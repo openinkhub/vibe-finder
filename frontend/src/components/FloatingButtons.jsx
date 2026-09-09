@@ -6,20 +6,21 @@ const FloatingButtons = () => {
   return (
     <div className="fixed right-5 bottom-6 z-40 flex flex-col gap-3">
       <a
-        href={`https://wa.me/${brand.whatsapp.replace(/[^0-9]/g, "")}`}
-        target="_blank"
-        rel="noreferrer"
-        className="w-13 h-13 md:w-14 md:h-14 flex items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 hover:scale-110 transition-transform duration-300"
-        aria-label="WhatsApp"
-      >
-        <MessageCircle size={24} />
-      </a>
-      <a
         href={`tel:${brand.phone.replace(/\s/g, "")}`}
-        className="w-13 h-13 md:w-14 md:h-14 flex items-center justify-center rounded-full bg-[#2B1B20] text-white shadow-lg shadow-black/20 hover:scale-110 transition-transform duration-300"
+        className="w-14 h-14 flex items-center justify-center rounded-full text-white shadow-lg hover:scale-110 transition-transform duration-300"
+        style={{ backgroundColor: "#8A1E3F" }}
         aria-label="Call"
       >
         <Phone size={22} />
+      </a>
+      <a
+        href={`https://wa.me/${brand.whatsapp.replace(/[^0-9]/g, "")}`}
+        target="_blank"
+        rel="noreferrer"
+        className="w-14 h-14 flex items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 hover:scale-110 transition-transform duration-300"
+        aria-label="WhatsApp"
+      >
+        <MessageCircle size={26} />
       </a>
     </div>
   );

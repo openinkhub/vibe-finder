@@ -20,6 +20,46 @@ export const navLinks = [
   { label: "Contact", path: "/contact" },
 ];
 
+// Real brand navigation (Rekha Krishnamurthy Makeup & Academy)
+export const navLeft = [
+  { label: "About Us", path: "/about" },
+  {
+    label: "Services",
+    path: "/services",
+    dropdown: [
+      { label: "Bridal Makeup", path: "/services" },
+      { label: "Non Bridal Makeup", path: "/services" },
+      { label: "Engagement Makeup", path: "/services" },
+      { label: "Party Makeup", path: "/services" },
+      { label: "Fashion Makeup", path: "/services" },
+      { label: "Editorial Makeup", path: "/services" },
+    ],
+  },
+  { label: "Courses", path: "/courses" },
+  { label: "Gallery", path: "/portfolio" },
+  { label: "Blogs", path: "/pricing" },
+];
+
+export const navRight = [
+  { label: "Personal Shopping", path: "/services" },
+  { label: "Testimonials", path: "/contact" },
+];
+
+export const heroPortrait = "https://images.unsplash.com/photo-1611150257812-e2296b43202b";
+
+export const heroCategories = {
+  left: [
+    { title: "Engagement", tagline: "Because you wont get a second chance to make the First Impression" },
+    { title: "Non Bridal", tagline: "Because there is always a contest between Ladkiwaale and Ladkewaale" },
+    { title: "Fashion", tagline: "You walk the Runway and We make you the Showstopper" },
+  ],
+  right: [
+    { title: "Bridal", tagline: "You are Beautiful but, we enumerate the Shimmer" },
+    { title: "Party", tagline: "For any occasion that you want to look and feel Special" },
+    { title: "Editorial", tagline: "For the Magazine Ready Look" },
+  ],
+};
+
 export const heroStats = [
   { value: "9+", label: "Years in Craft" },
   { value: "500+", label: "Brides Styled" },
@@ -31,8 +71,8 @@ export const heroTicker = [
 ];
 
 export const heroImage = "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9";
-export const heroVideo = "https://assets.mixkit.co/videos/40592/40592-720.mp4";
-export const heroVideoPoster = "https://assets.mixkit.co/videos/40592/40592-thumb-720-0.jpg";
+export const heroVideo = "https://customer-assets-lqy194kg.emergentagent.net/job_vibe-finder-76/artifacts/64x8xmfl_background.mp4";
+export const heroVideoPoster = "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9";
 
 export const services = [
   {
