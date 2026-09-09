@@ -1,64 +1,69 @@
 import React from "react";
-import { heroCategories, heroPortrait, heroVideo } from "../mock/mock";
-
-const MAROON = "#8A1E3F";
-
-const CategoryBlock = ({ item, align }) => (
-  <div className={`fade-up ${align === "right" ? "text-center lg:text-left" : "text-center lg:text-right"}`}>
-    <div className={`flex justify-center ${align === "right" ? "lg:justify-start" : "lg:justify-end"}`}>
-      <span
-        className="inline-block px-8 py-2.5 rounded-full text-white text-lg md:text-xl font-poppins font-semibold shadow-md"
-        style={{ backgroundColor: MAROON }}
-      >
-        {item.title}
-      </span>
-    </div>
-    <div className="font-script text-3xl md:text-4xl mt-3" style={{ color: "#C0466F" }}>Makeup</div>
-    <p className="font-poppins text-[15px] md:text-base text-[#6a6a6a] leading-relaxed mt-1 max-w-[280px] inline-block">
-      {item.tagline}
-    </p>
-  </div>
-);
+import { Play, Check, Star } from "lucide-react";
+import { heroStats, heroVideo, heroVideoPoster } from "../mock/mock";
+import { scrollToId } from "./Navbar";
 
 const Hero = () => {
   return (
-    <section className="relative overflow-hidden min-h-screen flex items-center">
-      {/* Watercolor background: pastel gradient base + uploaded video wash */}
-      <div className="absolute inset-0 z-0" style={{ background: "linear-gradient(120deg, #FBE7D6 0%, #FDF1EC 30%, #FBE3EC 65%, #F7D9E6 100%)" }} />
-      <video
-        className="absolute inset-0 z-0 w-full h-full object-cover mix-blend-lighten opacity-90"
-        src={heroVideo}
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
-      <div className="absolute inset-0 z-0 bg-white/10" />
+    <section id="top" className="relative overflow-hidden bg-[#F4F1EA] grain min-h-screen flex flex-col justify-center">
+      {/* Background video */}
+      <div className="absolute inset-0 z-0">
+        <video className="w-full h-full object-cover" src={heroVideo} poster={heroVideoPoster} autoPlay loop muted playsInline />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#F4F1EA] via-[#F4F1EA]/92 to-[#F4F1EA]/25 md:to-[#F4F1EA]/5" />
+        <div className="absolute inset-0 bg-[#F4F1EA]/35 md:bg-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F4F1EA] to-transparent" />
+      </div>
 
-      {/* Content */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 pt-32 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(280px,460px)_1fr] gap-10 lg:gap-6 items-center">
-          {/* Left categories */}
-          <div className="order-2 lg:order-1 flex flex-col gap-12 lg:gap-16">
-            {heroCategories.left.map((item) => (
-              <CategoryBlock key={item.title} item={item} align="left" />
+      {/* Editorial corner labels */}
+      <div className="absolute top-24 left-6 md:left-10 z-10 font-mono text-[11px] tracking-[0.2em] text-[#8B7F82]">No. 001 / SS26</div>
+      <div className="hidden md:block absolute top-24 right-10 z-10 font-mono text-[11px] tracking-[0.2em] text-[#8B7F82] text-right">Bridal · HD · Golden Hour</div>
+
+      <div className="relative z-10 max-w-[1320px] mx-auto px-6 md:px-10 w-full pt-32 md:pt-24 pb-14">
+        <div className="max-w-[660px]">
+          <div className="flex items-center gap-2.5 fade-up">
+            <span className="w-2 h-2 rounded-full bg-[#E62E6B] animate-pulse" />
+            <span className="font-mono text-[11px] tracking-[0.24em] text-[#8B7F82] uppercase">Bridal Makeup Artist in Bangalore · Est. 9 years</span>
+          </div>
+
+          <h1 className="font-display text-[#4A2530] mt-6 text-[44px] leading-[1.03] sm:text-[56px] md:text-[66px] lg:text-[72px] font-medium">
+            <span className="fade-up delay-1">Makeup that reads </span>
+            <span className="fade-up delay-1 italic font-bold text-[#E62E6B]">flawless</span>
+            <span className="fade-up delay-2"> on camera, feels </span>
+            <span className="fade-up delay-2 italic font-bold text-[#E62E6B]">effortless</span>
+            <span className="fade-up delay-3"> in person.</span>
+          </h1>
+
+          <p className="fade-up delay-3 mt-7 text-[17px] md:text-lg leading-relaxed text-[#4A3B3F] max-w-[540px]">
+            Rekha Krishnamurthy is Bangalore's <span className="font-semibold text-[#2B1B20]">best bridal makeup artist</span> — a <span className="font-semibold text-[#2B1B20]">wedding makeup artist</span> trusted for bridal makeup Bangalore-wide, plus self grooming classes for everyday confidence.
+          </p>
+
+          <div className="fade-up delay-4 mt-9 flex flex-wrap items-center gap-5">
+            <button onClick={() => scrollToId("contact")} className="px-8 py-4 rounded-full bg-[#2B1B20] text-white text-[15px] font-medium hover:bg-[#4A2530] transition-colors duration-300 shadow-lg shadow-black/10">
+              Book Your Free Consultation
+            </button>
+            <button onClick={() => scrollToId("reels")} className="group flex items-center gap-3 text-[#2B1B20]">
+              <span className="w-12 h-12 rounded-full border border-[#B9A7AC] bg-white/70 backdrop-blur flex items-center justify-center group-hover:bg-[#E62E6B] group-hover:border-[#E62E6B] group-hover:text-white transition-all duration-300">
+                <Play size={16} className="ml-0.5 fill-current" />
+              </span>
+              <span className="text-[15px]">Watch the reel</span>
+            </button>
+          </div>
+
+          <div className="fade-up delay-4 mt-9 flex flex-wrap gap-x-7 gap-y-3">
+            {["Makeup from ₹999", "Free consultation", "No visit charge — party, event & wedding bookings"].map((t) => (
+              <div key={t} className="flex items-center gap-2 text-sm text-[#4A3B3F]"><Check size={16} className="text-[#E62E6B]" /> {t}</div>
             ))}
           </div>
 
-          {/* Center portrait */}
-          <div className="order-1 lg:order-2 flex justify-center">
-            <img
-              src={heroPortrait}
-              alt="Watercolor portrait"
-              className="w-[280px] sm:w-[360px] lg:w-full max-w-[460px] object-contain drop-shadow-xl"
-              style={{ mixBlendMode: "multiply" }}
-            />
-          </div>
-
-          {/* Right categories */}
-          <div className="order-3 flex flex-col gap-12 lg:gap-16 lg:items-start">
-            {heroCategories.right.map((item) => (
-              <CategoryBlock key={item.title} item={item} align="right" />
+          <div className="mt-10 pt-8 border-t border-[#D3C7BA] grid grid-cols-3 max-w-[520px] divide-x divide-[#D3C7BA]">
+            {heroStats.map((s, i) => (
+              <div key={s.label} className={i === 0 ? "pr-6" : "px-6"}>
+                <div className="font-display text-3xl md:text-4xl font-bold text-[#2B1B20] flex items-center gap-1">
+                  {s.value}
+                  {s.label === "Google rating" && <Star size={16} className="fill-[#E62E6B] text-[#E62E6B]" />}
+                </div>
+                <div className="font-mono text-[10px] tracking-[0.16em] uppercase text-[#8B7F82] mt-1.5">{s.label}</div>
+              </div>
             ))}
           </div>
         </div>

@@ -1,193 +1,138 @@
-// Mock data for Rekha Krishnamurthy - Bridal Makeup Artist site
+// Mock data — Rekha Krishnamurthy · editorial "contact sheet" design (search-vibe-hub replica)
 
 export const brand = {
   name: "REKHA",
   surname: "KRISHNAMURTHY",
-  tagline: "Bridal Makeup Artist in Bangalore",
-  phone: "+91 98450 12345",
-  whatsapp: "+91 98450 12345",
-  email: "hello@rekhamakeup.in",
-  location: "Indiranagar, Bangalore",
-  instagram: "@rekha.makeup",
+  role: "Bridal Makeup Artist",
+  phone: "+91 98454 80507",
+  whatsapp: "+91 98454 80507",
+  email: "hello@rekhakrishnamurthy.in",
+  location: "Bengaluru, Karnataka",
+  instagram: "@makeupbyrekhakrishnamurthy",
+  instagramUrl: "https://www.instagram.com/makeupbyrekhakrishnamurthy/",
+  whatsappUrl: "https://api.whatsapp.com/send?phone=919845480507&text=Hello!%20I%20am%20looking%20for%20a%20makeup%20artist.",
 };
 
 export const navLinks = [
-  { label: "About", path: "/about" },
-  { label: "Services", path: "/services" },
-  { label: "Pricing", path: "/pricing" },
-  { label: "Portfolio", path: "/portfolio" },
-  { label: "Courses", path: "/courses" },
-  { label: "Contact", path: "/contact" },
+  { label: "About", to: "about" },
+  { label: "Services", to: "services" },
+  { label: "Pricing", to: "pricing" },
+  { label: "Portfolio", to: "portfolio" },
+  { label: "Academy", to: "academy" },
+  { label: "Contact", to: "contact" },
 ];
 
-// Real brand navigation (Rekha Krishnamurthy Makeup & Academy)
-export const navLeft = [
-  { label: "About Us", path: "/about" },
-  {
-    label: "Services",
-    path: "/services",
-    dropdown: [
-      { label: "Bridal Makeup", path: "/services" },
-      { label: "Non Bridal Makeup", path: "/services" },
-      { label: "Engagement Makeup", path: "/services" },
-      { label: "Party Makeup", path: "/services" },
-      { label: "Fashion Makeup", path: "/services" },
-      { label: "Editorial Makeup", path: "/services" },
-    ],
-  },
-  { label: "Courses", path: "/courses" },
-  { label: "Gallery", path: "/portfolio" },
-  { label: "Blogs", path: "/pricing" },
-];
-
-export const navRight = [
-  { label: "Personal Shopping", path: "/services" },
-  { label: "Testimonials", path: "/contact" },
-];
-
-export const heroPortrait = "https://images.unsplash.com/photo-1611150257812-e2296b43202b";
-
-export const heroCategories = {
-  left: [
-    { title: "Engagement", tagline: "Because you wont get a second chance to make the First Impression" },
-    { title: "Non Bridal", tagline: "Because there is always a contest between Ladkiwaale and Ladkewaale" },
-    { title: "Fashion", tagline: "You walk the Runway and We make you the Showstopper" },
-  ],
-  right: [
-    { title: "Bridal", tagline: "You are Beautiful but, we enumerate the Shimmer" },
-    { title: "Party", tagline: "For any occasion that you want to look and feel Special" },
-    { title: "Editorial", tagline: "For the Magazine Ready Look" },
-  ],
-};
-
-export const heroStats = [
-  { value: "9+", label: "Years in Craft" },
-  { value: "500+", label: "Brides Styled" },
-  { value: "5.0", label: "Google Rating" },
-];
-
-export const heroTicker = [
-  "BRIDAL", "HD", "GOLDEN HOUR", "AIRBRUSH", "ENGAGEMENT", "RECEPTION", "EDITORIAL",
-];
-
-export const heroImage = "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9";
 export const heroVideo = "https://customer-assets-lqy194kg.emergentagent.net/job_vibe-finder-76/artifacts/64x8xmfl_background.mp4";
 export const heroVideoPoster = "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9";
 
-export const services = [
-  {
-    id: "bridal",
-    title: "Bridal Makeup",
-    price: "from \u20B915,000",
-    desc: "HD & airbrush bridal looks engineered to read flawless on camera and feel weightless through the longest wedding day.",
-    points: ["HD & Airbrush finish", "Trial session included", "Draping & hairstyling", "On-location service"],
-    image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9",
-  },
-  {
-    id: "party",
-    title: "Party & Event",
-    price: "from \u20B92,500",
-    desc: "Glam, editorial and soft-glow looks for engagements, receptions, cocktails and cocktail sangeets.",
-    points: ["Glam / soft glow", "Lashes included", "Quick 45-min setup", "Long-wear products"],
-    image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51",
-  },
-  {
-    id: "minimal",
-    title: "Everyday & Minimal",
-    price: "from \u20B9999",
-    desc: "Natural, no-makeup makeup for shoots, brunches and days you simply want to look like the best version of you.",
-    points: ["No-makeup makeup", "Skin-first prep", "Photo-shoot ready", "Under 30 minutes"],
-    image: "https://images.unsplash.com/photo-1551184451-76b762941ad6",
-  },
-  {
-    id: "courses",
-    title: "Self-Grooming Classes",
-    price: "from \u20B94,999",
-    desc: "Learn to do your own makeup with confidence \u2014 personalised, hands-on classes for everyday beauty.",
-    points: ["1-on-1 or group", "Kit guidance", "Face-mapping", "Lifetime notes"],
-    image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2",
-  },
-];
-
-export const pricingPlans = [
-  {
-    id: "party",
-    name: "Party & Event",
-    price: "\u20B92,500",
-    unit: "per look",
-    featured: false,
-    features: ["HD makeup", "Complimentary lashes", "Basic hairstyling", "Long-wear finish", "Touch-up kit tips"],
-  },
-  {
-    id: "bridal",
-    name: "Signature Bridal",
-    price: "\u20B915,000",
-    unit: "wedding day",
-    featured: true,
-    features: ["HD & Airbrush finish", "Pre-wedding trial", "Draping + hairstyling", "On-location service", "Family makeup add-ons", "Dedicated assistant"],
-  },
-  {
-    id: "course",
-    name: "Grooming Course",
-    price: "\u20B94,999",
-    unit: "per module",
-    featured: false,
-    features: ["Hands-on training", "Personalised face-map", "Product & kit guidance", "Practice worksheets", "Certificate of completion"],
-  },
-];
-
-export const portfolio = [
-  { id: 1, category: "Bridal", title: "Golden Hour Bride", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9" },
-  { id: 2, category: "Bridal", title: "Royal Red", image: "https://images.unsplash.com/photo-1677691257363-eebd2abeafec" },
-  { id: 3, category: "Editorial", title: "Teal Reverie", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39" },
-  { id: 4, category: "Bridal", title: "Heirloom Glow", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749" },
-  { id: 5, category: "Glam", title: "Cocktail Glam", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51" },
-  { id: 6, category: "Glam", title: "Editorial Eye", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2" },
-  { id: 7, category: "Party", title: "Soft Party Glow", image: "https://images.unsplash.com/photo-1708735808460-2b131ddefb27" },
-  { id: 8, category: "Minimal", title: "No-Makeup Makeup", image: "https://images.unsplash.com/photo-1551184451-76b762941ad6" },
-  { id: 9, category: "Bridal", title: "Classic Bride", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6" },
-];
-
-export const courses = [
-  {
-    id: "self",
-    title: "Self-Grooming Masterclass",
-    duration: "2 days \u00B7 6 hrs",
-    level: "Beginner",
-    price: "\u20B94,999",
-    desc: "Everything you need to do your own everyday & occasion makeup with confidence.",
-    image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2",
-    modules: ["Skincare & prep", "Base & concealing", "Everyday eyes", "Occasion glam"],
-  },
-  {
-    id: "pro",
-    title: "Professional Artistry",
-    duration: "4 weeks",
-    level: "Advanced",
-    price: "\u20B939,999",
-    desc: "Become a working makeup artist \u2014 bridal, HD, airbrush and client management.",
-    image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51",
-    modules: ["Bridal techniques", "HD & Airbrush", "Hairstyling basics", "Building a business"],
-  },
-];
-
-export const testimonials = [
-  { id: 1, name: "Ananya R.", role: "Bride, 2024", text: "Rekha made me feel like the most beautiful version of myself. The makeup lasted through 12 hours and every photo looked stunning.", rating: 5 },
-  { id: 2, name: "Meghana S.", role: "Reception look", text: "Effortless, elegant and exactly what I asked for. My family kept asking who did my makeup all night!", rating: 5 },
-  { id: 3, name: "Priya K.", role: "Grooming student", text: "The self-grooming class changed how I see makeup. I finally do my own everyday look in 10 minutes.", rating: 5 },
-  { id: 4, name: "Divya M.", role: "Engagement", text: "Skin looked like skin \u2014 not cakey at all. HD finish was flawless on camera. Highly recommend.", rating: 5 },
-];
-
-export const aboutStats = [
-  { value: "9+", label: "Years experience" },
+export const heroStats = [
+  { value: "9+", label: "Years in craft" },
   { value: "500+", label: "Brides styled" },
-  { value: "50+", label: "Students trained" },
   { value: "5.0", label: "Google rating" },
 ];
 
+export const locationTicker = [
+  "Bridal Makeup Bangalore", "HSR Layout", "JP Nagar", "Jayanagar", "Banashankari", "Self Grooming Classes",
+];
+
+export const aboutStats = [
+  { value: "9 yrs", label: "Professional practice" },
+  { value: "500+", label: "Weddings & shoots" },
+  { value: "120+", label: "Artists trained" },
+];
+
+export const whoWeServe = [
+  { key: "A", title: "Brides-to-be", desc: "From the first trial to the last mandap look — a bridal makeup artist in Bangalore who plans every event with you." },
+  { key: "B", title: "Engagement & Pre-Wedding", desc: "Soft, camera-ready glam for rings, shoots and sangeet nights." },
+  { key: "C", title: "Premium / Luxury Brides", desc: "Full-day exclusivity, top-shelf products, and a dedicated team for high-touch weddings." },
+  { key: "D", title: "Corporate & Professional Events", desc: "Polished, understated makeup for launches, conferences and on-camera work." },
+  { key: "E", title: "South Indian Brides", desc: "Traditional draping, temple jewellery styling and looks true to South Indian bridal ritual — a specialty, not an add-on." },
+];
+
+export const services = [
+  { no: "01", title: "Bridal", desc: "HD & airbrush bridal makeup with a trial session, draping, and touch-up kit for the full wedding day.", cta: "Explore Bridal", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9" },
+  { no: "02", title: "Engagement", desc: "Soft-glam looks built for close-up photography and champagne-lit rooms.", cta: "Explore Engagement", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51" },
+  { no: "03", title: "Non-Bridal", desc: "Polished, camera-ready looks for the wedding party, family, and guests.", cta: "Explore Non-Bridal", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749" },
+  { no: "04", title: "Party", desc: "Bold or bare, tuned to your event and lighting — always long-wear.", cta: "Explore Party", image: "https://images.unsplash.com/photo-1708735808460-2b131ddefb27" },
+  { no: "05", title: "Editorial", desc: "Concept-led makeup for magazine covers, campaigns, and creative sets.", cta: "Explore Editorial", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2" },
+  { no: "06", title: "Fashion", desc: "Runway-ready faces built to hold up under stage light and quick changes.", cta: "Explore Fashion", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39" },
+  { no: "07", title: "Self Makeup Classes", desc: "Hands-on self-grooming classes so you can do your own everyday, event and touch-up makeup with confidence — starting at ₹999.", cta: "Explore Self Grooming Classes", image: "https://images.unsplash.com/photo-1551184451-76b762941ad6" },
+];
+
+export const pricing = [
+  { price: "₹999", title: "Self Makeup Class", desc: "A hands-on session to master your own everyday look." },
+  { price: "₹1,499", title: "Party Makeup", desc: "Event-ready glam, no visit charge." },
+  { price: "₹1,999", title: "Non-Bridal Makeup", desc: "For the wedding party, family & guests." },
+  { price: "₹2,999", title: "Engagement Makeup", desc: "Soft-glam for rings & pre-wedding shoots." },
+  { price: "On Quote", title: "Editorial / Fashion", desc: "Scoped to the brief, shoot, and usage." },
+  { price: "From ₹4,999", title: "Bridal Makeup", desc: "HD/airbrush, trial included, no visit charge.", featured: true },
+];
+
+export const areas = ["HSR Layout", "JP Nagar", "Jayanagar", "Banashankari", "+ Bangalore-wide on request"];
+
+export const portfolio = [
+  { id: "001", cat: "Bridal", caption: "Bridal · f/2.8 · Golden Hour", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9" },
+  { id: "002", cat: "Reels", caption: "Reel · Look Trial", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51" },
+  { id: "003", cat: "Editorial", caption: "Editorial · Studio Flash", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2" },
+  { id: "004", cat: "Fashion", caption: "Fashion · Backstage", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39" },
+  { id: "005", cat: "Bridal", caption: "Bridal · Airbrush Base", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6" },
+  { id: "006", cat: "Reels", caption: "Reel · GRWM", image: "https://images.unsplash.com/photo-1551184451-76b762941ad6" },
+  { id: "007", cat: "Editorial", caption: "Editorial · Cover Story", image: "https://images.unsplash.com/photo-1677691257363-eebd2abeafec" },
+  { id: "008", cat: "Bridal", caption: "Bridal · Reception", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749" },
+  { id: "009", cat: "Fashion", caption: "Fashion · Runway", image: "https://images.unsplash.com/photo-1708735808460-2b131ddefb27" },
+];
+
+export const portfolioFilters = ["All Frames", "Bridal", "Editorial", "Fashion", "Reels"];
+
+export const reels = [
+  { title: "Airbrush base, start to finish", time: "0:34", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51" },
+  { title: "Bridal trial walkthrough", time: "0:51", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9" },
+  { title: "Editorial smoky eye", time: "0:22", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2" },
+  { title: "Draping tips for sarees", time: "1:04", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749" },
+  { title: "Runway quick-change", time: "0:40", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39" },
+];
+
+export const process = [
+  { no: "01", title: "Enquiry & consultation", desc: "Share your date, venue and vision — we scope the right package and hold your slot." },
+  { no: "02", title: "Look trial", desc: "We finalise base, eyes and draping together, well ahead of the event." },
+  { no: "03", title: "Wedding day", desc: "On time, exclusively yours — no double bookings, ever." },
+  { no: "04", title: "Touch-up & support", desc: "A touch-up kit and on-call support for the rest of your celebrations." },
+];
+
+export const academyTracks = [
+  "Professional HD & bridal certification",
+  "Airbrush machine masterclass",
+  "Self-grooming & everyday makeup classes",
+];
+export const academyImage = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2";
+
+export const loyaltyPoints = [
+  "Free reward on joining the community",
+  "Loyalty points on every booking, redeemable on future services",
+  "Early access to seasonal offers & class dates",
+];
+export const loyaltyImage = "https://images.unsplash.com/photo-1594647210801-5124307f3d51";
+
+export const testimonials = [
+  { text: "Rekha did a great job dressing me up for my engagement — very polite and great at her work. I'd definitely recommend her.", name: "Harshita Naik" },
+  { text: "Thank you for the wonderful looks on my wedding day. You made me feel so comfortable and confident — amazing skills.", name: "Rumini Shesha" },
+  { text: "My cousin planned her wedding from the US — one phone call and every worry was put to rest. Absolutely loved her work.", name: "Nandini" },
+];
+
+export const instagramFeed = [
+  { caption: "Golden-hour bridal glow ✨", likes: "1,204", comments: "38", image: "https://images.unsplash.com/photo-1600685890506-593fdf55949b" },
+  { caption: "Red & gold, always a classic 💃", likes: "982", comments: "21", image: "https://images.unsplash.com/photo-1677691257363-eebd2abeafec" },
+  { caption: "Trial day magic — base built to last 12 hrs", likes: "1,540", comments: "54", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6" },
+  { caption: "Temple jewellery + soft eye 👑", likes: "2,110", comments: "76", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749" },
+  { caption: "Reception look, all airbrush 🤍", likes: "876", comments: "19", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9" },
+  { caption: "Behind the brush at the studio 🎨", likes: "1,332", comments: "44", image: "https://images.unsplash.com/photo-1551184451-76b762941ad6" },
+];
+
 export const faqs = [
-  { q: "Do you travel for on-location bridal makeup?", a: "Yes, I travel across Bangalore and to nearby cities for weddings. Outstation travel & stay is charged separately." },
-  { q: "Is a trial session included with bridal packages?", a: "A pre-wedding trial is included with the Signature Bridal package so we can perfect your look together before the big day." },
-  { q: "What products do you use?", a: "Only premium, long-wear and HD/airbrush-friendly products suited to Indian skin tones and Bangalore weather." },
-  { q: "How do I book a date?", a: "Book a free consultation via the contact page or WhatsApp. Dates are confirmed with a small advance." },
+  { q: "How far in advance should I book?", a: "For wedding-season dates (Oct–Feb), 4–6 months' notice keeps your date and trial slot secure. Off-season bookings can often be confirmed within a few weeks." },
+  { q: "HD vs. Airbrush makeup — what's the difference?", a: "HD makeup uses light-reflecting, high-definition products applied by hand for a flawless close-up finish. Airbrush sprays a fine, even mist for an ultra-lightweight, long-wear base — ideal for full-day weddings and hot, humid weather." },
+  { q: "Do you travel for destination weddings?", a: "Yes. Rekha travels across India for destination weddings and fashion assignments. Travel and stay are scoped transparently at consultation." },
+  { q: "Is a trial session included?", a: "A pre-wedding trial is included with the bridal package so we can perfect your base, eyes and draping together before the big day." },
+  { q: "What courses do you offer?", a: "Professional HD & bridal certification, an airbrush machine masterclass, and self-grooming & everyday makeup classes — all small-batch and hands-on at the Bangalore studio." },
+  { q: "Is there a visit charge, and what does pricing start at?", a: "Makeup starts at ₹999, and there's no visit charge for party, event or wedding bookings within Bangalore. Final pricing is confirmed free of charge at consultation." },
 ];

@@ -7,8 +7,7 @@ const FloatingButtons = () => {
     <div className="fixed right-5 bottom-6 z-40 flex flex-col gap-3">
       <a
         href={`tel:${brand.phone.replace(/\s/g, "")}`}
-        className="w-14 h-14 flex items-center justify-center rounded-full text-white shadow-lg hover:scale-110 transition-transform duration-300"
-        style={{ backgroundColor: "#8A1E3F" }}
+        className="w-14 h-14 flex items-center justify-center rounded-full bg-[#2B1B20] text-white shadow-lg hover:scale-110 hover:bg-[#E62E6B] transition-all duration-300"
         aria-label="Call"
       >
         <Phone size={22} />

@@ -1,43 +1,51 @@
 import { useEffect } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Marquee from "./components/Marquee";
+import About from "./components/About";
+import WhoWeServe from "./components/WhoWeServe";
+import Services from "./components/Services";
+import Pricing from "./components/Pricing";
+import Areas from "./components/Areas";
+import Portfolio from "./components/Portfolio";
+import Reels from "./components/Reels";
+import Process from "./components/Process";
+import Academy from "./components/Academy";
+import Loyalty from "./components/Loyalty";
+import Testimonials from "./components/Testimonials";
+import Instagram from "./components/Instagram";
+import FAQ from "./components/FAQ";
+import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import FloatingButtons from "./components/FloatingButtons";
-import SocialSidebar from "./components/SocialSidebar";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Services from "./pages/Services";
-import Pricing from "./pages/Pricing";
-import Portfolio from "./pages/Portfolio";
-import Courses from "./pages/Courses";
-import Contact from "./pages/Contact";
-
-function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
-  return null;
-}
 
 function App() {
+  useEffect(() => {
+    document.title = "Rekha Krishnamurthy · Bridal Makeup Artist in Bangalore";
+  }, []);
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <ScrollToTop />
-        <Navbar />
-        <SocialSidebar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-        <Footer />
-        <FloatingButtons />
-      </BrowserRouter>
+      <Navbar />
+      <Hero />
+      <Marquee />
+      <About />
+      <WhoWeServe />
+      <Services />
+      <Pricing />
+      <Areas />
+      <Portfolio />
+      <Reels />
+      <Process />
+      <Academy />
+      <Loyalty />
+      <Testimonials />
+      <Instagram />
+      <FAQ />
+      <Contact />
+      <Footer />
+      <FloatingButtons />
     </div>
   );
 }
