@@ -31,6 +31,8 @@ export const heroTicker = [
 ];
 
 export const heroImage = "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9";
+export const heroVideo = "https://assets.mixkit.co/videos/40592/40592-720.mp4";
+export const heroVideoPoster = "https://assets.mixkit.co/videos/40592/40592-thumb-720-0.jpg";
 
 export const services = [
   {
