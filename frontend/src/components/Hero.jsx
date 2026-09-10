@@ -1,14 +1,42 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Play, Check, Star } from "lucide-react";
-import { heroStats, heroVideo, heroVideoPoster } from "../mock/mock";
+import { heroStats, heroVideo, heroVideoWebm, heroVideoPoster } from "../mock/mock";
 import { scrollToId } from "./Navbar";
 
 const Hero = () => {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    const tryPlay = () => {
+      const p = v.play();
+      if (p && p.catch) p.catch(() => {});
+    };
+    v.load();
+    tryPlay();
+    v.addEventListener("canplay", tryPlay);
+    return () => v.removeEventListener("canplay", tryPlay);
+  }, []);
+
   return (
     <section id="top" className="relative overflow-hidden bg-[#F4F1EA] grain min-h-screen flex flex-col justify-center">
       {/* Background video */}
       <div className="absolute inset-0 z-0">
-        <video className="w-full h-full object-cover" src={heroVideo} poster={heroVideoPoster} autoPlay loop muted playsInline />
+        <video
+          ref={videoRef}
+          className="w-full h-full object-cover"
+          poster={heroVideoPoster}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source src={heroVideoWebm} type="video/webm" />
+          <source src={heroVideo} type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-r from-[#F4F1EA] via-[#F4F1EA]/92 to-[#F4F1EA]/25 md:to-[#F4F1EA]/5" />
         <div className="absolute inset-0 bg-[#F4F1EA]/35 md:bg-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F4F1EA] to-transparent" />

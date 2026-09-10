@@ -22,8 +22,9 @@ export const navLinks = [
   { label: "Contact", to: "contact" },
 ];
 
-export const heroVideo = "https://customer-assets-lqy194kg.emergentagent.net/job_vibe-finder-76/artifacts/64x8xmfl_background.mp4";
-export const heroVideoPoster = "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9";
+export const heroVideo = "/hero-bg.mp4";
+export const heroVideoWebm = "/hero-bg.webm";
+export const heroVideoPoster = "/hero-poster.jpg";
 
 export const heroStats = [
   { value: "9+", label: "Years in craft" },
