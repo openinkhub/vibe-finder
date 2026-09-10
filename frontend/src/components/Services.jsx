@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { services } from "../mock/mock";
+import { services as fallback } from "../mock/mock";
+import { api, imgUrl } from "../lib/api";
 import { scrollToId } from "./Navbar";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 
 const Services = () => {
+  const [services, setServices] = useState(fallback);
+  useEffect(() => { api.get("/content/services").then((r) => { if (r.data?.length) setServices(r.data); }).catch(() => {}); }, []);
   return (
     <section id="services" className="relative bg-[#F4F1EA] py-20 md:py-32 scroll-mt-20" data-testid="services-section">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
@@ -36,7 +39,7 @@ const Services = () => {
                 <div className="font-mono text-sm text-[#F4B7CE] group-hover:text-[#E62E6B] transition-colors">{s.no}</div>
                 <div className="flex items-center gap-4 sm:gap-6">
                   <TiltCard max={14} lift={false} className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden shrink-0 shadow-lg shadow-[#E62E6B]/15">
-                    <img src={s.image} alt={s.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <img src={imgUrl(s.image)} alt={s.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   </TiltCard>
                   <div>
                     <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-[#4A2530]">{s.title}</h3>

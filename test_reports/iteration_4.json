@@ -1,0 +1,36 @@
+{
+  "summary": "Iteration 4 (Look Lab / Portfolio / BookMe / Availability / Services / WhatsApp reply / Resend alerts) fully validated. Backend: 14/14 pytest passed in test_iter4.py — services CRUD (list 6+, auth 401, POST no-file default image, PUT with file → /api/files/, image served 200 image/*, DELETE 204), availability (POST partial 201, POST full-day nulls start/end, start>=end 400, missing times 400, GET ?month public lists them, unauth POST/DELETE 401, DELETE 204 cleanup), studio/showcase (cached — 4 keys natural/bridal/editorial/glam, all urls /api/files/, elapsed <15s, image URLs serve 200), enquiry creation triggers background Resend send with no 'Resend alert failed' in backend.err.log (log snapshot clean). Frontend on 1920x1080: Look Lab section — face-model canvas mounts; clicking looklab-glam then looklab-natural switches active pink styling; looklab-compare shows <img> with src containing /api/files/rekha-makeup/showcase/…; moving looklab-compare-slider changes clip-path of looklab-compare-before; looklab-tryon-btn scrolls page (scrollY 6420); looklab-portfolio-link navigates to /portfolio. /portfolio — morph-title starts 'Bare skin' → after window.innerHeight*2.5 scroll changes to 'Editorial'; parallax-gallery renders 9 parallax-item elements whose inline transform changes on mouse move; portfolio-back-link returns to /. Contact — bookme-compact has canvas; bookme-toggle-btn opens bookme-reveal with bookme-call tel:+919845480507 and bookme-form which focuses contact-name-input. Availability calendar — after admin creates a partial slot on 2026-09-20 10:00–14:00 note 'E2E', the day is highlighted (class contains F4B7CE partial-pink) and clicking it shows availability-slots text '10:00 – 14:00 booked · E2E'; clicking a free day shows availability-free. Admin services — service-add-btn → save → row appears; service-edit-{id} rename saves; service-delete-{id} removes row. Enquiries — enquiry-whatsapp-{id} href starts with 'https://wa.me/…?text=Hi <name>, this is Rekha Krishnamurthy…' (URL-encoded). Regression: 0 horizontal overflow on both 1920x1080 desktop and 390x844 mobile; zero console/page errors during full flow. All checks green.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Contact — BookMe compact", "issues": ["bookme-whatsapp uses brand.whatsappUrl = 'https://api.whatsapp.com/send?phone=…' (from mock/mock.js). Review request expected 'wa.me' — both are valid WhatsApp deep-links, but for consistency with admin's enquiry-whatsapp (which does use wa.me) consider migrating brand.whatsappUrl to wa.me/91… format."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter4.py",
+    "/app/backend/tests/test_new_features.py",
+    "/app/test_reports/pytest/iter4.xml"
+  ],
+  "action_items": [
+    "(Cosmetic) Standardise brand.whatsappUrl in /app/frontend/src/mock/mock.js to https://wa.me/91… so BookMe / Loyalty / Contact all use the same short link format used by the admin WhatsApp reply."
+  ],
+  "critical_code_review_comments": [
+    "availability.py create_slot: after model_dump() we overwrite start/end to None when full_day, but the request payload can still include start/end that pass the HH:MM regex validator without being stored — acceptable but consider stripping in the pydantic layer for cleanliness.",
+    "content.py service update: POST auto-computes 'no' as zfill(count+1) but PUT/DELETE don't renumber remaining services — after deleting a middle service the 'no' labels become non-sequential in the list view. Non-blocking (used cosmetically) but worth noting.",
+    "content.py store_image only validates extension (jpg/png/webp/gif) — not magic bytes; a renamed .txt→.jpg would still upload (documented in iter 3 — carry-over).",
+    "studio.py showcase endpoint has `regenerate=true` query param that would burn LLM credits if hit publicly (no auth). Consider gating regenerate behind admin auth to prevent abuse.",
+    "BookMeCompact.jsx uses brand.whatsappUrl (api.whatsapp.com/send) while Admin.jsx builds wa.me links — inconsistent. Not a functional bug."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter4.py (new — 14 iter-4 tests)"
+  ],
+  "success_rate": {"backend": "100% (14/14 iter-4 + all prior tests still passing)", "frontend": "100% on tested flows"},
+  "test_credentials": "Admin admin@rekhakrishnamurthy.com / Rekha@Admin2026 (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "Tests create TEST_ prefixed services/availability slots/enquiries and clean them up in-run. Showcase LLM cache reused (no regenerate call). No leftover TEST_ data verified via post-cleanup GET.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "All iter-4 features validated E2E. Iter-1/2/3 features regression-checked via prior test files (still passing). For any future run: use http://localhost:8001 for pytest and https://vibe-finder-76.preview.emergentagent.com for Playwright. Do NOT call /api/studio/showcase?regenerate=true or /api/studio/generate/transcribe — expensive. Look Lab & BookMe use Three.js WebGL — allow ~3s after scroll before checking canvas.",
+  "rca of the issue": "N/A — no functional bugs found. Only cosmetic inconsistency: brand.whatsappUrl uses api.whatsapp.com/send while admin uses wa.me — both work but inconsistent."
+}

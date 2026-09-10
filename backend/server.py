@@ -14,6 +14,7 @@ import auth
 import enquiries
 import studio
 import content
+import availability
 from storage import init_storage
 
 mongo_url = os.environ['MONGO_URL']
@@ -26,6 +27,8 @@ api_router = APIRouter(prefix="/api")
 auth.init(db)
 enquiries.init(db)
 content.init(db)
+studio.init(db)
+availability.init(db)
 
 
 @api_router.get("/")
@@ -37,6 +40,7 @@ api_router.include_router(auth.router)
 api_router.include_router(enquiries.router)
 api_router.include_router(studio.router)
 api_router.include_router(content.router)
+api_router.include_router(availability.router)
 app.include_router(api_router)
 
 app.add_middleware(
@@ -57,6 +61,8 @@ async def on_startup():
     await db.enquiries.create_index("created_at")
     await db.enquiries.create_index("status")
     await content.seed_content()
+    await content.seed_services()
+    await db.bookings.create_index("date")
     try:
         init_storage()
         logger.info("Storage initialized")

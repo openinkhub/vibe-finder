@@ -12,11 +12,12 @@ export const brand = {
   location: "Bengaluru, Karnataka",
   instagram: "@makeupbyrekhakrishnamurthy",
   instagramUrl: "https://www.instagram.com/makeupbyrekhakrishnamurthy/",
-  whatsappUrl: "https://api.whatsapp.com/send?phone=919845480507&text=Hello!%20I%20am%20looking%20for%20a%20makeup%20artist.",
+  whatsappUrl: "https://wa.me/919845480507?text=Hello!%20I%20am%20looking%20for%20a%20makeup%20artist.",
 };
 
 export const navLinks = [
   { label: "About", to: "about" },
+  { label: "Look Lab", to: "looklab" },
   { label: "Services", to: "services" },
   { label: "Try-On", to: "studio" },
   { label: "Pricing", to: "pricing" },

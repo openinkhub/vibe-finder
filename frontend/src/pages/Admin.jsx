@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { LogOut, RefreshCw, Phone, Mail, Calendar, Sparkles, Trash2, Loader2, Lock, ArrowLeft, Bell, BellRing, Mic, Inbox, IndianRupee, Images } from "lucide-react";
+import { LogOut, RefreshCw, Phone, Mail, Calendar, Sparkles, Trash2, Loader2, Lock, ArrowLeft, Bell, BellRing, Mic, Inbox, IndianRupee, Images, Scissors, CalendarDays, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { api, errorText, TOKEN_KEY, imgUrl } from "../lib/api";
 import { PricingEditor } from "./admin/PricingEditor";
 import { PortfolioEditor } from "./admin/PortfolioEditor";
+import { ServicesEditor } from "./admin/ServicesEditor";
+import { CalendarEditor } from "./admin/CalendarEditor";
 import { brand } from "../mock/mock";
 
 const STATUSES = ["new", "replied", "booked", "closed"];
@@ -72,7 +74,7 @@ const EnquiryCard = ({ e, onStatus, onDelete }) => (
         <button key={s} onClick={() => onStatus(e.id, s)} className="px-3 py-1.5 rounded-full text-xs font-medium border border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B] hover:text-[#E62E6B] transition-colors capitalize" data-testid={`enquiry-set-${s}-${e.id}`}>Mark {s}</button>
       ))}
       <div className="flex-1" />
-      <a href={`https://wa.me/${e.phone.replace(/[^0-9]/g, "")}`} target="_blank" rel="noreferrer" className="px-3 py-1.5 rounded-full text-xs font-medium bg-[#25D366] text-white">WhatsApp</a>
+      <a href={`https://wa.me/${e.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hi ${e.name.split(" ")[0]}, this is Rekha Krishnamurthy 💄 Thank you for your ${e.service.toLowerCase()} enquiry${e.date ? ` for ${e.date}` : ""}${e.look ? ` — I love that you picked the "${e.look}" look` : ""}! I'd be happy to hold your date. When would be a good time for a quick free consultation call?`)}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-[#25D366] text-white" data-testid={`enquiry-whatsapp-${e.id}`}><MessageCircle size={12} /> Reply on WhatsApp</a>
       <button onClick={() => onDelete(e.id)} className="w-8 h-8 rounded-full flex items-center justify-center text-[#8B7F82] hover:text-[#C81F57] hover:bg-[#FBE9F0]" aria-label="Delete" data-testid={`enquiry-delete-${e.id}`}><Trash2 size={14} /></button>
     </div>
   </div>
@@ -156,13 +158,15 @@ export default function Admin() {
 
       <main className="max-w-[1100px] mx-auto px-5 sm:px-8 py-8 sm:py-12">
         <div className="flex flex-wrap gap-2 mb-8" data-testid="admin-tabs">
-          {[["enquiries", "Enquiries", Inbox], ["pricing", "Pricing", IndianRupee], ["portfolio", "Portfolio", Images]].map(([k, label, Icon]) => (
+          {[["enquiries", "Enquiries", Inbox], ["calendar", "Calendar", CalendarDays], ["services", "Services", Scissors], ["pricing", "Pricing", IndianRupee], ["portfolio", "Portfolio", Images]].map(([k, label, Icon]) => (
             <button key={k} onClick={() => setTab(k)} className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium border transition-colors ${tab === k ? "bg-[#E62E6B] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`admin-tab-${k}`}>
               <Icon size={15} /> {label}{k === "enquiries" && stats?.unseen > 0 && <span className={`ml-1 px-1.5 rounded-full text-[10px] ${tab === k ? "bg-white text-[#E62E6B]" : "bg-[#E62E6B] text-white"}`}>{stats.unseen}</span>}
             </button>
           ))}
         </div>
 
+        {tab === "calendar" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Availability</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-2">Booked dates & hours</h1><p className="text-sm text-[#5C4E52] mb-8">Only you can edit this. Visitors see it read-only on the site so they enquire for open slots.</p><CalendarEditor /></>)}
+        {tab === "services" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Services</h1><ServicesEditor /></>)}
         {tab === "pricing" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Pricing cards</h1><PricingEditor /></>)}
         {tab === "portfolio" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Portfolio photos</h1><PortfolioEditor /></>)}
         {tab === "enquiries" && (<>

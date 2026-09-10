@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { scrollToId } from "./components/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { Toaster } from "./components/ui/sonner";
@@ -23,13 +24,21 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import FloatingButtons from "./components/FloatingButtons";
 import Admin from "./pages/Admin";
+import PortfolioPage from "./pages/PortfolioPage";
+import LookLab from "./components/lab/LookLab";
 
-const Landing = () => (
+const Landing = () => {
+  useEffect(() => {
+    const target = sessionStorage.getItem("rk_scroll_to") || (window.location.hash ? window.location.hash.slice(1) : "");
+    if (target) { sessionStorage.removeItem("rk_scroll_to"); setTimeout(() => scrollToId(target), 400); }
+  }, []);
+  return (
   <>
     <Navbar />
     <Hero />
     <Marquee />
     <About />
+    <LookLab />
     <WhoWeServe />
     <Services />
     <FaceStudio />
@@ -47,7 +56,8 @@ const Landing = () => (
     <Footer />
     <FloatingButtons />
   </>
-);
+  );
+};
 
 function App() {
   useEffect(() => {
@@ -60,6 +70,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-center" richColors />

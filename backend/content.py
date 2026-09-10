@@ -148,6 +148,65 @@ async def delete_portfolio(item_id: str, _: dict = Depends(require_admin)):
         raise HTTPException(status_code=404, detail="Not found")
 
 
+DEFAULT_SERVICES = [
+    {"no": "01", "title": "Bridal Makeup", "desc": "HD & airbrush bridal looks that last from the muhurtham to the last dance — trial included.", "cta": "Book bridal", "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"},
+    {"no": "02", "title": "Engagement Makeup", "desc": "Soft-glam for rings, rokas and pre-wedding shoots that photograph beautifully.", "cta": "Book engagement", "image": "https://images.unsplash.com/photo-1594647210801-5124307f3d51"},
+    {"no": "03", "title": "Non-Bridal Makeup", "desc": "Sisters, mothers, bridesmaids — polished looks for everyone in the wedding party.", "cta": "Book non-bridal", "image": "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2"},
+    {"no": "04", "title": "Party Makeup", "desc": "Event-ready glam for receptions, galas and celebrations — no visit charge.", "cta": "Book party", "image": "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6"},
+    {"no": "05", "title": "Editorial & Fashion", "desc": "Runway, campaign and cover-story makeup scoped to your brief and shoot.", "cta": "Enquire", "image": "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39"},
+    {"no": "06", "title": "Self-Grooming Courses", "desc": "Hands-on classes to master your own everyday and occasion looks.", "cta": "View courses", "image": "https://images.unsplash.com/photo-1551184451-76b762941ad6"},
+]
+
+
+async def seed_services():
+    if await _db.services.count_documents({}) == 0:
+        now = datetime.now(timezone.utc).isoformat()
+        await _db.services.insert_many([{**s, "id": str(uuid.uuid4()), "order": i, "created_at": now} for i, s in enumerate(DEFAULT_SERVICES)])
+
+
+class Service(BaseModel):
+    id: str
+    no: str
+    title: str
+    desc: str
+    cta: str
+    image: str
+    order: int = 0
+
+
+@router.get("/content/services", response_model=List[Service])
+async def list_services():
+    return await _db.services.find({}, {"_id": 0}).sort("order", 1).to_list(50)
+
+
+@router.post("/content/services", response_model=Service, status_code=201)
+async def create_service(title: str = Form(...), desc: str = Form(""), cta: str = Form("Enquire"), file: UploadFile = File(None), _: dict = Depends(require_admin)):
+    count = await _db.services.count_documents({})
+    image = DEFAULT_SERVICES[count % len(DEFAULT_SERVICES)]["image"]
+    if file and file.filename:
+        image = await store_image(await file.read(), file.filename.rsplit(".", 1)[-1], "services")
+    doc = {"id": str(uuid.uuid4()), "no": str(count + 1).zfill(2), "title": title[:80], "desc": desc[:300], "cta": cta[:40], "image": image, "order": count, "created_at": datetime.now(timezone.utc).isoformat()}
+    await _db.services.insert_one(dict(doc))
+    return doc
+
+
+@router.put("/content/services/{item_id}", response_model=Service)
+async def update_service(item_id: str, title: str = Form(...), desc: str = Form(""), cta: str = Form("Enquire"), file: UploadFile = File(None), _: dict = Depends(require_admin)):
+    patch = {"title": title[:80], "desc": desc[:300], "cta": cta[:40]}
+    if file and file.filename:
+        patch["image"] = await store_image(await file.read(), file.filename.rsplit(".", 1)[-1], "services")
+    res = await _db.services.find_one_and_update({"id": item_id}, {"$set": patch}, projection={"_id": 0}, return_document=True)
+    if not res:
+        raise HTTPException(status_code=404, detail="Not found")
+    return res
+
+
+@router.delete("/content/services/{item_id}", status_code=204)
+async def delete_service(item_id: str, _: dict = Depends(require_admin)):
+    if (await _db.services.delete_one({"id": item_id})).deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Not found")
+
+
 @router.get("/files/{path:path}")
 async def serve_file(path: str):
     record = await _db.files.find_one({"storage_path": path, "is_deleted": False})

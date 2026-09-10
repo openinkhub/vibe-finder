@@ -3,9 +3,13 @@ import { Instagram, Phone, MapPin, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { brand, navLinks } from "../mock/mock";
 import { scrollToId } from "./Navbar";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Reveal } from "./fx/Reveal";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const go = (id) => { if (pathname !== "/") { sessionStorage.setItem("rk_scroll_to", id); navigate("/"); } else scrollToId(id); };
   return (
     <footer className="relative bg-[#FBE9F0] text-[#4A2530] overflow-hidden" data-testid="footer">
       <div className="h-1.5 bg-[#E62E6B]" />
@@ -23,7 +27,7 @@ const Footer = () => {
             <h4 className="font-mono text-[10px] tracking-[0.24em] uppercase text-[#8B7F82] mb-5">Explore</h4>
             <ul className="space-y-3">
               {navLinks.map((l) => (
-                <li key={l.to}><button onClick={() => scrollToId(l.to)} className="text-[#4A2530] hover:text-[#E62E6B] hover:translate-x-1 inline-block transition-all" data-testid={`footer-nav-${l.to}`}>{l.label}</button></li>
+                <li key={l.to}><button onClick={() => go(l.to)} className="text-[#4A2530] hover:text-[#E62E6B] hover:translate-x-1 inline-block transition-all" data-testid={`footer-nav-${l.to}`}>{l.label}</button></li>
               ))}
             </ul>
           </Reveal>

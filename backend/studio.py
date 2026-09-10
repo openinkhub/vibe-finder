@@ -80,6 +80,58 @@ async def generate(body: GenerateIn):
     return {"image": f"data:{img.get('mime_type', 'image/png')};base64,{img['data']}", "note": (text or "")[:200]}
 
 
+SHOWCASE_LOOKS = [
+    {"key": "natural", "name": "Natural", "lips": "#C98A7A", "blush": "#EFC0B4", "eyes": "#B89078", "intensity": 0.45, "liner": False, "gloss": True},
+    {"key": "bridal", "name": "Bridal", "lips": "#B3122E", "blush": "#E8788A", "eyes": "#8A4B2E", "intensity": 0.9, "liner": True, "gloss": True},
+    {"key": "editorial", "name": "Editorial", "lips": "#7A1F3D", "blush": "#D98A9C", "eyes": "#4A2530", "intensity": 0.95, "liner": True, "gloss": False},
+    {"key": "glam", "name": "Glam", "lips": "#E62E6B", "blush": "#F28FB0", "eyes": "#6E2C3C", "intensity": 1.0, "liner": True, "gloss": True},
+]
+_db = None
+_showcase_lock = asyncio.Lock()
+
+
+def init(db):
+    global _db
+    _db = db
+
+
+async def _generate_bytes(img_b64: str, look: Look) -> tuple[bytes, str]:
+    api_key = os.environ.get("EMERGENT_LLM_KEY")
+    chat = LlmChat(api_key=api_key, session_id=f"showcase-{uuid.uuid4()}", system_message="You are a professional makeup artist retouching photos.")
+    chat.with_model("gemini", MODEL).with_params(modalities=["image", "text"])
+    _, images = await asyncio.wait_for(chat.send_message_multimodal_response(UserMessage(text=_prompt(look), file_contents=[ImageContent(img_b64)])), timeout=120)
+    if not images:
+        raise RuntimeError("no image")
+    mime = images[0].get("mime_type", "image/png")
+    return base64.b64decode(images[0]["data"]), ("jpg" if "jpeg" in mime else "png")
+
+
+@router.get("/showcase")
+async def showcase(regenerate: bool = False):
+    from content import store_image
+    async with _showcase_lock:
+        docs = {d["key"]: d for d in await _db.showcase.find({}, {"_id": 0}).to_list(20)}
+        if regenerate:
+            docs = {}
+        missing = [l for l in SHOWCASE_LOOKS if l["key"] not in docs]
+        if missing:
+            src = os.path.join(os.path.dirname(__file__), "..", "frontend", "public", "sample-face.jpg")
+            with open(src, "rb") as f:
+                img_b64 = base64.b64encode(f.read()).decode()
+            for l in missing:
+                try:
+                    data, ext = await _generate_bytes(img_b64, Look(**{k: v for k, v in l.items() if k not in ("key",)}))
+                    url = await store_image(data, ext, "showcase")
+                except Exception as e:
+                    logger.error("showcase %s failed: %s", l["key"], str(e)[:200])
+                    continue
+                doc = {"key": l["key"], "name": l["name"], "url": url, "lips": l["lips"], "blush": l["blush"], "eyes": l["eyes"], "created_at": datetime.now(timezone.utc).isoformat()}
+                await _db.showcase.replace_one({"key": l["key"]}, doc, upsert=True)
+                docs[l["key"]] = doc
+    order = {l["key"]: i for i, l in enumerate(SHOWCASE_LOOKS)}
+    return {"before": "/sample-face.jpg", "looks": sorted([{k: v for k, v in d.items() if k != "_id"} for d in docs.values()], key=lambda d: order.get(d["key"], 99))}
+
+
 class LookUploadIn(BaseModel):
     image: str
     look: str = "Custom"

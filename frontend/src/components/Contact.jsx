@@ -3,6 +3,8 @@ import { Phone, MapPin, Instagram, MessageCircle, Check, Loader2, Sparkles, X } 
 import { brand } from "../mock/mock";
 import { api, errorText, imgUrl } from "../lib/api";
 import { VoiceEnquiry } from "./VoiceEnquiry";
+import { BookMeCompact } from "./BookMeCompact";
+import { Availability } from "./Availability";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 
@@ -51,7 +53,7 @@ const Contact = () => {
   return (
     <section id="contact" className="relative bg-[#F4F1EA] py-20 md:py-32 scroll-mt-20" data-testid="contact-section">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-12">
-        <Reveal>
+        <Reveal className="min-w-0">
           <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Get in touch</span>
           <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Let's talk about your date</h2>
           <p className="mt-5 sm:mt-6 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-md">Tell us the event, the city and the vibe — we'll come back with availability and a package that fits. Consultation is always free, and there's no visit charge for party, event or wedding bookings.</p>
@@ -75,9 +77,14 @@ const Contact = () => {
             <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#25D366] text-white font-medium hover:bg-[#1eb959] hover:-translate-y-0.5 transition-all" data-testid="contact-whatsapp-btn"><MessageCircle size={18} /> Chat on WhatsApp</a>
             <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#E62E6B] hover:text-white transition-colors" data-testid="contact-call-btn"><Phone size={18} /> Call now</a>
           </div>
+
+          <div className="mt-8 sm:mt-9 space-y-5">
+            <BookMeCompact onBook={() => document.querySelector('[data-testid="contact-name-input"]')?.focus()} />
+            <Availability />
+          </div>
         </Reveal>
 
-        <Reveal delay={0.15}>
+        <Reveal delay={0.15} className="min-w-0">
           <TiltCard max={3} lift={false} glare={false} className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-[#F1DCE3] shadow-[0_30px_80px_-40px_rgba(230,46,107,0.45)]">
             {sent && <div className="mb-5 flex items-center gap-2 bg-[#EAF7EF] text-[#1c7a45] px-4 py-3 rounded-xl text-sm" data-testid="contact-success"><Check size={16} /> Thank you! Your enquiry has been received. We'll reach out shortly.</div>}
             {error && <div className="mb-5 flex items-center gap-2 bg-[#FBE9F0] text-[#C81F57] px-4 py-3 rounded-xl text-sm" data-testid="contact-error"><X size={16} /> {error}</div>}
