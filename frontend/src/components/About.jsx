@@ -3,7 +3,6 @@ import { useScroll, motion, useTransform } from "framer-motion";
 import { aboutStats } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
-import { ScrollObject } from "./fx/ScrollObject";
 
 const About = () => {
   const ref = useRef(null);
@@ -12,7 +11,6 @@ const About = () => {
 
   return (
     <section id="about" ref={ref} className="relative bg-[#F4F1EA] py-20 md:py-32 scroll-mt-20 overflow-hidden" data-testid="about-section">
-      <ScrollObject variant="ring" progress={scrollYProgress} className="hidden md:block absolute -top-6 right-[4%] w-[260px] h-[260px] lg:w-[340px] lg:h-[340px]" />
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
           <Reveal>

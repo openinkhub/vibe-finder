@@ -1,18 +1,12 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Gift } from "lucide-react";
-import { useScroll } from "framer-motion";
 import { loyaltyPoints, loyaltyImage, brand } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
-import { ScrollObject } from "./fx/ScrollObject";
 
 const Loyalty = () => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-
   return (
-    <section ref={ref} className="relative bg-[#F4F1EA] py-20 md:py-32 overflow-hidden" data-testid="loyalty-section">
-      <ScrollObject variant="gem" progress={scrollYProgress} className="hidden md:block absolute -top-4 right-[3%] w-[220px] h-[220px] lg:w-[300px] lg:h-[300px]" />
+    <section className="relative bg-[#F4F1EA] py-20 md:py-32 overflow-hidden" data-testid="loyalty-section">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         <Reveal className="order-2 lg:order-1">
           <TiltCard max={7} className="rounded-[24px] overflow-hidden shadow-[0_30px_80px_-30px_rgba(230,46,107,0.45)]">

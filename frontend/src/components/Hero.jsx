@@ -3,12 +3,9 @@ import { Play, Check, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { heroStats, heroVideo, heroVideoWebm, heroVideoPoster } from "../mock/mock";
 import { scrollToId } from "./Navbar";
-import { HeroScene } from "./fx/HeroScene";
-import { useIsMobile } from "../hooks/useIsMobile";
 
 const Hero = () => {
   const videoRef = useRef(null);
-  const mobile = useIsMobile(1024);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -31,10 +28,6 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-[#F4F1EA] via-[#F4F1EA]/92 to-[#F4F1EA]/25 md:to-[#F4F1EA]/5" />
         <div className="absolute inset-0 bg-[#F4F1EA]/35 md:bg-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F4F1EA] to-transparent" />
-      </div>
-
-      <div className="absolute inset-0 z-[1]" data-testid="hero-3d-scene">
-        <HeroScene light={mobile} />
       </div>
 
       <div className="absolute top-20 sm:top-24 left-5 sm:left-6 md:left-10 z-10 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] text-[#8B7F82]">No. 001 / SS26</div>

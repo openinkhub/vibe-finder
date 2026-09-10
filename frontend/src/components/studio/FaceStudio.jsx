@@ -20,12 +20,23 @@ const FaceStudio = () => {
   const streamRef = useRef(null);
   const landmarksRef = useRef(null);
   const lookRef = useRef(null);
-  const { load, status } = useFaceLandmarker();
+  const { load, detectImage, fallbackToCpu, status, progress } = useFaceLandmarker();
+  const sectionRef = useRef(null);
   const [source, setSource] = useState(null);
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
   const [look, setLook] = useState({ ...studioLooks[2], intensity: 0.8, liner: true, gloss: true });
   lookRef.current = look;
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { load(); io.disconnect(); }
+    }, { rootMargin: "600px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [load]);
 
   const stopCamera = useCallback(() => {
     cancelAnimationFrame(rafRef.current);
@@ -49,33 +60,40 @@ const FaceStudio = () => {
     stopCamera();
     setBusy(true);
     setMsg("Loading face engine…");
-    const lm = await load();
-    if (!lm) { setMsg("Face engine failed to load. Please retry."); setBusy(false); return; }
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = async () => {
+    try {
+      const img = await new Promise((res, rej) => {
+        const i = new Image();
+        i.crossOrigin = "anonymous";
+        i.onload = () => res(i);
+        i.onerror = () => rej(new Error("Couldn't read that image."));
+        i.src = src;
+      });
       const s = Math.min(1, MAX_DIM / Math.max(img.naturalWidth, img.naturalHeight));
       const c = canvasRef.current;
       c.width = Math.round(img.naturalWidth * s);
       c.height = Math.round(img.naturalHeight * s);
       imgRef.current = img;
-      await lm.setOptions({ runningMode: "IMAGE" });
-      const res = lm.detect(img);
+      landmarksRef.current = null;
+      setSource({ type: "image" });
+      setMsg("Mapping your face…");
+      const res = await detectImage(img);
       landmarksRef.current = res.faceLandmarks?.[0] || null;
       setMsg(landmarksRef.current ? "Face mapped · 478 points — pick a look" : "No face found — try a clear, front-facing photo");
-      setSource({ type: "image" });
+      setSource({ type: "image", t: Date.now() });
+    } catch (e) {
+      console.error(e);
+      setMsg(e?.message?.includes("image") ? e.message : "Face engine couldn't start in this browser — please retry or try another browser.");
+    } finally {
       setBusy(false);
-    };
-    img.onerror = () => { setMsg("Couldn't read that image."); setBusy(false); };
-    img.src = src;
+    }
   };
 
   const startCamera = async () => {
     stopCamera();
     setBusy(true);
     setMsg("Loading face engine…");
-    const lm = await load();
-    if (!lm) { setMsg("Face engine failed to load."); setBusy(false); return; }
+    let lm = await load();
+    if (!lm) { setMsg("Face engine failed to load. Please retry."); setBusy(false); return; }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 960 }, height: { ideal: 1280 } }, audio: false });
       streamRef.current = stream;
@@ -87,7 +105,8 @@ const FaceStudio = () => {
       setMsg("Live · move closer and face the light");
       setBusy(false);
       const c = canvasRef.current;
-      const tick = () => {
+      let failed = 0;
+      const tick = async () => {
         if (v.readyState >= 2) {
           if (c.width !== v.videoWidth) { c.width = v.videoWidth; c.height = v.videoHeight; }
           const ctx = c.getContext("2d");
@@ -95,8 +114,19 @@ const FaceStudio = () => {
           ctx.translate(c.width, 0);
           ctx.scale(-1, 1);
           ctx.drawImage(v, 0, 0, c.width, c.height);
-          const res = lm.detectForVideo(v, performance.now());
-          if (res.faceLandmarks?.[0]) paintMakeup(ctx, res.faceLandmarks[0], c.width, c.height, lookRef.current);
+          try {
+            const res = lm.detectForVideo(v, performance.now());
+            if (res.faceLandmarks?.[0]) paintMakeup(ctx, res.faceLandmarks[0], c.width, c.height, lookRef.current);
+          } catch (e) {
+            ctx.restore();
+            if (failed++ === 0) {
+              const cpu = await fallbackToCpu().catch(() => null);
+              if (cpu) { lm = cpu; await lm.setOptions({ runningMode: "VIDEO" }); }
+            }
+            if (failed > 3 || !streamRef.current) { setMsg("Face tracking stopped — try uploading a photo."); return; }
+            rafRef.current = requestAnimationFrame(tick);
+            return;
+          }
           ctx.restore();
         }
         rafRef.current = requestAnimationFrame(tick);
@@ -131,7 +161,7 @@ const FaceStudio = () => {
   const btn = "inline-flex items-center justify-center gap-2 rounded-full text-sm font-medium transition-all duration-300 disabled:opacity-50";
 
   return (
-    <section id="studio" className="relative bg-[#EBE6DB] py-20 md:py-32 scroll-mt-20 overflow-hidden" data-testid="face-studio-section">
+    <section id="studio" ref={sectionRef} className="relative bg-[#EBE6DB] py-20 md:py-32 scroll-mt-20 overflow-hidden" data-testid="face-studio-section">
       <div className="absolute -top-24 -left-24 w-[320px] h-[320px] rounded-full bg-[#E62E6B]/15 blur-3xl" />
       <div className="relative max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal className="max-w-2xl">
@@ -163,7 +193,8 @@ const FaceStudio = () => {
                 {busy && (
                   <div className="absolute inset-0 bg-white/70 backdrop-blur-sm flex flex-col items-center justify-center gap-3 text-[#E62E6B]" data-testid="studio-loading">
                     <Loader2 size={34} className="animate-spin" />
-                    <span className="font-mono text-[11px] tracking-[0.2em] uppercase">{msg || "Preparing…"}</span>
+                    <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-center px-6">{progress || msg || "Preparing…"}</span>
+                    <span className="font-mono text-[10px] text-[#8B7F82]">First load downloads a 15 MB on-device engine</span>
                   </div>
                 )}
                 {source && !busy && (
@@ -182,7 +213,7 @@ const FaceStudio = () => {
                 {source && <button onClick={reset} className={`${btn} w-10 h-10 border border-[#F1DCE3] text-[#8B7F82] hover:text-[#E62E6B]`} aria-label="Reset" data-testid="studio-reset-btn"><RotateCcw size={15} /></button>}
                 <input ref={fileRef} type="file" accept="image/*" onChange={onFile} className="hidden" data-testid="studio-file-input" />
               </div>
-              <p className="mt-3 font-mono text-[10px] tracking-[0.12em] uppercase text-[#8B7F82] min-h-[14px]" data-testid="studio-status">{!busy && (msg || (status === "ready" ? "Engine ready" : "Runs on-device · nothing is uploaded"))}</p>
+              <p className="mt-3 font-mono text-[10px] tracking-[0.12em] uppercase text-[#8B7F82] min-h-[14px]" data-testid="studio-status">{!busy && (msg || (status === "ready" ? "Engine ready · runs on-device, nothing is uploaded" : status === "loading" ? `${progress || "Preparing face engine…"}` : status === "error" ? "Face engine unavailable in this browser" : "Runs on-device · nothing is uploaded"))}</p>
             </div>
           </Reveal>
 

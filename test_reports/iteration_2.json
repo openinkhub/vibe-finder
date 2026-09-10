@@ -1,0 +1,28 @@
+{
+  "summary": "Frontend-only retest focused on the Try-On loading-spinner bug fix and removal of floating 3D objects. All targeted flows pass: MediaPipe engine preloads on scroll to studio ('Starting GPU face model…' status), studio-sample-btn clears the loading overlay in ~2s with status 'Face mapped · 478 points — pick a look' and studio-canvas renders (626x751). Look presets change canvas pixels (look-bridal-classic toDataURL differs from look-soft-nude). Reset + repeat sample click works (no stuck spinner, cleared in <1s on 2nd run). Upload flow via studio-file-input clears spinner and maps face. Camera flow (with permissions granted) clears spinner in 1s and shows 'Live · move closer and face the light'. Floating 3D objects fully removed: hero-section/about-section/process-section/academy-section/loyalty-section contain 0 canvases, hero-3d-scene testid absent, while lipstick-viewer-wrap still renders 1 canvas. No horizontal overflow on desktop (1920) or mobile (390). No uncaught console errors (MediaPipe emits an INFO log via console.error which is benign).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Contact form", "issues": ["Event date input still uses native <input type=date> (mm/dd/yyyy) instead of the shadcn Calendar/DatePicker — carried over from iteration_1", "Contact form inputs (name/email/phone/message) lack data-testid attributes (contact-name/email/phone/submit/success were used in iteration_1 report but not present in DOM; only the section itself is discoverable). Recommend adding data-testid to each field for regression testability."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "(Optional) Add data-testid=contact-name/contact-email/contact-phone/contact-message/contact-submit/contact-success to Contact.jsx form fields for reliable e2e testing",
+    "(Carry-over) Replace native date input with shadcn DatePicker in Contact.jsx"
+  ],
+  "critical_code_review_comments": [
+    "useFaceLandmarker.js correctly implements GPU->CPU fallback with timeout and try/catch/finally so the spinner always clears — verified in-browser (RUN1 sample cleared in 2s including full engine init).",
+    "FaceStudio.jsx IntersectionObserver preload is effective: engine status transitions before user interaction (observed 'Starting GPU face model…' immediately on scroll).",
+    "MediaPipe wasm logs 'INFO: Created TensorFlow Lite XNNPACK delegate for CPU.' via console.error — cosmetic only, but consider filtering or informing QA that it is not a real error."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "100%"},
+  "seed_data_creation": "None.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Bug fix verified: try-on loading spinner reliably clears (2s cold, <1s warm) via preload + GPU->CPU fallback. Canvas pixels change per look preset. 3D objects fully removed from hero/about/process/academy/loyalty; lipstick 3D viewer preserved. Contact form data-testids used in iteration_1 do NOT exist in current DOM — verify with role/placeholder selectors instead if retesting contact submission.",
+  "rca of the issue": "Previous stuck-spinner bug was due to MediaPipe GPU init/detect throwing without releasing loading state. Fix (verified working): loader wraps GPU create in a 15s timeout, catches detect() failures and retries on CPU, and uses try/catch/finally in FaceStudio load handlers so studio-loading is always cleared and studio-status reflects a terminal message."
+}

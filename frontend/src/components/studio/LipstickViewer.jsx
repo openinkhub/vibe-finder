@@ -1,19 +1,17 @@
 import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, ContactShadows, Float } from "@react-three/drei";
+import { OrbitControls, ContactShadows } from "@react-three/drei";
 
 const Glossy = (p) => <meshPhysicalMaterial roughness={0.18} metalness={0.35} clearcoat={1} clearcoatRoughness={0.08} {...p} />;
 
 const Lipstick = ({ shade, caseColor }) => (
-  <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.4}>
-    <group position={[0, -0.4, 0]}>
+  <group position={[0, -0.4, 0]}>
       <mesh position={[0, -1.1, 0]}><cylinderGeometry args={[0.5, 0.5, 2.2, 64]} /><Glossy color={caseColor} metalness={0.6} /></mesh>
       <mesh position={[0, 0.02, 0]}><cylinderGeometry args={[0.53, 0.53, 0.12, 64]} /><Glossy color="#E3B47A" metalness={0.95} roughness={0.12} /></mesh>
       <mesh position={[0, 0.5, 0]}><cylinderGeometry args={[0.4, 0.4, 0.9, 64]} /><Glossy color="#E3B47A" metalness={0.9} roughness={0.15} /></mesh>
       <mesh position={[0, 1.45, 0]}><cylinderGeometry args={[0.33, 0.33, 1.0, 64]} /><Glossy color={shade} roughness={0.32} metalness={0.05} /></mesh>
       <mesh position={[0, 2.2, 0]}><cylinderGeometry args={[0.04, 0.33, 0.5, 64]} /><Glossy color={shade} roughness={0.32} metalness={0.05} /></mesh>
-    </group>
-  </Float>
+  </group>
 );
 
 export const LipstickViewer = ({ shade = "#E62E6B", caseColor = "#6E2C3C" }) => (

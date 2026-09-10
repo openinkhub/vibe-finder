@@ -25,6 +25,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 - [x] 3D hero scene, scroll-driven 3D objects (About/Process/Academy/Loyalty, desktop only), TiltCard on all cards, 3D entrance reveals.
 - [x] Virtual Try-On face-scan studio (camera / upload / sample model), 5 signature looks, swatches, intensity, liner/gloss toggles, PNG download, 3D lipstick viewer.
 - [x] Mobile-first pass (no horizontal overflow at 390px). Tested via testing agent (iteration_1, 95% pass; minor fixes applied).
+- [x] 2026-06 fix: Try-On stuck spinner — robust loader (GPU 15s timeout → CPU fallback, detect retry, try/finally), engine preload on scroll, progress text. Floating 3D objects removed per user (HeroScene/ScrollObject deleted); tilt cards + lipstick viewer kept. iteration_2: 100% pass.
+- User confirmed backlog suggestions OK but said "start after my confirmation" — WAIT for explicit go-ahead before starting backend/share/admin/compare items.
 
 ## Backlog
 - P0: Backend — enquiries API (MongoDB) + wire Contact form; portfolio/services from API.

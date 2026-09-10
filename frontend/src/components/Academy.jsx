@@ -1,18 +1,12 @@
-import React, { useRef } from "react";
-import { useScroll } from "framer-motion";
+import React from "react";
 import { academyTracks, academyImage } from "../mock/mock";
 import { scrollToId } from "./Navbar";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
-import { ScrollObject } from "./fx/ScrollObject";
 
 const Academy = () => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-
   return (
-    <section id="academy" ref={ref} className="relative bg-[#EBE6DB] py-20 md:py-32 scroll-mt-20 overflow-hidden" data-testid="academy-section">
-      <ScrollObject variant="compact" progress={scrollYProgress} className="hidden lg:block absolute bottom-0 left-[38%] w-[260px] h-[260px]" />
+    <section id="academy" className="relative bg-[#EBE6DB] py-20 md:py-32 scroll-mt-20 overflow-hidden" data-testid="academy-section">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         <Reveal>
           <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Makeup Academy</span>
