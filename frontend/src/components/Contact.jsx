@@ -1,21 +1,41 @@
-import React, { useState } from "react";
-import { Phone, MapPin, Instagram, MessageCircle, Check } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Phone, MapPin, Instagram, MessageCircle, Check, Loader2, Sparkles, X } from "lucide-react";
 import { brand } from "../mock/mock";
+import { api, errorText } from "../lib/api";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "", service: "Bridal", date: "", message: "" });
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+  const [sending, setSending] = useState(false);
+  const [look, setLook] = useState(() => sessionStorage.getItem("rk_selected_look") || "");
   const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-  const submit = (e) => {
+
+  useEffect(() => {
+    const sync = () => setLook(sessionStorage.getItem("rk_selected_look") || "");
+    window.addEventListener("focus", sync);
+    const id = setInterval(sync, 1500);
+    return () => { window.removeEventListener("focus", sync); clearInterval(id); };
+  }, []);
+
+  const submit = async (e) => {
     e.preventDefault();
-    const prev = JSON.parse(localStorage.getItem("rk_enquiries") || "[]");
-    prev.push({ ...form, at: new Date().toISOString() });
-    localStorage.setItem("rk_enquiries", JSON.stringify(prev));
-    setSent(true);
-    setForm({ name: "", email: "", phone: "", service: "Bridal", date: "", message: "" });
-    setTimeout(() => setSent(false), 6000);
+    setError("");
+    setSending(true);
+    try {
+      await api.post("/enquiries", { ...form, email: form.email || null, date: form.date || null, message: form.message || null, look: look || null });
+      setSent(true);
+      setForm({ name: "", email: "", phone: "", service: "Bridal", date: "", message: "" });
+      sessionStorage.removeItem("rk_selected_look");
+      setLook("");
+      setTimeout(() => setSent(false), 8000);
+    } catch (err) {
+      setError(errorText(err, "Couldn't send your enquiry — please try again or WhatsApp us."));
+    } finally {
+      setSending(false);
+    }
   };
 
   const inputCls = "w-full px-4 py-3 rounded-xl border border-[#F1DCE3] bg-[#FBFAF7] text-[#4A2530] text-base focus:outline-none focus:border-[#E62E6B] focus:ring-2 focus:ring-[#E62E6B]/15 transition-all";
@@ -54,6 +74,13 @@ const Contact = () => {
         <Reveal delay={0.15}>
           <TiltCard max={3} lift={false} glare={false} className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-[#F1DCE3] shadow-[0_30px_80px_-40px_rgba(230,46,107,0.45)]">
             {sent && <div className="mb-5 flex items-center gap-2 bg-[#EAF7EF] text-[#1c7a45] px-4 py-3 rounded-xl text-sm" data-testid="contact-success"><Check size={16} /> Thank you! Your enquiry has been received. We'll reach out shortly.</div>}
+            {error && <div className="mb-5 flex items-center gap-2 bg-[#FBE9F0] text-[#C81F57] px-4 py-3 rounded-xl text-sm" data-testid="contact-error"><X size={16} /> {error}</div>}
+            {look && (
+              <div className="mb-5 flex items-center justify-between gap-2 bg-[#FBE9F0] text-[#4A2530] px-4 py-3 rounded-xl text-sm" data-testid="contact-look-chip">
+                <span className="flex items-center gap-2"><Sparkles size={15} className="text-[#E62E6B]" /> Booking look: <span className="font-semibold">{look}</span></span>
+                <button type="button" onClick={() => { sessionStorage.removeItem("rk_selected_look"); setLook(""); }} className="text-[#8B7F82] hover:text-[#E62E6B]" aria-label="Remove look" data-testid="contact-look-remove"><X size={15} /></button>
+              </div>
+            )}
             <form onSubmit={submit} className="space-y-5" data-testid="contact-form">
               <div className="grid sm:grid-cols-2 gap-5">
                 <div><label className="block text-sm text-[#5C4E52] mb-2">Name</label><input name="name" value={form.name} onChange={handle} required placeholder="Full name" className={inputCls} data-testid="contact-name-input" /></div>
@@ -69,7 +96,7 @@ const Contact = () => {
               </div>
               <div><label className="block text-sm text-[#5C4E52] mb-2">Event date</label><input type="date" name="date" value={form.date} onChange={handle} className={inputCls} data-testid="contact-date-input" /></div>
               <div><label className="block text-sm text-[#5C4E52] mb-2">Message</label><textarea name="message" value={form.message} onChange={handle} rows={4} placeholder="Tell us about your event & vision..." className={`${inputCls} resize-none`} data-testid="contact-message-input" /></div>
-              <button type="submit" className="w-full py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-xl shadow-[#E62E6B]/30" data-testid="contact-submit-btn">Send Enquiry</button>
+              <button type="submit" disabled={sending} className="w-full py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-xl shadow-[#E62E6B]/30 disabled:opacity-60 inline-flex items-center justify-center gap-2" data-testid="contact-submit-btn">{sending && <Loader2 size={16} className="animate-spin" />} {sending ? "Sending…" : "Send Enquiry"}</button>
             </form>
           </TiltCard>
         </Reveal>

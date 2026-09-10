@@ -3,32 +3,34 @@
 ## Original problem statement
 Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfolio (14 sections, Playfair Display + IBM Plex Mono, user video as hero background). Frontend mock first, backend later.
 
-## Latest user request (June 2026)
-- Remove ALL black/dark colours from every section, block, card → sections cream/blush, buttons/accents pink **#E62E6B** (colour of the word "flawless").
-- Uploaded logo in header + footer, linking to https://rekhakrishnamurthy.com/ (same tab).
-- 3D motion everywhere: 3D hero objects (WebGL/Three.js), scroll-driven 3D objects, tilt/depth/glare hover on every card.
-- 3D product viewer/configurator + AR-style preview → user chose **"Scan your face and select makeup view"** → new dedicated section after Services.
-- Full 3D on desktop, lighter on mobile. Mobile-first, optimised.
+## User requests (June 2026)
+- Remove ALL black/dark colours → cream/blush sections, pink **#E62E6B** buttons/accents.
+- Uploaded logo in header + footer → https://rekhakrishnamurthy.com/ (same tab).
+- 3D motion: tilt/glare cards, 3D reveals, 3D lipstick product viewer. **Floating 3D objects removed on user request.**
+- Virtual Try-On ("scan your face, select makeup view"): instant overlay + **Generate AI look** (photoreal, makeup only) + Before/After slider.
+- Mobile-first, full 3D desktop / lighter mobile.
+- Approved backlog: Enquiry backend, Share look on WhatsApp, Admin enquiries, Before/After compare — ALL DONE.
 
 ## Architecture
-- React 19 + Tailwind + framer-motion 11; `@react-three/fiber` 9, `@react-three/drei` 10, `three` 0.186; `@mediapipe/tasks-vision` (wasm + model served locally from `/public/mediapipe/`).
-- FastAPI + MongoDB backend: template only (`/api/status`). Data still 100% MOCKED in `src/mock/mock.js`; contact form → localStorage.
+- Frontend: React 19, Tailwind, framer-motion, react-router (`/` landing, `/admin`), @react-three/fiber + drei (lipstick viewer only), @mediapipe/tasks-vision (wasm + model served from `/public/mediapipe/`), sonner toasts, axios (`src/lib/api.js`, Bearer token in localStorage `rk_admin_token`).
+- Backend: FastAPI + Motor. `server.py` (routers), `auth.py` (JWT, bcrypt, seeded admin, brute-force lockout), `enquiries.py` (CRUD + stats, uuid ids), `studio.py` (Gemini `gemini-3.1-flash-image-preview` image edit via emergentintegrations + EMERGENT_LLM_KEY).
+- Mongo collections: `users`, `enquiries`, `login_attempts`.
+- Landing content (services/pricing/portfolio/testimonials/FAQ) still from `src/mock/mock.js` (MOCKED).
 
 ### Key files
-- `src/components/*.jsx` — 14 sections (all pink/cream palette, `Reveal` 3D entrance + `TiltCard` hover).
-- `src/components/fx/` — `TiltCard`, `Reveal`, `HeroScene` (R3F hero), `ScrollObject` (scroll-driven R3F object: ring/brush/compact/gem).
-- `src/components/studio/` — `FaceStudio` (section id=`studio`), `useFaceLandmarker`, `makeupPainter` (lips/blush/eyeshadow/liner/gloss on canvas), `StudioControls`, `LipstickViewer` (OrbitControls product viewer).
-- `public/logo.png`, `public/sample-face.jpg`, `public/mediapipe/{wasm, face_landmarker.task}`, hero video assets.
+- `src/components/*.jsx` sections; `src/components/fx/{TiltCard,Reveal}.jsx`
+- `src/components/studio/` — FaceStudio (logic), StudioStage (canvas/compare/AI image), StudioControls, makeupPainter, useFaceLandmarker (GPU→CPU fallback, timeouts), LipstickViewer
+- `src/pages/Admin.jsx`, `src/components/Contact.jsx` (POST /api/enquiries + look chip)
+- `backend/.env`: MONGO_URL, DB_NAME, CORS_ORIGINS, EMERGENT_LLM_KEY, JWT_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD
+- Credentials: `/app/memory/test_credentials.md`
 
-## Implemented (2026-06)
-- [x] Black removed everywhere; pink/cream/blush palette; logo in header/footer.
-- [x] 3D hero scene, scroll-driven 3D objects (About/Process/Academy/Loyalty, desktop only), TiltCard on all cards, 3D entrance reveals.
-- [x] Virtual Try-On face-scan studio (camera / upload / sample model), 5 signature looks, swatches, intensity, liner/gloss toggles, PNG download, 3D lipstick viewer.
-- [x] Mobile-first pass (no horizontal overflow at 390px). Tested via testing agent (iteration_1, 95% pass; minor fixes applied).
-- [x] 2026-06 fix: Try-On stuck spinner — robust loader (GPU 15s timeout → CPU fallback, detect retry, try/finally), engine preload on scroll, progress text. Floating 3D objects removed per user (HeroScene/ScrollObject deleted); tilt cards + lipstick viewer kept. iteration_2: 100% pass.
-- User confirmed backlog suggestions OK but said "start after my confirmation" — WAIT for explicit go-ahead before starting backend/share/admin/compare items.
+## Implemented log
+- 2026-06 a: palette/logo/3D/try-on MVP (iteration_1 95%).
+- 2026-06 b: try-on spinner fix, floating objects removed (iteration_2 100%).
+- 2026-06 c: stronger overlay + Before/After slider, AI look generation (~10–25 s), Share (Web Share → download + WhatsApp), enquiries API + Contact wiring + "Book this look", Admin dashboard (/admin) with JWT (iteration_3: backend 15/16 → base64 400 fixed after; frontend all pass).
 
 ## Backlog
-- P0: Backend — enquiries API (MongoDB) + wire Contact form; portfolio/services from API.
-- P1: Admin panel for enquiries.
-- P2: Save/share try-on looks; WhatsApp share of look image.
+- P1: Replace landing mock content with backend-managed content (services/pricing/portfolio) + admin editing.
+- P1: Email/WhatsApp notification to Rekha on new enquiry (Resend / Twilio).
+- P2: Gallery of generated AI looks per session; save looks to enquiry.
+- P2: shadcn DatePicker for event date (currently native input — fine on mobile).

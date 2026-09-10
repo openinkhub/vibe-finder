@@ -1,15 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Camera, Upload, Sparkles, Download, RotateCcw, ScanFace, Loader2 } from "lucide-react";
-import { studioLooks, sampleFace } from "../../mock/mock";
+import { Camera, Upload, Sparkles, Download, RotateCcw, Wand2, Share2, SlidersHorizontal, Layers } from "lucide-react";
+import { toast } from "sonner";
+import { studioLooks, sampleFace, brand } from "../../mock/mock";
+import { api, errorText } from "../../lib/api";
 import { useFaceLandmarker } from "./useFaceLandmarker";
 import { paintMakeup } from "./makeupPainter";
 import { StudioControls } from "./StudioControls";
+import { StudioStage } from "./StudioStage";
 import { LipstickViewer } from "./LipstickViewer";
 import { Reveal } from "../fx/Reveal";
 import { TiltCard } from "../fx/TiltCard";
 import { scrollToId } from "../Navbar";
 
 const MAX_DIM = 1000;
+const AI_DIM = 768;
+const DEFAULT_LOOK = { ...studioLooks[0], intensity: 0.9, liner: true, gloss: true };
 
 const FaceStudio = () => {
   const canvasRef = useRef(null);
@@ -20,12 +25,17 @@ const FaceStudio = () => {
   const streamRef = useRef(null);
   const landmarksRef = useRef(null);
   const lookRef = useRef(null);
-  const { load, detectImage, fallbackToCpu, status, progress } = useFaceLandmarker();
   const sectionRef = useRef(null);
+  const { load, detectImage, fallbackToCpu, status, progress } = useFaceLandmarker();
   const [source, setSource] = useState(null);
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
-  const [look, setLook] = useState({ ...studioLooks[2], intensity: 0.8, liner: true, gloss: true });
+  const [generating, setGenerating] = useState(false);
+  const [aiImage, setAiImage] = useState(null);
+  const [view, setView] = useState("overlay");
+  const [compare, setCompare] = useState(null);
+  const [beforeUrl, setBeforeUrl] = useState(null);
+  const [look, setLook] = useState(DEFAULT_LOOK);
   lookRef.current = look;
 
   useEffect(() => {
@@ -55,10 +65,14 @@ const FaceStudio = () => {
 
   useEffect(() => { if (source?.type === "image") renderImage(); }, [look, source, renderImage]);
   useEffect(() => () => stopCamera(), [stopCamera]);
+  useEffect(() => { setAiImage(null); setView("overlay"); }, [look.name, look.lips, look.blush, look.eyes, look.liner, look.gloss]);
 
   const loadImage = async (src) => {
     stopCamera();
     setBusy(true);
+    setAiImage(null);
+    setView("overlay");
+    setCompare(null);
     setMsg("Loading face engine…");
     try {
       const img = await new Promise((res, rej) => {
@@ -78,8 +92,13 @@ const FaceStudio = () => {
       setMsg("Mapping your face…");
       const res = await detectImage(img);
       landmarksRef.current = res.faceLandmarks?.[0] || null;
-      setMsg(landmarksRef.current ? "Face mapped · 478 points — pick a look" : "No face found — try a clear, front-facing photo");
       setSource({ type: "image", t: Date.now() });
+      const before = document.createElement("canvas");
+      before.width = c.width; before.height = c.height;
+      before.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      setBeforeUrl(before.toDataURL("image/jpeg", 0.9));
+      if (landmarksRef.current) { setCompare(0.5); setMsg("Face mapped · 478 points — drag the slider to compare, or generate the AI look"); }
+      else setMsg("No face found — try a clear, front-facing photo");
     } catch (e) {
       console.error(e);
       setMsg(e?.message?.includes("image") ? e.message : "Face engine couldn't start in this browser — please retry or try another browser.");
@@ -91,6 +110,9 @@ const FaceStudio = () => {
   const startCamera = async () => {
     stopCamera();
     setBusy(true);
+    setAiImage(null);
+    setView("overlay");
+    setCompare(null);
     setMsg("Loading face engine…");
     let lm = await load();
     if (!lm) { setMsg("Face engine failed to load. Please retry."); setBusy(false); return; }
@@ -102,7 +124,7 @@ const FaceStudio = () => {
       await v.play();
       await lm.setOptions({ runningMode: "VIDEO" });
       setSource({ type: "video" });
-      setMsg("Live · move closer and face the light");
+      setMsg("Live · move closer and face the light · tap Generate AI look for a photoreal snapshot");
       setBusy(false);
       const c = canvasRef.current;
       let failed = 0;
@@ -138,77 +160,125 @@ const FaceStudio = () => {
     }
   };
 
+  const snapshotFromVideo = () => {
+    const v = videoRef.current, c = document.createElement("canvas");
+    c.width = v.videoWidth; c.height = v.videoHeight;
+    const ctx = c.getContext("2d");
+    ctx.translate(c.width, 0); ctx.scale(-1, 1);
+    ctx.drawImage(v, 0, 0, c.width, c.height);
+    return c.toDataURL("image/jpeg", 0.92);
+  };
+
+  const generateAI = async () => {
+    if (!source) return;
+    if (source.type === "video") {
+      const snap = snapshotFromVideo();
+      await loadImage(snap);
+    }
+    const img = imgRef.current;
+    if (!img) return;
+    setGenerating(true);
+    try {
+      const s = Math.min(1, AI_DIM / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      const { data } = await api.post("/studio/generate", { image: c.toDataURL("image/jpeg", 0.88), look: { name: look.name, lips: look.lips, blush: look.blush, eyes: look.eyes, intensity: look.intensity, liner: look.liner, gloss: look.gloss } }, { timeout: 120000 });
+      setAiImage(data.image);
+      setView("ai");
+      setCompare(0.5);
+      setMsg("AI look ready — drag to compare with the original");
+      toast.success("Your photoreal look is ready");
+    } catch (e) {
+      const t = errorText(e, "AI generation failed — please try again");
+      setMsg(t);
+      toast.error(t);
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   const onFile = (e) => {
     const f = e.target.files?.[0];
     if (f) loadImage(URL.createObjectURL(f));
     e.target.value = "";
   };
 
-  const download = () => {
-    canvasRef.current.toBlob((b) => {
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(b);
-      a.download = `rekha-look-${look.name.toLowerCase().replace(/\s+/g, "-")}.png`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    }, "image/png");
+  const currentBlob = () => new Promise((res) => {
+    if (view === "ai" && aiImage) fetch(aiImage).then((r) => r.blob()).then(res);
+    else canvasRef.current.toBlob(res, "image/png");
+  });
+  const fileName = () => `rekha-${view === "ai" ? "ai-" : ""}look-${look.name.toLowerCase().replace(/\s+/g, "-")}.png`;
+
+  const download = async () => {
+    const b = await currentBlob();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(b);
+    a.download = fileName();
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   };
 
-  const reset = () => { stopCamera(); setSource(null); landmarksRef.current = null; setMsg(""); setLook({ ...studioLooks[2], intensity: 0.8, liner: true, gloss: true }); };
+  const share = async () => {
+    const b = await currentBlob();
+    const file = new File([b], fileName(), { type: b.type || "image/png" });
+    const text = `Hi Rekha! I tried the "${look.name}" look in your virtual studio and I'd love to book it.`;
+    if (navigator.canShare?.({ files: [file] })) {
+      try { await navigator.share({ files: [file], text, title: "My Rekha Krishnamurthy look" }); return; } catch (e) { if (e?.name === "AbortError") return; }
+    }
+    await download();
+    window.open(`https://api.whatsapp.com/send?phone=${brand.whatsapp.replace(/[^0-9]/g, "")}&text=${encodeURIComponent(text + " (photo attached)")}`, "_blank", "noopener");
+    toast("Image saved — attach it in the WhatsApp chat that just opened");
+  };
+
+  const bookLook = () => { sessionStorage.setItem("rk_selected_look", look.name); scrollToId("contact"); };
+  const reset = () => { stopCamera(); setSource(null); landmarksRef.current = null; setMsg(""); setAiImage(null); setView("overlay"); setCompare(null); setBeforeUrl(null); setLook(DEFAULT_LOOK); };
 
   const btn = "inline-flex items-center justify-center gap-2 rounded-full text-sm font-medium transition-all duration-300 disabled:opacity-50";
+  const canCompare = source?.type === "image" && !!landmarksRef.current;
 
   return (
     <section id="studio" ref={sectionRef} className="relative bg-[#EBE6DB] py-20 md:py-32 scroll-mt-20 overflow-hidden" data-testid="face-studio-section">
       <div className="absolute -top-24 -left-24 w-[320px] h-[320px] rounded-full bg-[#E62E6B]/15 blur-3xl" />
       <div className="relative max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal className="max-w-2xl">
-          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Virtual try-on · AR face scan</span>
+          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Virtual try-on · AR face scan · AI look</span>
           <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mt-4 sm:mt-5">Scan your face, <span className="italic text-[#E62E6B]">try the look</span> before the trial</h2>
-          <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">Your camera maps 478 facial points in real time. Swap lip, blush and eye shades, dial the intensity, and inspect the bullet in 3D — then book the real thing.</p>
+          <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">Your camera maps 478 facial points and paints the look instantly. Then tap <span className="font-semibold text-[#4A2530]">Generate AI look</span> for a photoreal re-render, drag to compare before / after, and share it straight to Rekha.</p>
         </Reveal>
 
         <div className="mt-10 md:mt-14 grid lg:grid-cols-[1.1fr_0.9fr] gap-6 lg:gap-10 items-start">
           <Reveal delay={0.1} className="min-w-0">
             <div className="bg-white rounded-[28px] p-3 sm:p-4 border border-[#F1DCE3] shadow-[0_30px_80px_-40px_rgba(230,46,107,0.45)]">
-              <div className="relative rounded-2xl overflow-hidden bg-[#FBE9F0] min-h-[380px] sm:min-h-[460px] flex items-center justify-center" data-testid="studio-stage">
-                <video ref={videoRef} playsInline muted className="hidden" />
-                <canvas ref={canvasRef} className={`w-full max-w-full h-auto max-h-[70vh] object-contain block ${source ? "" : "hidden"}`} data-testid="studio-canvas" />
-                {!source && (
-                  <div className="text-center px-6 py-10">
-                    <div className="mx-auto w-20 h-20 rounded-full bg-white flex items-center justify-center text-[#E62E6B] shadow-lg shadow-[#E62E6B]/20 animate-pulse">
-                      <ScanFace size={36} />
-                    </div>
-                    <h3 className="font-display text-xl sm:text-2xl text-[#4A2530] mt-5">Start your face scan</h3>
-                    <p className="text-sm text-[#5C4E52] mt-2 max-w-xs mx-auto">Use your camera, upload a selfie, or try it on our model first.</p>
-                    <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-                      <button onClick={startCamera} disabled={busy} className={`${btn} px-6 py-3 bg-[#E62E6B] text-white hover:bg-[#C81F57] shadow-lg shadow-[#E62E6B]/30`} data-testid="studio-camera-btn"><Camera size={17} /> Use camera</button>
-                      <button onClick={() => fileRef.current.click()} disabled={busy} className={`${btn} px-6 py-3 bg-white text-[#4A2530] border border-[#F1DCE3] hover:border-[#E62E6B]`} data-testid="studio-upload-btn"><Upload size={17} /> Upload selfie</button>
-                      <button onClick={() => loadImage(sampleFace)} disabled={busy} className={`${btn} px-6 py-3 bg-[#F4B7CE] text-[#4A2530] hover:bg-[#E62E6B] hover:text-white`} data-testid="studio-sample-btn"><Sparkles size={17} /> Try on model</button>
-                    </div>
-                  </div>
-                )}
-                {busy && (
-                  <div className="absolute inset-0 bg-white/70 backdrop-blur-sm flex flex-col items-center justify-center gap-3 text-[#E62E6B]" data-testid="studio-loading">
-                    <Loader2 size={34} className="animate-spin" />
-                    <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-center px-6">{progress || msg || "Preparing…"}</span>
-                    <span className="font-mono text-[10px] text-[#8B7F82]">First load downloads a 15 MB on-device engine</span>
-                  </div>
-                )}
-                {source && !busy && (
-                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-                    <span className="font-mono text-[10px] tracking-[0.15em] uppercase text-white bg-[#E62E6B]/90 backdrop-blur px-3 py-1.5 rounded-full">{source.type === "video" ? "● Live" : "Photo"} · {look.name}</span>
-                  </div>
-                )}
-              </div>
+              <StudioStage
+                canvasRef={canvasRef} videoRef={videoRef} source={source} busy={busy} generating={generating} progress={progress} msg={msg}
+                look={look} view={view} aiImage={aiImage} beforeUrl={beforeUrl} compare={compare} setCompare={setCompare}
+                onCamera={startCamera} onUpload={() => fileRef.current.click()} onSample={() => loadImage(sampleFace)}
+              />
 
-              <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-2">
-                <button onClick={startCamera} disabled={busy} className={`${btn} px-4 py-2.5 bg-[#E62E6B] text-white hover:bg-[#C81F57]`} data-testid="studio-camera-btn-2"><Camera size={15} /> Camera</button>
+              {source && !busy && (
+                <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-2">
+                  <button onClick={generateAI} disabled={generating} className={`${btn} px-5 py-2.5 bg-[#E62E6B] text-white hover:bg-[#C81F57] shadow-lg shadow-[#E62E6B]/30`} data-testid="studio-generate-ai-btn"><Wand2 size={15} /> {aiImage ? "Regenerate AI look" : "Generate AI look"}</button>
+                  {aiImage && (
+                    <div className="inline-flex rounded-full border border-[#F1DCE3] p-1 bg-[#FBFAF7]" data-testid="studio-view-toggle">
+                      <button onClick={() => setView("overlay")} className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1 ${view === "overlay" ? "bg-[#4A2530] text-white" : "text-[#5C4E52]"}`} data-testid="studio-view-overlay"><Layers size={13} /> Instant</button>
+                      <button onClick={() => setView("ai")} className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1 ${view === "ai" ? "bg-[#E62E6B] text-white" : "text-[#5C4E52]"}`} data-testid="studio-view-ai"><Wand2 size={13} /> AI look</button>
+                    </div>
+                  )}
+                  {canCompare && (
+                    <button onClick={() => setCompare(compare == null ? 0.5 : null)} className={`${btn} px-4 py-2.5 border ${compare != null ? "border-[#E62E6B] text-[#E62E6B]" : "border-[#F1DCE3] text-[#4A2530]"}`} data-testid="studio-compare-toggle"><SlidersHorizontal size={15} /> {compare != null ? "Hide compare" : "Before / After"}</button>
+                  )}
+                </div>
+              )}
+
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <button onClick={startCamera} disabled={busy} className={`${btn} px-4 py-2.5 ${source ? "bg-[#FBE9F0] text-[#4A2530] hover:bg-[#F4B7CE]" : "bg-[#E62E6B] text-white hover:bg-[#C81F57]"}`} data-testid="studio-camera-btn-2"><Camera size={15} /> Camera</button>
                 <button onClick={() => fileRef.current.click()} disabled={busy} className={`${btn} px-4 py-2.5 bg-[#FBE9F0] text-[#4A2530] hover:bg-[#F4B7CE]`} data-testid="studio-upload-btn-2"><Upload size={15} /> Upload</button>
                 <button onClick={() => loadImage(sampleFace)} disabled={busy} className={`${btn} px-4 py-2.5 bg-[#FBE9F0] text-[#4A2530] hover:bg-[#F4B7CE]`} data-testid="studio-sample-btn-2"><Sparkles size={15} /> Model</button>
                 <div className="flex-1" />
+                {source && <button onClick={share} className={`${btn} px-4 py-2.5 bg-[#25D366] text-white hover:bg-[#1eb959]`} data-testid="studio-share-btn"><Share2 size={15} /> Share</button>}
                 {source && <button onClick={download} className={`${btn} px-4 py-2.5 border border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]`} data-testid="studio-download-btn"><Download size={15} /> Save</button>}
                 {source && <button onClick={reset} className={`${btn} w-10 h-10 border border-[#F1DCE3] text-[#8B7F82] hover:text-[#E62E6B]`} aria-label="Reset" data-testid="studio-reset-btn"><RotateCcw size={15} /></button>}
                 <input ref={fileRef} type="file" accept="image/*" onChange={onFile} className="hidden" data-testid="studio-file-input" />
@@ -237,7 +307,7 @@ const FaceStudio = () => {
                     <div className="font-display text-lg text-[#4A2530]">{look.name}</div>
                     <div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">Lip bullet · {look.lips || "off"}</div>
                   </div>
-                  <button onClick={() => scrollToId("contact")} className="px-5 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] transition-colors" data-testid="studio-book-btn">Book this look</button>
+                  <button onClick={bookLook} className="px-5 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] transition-colors" data-testid="studio-book-btn">Book this look</button>
                 </div>
               </TiltCard>
             </Reveal>

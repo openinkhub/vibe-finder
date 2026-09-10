@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import { Toaster } from "./components/ui/sonner";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Marquee from "./components/Marquee";
@@ -20,6 +22,32 @@ import FAQ from "./components/FAQ";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import FloatingButtons from "./components/FloatingButtons";
+import Admin from "./pages/Admin";
+
+const Landing = () => (
+  <>
+    <Navbar />
+    <Hero />
+    <Marquee />
+    <About />
+    <WhoWeServe />
+    <Services />
+    <FaceStudio />
+    <Pricing />
+    <Areas />
+    <Portfolio />
+    <Reels />
+    <Process />
+    <Academy />
+    <Loyalty />
+    <Testimonials />
+    <Instagram />
+    <FAQ />
+    <Contact />
+    <Footer />
+    <FloatingButtons />
+  </>
+);
 
 function App() {
   useEffect(() => {
@@ -28,26 +56,13 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
-      <Hero />
-      <Marquee />
-      <About />
-      <WhoWeServe />
-      <Services />
-      <FaceStudio />
-      <Pricing />
-      <Areas />
-      <Portfolio />
-      <Reels />
-      <Process />
-      <Academy />
-      <Loyalty />
-      <Testimonials />
-      <Instagram />
-      <FAQ />
-      <Contact />
-      <Footer />
-      <FloatingButtons />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
+      </BrowserRouter>
+      <Toaster position="top-center" richColors />
     </div>
   );
 }
