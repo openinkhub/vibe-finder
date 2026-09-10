@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Camera, Upload, Sparkles, Download, RotateCcw, Wand2, Share2, SlidersHorizontal, Layers } from "lucide-react";
+import { Camera, Upload, Sparkles, Download, RotateCcw, Wand2, Share2, SlidersHorizontal, Layers, Loader2, Check } from "lucide-react";
 import { toast } from "sonner";
 import { studioLooks, sampleFace, brand } from "../../mock/mock";
 import { api, errorText } from "../../lib/api";
@@ -36,6 +36,8 @@ const FaceStudio = () => {
   const [compare, setCompare] = useState(null);
   const [beforeUrl, setBeforeUrl] = useState(null);
   const [look, setLook] = useState(DEFAULT_LOOK);
+  const [gallery, setGallery] = useState([]);
+  const [booking, setBooking] = useState(false);
   lookRef.current = look;
 
   useEffect(() => {
@@ -185,6 +187,7 @@ const FaceStudio = () => {
       c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
       const { data } = await api.post("/studio/generate", { image: c.toDataURL("image/jpeg", 0.88), look: { name: look.name, lips: look.lips, blush: look.blush, eyes: look.eyes, intensity: look.intensity, liner: look.liner, gloss: look.gloss } }, { timeout: 120000 });
       setAiImage(data.image);
+      setGallery((g) => [{ id: `${Date.now()}`, image: data.image, look: look.name, lips: look.lips, at: new Date() }, ...g].slice(0, 12));
       setView("ai");
       setCompare(0.5);
       setMsg("AI look ready — drag to compare with the original");
@@ -233,7 +236,24 @@ const FaceStudio = () => {
     toast("Image saved — attach it in the WhatsApp chat that just opened");
   };
 
-  const bookLook = () => { sessionStorage.setItem("rk_selected_look", look.name); scrollToId("contact"); };
+  const openGalleryItem = (g) => { setAiImage(g.image); setView("ai"); if (source?.type === "image") setCompare(0.5); setMsg(`Viewing saved AI look · ${g.look}`); };
+
+  const bookLook = async () => {
+    const name = view === "ai" && aiImage ? (gallery.find((g) => g.image === aiImage)?.look || look.name) : look.name;
+    sessionStorage.setItem("rk_selected_look", name);
+    sessionStorage.removeItem("rk_selected_look_image");
+    if (view === "ai" && aiImage) {
+      setBooking(true);
+      try {
+        const { data } = await api.post("/studio/looks", { image: aiImage, look: name }, { timeout: 60000 });
+        sessionStorage.setItem("rk_selected_look_image", data.url);
+        toast.success("Look attached to your enquiry");
+      } catch (e) {
+        toast.error(errorText(e, "Couldn't attach the image — booking the look by name instead"));
+      } finally { setBooking(false); }
+    }
+    scrollToId("contact");
+  };
   const reset = () => { stopCamera(); setSource(null); landmarksRef.current = null; setMsg(""); setAiImage(null); setView("overlay"); setCompare(null); setBeforeUrl(null); setLook(DEFAULT_LOOK); };
 
   const btn = "inline-flex items-center justify-center gap-2 rounded-full text-sm font-medium transition-all duration-300 disabled:opacity-50";
@@ -283,6 +303,23 @@ const FaceStudio = () => {
                 {source && <button onClick={reset} className={`${btn} w-10 h-10 border border-[#F1DCE3] text-[#8B7F82] hover:text-[#E62E6B]`} aria-label="Reset" data-testid="studio-reset-btn"><RotateCcw size={15} /></button>}
                 <input ref={fileRef} type="file" accept="image/*" onChange={onFile} className="hidden" data-testid="studio-file-input" />
               </div>
+              {gallery.length > 0 && (
+                <div className="mt-4 pt-4 border-t border-[#F1DCE3]" data-testid="look-gallery">
+                  <div className="flex items-center justify-between mb-2.5">
+                    <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8B7F82]">Your AI looks · {gallery.length}</span>
+                    <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[#E62E6B]">Tap one to view & book</span>
+                  </div>
+                  <div className="flex gap-2.5 overflow-x-auto no-scrollbar pb-1">
+                    {gallery.map((g) => (
+                      <button key={g.id} onClick={() => openGalleryItem(g)} className={`relative shrink-0 w-20 h-24 sm:w-24 sm:h-28 rounded-xl overflow-hidden border-2 transition-all ${aiImage === g.image && view === "ai" ? "border-[#E62E6B] shadow-lg shadow-[#E62E6B]/30" : "border-transparent hover:border-[#F4B7CE]"}`} data-testid={`gallery-item-${g.id}`} aria-label={`View ${g.look}`}>
+                        <img src={g.image} alt={g.look} className="w-full h-full object-cover" />
+                        <span className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#4A2530]/80 to-transparent text-white text-[9px] font-mono px-1.5 pb-1 pt-4 truncate text-left">{g.look}</span>
+                        {aiImage === g.image && view === "ai" && <span className="absolute top-1 right-1 w-5 h-5 rounded-full bg-[#E62E6B] text-white flex items-center justify-center"><Check size={11} /></span>}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
               <p className="mt-3 font-mono text-[10px] tracking-[0.12em] uppercase text-[#8B7F82] min-h-[14px]" data-testid="studio-status">{!busy && (msg || (status === "ready" ? "Engine ready · runs on-device, nothing is uploaded" : status === "loading" ? `${progress || "Preparing face engine…"}` : status === "error" ? "Face engine unavailable in this browser" : "Runs on-device · nothing is uploaded"))}</p>
             </div>
           </Reveal>
@@ -307,7 +344,7 @@ const FaceStudio = () => {
                     <div className="font-display text-lg text-[#4A2530]">{look.name}</div>
                     <div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">Lip bullet · {look.lips || "off"}</div>
                   </div>
-                  <button onClick={bookLook} className="px-5 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] transition-colors" data-testid="studio-book-btn">Book this look</button>
+                  <button onClick={bookLook} disabled={booking} className="px-5 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] transition-colors inline-flex items-center gap-2 disabled:opacity-60" data-testid="studio-book-btn">{booking && <Loader2 size={14} className="animate-spin" />} Book this look</button>
                 </div>
               </TiltCard>
             </Reveal>

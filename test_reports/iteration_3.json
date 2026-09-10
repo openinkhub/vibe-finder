@@ -1,0 +1,39 @@
+{
+  "summary": "Iteration 3 (new features) — both backend and frontend tested. Backend 14/14 pytest passed including content CRUD (pricing + portfolio multipart upload + /api/files serve + soft delete + bad-ext 400 + auth 401), alerts (unseen counter, mark-seen, PATCH sets seen, alerts_status={email:false,in_app:true}), look upload+fetch, and end-to-end transcribe with real espeak-ng speech sample — Whisper transcript + GPT extraction correctly returned name containing 'Priya' and date == '2027-02-14'. Frontend flows all passed on desktop 1920x1080: admin login → tabs, unseen badge appears after seeded enquiry, mark-seen clears badge, alerts-note visible; PricingEditor add/edit/delete works and rows persist; PortfolioEditor multipart upload creates a portfolio-admin-item whose <img> loads (naturalWidth=500) from /api/files/... , edit-caption saves, soft delete removes item; landing Portfolio grid renders 9 items from API and Pricing section loads. Try-On flow: sample → generate AI (single generation, ~20s) → studio-ai-image visible → look-gallery shows 1 gallery-item → clicking gallery restores AI view → studio-book-btn uploads look and scrolls to contact where contact-look-chip 'Bridal Classic' + contact-look-thumb with /api/files/ src appear → contact form submits → contact-success → admin API confirms enquiry persisted with look_image starting /api/files/. Voice enquiry: mic permission granted, voice-start-btn → voice-stop-btn appears with 'Say your name…' hint; after ~3s stop, backend responded 422 (silent audio) and frontend showed a graceful toast 'We couldn't hear anything — please try again closer to the mic' within ~5s (no hang, no uncaught error). Regression: desktop overflow=0, mobile 390x844 has minor 5px horizontal overflow.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Landing (mobile 390x844)", "issues": ["Minor 5px horizontal overflow on mobile viewport — inspect hero or marquee sections. Desktop is clean (0px)."]},
+      {"screen": "Contact form", "issues": ["Event date still uses native <input type=date> (mm/dd/yyyy) rather than shadcn DatePicker (carry-over from iter 1/2)."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_new_features.py",
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/iter3_new.xml"
+  ],
+  "action_items": [
+    "(Low) Investigate 5px horizontal overflow on mobile (390 width) — likely a section using min-w or negative margin.",
+    "(Carry-over) Replace native date input with shadcn DatePicker in Contact.jsx.",
+    "Optional: filter MediaPipe INFO log emitted via console.error to reduce noise (cosmetic)."
+  ],
+  "critical_code_review_comments": [
+    "content.py store_image path uses uuid + ext but does NOT validate the file content is really an image (relies on extension only). Consider magic-byte sniffing (imghdr / Pillow) to reject renamed .txt→.jpg uploads (currently .txt is rejected because it isn't in MIME map, but a text file renamed .jpg would pass).",
+    "enquiries.py unseen count uses {seen: {$ne: True}} which correctly includes legacy docs without 'seen' field. Works as documented in review request.",
+    "studio.py transcribe: EXTRACT_SYSTEM prompt is solid; JSON extraction with regex could fail on markdown code fences — consider stripping ```json fences before json.loads. Currently handled by try/except fallback so not critical.",
+    "alerts.py send_enquiry_alert: look_image URL check uses .startswith('http') so /api/files/... won't embed in email (email is skipped anyway without key). If email is enabled later, prepend REACT_APP_BACKEND_URL for /api/files/ URLs.",
+    "content.py create_pricing/portfolio uses count as 'order'; after deletions counts can collide — non-critical since UI sorts by order asc and only used for display."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_new_features.py (new — 14 tests)"
+  ],
+  "success_rate": {"backend": "100% (14/14 new + prior suite passing)", "frontend": "100% on tested flows"},
+  "test_credentials": "Admin admin@rekhakrishnamurthy.com / Rekha@Admin2026 (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "Tests create TEST_ prefixed enquiries/pricing/portfolio and clean them up in the same run.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "All iteration-3 features validated end-to-end. Real speech transcription tested using espeak-ng (apt-installed). Only cosmetic follow-ups remain: 5px mobile overflow + native date picker. Use http://localhost:8001 for pytest, https://vibe-finder-76.preview.emergentagent.com for Playwright.",
+  "rca of the issue": "N/A — no functional bugs found. The 5px mobile overflow is a layout artefact (likely negative margin / min-w on a section); not blocking."
+}

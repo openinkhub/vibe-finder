@@ -29,8 +29,10 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 - 2026-06 b: try-on spinner fix, floating objects removed (iteration_2 100%).
 - 2026-06 c: stronger overlay + Before/After slider, AI look generation (~10–25 s), Share (Web Share → download + WhatsApp), enquiries API + Contact wiring + "Book this look", Admin dashboard (/admin) with JWT (iteration_3: backend 15/16 → base64 400 fixed after; frontend all pass).
 
+- 2026-06 d (iteration_3b, backend 14/14, frontend 100%): **Enquiry alerts** (in-app: seen flag, unseen badge, mark-seen, 20s polling, browser Notification opt-in; Resend email scaffolded in alerts.py — sends automatically once RESEND_API_KEY + ALERT_TO_EMAIL set in backend/.env), **Editable content** (pricing + portfolio CRUD in admin tabs; images in Emergent object storage via storage.py, served at /api/files/{path}; landing Pricing/Portfolio load from API with mock fallback), **Look gallery** (session strip of generated AI looks), **Look in enquiry** (POST /api/studio/looks uploads AI image → look_image on enquiry → thumbnail in Contact chip + admin card), **Speech-to-text booking** (VoiceEnquiry: MediaRecorder → POST /api/studio/transcribe → Whisper-1 + GPT-5.4 extraction auto-fills name/phone/email/service/date/message; source='voice' badge in admin).
+- Mobile 5px overflow fixed (html/.App overflow-x clip).
+
 ## Backlog
 - P1: Replace landing mock content with backend-managed content (services/pricing/portfolio) + admin editing.
-- P1: Email/WhatsApp notification to Rekha on new enquiry (Resend / Twilio).
-- P2: Gallery of generated AI looks per session; save looks to enquiry.
+- P1: Email alerts need RESEND_API_KEY + ALERT_TO_EMAIL from user (code ready). WhatsApp alerts (Twilio) not started.
 - P2: shadcn DatePicker for event date (currently native input — fine on mobile).

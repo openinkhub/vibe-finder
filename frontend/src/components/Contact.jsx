@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Phone, MapPin, Instagram, MessageCircle, Check, Loader2, Sparkles, X } from "lucide-react";
 import { brand } from "../mock/mock";
-import { api, errorText } from "../lib/api";
+import { api, errorText, imgUrl } from "../lib/api";
+import { VoiceEnquiry } from "./VoiceEnquiry";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 
@@ -11,10 +12,12 @@ const Contact = () => {
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
   const [look, setLook] = useState(() => sessionStorage.getItem("rk_selected_look") || "");
+  const [lookImage, setLookImage] = useState(() => sessionStorage.getItem("rk_selected_look_image") || "");
+  const [source, setSource] = useState("form");
   const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   useEffect(() => {
-    const sync = () => setLook(sessionStorage.getItem("rk_selected_look") || "");
+    const sync = () => { setLook(sessionStorage.getItem("rk_selected_look") || ""); setLookImage(sessionStorage.getItem("rk_selected_look_image") || ""); };
     window.addEventListener("focus", sync);
     const id = setInterval(sync, 1500);
     return () => { window.removeEventListener("focus", sync); clearInterval(id); };
@@ -25,11 +28,14 @@ const Contact = () => {
     setError("");
     setSending(true);
     try {
-      await api.post("/enquiries", { ...form, email: form.email || null, date: form.date || null, message: form.message || null, look: look || null });
+      await api.post("/enquiries", { ...form, email: form.email || null, date: form.date || null, message: form.message || null, look: look || null, look_image: lookImage || null, source });
       setSent(true);
       setForm({ name: "", email: "", phone: "", service: "Bridal", date: "", message: "" });
       sessionStorage.removeItem("rk_selected_look");
+      sessionStorage.removeItem("rk_selected_look_image");
       setLook("");
+      setLookImage("");
+      setSource("form");
       setTimeout(() => setSent(false), 8000);
     } catch (err) {
       setError(errorText(err, "Couldn't send your enquiry — please try again or WhatsApp us."));
@@ -77,10 +83,13 @@ const Contact = () => {
             {error && <div className="mb-5 flex items-center gap-2 bg-[#FBE9F0] text-[#C81F57] px-4 py-3 rounded-xl text-sm" data-testid="contact-error"><X size={16} /> {error}</div>}
             {look && (
               <div className="mb-5 flex items-center justify-between gap-2 bg-[#FBE9F0] text-[#4A2530] px-4 py-3 rounded-xl text-sm" data-testid="contact-look-chip">
-                <span className="flex items-center gap-2"><Sparkles size={15} className="text-[#E62E6B]" /> Booking look: <span className="font-semibold">{look}</span></span>
-                <button type="button" onClick={() => { sessionStorage.removeItem("rk_selected_look"); setLook(""); }} className="text-[#8B7F82] hover:text-[#E62E6B]" aria-label="Remove look" data-testid="contact-look-remove"><X size={15} /></button>
+                <span className="flex items-center gap-2">{lookImage ? <img src={imgUrl(lookImage)} alt={look} className="w-10 h-10 rounded-lg object-cover border border-white" data-testid="contact-look-thumb" /> : <Sparkles size={15} className="text-[#E62E6B]" />} Booking look: <span className="font-semibold">{look}</span></span>
+                <button type="button" onClick={() => { sessionStorage.removeItem("rk_selected_look"); sessionStorage.removeItem("rk_selected_look_image"); setLook(""); setLookImage(""); }} className="text-[#8B7F82] hover:text-[#E62E6B]" aria-label="Remove look" data-testid="contact-look-remove"><X size={15} /></button>
               </div>
             )}
+            <div className="mb-6">
+              <VoiceEnquiry onResult={({ fields }) => { setForm((f) => ({ ...f, name: fields.name || f.name, phone: fields.phone || f.phone, email: fields.email || f.email, service: fields.service || f.service, date: fields.date || f.date, message: fields.message || f.message })); setSource("voice"); }} />
+            </div>
             <form onSubmit={submit} className="space-y-5" data-testid="contact-form">
               <div className="grid sm:grid-cols-2 gap-5">
                 <div><label className="block text-sm text-[#5C4E52] mb-2">Name</label><input name="name" value={form.name} onChange={handle} required placeholder="Full name" className={inputCls} data-testid="contact-name-input" /></div>

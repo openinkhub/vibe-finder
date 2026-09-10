@@ -13,6 +13,8 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import auth
 import enquiries
 import studio
+import content
+from storage import init_storage
 
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
@@ -23,6 +25,7 @@ api_router = APIRouter(prefix="/api")
 
 auth.init(db)
 enquiries.init(db)
+content.init(db)
 
 
 @api_router.get("/")
@@ -33,6 +36,7 @@ async def root():
 api_router.include_router(auth.router)
 api_router.include_router(enquiries.router)
 api_router.include_router(studio.router)
+api_router.include_router(content.router)
 app.include_router(api_router)
 
 app.add_middleware(
@@ -52,6 +56,12 @@ async def on_startup():
     await auth.seed_admin()
     await db.enquiries.create_index("created_at")
     await db.enquiries.create_index("status")
+    await content.seed_content()
+    try:
+        init_storage()
+        logger.info("Storage initialized")
+    except Exception as e:
+        logger.error("Storage init failed: %s", e)
 
 
 @app.on_event("shutdown")

@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Star } from "lucide-react";
-import { pricing } from "../mock/mock";
+import { pricing as fallback } from "../mock/mock";
+import { api } from "../lib/api";
 import { scrollToId } from "./Navbar";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 
 const Pricing = () => {
+  const [pricing, setPricing] = useState(fallback);
+  useEffect(() => { api.get("/content/pricing").then((r) => { if (r.data?.length) setPricing(r.data); }).catch(() => {}); }, []);
   return (
     <section id="pricing" className="relative bg-[#FBE9F0] py-20 md:py-32 scroll-mt-20 overflow-hidden" data-testid="pricing-section">
       <div className="absolute -top-24 -right-24 w-[380px] h-[380px] rounded-full bg-[#E62E6B]/15 blur-3xl" />
@@ -19,7 +22,7 @@ const Pricing = () => {
 
         <div className="mt-10 md:mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" style={{ perspective: 1200 }}>
           {pricing.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.07}>
+            <Reveal key={p.id || p.title} delay={i * 0.07}>
               <TiltCard className={`h-full rounded-3xl p-6 sm:p-8 border transition-shadow duration-300 ${p.featured ? "bg-[#E62E6B] border-[#E62E6B] text-white shadow-2xl shadow-[#E62E6B]/40" : "bg-white border-[#F1DCE3] hover:shadow-xl hover:shadow-[#E62E6B]/15"}`} data-testid={`pricing-card-${i}`}>
                 {p.featured && <span className="absolute top-5 right-5 sm:top-6 sm:right-6 inline-flex items-center gap-1 bg-white text-[#E62E6B] text-xs font-medium px-3 py-1.5 rounded-full"><Star size={12} className="fill-[#E62E6B]" /> Most booked</span>}
                 <div className={`font-display text-3xl sm:text-4xl font-bold ${p.featured ? "text-white" : "text-[#E62E6B]"}`} style={{ transform: "translateZ(30px)" }}>{p.price}</div>

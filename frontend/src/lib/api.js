@@ -10,6 +10,8 @@ api.interceptors.request.use((c) => {
   return c;
 });
 
+export const imgUrl = (u) => (u && u.startsWith("/api") ? `${process.env.REACT_APP_BACKEND_URL}${u}` : u);
+
 export const errorText = (e, fallback = "Something went wrong. Please try again.") => {
   const d = e?.response?.data?.detail;
   if (!d) return e?.message || fallback;
