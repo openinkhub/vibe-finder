@@ -1,32 +1,36 @@
 import React from "react";
 import { Instagram as IgIcon, Heart, MessageCircle } from "lucide-react";
 import { instagramFeed, brand } from "../mock/mock";
+import { Reveal } from "./fx/Reveal";
+import { TiltCard } from "./fx/TiltCard";
 
 const Instagram = () => {
   return (
-    <section className="relative bg-[#F4F1EA] py-24 md:py-28">
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+    <section className="relative bg-[#F4F1EA] py-20 md:py-28" data-testid="instagram-section">
+      <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
+        <Reveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 md:gap-6 mb-8 md:mb-12">
           <div>
             <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Follow along</span>
-            <h2 className="font-display text-[#4A2530] text-3xl md:text-4xl leading-tight mt-5">{brand.instagram}</h2>
+            <h2 className="font-display text-[#4A2530] text-2xl sm:text-3xl md:text-4xl leading-tight mt-4 sm:mt-5 break-all sm:break-normal">{brand.instagram}</h2>
           </div>
-          <a href={brand.instagramUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#2B1B20] text-white font-medium hover:bg-[#4A2530] transition-colors w-fit">
+          <a href={brand.instagramUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all w-fit shadow-lg shadow-[#E62E6B]/25" data-testid="instagram-follow-btn">
             <IgIcon size={18} /> Follow on Instagram
           </a>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
-          {instagramFeed.map((p) => (
-            <a key={p.caption} href={brand.instagramUrl} target="_blank" rel="noreferrer" className="group relative aspect-square overflow-hidden rounded-2xl">
-              <img src={p.image} alt={p.caption} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-[#2B1B20]/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 p-4 text-center">
-                <p className="text-white text-xs leading-snug">{p.caption}</p>
-                <div className="flex items-center gap-4 text-white text-sm">
-                  <span className="flex items-center gap-1"><Heart size={14} className="fill-white" /> {p.likes}</span>
-                  <span className="flex items-center gap-1"><MessageCircle size={14} /> {p.comments}</span>
+        </Reveal>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4" style={{ perspective: 1200 }}>
+          {instagramFeed.map((p, i) => (
+            <Reveal key={p.caption} delay={i * 0.06} rotate={16}>
+              <TiltCard as="a" max={12} href={brand.instagramUrl} target="_blank" rel="noreferrer" className="block aspect-square overflow-hidden rounded-2xl shadow-[0_20px_50px_-30px_rgba(230,46,107,0.5)]" data-testid={`instagram-item-${i}`}>
+                <img src={p.image} alt={p.caption} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-[#E62E6B]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 p-4 text-center">
+                  <p className="text-white text-xs leading-snug">{p.caption}</p>
+                  <div className="flex items-center gap-4 text-white text-sm">
+                    <span className="flex items-center gap-1"><Heart size={14} className="fill-white" /> {p.likes}</span>
+                    <span className="flex items-center gap-1"><MessageCircle size={14} /> {p.comments}</span>
+                  </div>
                 </div>
-              </div>
-            </a>
+              </TiltCard>
+            </Reveal>
           ))}
         </div>
       </div>

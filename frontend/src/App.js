@@ -6,6 +6,7 @@ import Marquee from "./components/Marquee";
 import About from "./components/About";
 import WhoWeServe from "./components/WhoWeServe";
 import Services from "./components/Services";
+import FaceStudio from "./components/studio/FaceStudio";
 import Pricing from "./components/Pricing";
 import Areas from "./components/Areas";
 import Portfolio from "./components/Portfolio";
@@ -33,6 +34,7 @@ function App() {
       <About />
       <WhoWeServe />
       <Services />
+      <FaceStudio />
       <Pricing />
       <Areas />
       <Portfolio />

@@ -2,32 +2,37 @@ import React from "react";
 import { Star } from "lucide-react";
 import { pricing } from "../mock/mock";
 import { scrollToId } from "./Navbar";
+import { Reveal } from "./fx/Reveal";
+import { TiltCard } from "./fx/TiltCard";
 
 const Pricing = () => {
   return (
-    <section id="pricing" className="relative bg-[#2B1B20] py-24 md:py-32 scroll-mt-20 overflow-hidden">
-      <div className="absolute -top-24 -right-24 w-[380px] h-[380px] rounded-full bg-[#E62E6B]/12 blur-3xl" />
-      <div className="relative max-w-[1320px] mx-auto px-6 md:px-10">
-        <div className="text-center max-w-2xl mx-auto">
-          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#F4B7CE]">Transparent pricing</span>
-          <h2 className="font-display text-white text-4xl md:text-5xl leading-tight mt-5">Makeup starting from <span className="italic text-[#F4B7CE]">₹999/-</span></h2>
-          <p className="mt-5 text-[#C9B7BD]">Free consultation on every enquiry. No visit charge for party, event or wedding bookings.</p>
-        </div>
+    <section id="pricing" className="relative bg-[#FBE9F0] py-20 md:py-32 scroll-mt-20 overflow-hidden" data-testid="pricing-section">
+      <div className="absolute -top-24 -right-24 w-[380px] h-[380px] rounded-full bg-[#E62E6B]/15 blur-3xl" />
+      <div className="absolute -bottom-32 -left-24 w-[320px] h-[320px] rounded-full bg-[#F4B7CE]/40 blur-3xl" />
+      <div className="relative max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
+        <Reveal className="text-center max-w-2xl mx-auto">
+          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Transparent pricing</span>
+          <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Makeup starting from <span className="italic text-[#E62E6B]">₹999/-</span></h2>
+          <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">Free consultation on every enquiry. No visit charge for party, event or wedding bookings.</p>
+        </Reveal>
 
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {pricing.map((p) => (
-            <div key={p.title} className={`relative rounded-3xl p-8 border transition-all duration-300 ${p.featured ? "bg-[#E62E6B] border-[#E62E6B] shadow-2xl" : "bg-white/[0.04] border-white/10 hover:bg-white/[0.08]"}`}>
-              {p.featured && <span className="absolute top-6 right-6 inline-flex items-center gap-1 bg-white text-[#E62E6B] text-xs font-medium px-3 py-1.5 rounded-full"><Star size={12} className="fill-[#E62E6B]" /> Most booked</span>}
-              <div className={`font-display text-4xl font-bold ${p.featured ? "text-white" : "text-[#F4B7CE]"}`}>{p.price}</div>
-              <h3 className={`font-display text-xl font-semibold mt-4 ${p.featured ? "text-white" : "text-white"}`}>{p.title}</h3>
-              <p className={`mt-2 text-sm leading-relaxed ${p.featured ? "text-white/85" : "text-[#C9B7BD]"}`}>{p.desc}</p>
-            </div>
+        <div className="mt-10 md:mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" style={{ perspective: 1200 }}>
+          {pricing.map((p, i) => (
+            <Reveal key={p.title} delay={i * 0.07}>
+              <TiltCard className={`h-full rounded-3xl p-6 sm:p-8 border transition-shadow duration-300 ${p.featured ? "bg-[#E62E6B] border-[#E62E6B] text-white shadow-2xl shadow-[#E62E6B]/40" : "bg-white border-[#F1DCE3] hover:shadow-xl hover:shadow-[#E62E6B]/15"}`} data-testid={`pricing-card-${i}`}>
+                {p.featured && <span className="absolute top-5 right-5 sm:top-6 sm:right-6 inline-flex items-center gap-1 bg-white text-[#E62E6B] text-xs font-medium px-3 py-1.5 rounded-full"><Star size={12} className="fill-[#E62E6B]" /> Most booked</span>}
+                <div className={`font-display text-3xl sm:text-4xl font-bold ${p.featured ? "text-white" : "text-[#E62E6B]"}`} style={{ transform: "translateZ(30px)" }}>{p.price}</div>
+                <h3 className={`font-display text-xl font-semibold mt-4 ${p.featured ? "text-white" : "text-[#4A2530]"}`}>{p.title}</h3>
+                <p className={`mt-2 text-sm leading-relaxed ${p.featured ? "text-white/90" : "text-[#5C4E52]"}`}>{p.desc}</p>
+              </TiltCard>
+            </Reveal>
           ))}
         </div>
 
-        <p className="mt-10 text-center text-sm text-[#9E858C] max-w-2xl mx-auto">Final pricing depends on look, location and event duration — confirmed free of charge at consultation.</p>
-        <div className="mt-8 text-center">
-          <button onClick={() => scrollToId("contact")} className="px-8 py-4 rounded-full bg-white text-[#2B1B20] font-medium hover:bg-[#F4B7CE] transition-colors">Book Your Free Consultation</button>
+        <p className="mt-8 sm:mt-10 text-center text-sm text-[#8B7F82] max-w-2xl mx-auto">Final pricing depends on look, location and event duration — confirmed free of charge at consultation.</p>
+        <div className="mt-6 sm:mt-8 text-center">
+          <button onClick={() => scrollToId("contact")} className="px-8 py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="pricing-book-btn">Book Your Free Consultation</button>
         </div>
       </div>
     </section>

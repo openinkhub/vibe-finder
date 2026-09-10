@@ -10,7 +10,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #F4F1EA;
-    color: #2B1B20;
+    color: #4A2530;
     overflow-x: hidden;
 }
 
@@ -43,8 +43,8 @@ code {
         --card-foreground: 340 24% 14%;
         --popover: 0 0% 100%;
         --popover-foreground: 340 24% 14%;
-        --primary: 336 24% 22%;
-        --primary-foreground: 44 33% 96%;
+        --primary: 336 79% 54%;
+        --primary-foreground: 0 0% 100%;
         --secondary: 40 20% 90%;
         --secondary-foreground: 340 24% 14%;
         --muted: 40 15% 88%;
@@ -108,5 +108,17 @@ code {
 
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: #EBE6DB; }
-::-webkit-scrollbar-thumb { background: #C9BBA9; border-radius: 8px; }
-::-webkit-scrollbar-thumb:hover { background: #4A2530; }
+::-webkit-scrollbar-thumb { background: #F4B7CE; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #E62E6B; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+canvas { display: block; touch-action: pan-y; }
+
+input[type="range"] { height: 4px; border-radius: 999px; background: #F4B7CE; appearance: none; }
+input[type="range"]::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #E62E6B; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(230,46,107,0.4); cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+    .fade-up, .animate-marquee { animation: none !important; }
+}

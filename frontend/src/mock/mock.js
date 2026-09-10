@@ -1,6 +1,8 @@
 // Mock data — Rekha Krishnamurthy · editorial "contact sheet" design (search-vibe-hub replica)
 
 export const brand = {
+  logo: "/logo.png",
+  siteUrl: "https://rekhakrishnamurthy.com/",
   name: "REKHA",
   surname: "KRISHNAMURTHY",
   role: "Bridal Makeup Artist",
@@ -16,11 +18,28 @@ export const brand = {
 export const navLinks = [
   { label: "About", to: "about" },
   { label: "Services", to: "services" },
+  { label: "Try-On", to: "studio" },
   { label: "Pricing", to: "pricing" },
   { label: "Portfolio", to: "portfolio" },
   { label: "Academy", to: "academy" },
   { label: "Contact", to: "contact" },
 ];
+
+export const sampleFace = "/sample-face.jpg";
+
+export const studioLooks = [
+  { name: "Bridal Classic", lips: "#B3122E", blush: "#E8788A", eyes: "#8A4B2E" },
+  { name: "Engagement Rose", lips: "#D9536F", blush: "#F0A0B0", eyes: "#C58A72" },
+  { name: "Party Fuchsia", lips: "#E62E6B", blush: "#F28FB0", eyes: "#6E2C3C" },
+  { name: "Editorial Plum", lips: "#7A1F3D", blush: "#D98A9C", eyes: "#4A2530" },
+  { name: "Soft Nude", lips: "#C98A7A", blush: "#EFC0B4", eyes: "#B89078" },
+];
+
+export const studioShades = {
+  lips: ["#B3122E", "#E62E6B", "#D9536F", "#7A1F3D", "#C98A7A", "#F0668B", "#9C2A4A", "#E0785A"],
+  blush: ["#E8788A", "#F0A0B0", "#F28FB0", "#D98A9C", "#EFC0B4", "#E9A18F"],
+  eyes: ["#8A4B2E", "#C58A72", "#6E2C3C", "#4A2530", "#B89078", "#D4A5A5"],
+};
 
 export const heroVideo = "/hero-bg.mp4";
 export const heroVideoWebm = "/hero-bg.webm";
