@@ -34,7 +34,11 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-06 e (iteration_4: backend 14/14, frontend 100%): **Look Lab** section (3D porcelain head with live-painted makeup texture — Natural/Bridal/Editorial/Glam — + 3D tilt before/after portrait using 4 cached AI showcase looks via GET /api/studio/showcase), **/portfolio page** (scroll-based transformation Bare→Natural→Bridal→Editorial→Glam + mouse/tilt parallax gallery), **3D "Book Me" compact** in Contact (opens → call/WhatsApp/form), **Availability calendar** (admin marks booked date + hours or full day; public read-only calendar in Contact; enquiry date input stays normal), **WhatsApp reply** with prefilled message on admin cards, **Editable Services** admin tab (title/desc/cta/image upload), **Email alerts LIVE via Resend** → reks5555@gmail.com (sender onboarding@resend.dev). brand.whatsappUrl standardised to wa.me.
 
+- 2026-06 f (iteration_5: frontend 100%): **Legal page** /legal (Privacy, Terms, Refund & Cancellation, Disclaimer from user's Legal_Policies.md; placeholders filled with assumptions — email reks5555@gmail.com, address "JP Nagar, Bengaluru 560078", 7-day/30-day windows; user should verify), footer Legal column + **Locations bar** (HSR Layout, JP Nagar, Jayanagar, Banashankari → location pages with the user's slugs). **New header menu** Home / About Us / Services dropdown (7 EEAT service pages from the user's E-E-A-T doc incl. author bio + FAQ) / Academy / Portfolio / Contact us (/personal-shopping) / Blog. Look Lab, Try-On, Pricing, Testimonials moved to footer Explore (hash links). Content data: `src/content/site.js`, `src/content/legal.json`; pages: `src/pages/ContentPages.jsx`, shell `src/components/PageShell.jsx`.
+
 ## Backlog
+- P1: Verify legal placeholder assumptions (address, refund windows) and EEAT numbers (320+ brides, lead times) with Rekha.
+- P2: Blog article pages (currently teaser cards).
 - P2: Testimonials / FAQ / About copy still in mock.js — could be made editable.
 - P1: Resend sender is onboarding@resend.dev (only delivers to the Resend account owner email) — add a verified domain sender for production. WhatsApp alerts (Twilio) not started.
 - P2: shadcn DatePicker for event date (currently native input — fine on mobile).

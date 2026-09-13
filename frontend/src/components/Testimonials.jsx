@@ -6,7 +6,7 @@ import { TiltCard } from "./fx/TiltCard";
 
 const Testimonials = () => {
   return (
-    <section className="relative bg-[#FBE9F0] py-20 md:py-32 overflow-hidden" data-testid="testimonials-section">
+    <section id="testimonials" className="relative bg-[#FBE9F0] py-20 md:py-32 overflow-hidden scroll-mt-20" data-testid="testimonials-section">
       <div className="absolute -bottom-24 -left-24 w-[380px] h-[380px] rounded-full bg-[#E62E6B]/15 blur-3xl" />
       <div className="relative max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal className="text-center max-w-2xl mx-auto mb-10 md:mb-16">

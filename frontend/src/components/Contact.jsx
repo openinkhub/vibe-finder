@@ -9,7 +9,7 @@ import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", service: "Bridal", date: "", message: "" });
+  const [form, setForm] = useState(() => ({ name: "", email: "", phone: "", service: sessionStorage.getItem("rk_service") || "Bridal", date: "", message: "" }));
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);

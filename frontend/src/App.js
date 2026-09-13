@@ -26,6 +26,8 @@ import FloatingButtons from "./components/FloatingButtons";
 import Admin from "./pages/Admin";
 import PortfolioPage from "./pages/PortfolioPage";
 import LookLab from "./components/lab/LookLab";
+import { ServicePage, StaticPage, BlogPage, LegalPage } from "./pages/ContentPages";
+import { servicePages, locationPages } from "./content/site";
 
 const Landing = () => {
   useEffect(() => {
@@ -71,6 +73,12 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/legal" element={<LegalPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/about-us" element={<StaticPage slug="about-us" />} />
+          <Route path="/makeup-course-training-bangalore" element={<StaticPage slug="makeup-course-training-bangalore" />} />
+          <Route path="/personal-shopping" element={<StaticPage slug="personal-shopping" />} />
+          {[...servicePages, ...locationPages].map((p) => <Route key={p.slug} path={`/${p.slug}`} element={<ServicePage />} />)}
         </Routes>
       </BrowserRouter>
       <Toaster position="top-center" richColors />
