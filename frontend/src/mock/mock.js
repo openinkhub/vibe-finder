@@ -158,5 +158,5 @@ export const faqs = [
   { q: "Do you travel for destination weddings?", a: "Yes. Rekha travels across India for destination weddings and fashion assignments. Travel and stay are scoped transparently at consultation." },
   { q: "Is a trial session included?", a: "A pre-wedding trial is included with the bridal package so we can perfect your base, eyes and draping together before the big day." },
   { q: "What courses do you offer?", a: "Professional HD & bridal certification, an airbrush machine masterclass, and self-grooming & everyday makeup classes — all small-batch and hands-on at the Bangalore studio." },
-  { q: "Is there a visit charge, and what does pricing start at?", a: "Makeup starts at ₹999, and there's no visit charge for party, event or wedding bookings within Bangalore. Final pricing is confirmed free of charge at consultation." },
+  { q: "Is there a visit charge, and what does pricing start at?", a: "Makeup starts at ₹4,999, and there's no visit charge for party, event or wedding bookings within Bangalore. Final pricing is confirmed free of charge at consultation." },
 ];

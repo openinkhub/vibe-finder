@@ -60,7 +60,7 @@ const Hero = ({ page }) => {
           </div>
 
           <div className="fade-up delay-4 mt-8 sm:mt-9 flex flex-wrap gap-x-7 gap-y-2.5">
-            {["Makeup from ₹999", "Free consultation", "No visit charge — party, event & wedding bookings"].map((t) => (
+            {["Makeup from ₹4,999", "Free consultation", "No visit charge — party, event & wedding bookings"].map((t) => (
               <div key={t} className="flex items-center gap-2 text-sm text-[#5C4E52]"><Check size={16} className="text-[#E62E6B] shrink-0" /> {t}</div>
             ))}
           </div>

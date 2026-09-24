@@ -78,6 +78,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-09 z: **Bug fix — Google review section showed contradictory stats**: `Testimonials.jsx` had a stale hardcoded "146 reviews · 5.0 average on Google" line + 5 static stars sitting directly above the live Featurable widget (real data: 4.9★, 53 reviews) — visibly conflicting. Removed the stale block, replaced with a generic subtitle; also synced `heroStats` "Google rating" from stale "5.0" to real "4.9" in mock.js. Verified via testing_agent (iteration_11, 100% frontend pass, no regressions).
 
+- 2026-09 aa: Hero checklist chip "Makeup from ₹999" was stale (missed during earlier pricing-card update) — fixed to "Makeup from ₹4,999" in `Hero.jsx`; also synced matching FAQ answer in mock.js. Verified via screenshot desktop+mobile.
+
 ## Backlog
 - P1: Replace `/public/og-image.webp` with the user's original banner (upload it as a file — the inline chat image wasn't retrievable).
 - P1: Body copy for the remaining sheet pages without a docx yet; Delivery & Cookies policy text.
