@@ -35,6 +35,20 @@ const Block = ({ s, i }) => (
       {s.terms && <ol className="bg-white rounded-3xl border border-[#F1DCE3] divide-y divide-[#FBE9F0]" data-testid="body-terms">{s.terms.map(([t, d], k) => <li key={t} className="p-5 sm:p-6"><h4 className="font-display text-lg text-[#4A2530]"><span className="font-mono text-xs text-[#E62E6B] mr-2">{k + 1}.</span>{t}</h4><p className="text-sm text-[#5C4E52] mt-2 leading-relaxed">{d}</p></li>)}</ol>}
       {s.qa && <div className="space-y-3" data-testid="body-qa">{s.qa.map(([q, a]) => <div key={q} className="bg-white rounded-2xl border border-[#F1DCE3] px-5 py-4"><div className="flex items-start gap-3"><span className="shrink-0 w-7 h-7 rounded-full bg-[#E62E6B] text-white font-mono text-[10px] flex items-center justify-center mt-0.5">Q</span><div className="font-display text-base sm:text-lg text-[#4A2530]">{q}</div></div><div className="flex items-start gap-3 mt-2"><span className="shrink-0 w-7 h-7 rounded-full bg-[#FBE9F0] text-[#E62E6B] font-mono text-[10px] flex items-center justify-center mt-0.5">A</span><p className="text-sm text-[#5C4E52] leading-relaxed">{a}</p></div></div>)}</div>}
       {s.details && <dl className="bg-white rounded-3xl border border-[#F1DCE3] divide-y divide-[#FBE9F0]" data-testid="body-details">{s.details.map(([k, v]) => <div key={k} className="grid sm:grid-cols-[180px_1fr] gap-1 sm:gap-4 px-5 py-3.5"><dt className="font-mono text-[11px] uppercase tracking-wider text-[#8B7F82] pt-0.5">{k}</dt><dd className={`text-sm sm:text-base ${k === "Course Fee" ? "font-display text-xl text-[#E62E6B]" : "text-[#4A2530]"}`}>{v}</dd></div>)}</dl>}
+      {s.cardTable && (
+        <div className="grid sm:grid-cols-2 gap-4" data-testid="body-card-table">
+          {s.cardTable.map(([occ, svc, desc], k) => (
+            <div key={`${occ}-${k}`} className="bg-white rounded-2xl p-5 border border-[#F1DCE3] hover:border-[#E62E6B] transition-colors" data-testid={`card-table-item-${k}`}>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">{occ}</span>
+                <ArrowRight size={12} className="text-[#F4B7CE]" />
+                <span className="px-2.5 py-1 rounded-full bg-[#FBE9F0] text-[#E62E6B] text-xs font-semibold">{svc}</span>
+              </div>
+              <p className="text-sm text-[#5C4E52] mt-3 leading-relaxed">{desc}</p>
+            </div>
+          ))}
+        </div>
+      )}
       {s.ctas && <div className="flex flex-wrap gap-3 pt-2">{s.ctas.map((c) => <Cta key={c.label} c={c} />)}</div>}
     </div>
   </Reveal>
