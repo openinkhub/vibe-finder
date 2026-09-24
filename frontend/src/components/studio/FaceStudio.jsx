@@ -11,6 +11,7 @@ import { LipstickViewer } from "./LipstickViewer";
 import { Reveal } from "../fx/Reveal";
 import { TiltCard } from "../fx/TiltCard";
 import { useNavigate } from "react-router-dom";
+import { scrollToId } from "../Navbar";
 
 const MAX_DIM = 1000;
 const AI_DIM = 768;
@@ -253,8 +254,7 @@ const FaceStudio = () => {
         toast.error(errorText(e, "Couldn't attach the image — booking the look by name instead"));
       } finally { setBooking(false); }
     }
-    sessionStorage.setItem("rk_scroll_to", "contact");
-    navigate("/");
+    if (document.getElementById("contact")) scrollToId("contact"); else navigate("/contact");
   };
   const reset = () => { stopCamera(); setSource(null); landmarksRef.current = null; setMsg(""); setAiImage(null); setView("overlay"); setCompare(null); setBeforeUrl(null); setLook(DEFAULT_LOOK); };
 

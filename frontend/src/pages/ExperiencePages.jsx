@@ -1,16 +1,23 @@
 import React from "react";
-import { PageShell } from "../components/PageShell";
+import { useLocation } from "react-router-dom";
+import { PageShell, PageHero } from "../components/PageShell";
+import { SeoIntro } from "../components/SeoIntro";
 import LookLab from "../components/lab/LookLab";
 import FaceStudio from "../components/studio/FaceStudio";
+import { getPage } from "../lib/pages";
 
-export const LookLabPage = () => (
-  <PageShell title="Look Lab">
-    <div className="-mt-8 sm:-mt-10" data-testid="looklab-page"><LookLab /></div>
-  </PageShell>
-);
+const Experience = ({ children, testid }) => {
+  const page = getPage(useLocation().pathname);
+  return (
+    <PageShell page={page} title={page?.name}>
+      <div data-testid={testid}>
+        <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={page.image} />
+        <SeoIntro page={page} />
+        {children}
+      </div>
+    </PageShell>
+  );
+};
 
-export const TryOnPage = () => (
-  <PageShell title="Try-On Studio">
-    <div className="-mt-8 sm:-mt-10" data-testid="tryon-page"><FaceStudio /></div>
-  </PageShell>
-);
+export const LookLabPage = () => <Experience testid="looklab-page"><LookLab /></Experience>;
+export const TryOnPage = () => <Experience testid="tryon-page"><FaceStudio /></Experience>;

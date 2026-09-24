@@ -3,17 +3,40 @@ import { Menu, X, ArrowUpRight, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { brand } from "../mock/mock";
-import { headerMenu, servicePages } from "../content/site";
+import { headerMenu } from "../lib/pages";
 
 export const scrollToId = (id) => {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
+const slug = (s) => s.toLowerCase().replace(/\s+/g, "-");
+
+const Dropdown = ({ m, pathname, linkCls }) => {
+  const [open, setOpen] = useState(false);
+  const active = pathname === m.to || m.children.some((c) => c.path === pathname);
+  const key = slug(m.label);
+  return (
+    <div className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      {m.to
+        ? <Link to={m.to} className={`${linkCls(m.to, active)} flex items-center gap-1`} data-testid={`nav-${key}`}>{m.label} <ChevronDown size={14} className={`transition-transform ${open ? "rotate-180" : ""}`} /></Link>
+        : <button className={`${linkCls("", active)} flex items-center gap-1`} onClick={() => setOpen((v) => !v)} data-testid={`nav-${key}`}>{m.label} <ChevronDown size={14} className={`transition-transform ${open ? "rotate-180" : ""}`} /></button>}
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ opacity: 0, y: 8, rotateX: -10 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} exit={{ opacity: 0, y: 6 }} style={{ transformPerspective: 800, transformOrigin: "top" }} className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 rounded-2xl bg-white border border-[#F1DCE3] shadow-xl overflow-hidden p-2" data-testid={`${key}-dropdown`}>
+            {m.children.map((c) => (
+              <Link key={c.path} to={c.path} className="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm text-[#4A2530] hover:bg-[#FBE9F0] hover:text-[#E62E6B] transition-colors" data-testid={`nav-${key}-${c.path.slice(1)}`}>{c.name} <ArrowUpRight size={13} className="opacity-50" /></Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
 const Navbar = ({ solid = false }) => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [svc, setSvc] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -22,10 +45,10 @@ const Navbar = ({ solid = false }) => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  useEffect(() => { setOpen(false); setSvc(false); }, [pathname]);
+  useEffect(() => { setOpen(false); }, [pathname]);
 
-  const goContact = () => { setOpen(false); if (pathname === "/") scrollToId("contact"); else { sessionStorage.setItem("rk_scroll_to", "contact"); navigate("/"); } };
-  const linkCls = (to) => `relative text-[14px] tracking-wide transition-colors duration-300 group ${pathname === to ? "text-[#E62E6B]" : "text-[#4A2530] hover:text-[#E62E6B]"}`;
+  const goContact = () => { setOpen(false); if (pathname === "/") scrollToId("contact"); else navigate("/contact"); };
+  const linkCls = (to, active = pathname === to) => `relative text-[14px] tracking-wide transition-colors duration-300 group ${active ? "text-[#E62E6B]" : "text-[#4A2530] hover:text-[#E62E6B]"}`;
   const filled = solid || scrolled;
 
   return (
@@ -35,22 +58,9 @@ const Navbar = ({ solid = false }) => {
           <motion.img src={brand.logo} alt="Rekha Krishnamurthy Makeup & Academy" className="h-9 sm:h-10 md:h-12 w-auto" whileHover={{ rotateY: 12, scale: 1.04 }} transition={{ type: "spring", stiffness: 240, damping: 18 }} style={{ transformPerspective: 600 }} />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-7" data-testid="desktop-nav">
-          {headerMenu.map((m) => m.children ? (
-            <div key="services" className="relative" onMouseEnter={() => setSvc(true)} onMouseLeave={() => setSvc(false)}>
-              <button className={`${linkCls("/services")} flex items-center gap-1`} onClick={() => setSvc((v) => !v)} data-testid="nav-services">Services <ChevronDown size={14} className={`transition-transform ${svc ? "rotate-180" : ""}`} /></button>
-              <AnimatePresence>
-                {svc && (
-                  <motion.div initial={{ opacity: 0, y: 8, rotateX: -10 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} exit={{ opacity: 0, y: 6 }} style={{ transformPerspective: 800, transformOrigin: "top" }} className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 rounded-2xl bg-white border border-[#F1DCE3] shadow-xl overflow-hidden p-2" data-testid="services-dropdown">
-                    {servicePages.map((s) => (
-                      <Link key={s.slug} to={`/${s.slug}`} className="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm text-[#4A2530] hover:bg-[#FBE9F0] hover:text-[#E62E6B] transition-colors" data-testid={`nav-service-${s.slug}`}>{s.menu} <ArrowUpRight size={13} className="opacity-50" /></Link>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ) : (
-            <Link key={m.to} to={m.to} className={linkCls(m.to)} data-testid={`nav-${m.label.toLowerCase().replace(/\s+/g, "-")}`}>
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-7" data-testid="desktop-nav">
+          {headerMenu.map((m) => m.children ? <Dropdown key={m.label} m={m} pathname={pathname} linkCls={linkCls} /> : (
+            <Link key={m.to} to={m.to} className={linkCls(m.to)} data-testid={`nav-${slug(m.label)}`}>
               {m.label}
               <span className={`absolute -bottom-1.5 left-0 h-px bg-[#E62E6B] transition-all duration-300 ${pathname === m.to ? "w-full" : "w-0 group-hover:w-full"}`} />
             </Link>
@@ -67,14 +77,16 @@ const Navbar = ({ solid = false }) => {
         {open && (
           <motion.div initial={{ opacity: 0, y: -12, rotateX: -12 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} exit={{ opacity: 0, y: -8 }} style={{ transformPerspective: 800, transformOrigin: "top" }} className="lg:hidden mt-3 mx-4 rounded-2xl bg-white border border-[#F1DCE3] shadow-xl overflow-hidden max-h-[75vh] overflow-y-auto" data-testid="mobile-menu">
             {headerMenu.map((m) => m.children ? (
-              <div key="services" className="border-b border-[#FBE9F0]">
-                <div className="px-6 pt-4 pb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#E62E6B]">Services</div>
+              <div key={m.label} className="border-b border-[#FBE9F0]">
+                {m.to
+                  ? <Link to={m.to} className="block px-6 pt-4 pb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#E62E6B]" data-testid={`mobile-nav-${slug(m.label)}`}>{m.label}</Link>
+                  : <div className="px-6 pt-4 pb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#E62E6B]" data-testid={`mobile-nav-${slug(m.label)}`}>{m.label}</div>}
                 <div className="grid grid-cols-2 gap-1 px-4 pb-3">
-                  {servicePages.map((s) => <Link key={s.slug} to={`/${s.slug}`} className="px-3 py-2 rounded-lg text-sm text-[#4A2530] hover:bg-[#FBE9F0]" data-testid={`mobile-nav-service-${s.slug}`}>{s.menu}</Link>)}
+                  {m.children.map((c) => <Link key={c.path} to={c.path} className="px-3 py-2 rounded-lg text-sm text-[#4A2530] hover:bg-[#FBE9F0]" data-testid={`mobile-nav-${slug(m.label)}-${c.path.slice(1)}`}>{c.name}</Link>)}
                 </div>
               </div>
             ) : (
-              <Link key={m.to} to={m.to} className="block w-full text-left px-6 py-4 text-[#4A2530] border-b border-[#FBE9F0] hover:bg-[#FBE9F0] hover:text-[#E62E6B] transition-colors" data-testid={`mobile-nav-${m.label.toLowerCase().replace(/\s+/g, "-")}`}>{m.label}</Link>
+              <Link key={m.to} to={m.to} className="block w-full text-left px-6 py-4 text-[#4A2530] border-b border-[#FBE9F0] hover:bg-[#FBE9F0] hover:text-[#E62E6B] transition-colors" data-testid={`mobile-nav-${slug(m.label)}`}>{m.label}</Link>
             ))}
             <button onClick={goContact} className="m-4 w-[calc(100%-2rem)] py-3.5 rounded-full bg-[#E62E6B] text-white font-medium" data-testid="mobile-book-btn">Book now</button>
           </motion.div>

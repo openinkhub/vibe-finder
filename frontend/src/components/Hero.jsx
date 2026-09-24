@@ -4,7 +4,9 @@ import { motion } from "framer-motion";
 import { heroStats, heroVideo, heroVideoWebm, heroVideoPoster } from "../mock/mock";
 import { scrollToId } from "./Navbar";
 
-const Hero = () => {
+const Headline = ({ text }) => text.split(/["“”]/).map((part, i) => part ? <span key={i} className={`fade-up delay-${Math.min(3, Math.floor(i / 2) + 1)} ${i % 2 ? "italic font-bold text-[#E62E6B]" : ""}`}>{part}</span> : null);
+
+const Hero = ({ page }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -37,19 +39,15 @@ const Hero = () => {
         <div className="max-w-[660px]">
           <div className="flex items-center gap-2.5 fade-up">
             <span className="w-2 h-2 rounded-full bg-[#E62E6B] animate-pulse" />
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] text-[#8B7F82] uppercase">Bridal Makeup Artist in Bangalore · Est. 9 years</span>
+            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] text-[#8B7F82] uppercase" data-testid="hero-eyebrow">{page.eyebrow}</span>
           </div>
 
-          <h1 className="font-display text-[#4A2530] mt-5 sm:mt-6 text-[40px] leading-[1.04] sm:text-[56px] md:text-[66px] lg:text-[72px] font-medium" data-testid="hero-title">
-            <span className="fade-up delay-1">Makeup that reads </span>
-            <span className="fade-up delay-1 italic font-bold text-[#E62E6B]">flawless</span>
-            <span className="fade-up delay-2"> on camera, feels </span>
-            <span className="fade-up delay-2 italic font-bold text-[#E62E6B]">effortless</span>
-            <span className="fade-up delay-3"> in person.</span>
-          </h1>
+          <h2 className="font-display text-[#4A2530] mt-5 sm:mt-6 text-[40px] leading-[1.04] sm:text-[56px] md:text-[66px] lg:text-[72px] font-medium" data-testid="hero-title">
+            <Headline text={page.heroHeadline} />
+          </h2>
 
-          <p className="fade-up delay-3 mt-6 sm:mt-7 text-base sm:text-[17px] md:text-lg leading-relaxed text-[#5C4E52] max-w-[540px]">
-            Rekha Krishnamurthy is Bangalore's <span className="font-semibold text-[#4A2530]">best bridal makeup artist</span> — a <span className="font-semibold text-[#4A2530]">wedding makeup artist</span> trusted for bridal makeup Bangalore-wide, plus self grooming classes for everyday confidence.
+          <p className="fade-up delay-3 mt-6 sm:mt-7 text-base sm:text-[17px] md:text-lg leading-relaxed text-[#5C4E52] max-w-[540px]" data-testid="hero-subtitle">
+            {page.heroSub}
           </p>
 
           <div className="fade-up delay-4 mt-8 sm:mt-9 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 sm:gap-5">

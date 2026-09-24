@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { scrollToId } from "./components/Navbar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import { Toaster } from "./components/ui/sonner";
 import Navbar from "./components/Navbar";
@@ -25,10 +25,14 @@ import FloatingButtons from "./components/FloatingButtons";
 import Admin from "./pages/Admin";
 import PortfolioPage from "./pages/PortfolioPage";
 import { LookLabPage, TryOnPage } from "./pages/ExperiencePages";
-import { ServicePage, StaticPage, BlogPage, LegalPage } from "./pages/ContentPages";
-import { servicePages, locationPages } from "./content/site";
+import { SheetPage, ContactPage, TestimonialsPage, BlogPage, LegalPage } from "./pages/ContentPages";
+import { SeoIntro } from "./components/SeoIntro";
+import { useSeo } from "./components/Seo";
+import { allPages, getPage, legalKeyByPath } from "./lib/pages";
 
 const Landing = () => {
+  const page = getPage("/");
+  useSeo(page);
   useEffect(() => {
     const target = sessionStorage.getItem("rk_scroll_to") || (window.location.hash ? window.location.hash.slice(1) : "");
     if (target) { sessionStorage.removeItem("rk_scroll_to"); setTimeout(() => scrollToId(target), 400); }
@@ -36,7 +40,8 @@ const Landing = () => {
   return (
   <>
     <Navbar />
-    <Hero />
+    <Hero page={page} />
+    <SeoIntro page={page} onCta={() => scrollToId("contact")} className="pt-14 md:pt-20" />
     <Marquee />
     <About />
     <WhoWeServe />
@@ -58,26 +63,29 @@ const Landing = () => {
   );
 };
 
-function App() {
-  useEffect(() => {
-    document.title = "Rekha Krishnamurthy · Bridal Makeup Artist in Bangalore";
-  }, []);
+const special = {
+  "/": <Landing />,
+  "/portfolio": <PortfolioPage />,
+  "/contact": <ContactPage />,
+  "/premium-bridal-makeup-booking": <ContactPage />,
+  "/testimonials": <TestimonialsPage />,
+  "/blog": <BlogPage />,
+  "/archive": <BlogPage />,
+  "/corporate-professional-makeup-services": <LookLabPage />,
+  "/book-bridal-makeup-package-karnataka": <TryOnPage />,
+};
 
+function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Landing />} />
+          {allPages.map((p) => <Route key={p.path} path={p.path} element={special[p.path] || (legalKeyByPath[p.path] ? <LegalPage /> : <SheetPage />)} />)}
           <Route path="/admin" element={<Admin />} />
-          <Route path="/portfolio" element={<PortfolioPage />} />
-          <Route path="/look-lab" element={<LookLabPage />} />
-          <Route path="/try-on" element={<TryOnPage />} />
-          <Route path="/legal" element={<LegalPage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/about-us" element={<StaticPage slug="about-us" />} />
-          <Route path="/makeup-course-training-bangalore" element={<StaticPage slug="makeup-course-training-bangalore" />} />
-          <Route path="/personal-shopping" element={<StaticPage slug="personal-shopping" />} />
-          {[...servicePages, ...locationPages].map((p) => <Route key={p.slug} path={`/${p.slug}`} element={<ServicePage />} />)}
+          <Route path="/look-lab" element={<Navigate to="/corporate-professional-makeup-services" replace />} />
+          <Route path="/try-on" element={<Navigate to="/book-bridal-makeup-package-karnataka" replace />} />
+          <Route path="/legal" element={<Navigate to="/privacy" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-center" richColors />

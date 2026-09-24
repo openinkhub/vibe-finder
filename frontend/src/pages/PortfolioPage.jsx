@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { api, imgUrl } from "../lib/api";
-import { brand, portfolio as fallback } from "../mock/mock";
+import { portfolio as fallback } from "../mock/mock";
 import { useShowcase } from "../components/lab/LookLab";
 import { LAB_LOOKS } from "../components/lab/faceTexture";
 import { Reveal } from "../components/fx/Reveal";
 import { TiltCard } from "../components/fx/TiltCard";
-import Footer from "../components/Footer";
+import { PageShell, PageHero } from "../components/PageShell";
+import { SeoIntro } from "../components/SeoIntro";
+import { getPage } from "../lib/pages";
 
 const Stage = ({ progress, index, total, src, name }) => {
   const seg = 1 / total;
@@ -36,7 +36,7 @@ const ScrollTransformation = ({ showcase }) => {
         <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 w-full grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-16 items-center">
           <div className="order-2 lg:order-1">
             <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Scroll to transform · {String(idx + 1).padStart(2, "0")} / {String(frames.length).padStart(2, "0")}</span>
-            <h1 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-7xl leading-[1.02] mt-4" data-testid="morph-title">{cur.name}</h1>
+            <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-7xl leading-[1.02] mt-4" data-testid="morph-title">{cur.name}</h2>
             <p className="mt-4 text-sm sm:text-base text-[#5C4E52] max-w-md">{idx === 0 ? "Every transformation starts with skin prep — hydrated, primed, ready to hold a twelve-hour look." : `${cur.name} — lips ${lab?.lips || ""}, cheeks ${lab?.blush || ""}, eyes ${lab?.eyes || ""}. Keep scrolling to move through the looks.`}</p>
             <div className="mt-6 flex gap-1.5" aria-hidden>{frames.map((f, i) => <span key={f.key} className={`h-1 rounded-full transition-all duration-500 ${i === idx ? "w-10 bg-[#E62E6B]" : "w-4 bg-[#F4B7CE]"}`} />)}</div>
           </div>
@@ -94,21 +94,23 @@ const ParallaxItem = ({ p, d, sx, sy, i }) => {
   );
 };
 
+export const PortfolioGallery = () => {
+  const [items, setItems] = useState(fallback);
+  useEffect(() => { api.get("/content/portfolio").then((r) => { if (r.data?.length) setItems(r.data); }).catch(() => {}); }, []);
+  return <ParallaxGallery items={items} />;
+};
+
 export default function PortfolioPage() {
   const showcase = useShowcase();
-  const [items, setItems] = useState(fallback);
-  useEffect(() => { api.get("/content/portfolio").then((r) => { if (r.data?.length) setItems(r.data); }).catch(() => {}); window.scrollTo(0, 0); }, []);
+  const page = getPage("/portfolio");
   return (
-    <div className="bg-[#F4F1EA]" data-testid="portfolio-page">
-      <header className="fixed top-0 inset-x-0 z-50 bg-[#F4F1EA]/90 backdrop-blur-xl border-b border-[#F1DCE3]">
-        <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 py-3 flex items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-3" data-testid="portfolio-back-link"><ArrowLeft size={16} className="text-[#E62E6B]" /><img src={brand.logo} alt="Rekha Krishnamurthy" className="h-9 sm:h-10 w-auto" /></Link>
-          <Link to="/#contact" onClick={() => sessionStorage.setItem("rk_scroll_to", "contact")} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57]" data-testid="portfolio-book-btn">Book now <ArrowUpRight size={15} /></Link>
-        </div>
-      </header>
-      <ScrollTransformation showcase={showcase} />
-      <ParallaxGallery items={items} />
-      <Footer />
-    </div>
+    <PageShell page={page} title="Portfolio">
+      <div className="bg-[#F4F1EA]" data-testid="portfolio-page">
+        <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={page.image} />
+        <SeoIntro page={page} />
+        <ScrollTransformation showcase={showcase} />
+        <PortfolioGallery />
+      </div>
+    </PageShell>
   );
 }

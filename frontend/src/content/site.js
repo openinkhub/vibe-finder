@@ -5,30 +5,13 @@ export const authorBio = {
   text: `Rekha Krishnamurthy is a Bangalore-based professional makeup artist with 9+ years of hands-on experience and 320+ bridal, editorial and fashion assignments completed across South India. She specialises in HD and Airbrush makeup techniques, works exclusively with premium international brands (${BRANDS}), and follows strict hygiene protocols on every assignment.`,
 };
 
-export const headerMenu = [
-  { label: "Home", to: "/" },
-  { label: "About Us", to: "/about-us" },
-  { label: "Services", children: true },
-  { label: "Academy", to: "/makeup-course-training-bangalore" },
-  { label: "Portfolio", to: "/portfolio" },
-  { label: "Contact us", to: "/personal-shopping" },
-  { label: "Blog", to: "/blog" },
-];
-
-export const footerExplore = [
-  { label: "Look Lab", to: "/look-lab" },
-  { label: "Try-On Studio", to: "/try-on" },
-  { label: "Pricing", to: "/#pricing" },
-  { label: "Testimonials", to: "/#testimonials" },
-  { label: "Portfolio", to: "/portfolio" },
-  { label: "Academy", to: "/makeup-course-training-bangalore" },
-];
-
 export const legalLinks = [
-  { label: "Privacy Policy", to: "/legal#privacy" },
-  { label: "Terms & Conditions", to: "/legal#terms" },
-  { label: "Refund & Cancellation", to: "/legal#refunds" },
-  { label: "Disclaimer", to: "/legal#disclaimer" },
+  { label: "Privacy Policy", to: "/privacy" },
+  { label: "Terms & Conditions", to: "/terms" },
+  { label: "Refund & Cancellation", to: "/refund" },
+  { label: "Disclaimer", to: "/disclaimer" },
+  { label: "Shipping & Delivery", to: "/delivery" },
+  { label: "Cookies", to: "/cookies" },
 ];
 
 export const servicePages = [
@@ -102,7 +85,7 @@ export const servicePages = [
     faq: [["Do you have experience working backstage at fashion shows?", "Yes — backstage and runway assignments across Bangalore fashion weeks and designer showcases."], ["Can fashion makeup be adapted for a personal shoot, not just a show?", "Yes — the same techniques apply to personal fashion shoots and portfolios."]],
   },
   {
-    slug: "premium-south-indian-bridal-makeup-karnataka", menu: "Photo Shoot", eyebrow: "Camera-First Makeup", title: "Photo Shoot & Premium South Indian Bridal Makeup",
+    slug: "south-indian-bridal-makeup-karnataka", menu: "Photo Shoot", eyebrow: "Camera-First Makeup", title: "Photo Shoot & Premium South Indian Bridal Makeup",
     subtitle: "Pre-wedding shoots, portfolio sessions and traditional South Indian bridal looks — built for how the lens sees skin.",
     image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749", service: "Bridal",
     body: [
@@ -120,7 +103,7 @@ export const locationPages = [
     body: ["Our studio base is close to JP Nagar — the fastest slot for party, event and bridesmaid bookings across Phases 1–9, Sarakki and Puttenahalli.", "Group bookings for the bridal party, birthday glam and anniversary dinners, with HD/airbrush technique chosen for restaurant and flash lighting."] },
   { slug: "best-bridal-makup-artist-in-bangalore", area: "Jayanagar", title: "Best Bridal Makeup Artist in Jayanagar, Bangalore", service: "Bridal", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749",
     body: ["Rated 5.0 on Google across 146 reviews — Jayanagar brides choose us for traditional South Indian bridal looks that photograph beautifully in temple and kalyana-mantapa lighting.", "From 4th Block to South End Circle, we arrive with a full kit, sanitised tools and a plan built at your free consultation."] },
-  { slug: "pre-wedding-photoshoot-makeup-artist", area: "Banashankari", title: "Pre-Wedding Photoshoot Makeup Artist — Banashankari", service: "Engagement", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51",
+  { slug: "pre-wedding-makeup-artist", area: "Banashankari", title: "Pre-Wedding Photoshoot Makeup Artist — Banashankari", service: "Engagement", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51",
     body: ["Pre-wedding shoots around Banashankari, Turahalli forest and the Big Banyan Tree need makeup that survives sun, wind and outfit changes — that's exactly what we plan for.", "Multiple looks per shoot, photographer coordination and touch-ups on location, with no visit charge."] },
 ];
 
@@ -130,7 +113,7 @@ export const staticPages = {
   "makeup-course-training-bangalore": { eyebrow: "Makeup Academy", title: "Makeup course & training in Bangalore", image: "https://images.unsplash.com/photo-1551184451-76b762941ad6", service: "Courses",
     body: ["Small-batch training at the Bangalore studio — for artists building a career, and for anyone who wants to master their own face.", "Tracks include Professional Bridal Makeup Certification, HD & Airbrush Masterclass, Self-Grooming for Everyday & Occasions, and Hairstyling for Brides. Every course is hands-on with live models and premium kits."],
     bullets: [["Professional Bridal Certification", "6 weeks · live brides · portfolio shoot included"], ["HD & Airbrush Masterclass", "2 days · camera tests under studio & daylight"], ["Self-Grooming Class", "1 day · your own kit, your own face — from ₹999"]] },
-  "personal-shopping": { eyebrow: "Contact us", title: "Let's talk about your date", image: "https://images.unsplash.com/photo-1677691257363-eebd2abeafec",
+  "personal-shopping": { eyebrow: "Personal Shopping", title: "Buy fewer products that work better for you", image: "https://images.unsplash.com/photo-1677691257363-eebd2abeafec",
     body: ["Consultation is always free, and there's no visit charge for party, event or wedding bookings. Tell us the event, the city and the vibe — we'll come back with availability and a package that fits."] },
 };
 
