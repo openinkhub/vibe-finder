@@ -17,11 +17,13 @@ MAX_UPLOAD = 8 * 1024 * 1024
 
 DEFAULT_PRICING = [
     {"price": "₹999", "title": "Self Makeup Class", "desc": "A hands-on session to master your own everyday look.", "featured": False},
-    {"price": "₹1,499", "title": "Party Makeup", "desc": "Event-ready glam, no visit charge.", "featured": False},
-    {"price": "₹1,999", "title": "Non-Bridal Makeup", "desc": "For the wedding party, family & guests.", "featured": False},
-    {"price": "₹2,999", "title": "Engagement Makeup", "desc": "Soft-glam for rings & pre-wedding shoots.", "featured": False},
-    {"price": "On Quote", "title": "Editorial / Fashion", "desc": "Scoped to the brief, shoot, and usage.", "featured": False},
-    {"price": "From ₹4,999", "title": "Bridal Makeup", "desc": "HD/airbrush, trial included, no visit charge.", "featured": True},
+    {"price": "Starting ₹7,999/person/session", "title": "Party Makeup", "desc": "Event-ready glam, no visit charge.", "featured": False},
+    {"price": "Starting ₹9,999/person/session", "title": "Non-Bridal Makeup", "desc": "For the wedding party, family & guests.", "featured": False},
+    {"price": "Starting ₹19,999/session", "title": "Engagement Makeup", "desc": "Soft-glam for rings & pre-wedding shoots.", "featured": False},
+    {"price": "On Quote", "title": "Editorial Makeup", "desc": "Scoped to the brief, shoot, and usage.", "featured": False},
+    {"price": "Starting ₹9,999 onwards", "title": "Fashion Makeup", "desc": "Customised looks for portfolio & fashion shoots.", "featured": False},
+    {"price": "₹4,999/session", "title": "Groom Makeup", "desc": "Camera-ready grooming for the big day.", "featured": False},
+    {"price": "Starting ₹29,999/session", "title": "Bridal Makeup", "desc": "HD/airbrush, trial included, no visit charge.", "featured": True},
 ]
 DEFAULT_PORTFOLIO = [
     {"cat": "Bridal", "caption": "Bridal · f/2.8 · Golden Hour", "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"},

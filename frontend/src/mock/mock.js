@@ -82,11 +82,13 @@ export const services = [
 
 export const pricing = [
   { price: "₹999", title: "Self Makeup Class", desc: "A hands-on session to master your own everyday look." },
-  { price: "₹1,499", title: "Party Makeup", desc: "Event-ready glam, no visit charge." },
-  { price: "₹1,999", title: "Non-Bridal Makeup", desc: "For the wedding party, family & guests." },
-  { price: "₹2,999", title: "Engagement Makeup", desc: "Soft-glam for rings & pre-wedding shoots." },
-  { price: "On Quote", title: "Editorial / Fashion", desc: "Scoped to the brief, shoot, and usage." },
-  { price: "From ₹4,999", title: "Bridal Makeup", desc: "HD/airbrush, trial included, no visit charge.", featured: true },
+  { price: "Starting ₹7,999/person/session", title: "Party Makeup", desc: "Event-ready glam, no visit charge." },
+  { price: "Starting ₹9,999/person/session", title: "Non-Bridal Makeup", desc: "For the wedding party, family & guests." },
+  { price: "Starting ₹19,999/session", title: "Engagement Makeup", desc: "Soft-glam for rings & pre-wedding shoots." },
+  { price: "On Quote", title: "Editorial Makeup", desc: "Scoped to the brief, shoot, and usage." },
+  { price: "Starting ₹9,999 onwards", title: "Fashion Makeup", desc: "Customised looks for portfolio & fashion shoots." },
+  { price: "₹4,999/session", title: "Groom Makeup", desc: "Camera-ready grooming for the big day." },
+  { price: "Starting ₹29,999/session", title: "Bridal Makeup", desc: "HD/airbrush, trial included, no visit charge.", featured: true },
 ];
 
 export const areas = ["HSR Layout", "JP Nagar", "Jayanagar", "Banashankari", "+ Bangalore-wide on request"];

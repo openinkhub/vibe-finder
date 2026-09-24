@@ -112,7 +112,7 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
                 <div><label className="block text-sm text-[#5C4E52] mb-2">Phone</label><input name="phone" value={form.phone} onChange={handle} required placeholder="+91" className={inputCls} data-testid="contact-phone-input" /></div>
                 <div><label className="block text-sm text-[#5C4E52] mb-2">Service</label>
                   <select name="service" value={form.service} onChange={handle} className={inputCls} data-testid="contact-service-select">
-                    <optgroup label="Makeup">{["Bridal", "Engagement", "Non-Bridal", "Party", "Editorial", "Fashion"].map((s) => <option key={s}>{s}</option>)}</optgroup>
+                    <optgroup label="Makeup">{["Bridal", "Engagement", "Non-Bridal", "Party", "Groom", "Editorial", "Fashion", "Photo Shoot"].map((s) => <option key={s}>{s}</option>)}</optgroup>
                     <optgroup label="Courses & workshops">{COURSE_SERVICES.map((s) => <option key={s}>{s}</option>)}</optgroup>
                   </select>
                 </div>

@@ -13,7 +13,7 @@ import { getPage, pagesByGroup, headerMenu, legalKeyByPath, BOOKING_PATH, enquir
 import { BatchBanner } from "../components/BatchBanner";
 import { PortfolioGallery } from "./PortfolioPage";
 import { RichBody } from "../components/RichBody";
-import { pageBodies } from "../content/pageBodies";
+import { pageBodies, communityFaq } from "../content/pageBodies";
 import { BrochureCta } from "../components/BrochureCta";
 import { BookingPanel } from "../components/BookingPanel";
 import { usePageImage, usePageImages, heroImage } from "../hooks/usePageImages";
@@ -81,7 +81,7 @@ const ChildCards = ({ items }) => {
   );
 };
 
-const ComingSoon = () => (
+const ComingSoon = ({ faq }) => (
   <Section>
     <Reveal>
       <div className="bg-[#FBE9F0] rounded-3xl p-8 sm:p-12 border border-[#F1DCE3] text-center" data-testid="coming-soon">
@@ -90,6 +90,21 @@ const ComingSoon = () => (
         <p className="mt-3 text-sm sm:text-base text-[#5C4E52] max-w-xl mx-auto">Community perks, member stories and workshop invites will appear here shortly. In the meantime, say hello on WhatsApp or start an enquiry.</p>
       </div>
     </Reveal>
+    {faq && (
+      <Reveal delay={0.1}>
+        <div className="mt-8" data-testid="community-faq">
+          <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#E62E6B] mb-4">Good to know</div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {faq.map(([q, a]) => (
+              <div key={q} className="bg-white rounded-2xl border border-[#F1DCE3] p-5">
+                <div className="font-display text-base text-[#4A2530]">{q}</div>
+                <p className="text-sm text-[#5C4E52] mt-1">{a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    )}
   </Section>
 );
 
@@ -121,7 +136,7 @@ export const SheetPage = () => {
         <Hero page={page} />
         {page.group === "Academy" && <BatchBanner page={page} />}
         <SeoIntro page={page} ctaTo={`/contact?service=${encodeURIComponent(enquiryServiceFor(page))}`} />
-        {hub ? <ChildCards items={hub.children} /> : pageBodies[pathname] ? <RichBody body={pageBodies[pathname]} /> : page.comingSoon ? <ComingSoon /> : <Body page={content} />}
+        {hub ? <ChildCards items={hub.children} /> : pageBodies[pathname] ? <RichBody body={pageBodies[pathname]} /> : page.comingSoon ? <ComingSoon faq={pathname === "/community" ? communityFaq : undefined} /> : <Body page={content} />}
         {page.group === "Portfolio" && <PortfolioGallery />}
         {!hub && (page.group === "Services" || page.group === "Academy") && (<><BrochureCta page={page} /><BookingPanel page={page} /></>)}
         {!hub && <Siblings page={page} />}
