@@ -1,0 +1,23 @@
+{
+  "summary": "Frontend regression pass on 11 new Service Area / Service Location SEO pages (card-table rich content). All 11 slugs render RichBody with cardTable grid (data-testid='body-card-table' with 11-13 card-table-item-{i} cards each), body-faq sidebar, and CTAs. No raw <table> elements in rich body. CTAs verified: 'Enquire About Bridal Makeup' -> /contact?service=Bridal (select prefills to 'Bridal'); 'Talk to Rekha' -> wa.me link. Responsive check at 390x844: cards stack single-column, zero horizontal overflow. Smoke tests pass: Home loads, Contact enquiry POST /api/enquiries returns 201, Portfolio bridal (/south-indian-bridal-makeup-artist-in-karnataka) renders rich body + faq, Academy Launchpad brochure CTA present.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "pages.json canonical URL for /bridal-makeup-Bangalore uses mixed-case 'Bangalore' path segment which is case-sensitive in some routers/SEO tools - consider lowercasing the slug for consistency with all other slugs.",
+    "RichBody.jsx does not include a fallback when body.sections is undefined; safe currently because pageBodies always defines it, but a defensive guard would prevent runtime errors if a slug is added to pages.json without a matching body entry."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100% (spot-checked enquiry POST 201)", "frontend": "100% (11/11 location pages + smoke tests)"},
+  "test_credentials": "admin@rekhakrishnamurthy.com / Rekha@Admin2026 (not used this pass - frontend regression only)",
+  "seed_data_creation": "One TEST_regression enquiry created via POST /api/enquiries (201). Admin can delete via existing enquiry management UI.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "iteration_8 confirmed backend 16/16 + broader frontend 100%. iteration_9 confirms the 11 new location/service-area pages render correctly as CARD grids (not tables) with FAQ sidebar and working CTAs. All 11 slugs verified: /bridal-makeup-Bangalore, /party-and-non-bridal-makeup-karnataka, /best-bridal-makup-artist-in-bangalore, /pre-wedding-makeup-artist, /wedding-makeup-artist, /bridal-makeup-artist-in-bangalore, /premium-south-indian-bridal-makeup-karnataka, /bridal-makeup-artist-karnataka, /book-premium-bridal-makeup-artist, /luxury-makeup-services-karnataka, /best-makeup-artist-for-brides. Card counts range 11-13 per page. No regressions in Home/Contact/Portfolio/Academy smoke tests.",
+  "rca of the issue": "N/A - no issues found."
+}
