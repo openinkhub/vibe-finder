@@ -16,8 +16,8 @@ export const headerMenu = [
 ];
 
 export const footerExplore = [
-  { label: "Look Lab", to: "/#looklab" },
-  { label: "Try-On Studio", to: "/#studio" },
+  { label: "Look Lab", to: "/look-lab" },
+  { label: "Try-On Studio", to: "/try-on" },
   { label: "Pricing", to: "/#pricing" },
   { label: "Testimonials", to: "/#testimonials" },
   { label: "Portfolio", to: "/portfolio" },

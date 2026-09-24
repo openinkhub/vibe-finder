@@ -38,6 +38,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-06 g: **MediaPipe 3D face model in Look Lab** — porcelain mannequin replaced by a photo-textured 468-point face mesh (triangles derived from FACE_LANDMARKS_TESSELATION → `src/content/faceTriangles.json`, eye/mouth fans added). Sample model auto-scanned on scroll; "Scan my face" camera capture (no upload, by user request) builds the visitor's own mesh; looks painted via the shared makeupPainter; CompareCard shows before/after of the same scan. Face engine is now a module-level singleton shared with Try-On. Testing agent + self-test: all pass.
 
+- 2026-06 h: **Look Lab & Try-On moved off Home** → dedicated routes `/look-lab` and `/try-on` (`src/pages/ExperiencePages.jsx`, PageShell wrap). Footer Explore links updated; Look Lab "Live try-on" → `/try-on`; Try-On "Book this look" navigates Home → #contact via rk_scroll_to. No header menu entries / no home teaser (user choice). Self-tested via screenshot.
+
 ## Backlog
 - P1: Verify legal placeholder assumptions (address, refund windows) and EEAT numbers (320+ brides, lead times) with Rekha.
 - P2: Blog article pages (currently teaser cards).

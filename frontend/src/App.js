@@ -9,7 +9,6 @@ import Marquee from "./components/Marquee";
 import About from "./components/About";
 import WhoWeServe from "./components/WhoWeServe";
 import Services from "./components/Services";
-import FaceStudio from "./components/studio/FaceStudio";
 import Pricing from "./components/Pricing";
 import Areas from "./components/Areas";
 import Portfolio from "./components/Portfolio";
@@ -25,7 +24,7 @@ import Footer from "./components/Footer";
 import FloatingButtons from "./components/FloatingButtons";
 import Admin from "./pages/Admin";
 import PortfolioPage from "./pages/PortfolioPage";
-import LookLab from "./components/lab/LookLab";
+import { LookLabPage, TryOnPage } from "./pages/ExperiencePages";
 import { ServicePage, StaticPage, BlogPage, LegalPage } from "./pages/ContentPages";
 import { servicePages, locationPages } from "./content/site";
 
@@ -40,10 +39,8 @@ const Landing = () => {
     <Hero />
     <Marquee />
     <About />
-    <LookLab />
     <WhoWeServe />
     <Services />
-    <FaceStudio />
     <Pricing />
     <Areas />
     <Portfolio />
@@ -73,6 +70,8 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/look-lab" element={<LookLabPage />} />
+          <Route path="/try-on" element={<TryOnPage />} />
           <Route path="/legal" element={<LegalPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/about-us" element={<StaticPage slug="about-us" />} />

@@ -10,13 +10,14 @@ import { StudioStage } from "./StudioStage";
 import { LipstickViewer } from "./LipstickViewer";
 import { Reveal } from "../fx/Reveal";
 import { TiltCard } from "../fx/TiltCard";
-import { scrollToId } from "../Navbar";
+import { useNavigate } from "react-router-dom";
 
 const MAX_DIM = 1000;
 const AI_DIM = 768;
 const DEFAULT_LOOK = { ...studioLooks[0], intensity: 0.9, liner: true, gloss: true };
 
 const FaceStudio = () => {
+  const navigate = useNavigate();
   const canvasRef = useRef(null);
   const videoRef = useRef(null);
   const fileRef = useRef(null);
@@ -252,7 +253,8 @@ const FaceStudio = () => {
         toast.error(errorText(e, "Couldn't attach the image — booking the look by name instead"));
       } finally { setBooking(false); }
     }
-    scrollToId("contact");
+    sessionStorage.setItem("rk_scroll_to", "contact");
+    navigate("/");
   };
   const reset = () => { stopCamera(); setSource(null); landmarksRef.current = null; setMsg(""); setAiImage(null); setView("overlay"); setCompare(null); setBeforeUrl(null); setLook(DEFAULT_LOOK); };
 

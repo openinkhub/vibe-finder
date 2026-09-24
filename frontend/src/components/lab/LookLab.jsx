@@ -8,7 +8,6 @@ import { LAB_LOOKS } from "./faceTexture";
 import { useFaceLandmarker } from "../studio/useFaceLandmarker";
 import { paintMakeup } from "../studio/makeupPainter";
 import { api } from "../../lib/api";
-import { scrollToId } from "../Navbar";
 import { sampleFace } from "../../mock/mock";
 
 const MAX = 768;
@@ -170,7 +169,7 @@ const LookLab = () => {
               {mode !== "camera" && scan && (
                 <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 pointer-events-none">
                   <div><div className="font-display text-2xl text-[#4A2530]">{active.name}</div><div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">{scan.isSample ? "Our model" : "Your scan"} · 468 points</div></div>
-                  <button onClick={() => scrollToId("studio")} className="pointer-events-auto shrink-0 px-4 py-2 rounded-full bg-[#E62E6B] text-white text-xs font-medium hover:bg-[#C81F57]" data-testid="looklab-tryon-btn">Live try-on</button>
+                  <Link to="/try-on" className="pointer-events-auto shrink-0 px-4 py-2 rounded-full bg-[#E62E6B] text-white text-xs font-medium hover:bg-[#C81F57]" data-testid="looklab-tryon-btn">Live try-on</Link>
                 </div>
               )}
             </div>
