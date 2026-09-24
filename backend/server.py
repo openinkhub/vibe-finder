@@ -15,6 +15,7 @@ import enquiries
 import studio
 import content
 import availability
+import brochure
 from storage import init_storage
 
 mongo_url = os.environ['MONGO_URL']
@@ -29,6 +30,7 @@ enquiries.init(db)
 content.init(db)
 studio.init(db)
 availability.init(db)
+brochure.init(db)
 
 
 @api_router.get("/")
@@ -41,6 +43,7 @@ api_router.include_router(enquiries.router)
 api_router.include_router(studio.router)
 api_router.include_router(content.router)
 api_router.include_router(availability.router)
+api_router.include_router(brochure.router)
 app.include_router(api_router)
 
 app.add_middleware(

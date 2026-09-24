@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { LogOut, RefreshCw, Phone, Mail, Calendar, Sparkles, Trash2, Loader2, Lock, ArrowLeft, Bell, BellRing, Mic, Inbox, IndianRupee, Images, Scissors, CalendarDays, MessageCircle, Image as ImageIcon, GraduationCap } from "lucide-react";
+import { LogOut, RefreshCw, Phone, Mail, Calendar, Sparkles, Trash2, Loader2, Lock, ArrowLeft, Bell, BellRing, Mic, Inbox, IndianRupee, Images, Scissors, CalendarDays, MessageCircle, Image as ImageIcon, GraduationCap, BookOpen, CheckCircle2, XCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { api, errorText, TOKEN_KEY, imgUrl } from "../lib/api";
@@ -53,7 +53,7 @@ const Login = ({ onLogin }) => {
   );
 };
 
-const EnquiryCard = ({ e, onStatus, onDelete }) => (
+const EnquiryCard = ({ e, onStatus, onAccept, onReject, onDelete }) => (
   <div className={`bg-white rounded-3xl p-5 sm:p-6 border ${e.seen === false ? "border-[#E62E6B]/60 shadow-lg shadow-[#E62E6B]/10" : "border-[#F1DCE3]"}`} data-testid={`enquiry-card-${e.id}`}>
     <div className="flex flex-wrap items-start justify-between gap-3">
       <div className="flex items-start gap-3">
@@ -73,6 +73,8 @@ const EnquiryCard = ({ e, onStatus, onDelete }) => (
     </div>
     {e.message && <p className="mt-3 text-sm text-[#5C4E52] leading-relaxed bg-[#FBFAF7] rounded-xl px-4 py-3">{e.message}</p>}
     <div className="mt-4 flex flex-wrap items-center gap-2">
+      <button onClick={() => onAccept(e.id)} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#1c7a45]/10 text-[#1c7a45] border border-[#1c7a45]/30 hover:bg-[#1c7a45] hover:text-white transition-colors" data-testid={`enquiry-accept-${e.id}`}><CheckCircle2 size={13} /> Accept</button>
+      <button onClick={() => onReject(e.id)} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#C81F57]/10 text-[#C81F57] border border-[#C81F57]/30 hover:bg-[#C81F57] hover:text-white transition-colors" data-testid={`enquiry-reject-${e.id}`}><XCircle size={13} /> Reject</button>
       {STATUSES.filter((s) => s !== e.status).map((s) => (
         <button key={s} onClick={() => onStatus(e.id, s)} className="px-3 py-1.5 rounded-full text-xs font-medium border border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B] hover:text-[#E62E6B] transition-colors capitalize" data-testid={`enquiry-set-${s}-${e.id}`}>Mark {s}</button>
       ))}
@@ -83,22 +85,48 @@ const EnquiryCard = ({ e, onStatus, onDelete }) => (
   </div>
 );
 
+const EnquiriesSection = ({ group, title, items, filter, setFilter, stats, unseen, markSeen }) => (
+  <>
+    <div className="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">{group === "course" ? "Course enquiries" : "Service enquiries"}</span>
+        <h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3">{title}</h1>
+      </div>
+      {unseen > 0 && <button onClick={markSeen} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[#E62E6B] text-[#E62E6B] text-sm font-medium hover:bg-[#FBE9F0]" data-testid={`admin-mark-seen-${group}`}><Bell size={15} /> Mark {unseen} as seen</button>}
+    </div>
+
+    <div className="mt-8 grid grid-cols-2 sm:grid-cols-5 gap-3" data-testid={`admin-stats-${group}`}>
+      {["total", ...STATUSES].map((k) => (
+        <button key={k} onClick={() => setFilter(k === "total" ? "all" : k)} className={`text-left rounded-2xl p-4 border transition-colors ${(filter === "all" && k === "total") || filter === k ? "bg-[#E62E6B] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`admin-filter-${group}-${k}`}>
+          <div className="font-display text-3xl">{stats[k]}</div>
+          <div className="font-mono text-[10px] uppercase tracking-wider opacity-70 mt-1">{k}</div>
+        </button>
+      ))}
+    </div>
+
+    <div className="mt-8 space-y-4" data-testid={`admin-enquiry-list-${group}`}>
+      {items.length === 0 && <div className="bg-white rounded-3xl p-10 text-center text-[#8B7F82] border border-[#F1DCE3]" data-testid={`admin-empty-${group}`}>No {group} enquiries {filter !== "all" ? `marked ${filter}` : "yet"}.</div>}
+    </div>
+  </>
+);
+
 export default function Admin() {
   const [user, setUser] = useState(undefined);
   const [items, setItems] = useState([]);
   const [stats, setStats] = useState(null);
-  const [filter, setFilter] = useState("all");
+  const [serviceFilter, setServiceFilter] = useState("all");
+  const [courseFilter, setCourseFilter] = useState("all");
   const [loading, setLoading] = useState(false);
-  const [tab, setTab] = useState("enquiries");
+  const [tab, setTab] = useState("service-enquiries");
   const [notify, setNotify] = useState(() => typeof Notification !== "undefined" && Notification.permission === "granted");
   const prevUnseen = useRef(null);
 
   const logout = useCallback(() => { localStorage.removeItem(TOKEN_KEY); setUser(false); }, []);
 
-  const refresh = useCallback(async (f = filter) => {
+  const refresh = useCallback(async () => {
     setLoading(true);
     try {
-      const [a, b] = await Promise.all([api.get("/enquiries", { params: { status: f } }), api.get("/enquiries/stats")]);
+      const [a, b] = await Promise.all([api.get("/enquiries", { params: { status: "all" } }), api.get("/enquiries/stats")]);
       setItems(a.data); setStats(b.data);
       const unseen = b.data.unseen || 0;
       if (prevUnseen.current != null && unseen > prevUnseen.current) {
@@ -109,14 +137,14 @@ export default function Admin() {
     } catch (err) {
       if (err?.response?.status === 401) logout(); else toast.error(errorText(err));
     } finally { setLoading(false); }
-  }, [filter, logout]);
+  }, [logout]);
 
   useEffect(() => {
     if (!localStorage.getItem(TOKEN_KEY)) { setUser(false); return; }
     api.get("/auth/me").then((r) => setUser(r.data)).catch(() => logout());
   }, [logout]);
 
-  useEffect(() => { if (user) refresh(filter); }, [user, filter, refresh]);
+  useEffect(() => { if (user) refresh(); }, [user, refresh]);
   useEffect(() => {
     if (!user) return;
     const id = setInterval(() => refresh(), 20000);
@@ -134,6 +162,12 @@ export default function Admin() {
   const setStatus = async (id, status) => {
     try { await api.patch(`/enquiries/${id}`, { status }); toast.success(`Marked ${status}`); refresh(); } catch (err) { toast.error(errorText(err)); }
   };
+  const accept = async (id) => {
+    try { await api.post(`/enquiries/${id}/accept`); toast.success("Accepted — confirmation email sent"); refresh(); } catch (err) { toast.error(errorText(err)); }
+  };
+  const reject = async (id) => {
+    try { await api.post(`/enquiries/${id}/reject`); toast.success("Rejected — email sent"); refresh(); } catch (err) { toast.error(errorText(err)); }
+  };
   const remove = async (id) => {
     if (!window.confirm("Delete this enquiry?")) return;
     try { await api.delete(`/enquiries/${id}`); toast.success("Deleted"); refresh(); } catch (err) { toast.error(errorText(err)); }
@@ -141,6 +175,19 @@ export default function Admin() {
 
   if (user === undefined) return <div className="min-h-screen bg-[#F4F1EA] flex items-center justify-center text-[#E62E6B]"><Loader2 className="animate-spin" /></div>;
   if (!user) return <Login onLogin={setUser} />;
+
+  const isCourse = (e) => COURSE_SERVICES.includes(e.service);
+  const groupStats = (group) => {
+    const g = items.filter((e) => (group === "course" ? isCourse(e) : !isCourse(e)));
+    const out = { total: g.length };
+    STATUSES.forEach((s) => { out[s] = g.filter((e) => e.status === s).length; });
+    return out;
+  };
+  const groupUnseen = (group) => items.filter((e) => (group === "course" ? isCourse(e) : !isCourse(e)) && e.seen === false).length;
+  const filteredItems = (group, filter) => items.filter((e) => (group === "course" ? isCourse(e) : !isCourse(e))).filter((e) => filter === "all" || e.status === filter);
+
+  const serviceItems = filteredItems("service", serviceFilter);
+  const courseItems = filteredItems("course", courseFilter);
 
   return (
     <div className="min-h-screen bg-[#F4F1EA]" data-testid="admin-dashboard">
@@ -161,9 +208,18 @@ export default function Admin() {
 
       <main className="max-w-[1100px] mx-auto px-5 sm:px-8 py-8 sm:py-12">
         <div className="flex flex-wrap gap-2 mb-8" data-testid="admin-tabs">
-          {[["enquiries", "Enquiries", Inbox], ["calendar", "Calendar", CalendarDays], ["services", "Services", Scissors], ["pricing", "Pricing", IndianRupee], ["portfolio", "Portfolio", Images], ["heroes", "Page heroes", ImageIcon], ["batches", "Batches", GraduationCap]].map(([k, label, Icon]) => (
+          {[
+            ["service-enquiries", "Service Enquiries", Inbox, groupUnseen("service")],
+            ["course-enquiries", "Course Enquiries", GraduationCap, groupUnseen("course")],
+            ["calendar", "Calendar", CalendarDays, 0],
+            ["services", "Services", Scissors, 0],
+            ["pricing", "Pricing", IndianRupee, 0],
+            ["portfolio", "Portfolio", Images, 0],
+            ["heroes", "Page heroes", ImageIcon, 0],
+            ["batches", "Batches", BookOpen, 0],
+          ].map(([k, label, Icon, badge]) => (
             <button key={k} onClick={() => setTab(k)} className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium border transition-colors ${tab === k ? "bg-[#E62E6B] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`admin-tab-${k}`}>
-              <Icon size={15} /> {label}{k === "enquiries" && stats?.unseen > 0 && <span className={`ml-1 px-1.5 rounded-full text-[10px] ${tab === k ? "bg-white text-[#E62E6B]" : "bg-[#E62E6B] text-white"}`}>{stats.unseen}</span>}
+              <Icon size={15} /> {label}{badge > 0 && <span className={`ml-1 px-1.5 rounded-full text-[10px] ${tab === k ? "bg-white text-[#E62E6B]" : "bg-[#E62E6B] text-white"}`}>{badge}</span>}
             </button>
           ))}
         </div>
@@ -174,32 +230,25 @@ export default function Admin() {
         {tab === "portfolio" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Portfolio photos</h1><PortfolioEditor /></>)}
         {tab === "heroes" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Page hero images</h1><HeroImagesEditor /></>)}
         {tab === "batches" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Academy</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Next batch dates</h1><BatchesEditor /></>)}
-        {tab === "enquiries" && (<>
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Enquiries</span>
-            <h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3">Who's waiting to hear from you</h1>
-          </div>
-          {stats?.unseen > 0 && <button onClick={markSeen} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[#E62E6B] text-[#E62E6B] text-sm font-medium hover:bg-[#FBE9F0]" data-testid="admin-mark-seen-btn"><Bell size={15} /> Mark {stats.unseen} as seen</button>}
-        </div>
-        {stats?.alerts && !stats.alerts.email && <p className="mt-4 text-xs text-[#8B7F82] bg-white border border-[#F1DCE3] rounded-xl px-4 py-2.5 inline-block" data-testid="admin-alerts-note">In-app alerts are on. Email alerts will switch on automatically once RESEND_API_KEY and ALERT_TO_EMAIL are added to the backend .env.</p>}
 
-        {stats && (
-          <div className="mt-8 grid grid-cols-2 sm:grid-cols-5 gap-3" data-testid="admin-stats">
-            {["total", ...STATUSES].map((k) => (
-              <button key={k} onClick={() => setFilter(k === "total" ? "all" : k)} className={`text-left rounded-2xl p-4 border transition-colors ${(filter === "all" && k === "total") || filter === k ? "bg-[#E62E6B] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`admin-filter-${k}`}>
-                <div className="font-display text-3xl">{stats[k]}</div>
-                <div className="font-mono text-[10px] uppercase tracking-wider opacity-70 mt-1">{k}</div>
-              </button>
-            ))}
-          </div>
+        {(tab === "service-enquiries" || tab === "course-enquiries") && stats?.alerts && !stats.alerts.email && <p className="mb-6 text-xs text-[#8B7F82] bg-white border border-[#F1DCE3] rounded-xl px-4 py-2.5 inline-block" data-testid="admin-alerts-note">In-app alerts are on. Email alerts will switch on automatically once RESEND_API_KEY and ALERT_TO_EMAIL are added to the backend .env.</p>}
+
+        {tab === "service-enquiries" && (
+          <>
+            <EnquiriesSection group="service" title="Who's waiting to hear from you" items={serviceItems} filter={serviceFilter} setFilter={setServiceFilter} stats={groupStats("service")} unseen={groupUnseen("service")} markSeen={markSeen} />
+            <div className="space-y-4" data-testid="admin-enquiry-list-service-cards">
+              {serviceItems.map((e) => <EnquiryCard key={e.id} e={e} onStatus={setStatus} onAccept={accept} onReject={reject} onDelete={remove} />)}
+            </div>
+          </>
         )}
-
-        <div className="mt-8 space-y-4" data-testid="admin-enquiry-list">
-          {items.length === 0 && !loading && <div className="bg-white rounded-3xl p-10 text-center text-[#8B7F82] border border-[#F1DCE3]" data-testid="admin-empty">No enquiries {filter !== "all" ? `marked ${filter}` : "yet"}.</div>}
-          {items.map((e) => <EnquiryCard key={e.id} e={e} onStatus={setStatus} onDelete={remove} />)}
-        </div>
-        </>)}
+        {tab === "course-enquiries" && (
+          <>
+            <EnquiriesSection group="course" title="Academy leads to follow up" items={courseItems} filter={courseFilter} setFilter={setCourseFilter} stats={groupStats("course")} unseen={groupUnseen("course")} markSeen={markSeen} />
+            <div className="space-y-4" data-testid="admin-enquiry-list-course-cards">
+              {courseItems.map((e) => <EnquiryCard key={e.id} e={e} onStatus={setStatus} onAccept={accept} onReject={reject} onDelete={remove} />)}
+            </div>
+          </>
+        )}
       </main>
     </div>
   );

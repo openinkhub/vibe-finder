@@ -14,6 +14,8 @@ import { BatchBanner } from "../components/BatchBanner";
 import { PortfolioGallery } from "./PortfolioPage";
 import { RichBody } from "../components/RichBody";
 import { pageBodies } from "../content/pageBodies";
+import { BrochureCta } from "../components/BrochureCta";
+import { BookingPanel } from "../components/BookingPanel";
 import { usePageImage, usePageImages, heroImage } from "../hooks/usePageImages";
 import legal from "../content/legal.json";
 
@@ -121,6 +123,7 @@ export const SheetPage = () => {
         <SeoIntro page={page} ctaTo={`/contact?service=${encodeURIComponent(enquiryServiceFor(page))}`} />
         {hub ? <ChildCards items={hub.children} /> : pageBodies[pathname] ? <RichBody body={pageBodies[pathname]} /> : page.comingSoon ? <ComingSoon /> : <Body page={content} />}
         {page.group === "Portfolio" && <PortfolioGallery />}
+        {!hub && (page.group === "Services" || page.group === "Academy") && (<><BrochureCta page={page} /><BookingPanel page={page} /></>)}
         {!hub && <Siblings page={page} />}
       </div>
     </PageShell>

@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, Depends, Query, BackgroundTasks
 from pydantic import BaseModel, Field
 
 from auth import require_admin
-from alerts import send_enquiry_alert, alerts_status
+from alerts import send_enquiry_alert, alerts_status, send_status_email
 
 router = APIRouter(prefix="/enquiries")
 _db = None
@@ -91,3 +91,24 @@ async def delete_enquiry(enquiry_id: str, _: dict = Depends(require_admin)):
     res = await _db.enquiries.delete_one({"id": enquiry_id})
     if res.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Enquiry not found")
+
+
+@router.post("/{enquiry_id}/accept", response_model=Enquiry)
+async def accept_enquiry(enquiry_id: str, bg: BackgroundTasks, _: dict = Depends(require_admin)):
+    now = datetime.now(timezone.utc).isoformat()
+    res = await _db.enquiries.find_one_and_update({"id": enquiry_id}, {"$set": {"status": "booked", "seen": True, "updated_at": now}}, projection={"_id": 0}, return_document=True)
+    if not res:
+        raise HTTPException(status_code=404, detail="Enquiry not found")
+    bg.add_task(send_enquiry_alert, res, "booked")
+    bg.add_task(send_status_email, res, "accepted")
+    return res
+
+
+@router.post("/{enquiry_id}/reject", response_model=Enquiry)
+async def reject_enquiry(enquiry_id: str, bg: BackgroundTasks, _: dict = Depends(require_admin)):
+    now = datetime.now(timezone.utc).isoformat()
+    res = await _db.enquiries.find_one_and_update({"id": enquiry_id}, {"$set": {"status": "closed", "seen": True, "updated_at": now}}, projection={"_id": 0}, return_document=True)
+    if not res:
+        raise HTTPException(status_code=404, detail="Enquiry not found")
+    bg.add_task(send_status_email, res, "rejected")
+    return res

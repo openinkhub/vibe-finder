@@ -156,10 +156,14 @@ class PageImage(BaseModel):
 class BatchIn(BaseModel):
     date: str = Field(..., max_length=10)
     note: Optional[str] = Field(default=None, max_length=160)
+    seats: Optional[int] = Field(default=None, ge=1, le=999)
 
 
-class Batch(BatchIn):
+class Batch(BaseModel):
     path: str
+    date: str
+    note: Optional[str] = None
+    seats: int = 5
 
 
 @router.get("/content/batches", response_model=List[Batch])
@@ -169,7 +173,7 @@ async def list_batches():
 
 @router.put("/content/batches/{slug}", response_model=Batch)
 async def set_batch(slug: str, body: BatchIn, _: dict = Depends(require_admin)):
-    doc = {"path": f"/{slug}", **body.model_dump(), "updated_at": datetime.now(timezone.utc).isoformat()}
+    doc = {"path": f"/{slug}", "date": body.date, "note": body.note, "seats": body.seats or 5, "updated_at": datetime.now(timezone.utc).isoformat()}
     await _db.course_batches.update_one({"path": doc["path"]}, {"$set": doc}, upsert=True)
     return doc
 

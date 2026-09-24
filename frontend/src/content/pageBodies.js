@@ -102,6 +102,97 @@ export const pageBodies = {
       { h: "Not Sure What to Buy? Start With a Conversation.", p: ["Tell Rekha what you already own, what you struggle with and what you want your makeup collection to do. From there, you can build a more focused shopping plan."], ctas: [{ label: "Enquire About Personal Shopping", to: "/contact?service=Personal%20Shopping" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }, { label: "Explore Academy", to: "/makeup-course-training-bangalore", secondary: true }] },
     ],
   },
+  "/south-indian-bridal-makeup-artist-in-karnataka": {
+    sections: [
+      { h: "Bridal Makeup Portfolio", p: ["Every bride has a different idea of what makes her feel beautiful. This portfolio brings together bridal looks created around different faces, skin types, features, personal styles, bridal outfits and wedding aesthetics. Explore bridal makeup created with attention to complexion, eye shape, facial balance, lips, lashes, hairstyle coordination and the overall bridal presentation.", "The focus is not on creating one fixed bridal look. It is on adapting makeup to the individual bride while keeping the result polished, comfortable and suitable for the occasion. From classic bridal elegance to soft glam, traditional bridal styling and more defined contemporary looks, the portfolio demonstrates how makeup can change according to the bride, her outfit, jewellery, ceremony, venue and personal preference."] },
+      { h: "Explore the Work", p: ["Browse the portfolio to see different approaches to makeup, finish, styling and visual presentation. If you have a particular look in mind, use the images as references during your consultation rather than expecting an exact reproduction."] },
+      { h: "Plan Your Look", p: ["Your makeup can be discussed around the occasion, features, skin, outfit, jewellery, lighting, photography and the level of definition you are comfortable with. The goal is to create a considered look that fits the person and the purpose of the booking."], ctas: [{ label: "Enquire About Bridal Makeup", to: "/contact?service=Bridal" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
+    ],
+    faq: [
+      ["What type of bridal makeup can I see in the portfolio?", "The portfolio showcases different bridal approaches, including classic, traditional, soft glam and contemporary bridal looks."],
+      ["Can I request a bridal look similar to a portfolio image?", "Yes. Portfolio references can be discussed during consultation. The final look is adapted to your features, skin, outfit, jewellery and preferences."],
+      ["Will my makeup look exactly like a portfolio image?", "Not necessarily. Each face, skin condition, lighting environment and bridal styling is different, so references are used for direction rather than exact reproduction."],
+      ["Can I discuss my bridal look before booking?", "Yes. A consultation is the right place to discuss your preferences, references and the final bridal look."],
+    ],
+  },
+  "/book-engagement-makeup-artist-near-me": {
+    sections: [
+      { h: "Engagement Makeup Portfolio", p: ["Your engagement is a different celebration from your wedding, and your makeup can have its own personality. This portfolio showcases engagement makeup designed for photographs, celebrations and individual style. Explore engagement looks ranging from fresh and elegant finishes to soft glam and more defined occasion makeup.", "Each look considers the person's features, outfit, jewellery, event setting and the level of makeup they feel comfortable wearing. Engagement makeup can sit between everyday makeup and full bridal styling. The aim is to create a polished look that works for the event and photographs well while allowing personal style to come through."] },
+      { h: "Explore the Work", p: ["Browse the portfolio to see different approaches to makeup, finish, styling and visual presentation. If you have a particular look in mind, use the images as references during your consultation rather than expecting an exact reproduction."] },
+      { h: "Plan Your Look", p: ["Your makeup can be discussed around the occasion, features, skin, outfit, jewellery, lighting, photography and the level of definition you are comfortable with. The goal is to create a considered look that fits the person and the purpose of the booking."], ctas: [{ label: "Enquire About Engagement Makeup", to: "/contact?service=Engagement" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
+    ],
+    faq: [
+      ["What is different about engagement makeup?", "Engagement makeup can be planned specifically for the engagement celebration rather than following the styling requirements of the wedding day."],
+      ["Can engagement makeup be soft and natural?", "Yes. The look can be adapted to your preferred level of coverage, definition and finish."],
+      ["Can I use a portfolio image as a reference?", "Yes. A reference can help communicate the style you like, after which the look can be adapted to your features."],
+      ["Can my engagement and bridal looks be different?", "Yes. They can be planned as separate looks according to your outfits, events and personal preferences."],
+    ],
+  },
+  "/best-makeup-for-south-indian-brides": {
+    sections: [
+      { h: "Non-Bridal Makeup Portfolio", p: ["Not every special occasion needs a bridal makeup look. This portfolio showcases makeup created for clients who want polished, occasion-ready beauty without traditional bridal styling. Explore makeup designed around personal features, occasion, outfit, comfort and desired finish.", "The work can range from refined and understated makeup to more defined occasion looks, depending on what suits the client and the event. Non-bridal makeup is about adapting the artistry to the person and situation. A daytime event, family celebration, professional occasion, dinner or social event may call for a different balance of complexion, eyes, lips and overall definition."] },
+      { h: "Explore the Work", p: ["Browse the portfolio to see different approaches to makeup, finish, styling and visual presentation. If you have a particular look in mind, use the images as references during your consultation rather than expecting an exact reproduction."] },
+      { h: "Plan Your Look", p: ["Your makeup can be discussed around the occasion, features, skin, outfit, jewellery, lighting, photography and the level of definition you are comfortable with. The goal is to create a considered look that fits the person and the purpose of the booking."], ctas: [{ label: "Enquire About Non-Bridal Makeup", to: "/contact?service=Non-Bridal" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
+    ],
+    faq: [
+      ["What is included in non-bridal makeup?", "Non-bridal makeup refers to occasion-focused makeup that is not specifically planned as bridal makeup."],
+      ["Can I request a natural non-bridal look?", "Yes. Coverage, eye definition and overall finish can be discussed according to your preference."],
+      ["Is non-bridal makeup suitable for family functions?", "It can be suitable for a range of celebrations and occasions, depending on the event and the look you want."],
+      ["Can I bring a reference image?", "Yes. Reference images can help communicate the style and finish you prefer."],
+    ],
+  },
+  "/party-makeup-near-me": {
+    sections: [
+      { h: "Party Makeup Portfolio", p: ["Party makeup gives you the freedom to choose how defined, polished or glamorous you want your look to be. This portfolio showcases occasion makeup created for celebrations, evening events and social occasions. Explore party makeup with different approaches to complexion, eyes, lashes, lips, blush and glow.", "Looks can range from soft glam and polished elegance to stronger evening definition. The right party look depends on the occasion, outfit, lighting, venue and personal style. Makeup can be planned to complement clothing and jewellery without making the overall look feel disconnected from you."] },
+      { h: "Explore the Work", p: ["Browse the portfolio to see different approaches to makeup, finish, styling and visual presentation. If you have a particular look in mind, use the images as references during your consultation rather than expecting an exact reproduction."] },
+      { h: "Plan Your Look", p: ["Your makeup can be discussed around the occasion, features, skin, outfit, jewellery, lighting, photography and the level of definition you are comfortable with. The goal is to create a considered look that fits the person and the purpose of the booking."], ctas: [{ label: "Enquire About Party Makeup", to: "/contact?service=Party" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
+    ],
+    faq: [
+      ["What kind of party makeup is shown?", "The portfolio includes different occasion and party makeup approaches, from softer glam to more defined evening looks."],
+      ["Can party makeup be customised?", "Yes. Coverage, eye intensity, lashes, lips and overall finish can be adjusted to your preferences."],
+      ["Is party makeup suitable for daytime events?", "Yes. The look can be adapted to the time, venue and nature of the event."],
+      ["Can you coordinate makeup with my outfit?", "Your outfit, jewellery and event can be discussed so the makeup works as part of the overall look."],
+    ],
+  },
+  "/bridal-makeup-educator-karnataka": {
+    sections: [
+      { h: "Editorial Makeup Portfolio", p: ["Editorial makeup is an opportunity to explore makeup as visual expression. This portfolio presents looks created for editorial, creative and image-led work where concept, styling, features and photography come together. Editorial makeup may involve stronger colour, texture, shape, definition or unconventional beauty choices depending on the creative direction.", "The approach is driven by the brief rather than by a single everyday makeup formula. The portfolio demonstrates the ability to adapt makeup to visual concepts and collaborate with styling, fashion, photography and creative direction. Every editorial look can require a different balance between makeup, hair, wardrobe, lighting and the intended image."] },
+      { h: "Explore the Work", p: ["Browse the portfolio to see different approaches to makeup, finish, styling and visual presentation. If you have a particular look in mind, use the images as references during your consultation rather than expecting an exact reproduction."] },
+      { h: "Plan Your Look", p: ["Your makeup can be discussed around the occasion, features, skin, outfit, jewellery, lighting, photography and the level of definition you are comfortable with. The goal is to create a considered look that fits the person and the purpose of the booking."], ctas: [{ label: "Enquire About Editorial Makeup", to: "/contact?service=Editorial" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
+    ],
+    faq: [
+      ["What is editorial makeup?", "Editorial makeup is makeup created for visual storytelling, creative concepts, fashion imagery or image-led photography."],
+      ["Can editorial makeup be more experimental?", "Yes. Depending on the creative brief, editorial makeup can explore stronger colour, shape, texture or definition."],
+      ["Can I share a creative mood board?", "Yes. A mood board or visual reference can help communicate the intended direction."],
+      ["Does editorial makeup depend on photography?", "Photography and lighting are important considerations when planning an editorial look, along with styling and the creative brief."],
+    ],
+  },
+  "/hire-celebrity-makeup-artist-for-wedding": {
+    sections: [
+      { h: "Fashion Makeup Portfolio", p: ["Fashion makeup is created as part of a larger visual story. The makeup must work with the clothing, styling, hair, lighting, model and creative direction rather than being considered separately. This portfolio showcases fashion-focused makeup designed for visual impact and coordination with the overall styling.", "Depending on the brief, the makeup may be refined and minimal or more defined and expressive. Fashion work often requires flexibility. The makeup may need to complement a collection, campaign, lookbook, runway-inspired concept or editorial direction. The final approach depends on the purpose of the shoot and the visual language being created."] },
+      { h: "Explore the Work", p: ["Browse the portfolio to see different approaches to makeup, finish, styling and visual presentation. If you have a particular look in mind, use the images as references during your consultation rather than expecting an exact reproduction."] },
+      { h: "Plan Your Look", p: ["Your makeup can be discussed around the occasion, features, skin, outfit, jewellery, lighting, photography and the level of definition you are comfortable with. The goal is to create a considered look that fits the person and the purpose of the booking."], ctas: [{ label: "Enquire About Fashion Makeup", to: "/contact?service=Fashion" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
+    ],
+    faq: [
+      ["What is fashion makeup?", "Fashion makeup is makeup created to support fashion imagery, styling, campaigns, lookbooks or other fashion-focused visual work."],
+      ["Can fashion makeup be minimal?", "Yes. Fashion makeup can range from minimal and refined to strong and expressive depending on the creative direction."],
+      ["Can you work from a fashion mood board?", "Yes. References and the creative brief are useful for planning the makeup direction."],
+      ["What information is useful before a fashion shoot?", "The creative brief, wardrobe, references, number of looks, schedule, model details and photography requirements help with planning."],
+    ],
+  },
+  "/makeup-artist-for-pre-wedding-shoot": {
+    sections: [
+      { h: "Photo Shoot Makeup Portfolio", p: ["Makeup for a photoshoot needs to work for both the person and the camera. This portfolio showcases makeup created for pre-wedding, portrait, fashion, editorial and other image-focused shoots. The approach considers the purpose of the shoot, lighting, styling, outfit, camera requirements and the look the subject wants to achieve.", "Depending on the project, makeup can range from fresh and natural-looking to polished glam or more creative styling. Photoshoot makeup is not simply about applying more makeup. It is about choosing the right level of complexion, definition and finish for the visual result while keeping the subject comfortable and recognisable."] },
+      { h: "Explore the Work", p: ["Browse the portfolio to see different approaches to makeup, finish, styling and visual presentation. If you have a particular look in mind, use the images as references during your consultation rather than expecting an exact reproduction."] },
+      { h: "Plan Your Look", p: ["Your makeup can be discussed around the occasion, features, skin, outfit, jewellery, lighting, photography and the level of definition you are comfortable with. The goal is to create a considered look that fits the person and the purpose of the booking."], ctas: [{ label: "Enquire About Photo Shoot Makeup", to: "/contact?service=Bridal" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
+    ],
+    faq: [
+      ["What type of photoshoot makeup is available?", "The portfolio can represent different image-focused work such as pre-wedding, portrait, fashion and editorial-style shoots."],
+      ["Will photoshoot makeup look heavier in person?", "The amount of makeup depends on the camera, lighting, concept and desired result. The aim is to balance what works on camera with how the subject feels in person."],
+      ["Can I have a natural photoshoot look?", "Yes. The makeup can be planned around a fresh, natural-looking or more polished finish depending on the shoot."],
+      ["What should I share before a photoshoot booking?", "Share the concept, location, outfits, number of looks, schedule, references and photography style so the makeup can be planned appropriately."],
+    ],
+  },
   "/self-grooming-classes": {
     intro: ["Self Grooming Makeup Workshop", "Self-Grooming Makeup Workshop in Bangalore"],
     sections: [
