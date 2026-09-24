@@ -36,6 +36,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-06 f (iteration_5: frontend 100%): **Legal page** /legal (Privacy, Terms, Refund & Cancellation, Disclaimer from user's Legal_Policies.md; placeholders filled with assumptions — email reks5555@gmail.com, address "JP Nagar, Bengaluru 560078", 7-day/30-day windows; user should verify), footer Legal column + **Locations bar** (HSR Layout, JP Nagar, Jayanagar, Banashankari → location pages with the user's slugs). **New header menu** Home / About Us / Services dropdown (7 EEAT service pages from the user's E-E-A-T doc incl. author bio + FAQ) / Academy / Portfolio / Contact us (/personal-shopping) / Blog. Look Lab, Try-On, Pricing, Testimonials moved to footer Explore (hash links). Content data: `src/content/site.js`, `src/content/legal.json`; pages: `src/pages/ContentPages.jsx`, shell `src/components/PageShell.jsx`.
 
+- 2026-06 g: **MediaPipe 3D face model in Look Lab** — porcelain mannequin replaced by a photo-textured 468-point face mesh (triangles derived from FACE_LANDMARKS_TESSELATION → `src/content/faceTriangles.json`, eye/mouth fans added). Sample model auto-scanned on scroll; "Scan my face" camera capture (no upload, by user request) builds the visitor's own mesh; looks painted via the shared makeupPainter; CompareCard shows before/after of the same scan. Face engine is now a module-level singleton shared with Try-On. Testing agent + self-test: all pass.
+
 ## Backlog
 - P1: Verify legal placeholder assumptions (address, refund windows) and EEAT numbers (320+ brides, lead times) with Rekha.
 - P2: Blog article pages (currently teaser cards).

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 
 const WASM_PATH = "/mediapipe/wasm";
 const MODEL_PATH = "/mediapipe/face_landmarker.task";
@@ -6,10 +6,11 @@ const MODEL_PATH = "/mediapipe/face_landmarker.task";
 const withTimeout = (p, ms, label) =>
   Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error(`${label} timed out`)), ms))]);
 
+const lmRef = { current: null };
+const delegateRef = { current: null };
+const pendingRef = { current: null };
+
 export const useFaceLandmarker = () => {
-  const lmRef = useRef(null);
-  const delegateRef = useRef(null);
-  const pendingRef = useRef(null);
   const [status, setStatus] = useState("idle");
   const [progress, setProgress] = useState("");
 
