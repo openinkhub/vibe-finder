@@ -68,6 +68,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-09 u: **Address updated everywhere** — `brand.location` (mock.js, used in Footer + Contact "Studio" panel), `/contact` page's "Contact Details" section, and all 3 legal pages' contact blocks + publish checklist (legal.json, replaced old "JP Nagar, Bengaluru, Karnataka 560078" placeholder, 4 occurrences) now show: "1st Floor, 1314, 32nd Cross Rd, 1st Stage, Kumaraswamy Layout, Bengaluru, Karnataka 560070, India". Verified via screenshot (Footer, Contact page, Privacy page).
 
+- 2026-09 v: **Happy Clients section on Home replaced with live Featurable Google-reviews widget** — `Testimonials.jsx` swapped the 3 static mock testimonial cards for `FeaturableWidget.jsx` (new component, injects the `cdn.featurable.com/widget/v2/embed.js` script once + renders `#featurable-a61c35eb-...` target div); heading/stars/"Read all testimonials" link kept as-is. Applies to both Home's inline section and the dedicated `/testimonials` page (shared component). Verified via screenshot — widget renders real Google reviews (4.9★, 53 reviews) on desktop + mobile.
+
 ## Backlog
 - P1: Replace `/public/og-image.webp` with the user's original banner (upload it as a file — the inline chat image wasn't retrievable).
 - P1: Body copy for the remaining sheet pages without a docx yet; Delivery & Cookies policy text.

@@ -1,9 +1,8 @@
 import React from "react";
-import { Star, Quote, ArrowUpRight } from "lucide-react";
+import { Star, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { testimonials } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";
-import { TiltCard } from "./fx/TiltCard";
+import { FeaturableWidget } from "./FeaturableWidget";
 
 const Testimonials = ({ showLink = true }) => {
   return (
@@ -18,20 +17,11 @@ const Testimonials = ({ showLink = true }) => {
             <span className="flex">{[...Array(5)].map((_, i) => <Star key={i} size={15} className="fill-[#E62E6B] text-[#E62E6B]" />)}</span>
           </p>
         </Reveal>
-        <div className="grid md:grid-cols-3 gap-4 sm:gap-6" style={{ perspective: 1200 }}>
-          {testimonials.map((t, i) => (
-            <Reveal key={t.name} delay={i * 0.1}>
-              <TiltCard className="h-full bg-white border border-[#F1DCE3] rounded-3xl p-6 sm:p-8 hover:shadow-2xl hover:shadow-[#E62E6B]/20 transition-shadow" data-testid={`testimonial-card-${i}`}>
-                <Quote size={30} className="text-[#E62E6B] fill-[#E62E6B]/20" style={{ transform: "translateZ(30px)" }} />
-                <p className="mt-5 font-display text-base sm:text-lg leading-relaxed text-[#4A2530] italic">“{t.text}”</p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#E62E6B] flex items-center justify-center font-display font-bold text-white">{t.name.charAt(0)}</div>
-                  <div className="font-medium text-[#4A2530]">— {t.name}</div>
-                </div>
-              </TiltCard>
-            </Reveal>
-          ))}
-        </div>
+        <Reveal delay={0.1}>
+          <div className="bg-white border border-[#F1DCE3] rounded-3xl p-4 sm:p-6" data-testid="testimonials-widget-wrap">
+            <FeaturableWidget />
+          </div>
+        </Reveal>
         {showLink && (
           <div className="mt-10 text-center">
             <Link to="/testimonials" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="testimonials-all-link">Read all testimonials <ArrowUpRight size={16} /></Link>
