@@ -50,6 +50,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-06 m: **14 years everywhere** (hero stat 14+, About "Fourteen years…", author bio, service pages, about-stats). **Booking T&C checkbox** on /premium-bridal-makeup-booking form only (`Contact requireTerms`): required, submit disabled until checked, link scrolls to `#booking-terms` (RichBody terms section); enquiry payload sends `terms_accepted: true` (field added to EnquiryIn).
 
+- 2026-06 n: **Academy › Launchpad page** (/makeup-educator-beauty-mentor-karnataka) from Academy_Launchpad.docx — hero/H1 block overridden per doc (hero CTA "Enquire for the Next Batch" via new `heroCta` field → /contact?service=Courses; H1 CTA "Book a Counselling Session"), full body in pageBodies.js (18 sections: passion bullets, 6 phases as steps, mastery grid, quotes, process chips, who-should-join, included list, assessment, after-course path, educator, note, 16 open FAQs, course details table with ₹1,50,000 fee, final 4 CTAs incl. WhatsApp/Call). RichBody gained `sub`, `after`, `chips`, `qa`, `details`, external `href` CTAs.
+
 ## Backlog
 - P1: Replace `/public/og-image.webp` with the user's original banner (upload it as a file — the inline chat image wasn't retrievable).
 - P1: Body copy for the ~32 new sheet pages (currently hero + H1 block + author bio only); Delivery & Cookies policy text.

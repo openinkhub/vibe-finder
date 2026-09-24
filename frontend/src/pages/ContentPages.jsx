@@ -104,7 +104,7 @@ const Siblings = ({ page }) => {
 
 const Hero = ({ page, image }) => {
   const resolved = usePageImage(page);
-  return <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image === null ? null : image ?? resolved} ctaTo="/contact" />;
+  return <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image === null ? null : image ?? resolved} cta={page.heroCta} ctaTo={page.heroCta ? `/contact?service=${encodeURIComponent(page.group === "Academy" ? "Courses" : page.name)}` : "/contact"} />;
 };
 
 export const SheetPage = () => {
