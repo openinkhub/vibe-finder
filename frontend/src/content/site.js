@@ -2,7 +2,7 @@ const BRANDS = "MAC Cosmetics, Bobbi Brown, Estée Lauder, HUDA Beauty, Lancôme
 
 export const authorBio = {
   title: "About Rekha Krishnamurthy",
-  text: `Rekha Krishnamurthy is a Bangalore-based professional makeup artist with 9+ years of hands-on experience and 320+ bridal, editorial and fashion assignments completed across South India. She specialises in HD and Airbrush makeup techniques, works exclusively with premium international brands (${BRANDS}), and follows strict hygiene protocols on every assignment.`,
+  text: `Rekha Krishnamurthy is a Bangalore-based professional makeup artist and educator with 14 years of hands-on experience and 320+ bridal, editorial and fashion assignments completed across South India. She specialises in HD and Airbrush makeup techniques, works exclusively with premium international brands (${BRANDS}), and follows strict hygiene protocols on every assignment.`,
 };
 
 export const legalLinks = [

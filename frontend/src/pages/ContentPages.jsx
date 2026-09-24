@@ -11,6 +11,8 @@ import Testimonials from "../components/Testimonials";
 import { servicePages, locationPages, staticPages, blogPosts, legalLinks } from "../content/site";
 import { getPage, pagesByGroup, headerMenu, legalKeyByPath, BOOKING_PATH } from "../lib/pages";
 import { PortfolioGallery } from "./PortfolioPage";
+import { RichBody } from "../components/RichBody";
+import { pageBodies } from "../content/pageBodies";
 import { usePageImage, usePageImages, heroImage } from "../hooks/usePageImages";
 import legal from "../content/legal.json";
 
@@ -115,7 +117,7 @@ export const SheetPage = () => {
       <div data-testid={`sheet-page-${pathname.slice(1)}`}>
         <Hero page={page} />
         <SeoIntro page={page} ctaTo={`/contact?service=${encodeURIComponent(content?.service || page.name)}`} />
-        {hub ? <ChildCards items={hub.children} /> : page.comingSoon ? <ComingSoon /> : <Body page={content} />}
+        {hub ? <ChildCards items={hub.children} /> : pageBodies[pathname] ? <RichBody body={pageBodies[pathname]} /> : page.comingSoon ? <ComingSoon /> : <Body page={content} />}
         {page.group === "Portfolio" && <PortfolioGallery />}
         {!hub && <Siblings page={page} />}
       </div>
@@ -133,6 +135,7 @@ export const ContactPage = () => {
       <div data-testid="contact-page">
         <Hero page={page} />
         <SeoIntro page={page} onCta={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} />
+        {pageBodies[pathname] && <RichBody body={pageBodies[pathname]} />}
         <Contact showBooking={pathname !== BOOKING_PATH} />
       </div>
     </PageShell>

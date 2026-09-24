@@ -46,6 +46,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-06 k: **Single-source hero images** — `page_images` Mongo collection (`GET /api/content/page-images`, `PUT/DELETE /api/content/page-images/{slug}` admin, uploads to object storage folder `heroes`). `src/hooks/usePageImages.js` (module cache + `heroImage(page,map)`) feeds page heroes (SheetPage, Experience, Portfolio), the Home portfolio grid, "A look for every occasion" rows and hub child cards → changing a page's hero in Admin → **Page heroes** tab updates the home page automatically. Defaults = the original 9 home portfolio images (pages.json). Slug typos fixed: `karnatka`→`karnataka`, `celebrirt`→`celebrity` (old URLs redirect).
 
+- 2026-06 l: **About Us & Booking page content** from user's docx → `src/content/pageBodies.js` rendered by `components/RichBody.jsx` (sections, quote, bullets/don'ts, who-I-work-with cards, numbered steps, 20-point T&C list, CTAs, AEO FAQ sidebar). About: "Talk to Rekha" → /contact, "Explore Bridal Makeup Services" → bridal page. Booking (/premium-bridal-makeup-booking): content above the enquiry form; "Check Bridal Makeup Availability" scrolls to the form. Internal notes from the docs (AEO targets → turned into FAQ; "Important Note" legal review advice) not published. authorBio now says 14 years (per About doc); other EEAT copy still says 9 years — flagged to user.
+
 ## Backlog
 - P1: Replace `/public/og-image.webp` with the user's original banner (upload it as a file — the inline chat image wasn't retrievable).
 - P1: Body copy for the ~32 new sheet pages (currently hero + H1 block + author bio only); Delivery & Cookies policy text.
