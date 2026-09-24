@@ -76,6 +76,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-09 y: **Social media icons added** — installed `react-icons` (fa6 set) for authentic brand logos. Footer now has a 4-icon row (Instagram/Facebook/X/LinkedIn) below contact details + a "Chat on WhatsApp" line; `AuthorBio` sidebar (shown on all content pages) also lists Facebook/X/LinkedIn alongside Instagram/WhatsApp. Sticky `FloatingButtons` bar now uses the real `FaWhatsapp` brand icon (was generic lucide `MessageCircle`) next to the Phone icon, both responsively sized (20px/22px mobile → scales on sm:). Same WhatsApp icon swap applied in `Contact.jsx`, `BookMeCompact.jsx`, `RichBody.jsx` CTAs for consistency. New `brand.facebookUrl`/`twitterUrl`/`linkedinUrl` added to mock.js. Verified via screenshot desktop+mobile.
 
+- 2026-09 z: **Bug fix — Google review section showed contradictory stats**: `Testimonials.jsx` had a stale hardcoded "146 reviews · 5.0 average on Google" line + 5 static stars sitting directly above the live Featurable widget (real data: 4.9★, 53 reviews) — visibly conflicting. Removed the stale block, replaced with a generic subtitle; also synced `heroStats` "Google rating" from stale "5.0" to real "4.9" in mock.js. Verified via testing_agent (iteration_11, 100% frontend pass, no regressions).
+
 ## Backlog
 - P1: Replace `/public/og-image.webp` with the user's original banner (upload it as a file — the inline chat image wasn't retrievable).
 - P1: Body copy for the remaining sheet pages without a docx yet; Delivery & Cookies policy text.
