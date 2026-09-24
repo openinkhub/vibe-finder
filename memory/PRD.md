@@ -66,6 +66,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-09 t: **5 Experience pages** (Bridal Experience, Makeup Trial, Skin Consultation, HD Makeup, Airbrush Makeup) got full rich content from `Experience.docx` — intro, why-choose/why-now paragraphs, "How It Works" bullets, an "Across Services" items grid (8 service use-cases each), benefits, "When Is It Useful", a shared "Connecting the Experience Pages" cross-link paragraph, and rate cards (HD ₹30,000/session, Airbrush ₹40,000/session) via new `pageBodies` entries + reused `CONNECTING_EXPERIENCE` block. Verified via screenshot (desktop+mobile, all 5 render `rich-body` + existing `Siblings` cross-links).
 
+- 2026-09 u: **Address updated everywhere** — `brand.location` (mock.js, used in Footer + Contact "Studio" panel), `/contact` page's "Contact Details" section, and all 3 legal pages' contact blocks + publish checklist (legal.json, replaced old "JP Nagar, Bengaluru, Karnataka 560078" placeholder, 4 occurrences) now show: "1st Floor, 1314, 32nd Cross Rd, 1st Stage, Kumaraswamy Layout, Bengaluru, Karnataka 560070, India". Verified via screenshot (Footer, Contact page, Privacy page).
+
 ## Backlog
 - P1: Replace `/public/og-image.webp` with the user's original banner (upload it as a file — the inline chat image wasn't retrievable).
 - P1: Body copy for the remaining sheet pages without a docx yet; Delivery & Cookies policy text.
