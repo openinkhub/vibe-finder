@@ -23,13 +23,15 @@ export const PageShell = ({ children, title, page }) => {
   );
 };
 
-export const PageHero = ({ eyebrow, title, subtitle, image, cta = "Book Your Free Consultation", ctaTo = "/contact" }) => (
+export const PageHero = ({ eyebrow, title, subtitle, image, cta = "Book Your Free Consultation", ctaTo = "/contact", onCta }) => (
   <section className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-14 items-center pb-12 md:pb-20" data-testid="page-hero">
     <Reveal>
       {eyebrow && <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]" data-testid="page-eyebrow">{eyebrow}</span>}
       <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mt-4" data-testid="page-title">{title}</h2>
       {subtitle && <p className="mt-5 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-xl" data-testid="page-subtitle">{subtitle}</p>}
-      <Link to={ctaTo} className="mt-8 inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25" data-testid="page-cta">{cta} <ArrowUpRight size={16} /></Link>
+      {onCta
+        ? <button type="button" onClick={onCta} className="mt-8 inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25" data-testid="page-cta">{cta} <ArrowUpRight size={16} /></button>
+        : <Link to={ctaTo} className="mt-8 inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25" data-testid="page-cta">{cta} <ArrowUpRight size={16} /></Link>}
     </Reveal>
     {image && (
       <Reveal delay={0.1}>

@@ -120,9 +120,9 @@ const Siblings = ({ page }) => {
   );
 };
 
-const Hero = ({ page, image }) => {
+const Hero = ({ page, image, cta, onCta }) => {
   const resolved = usePageImage(page);
-  return <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image === null ? null : image ?? resolved} cta={page.heroCta} ctaTo={`/contact?service=${encodeURIComponent(enquiryServiceFor(page))}`} />;
+  return <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image === null ? null : image ?? resolved} cta={cta ?? page.heroCta} ctaTo={`/contact?service=${encodeURIComponent(enquiryServiceFor(page))}`} onCta={onCta} />;
 };
 
 export const SheetPage = () => {
@@ -153,7 +153,7 @@ export const ContactPage = () => {
   return (
     <PageShell page={page} title="Contact">
       <div data-testid="contact-page">
-        <Hero page={page} />
+        <Hero page={page} cta="Jump to Enquiry Form" onCta={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} />
         <SeoIntro page={page} onCta={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} />
         {pageBodies[pathname] && <RichBody body={pageBodies[pathname]} />}
         <Contact showBooking={pathname !== BOOKING_PATH} requireTerms={pathname === BOOKING_PATH} />
