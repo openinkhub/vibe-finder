@@ -11,6 +11,24 @@ export const communityFaq = [
 ];
 
 export const pageBodies = {
+  "/contact": {
+    sections: [
+      { h: "Let's Talk About Your Makeup Plans", p: ["Planning a wedding, engagement, celebration, photoshoot, or special event? Share your requirements with Rekha Krishnamurthy and start a conversation about your makeup look."] },
+      { h: "Tell Us About Your Event", p: ["Share your event date, location, occasion, and the makeup service you are looking for. This helps us understand your requirements and suggest the right service."] },
+      { h: "Looking for Bridal Makeup?", p: ["For bridal enquiries, share your wedding date, venue, functions, and preferred makeup style. We can discuss the complete makeup plan for your wedding celebrations."] },
+      { h: "Not Sure Which Makeup Service You Need?", p: ["You do not need to know exactly which service is right for you. Tell us about your event and desired look, and we can help you identify the suitable option."] },
+      { h: "Tell Us How You Want to Look", p: ["Your makeup should suit your features, outfit, occasion, and personal style. Tell us whether you prefer a natural, soft glam, traditional, defined, or more creative look."] },
+      { h: "How Rekha Approaches Your Makeup Requirement", p: ["Rekha first understands your requirements, features, skin, comfort, occasion, and expectations. The aim is to create a look that feels like you while being professionally planned for the event."] },
+      { h: "What Happens After You Contact Us?", p: ["After receiving your enquiry, the details can be reviewed to understand your requirements, availability, service, and next steps."] },
+      { h: "For Brides: Plan Before the Wedding Day", p: ["Bridal makeup is easier to plan when your requirements are discussed early. Share your wedding details in advance so your makeup, hair, styling, and timing can be planned around your functions."] },
+      { h: "Your Comfort Matters", p: ["Your makeup experience should feel comfortable and personal. Share any preferences, concerns, or specific requirements before your appointment."] },
+      { h: "Before You Send Your Enquiry", bullets: ["Event date", "Event location", "Type of occasion", "Number of functions", "Makeup service required", "Preferred makeup style", "Any specific requirements"] },
+      { h: "If You Are Booking for Someone Else", p: ["If you are enquiring for a bride, family member, friend, or another person, share their event details and requirements so the service can be discussed accurately."] },
+      { h: "For Professional Makeup and Creative Projects", p: ["For fashion, editorial, portfolio, or photoshoot requirements, share the project concept, date, location, number of looks, and creative requirements."] },
+      { h: "Need a Makeup Course or Workshop?", p: ["If you are interested in self-grooming, self-makeup, or professional makeup training, share your learning goals and preferred programme."], ctas: [{ label: "Explore Academy", to: "/makeup-course-training-bangalore", secondary: true }] },
+      { h: "Contact Details", details: [["Phone", "+91 98454 80507"], ["Email", "hello@rekhakrishnamurthy.in"], ["Location", "Bangalore, Karnataka"]], ctas: [{ label: "Check Availability", scrollTo: "contact" }, { label: "Send an Enquiry", scrollTo: "contact" }] },
+    ],
+  },
   "/about-us": {
     sections: [
       { h: "About Me", p: ["Hi, I’m Rekha. I’m a Professional Makeup Artist and Educator based in Bangalore, with 14 years of experience in Bridal Makeup, Makeup Artistry and Beauty Education.", "But beyond makeup, I believe that the best makeup is the kind that still feels like you. Over the years, I’ve had the opportunity to work with brides with very different personalities, preferences and ideas of what their wedding look should be. Some know exactly what they want. Some come with a folder full of Instagram inspiration. And some simply say, “Rekha, I trust you. You tell me what will suit me.” I love all three."] },
