@@ -164,11 +164,13 @@ export const ContactPage = () => {
 
 export const TestimonialsPage = () => {
   const { page } = usePage();
+  const { pathname } = useLocation();
   return (
     <PageShell page={page} title="Testimonials">
       <div data-testid="testimonials-page">
         <Hero page={page} />
         <SeoIntro page={page} />
+        {pageBodies[pathname] && <RichBody body={pageBodies[pathname]} />}
         <Testimonials showLink={false} />
       </div>
     </PageShell>

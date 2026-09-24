@@ -72,6 +72,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-09 w: Added "Locate us on Google" link in Footer (below address, opens `https://share.google/nu7HoWg5cktHMEnHr` in new tab). Verified via screenshot desktop+mobile.
 
+- 2026-09 x: **Testimonials page (`/testimonials`) fleshed out** with new `pageBodies["/testimonials"]` content: "What Our Happy Clients Are Saying", "What Matters Most to Them" (bullets), "How They're Referring Us Today" (word-of-mouth/tagging), "Clients Who Keep Coming Back" (repeat-booking narrative), rendered above the Featurable Google-reviews widget (already added previous session). Wired via `RichBody` in `TestimonialsPage`. Verified via screenshot desktop+mobile.
+
 ## Backlog
 - P1: Replace `/public/og-image.webp` with the user's original banner (upload it as a file — the inline chat image wasn't retrievable).
 - P1: Body copy for the remaining sheet pages without a docx yet; Delivery & Cookies policy text.
