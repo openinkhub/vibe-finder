@@ -85,6 +85,8 @@ function App() {
           <Route path="/look-lab" element={<Navigate to="/corporate-professional-makeup-services" replace />} />
           <Route path="/try-on" element={<Navigate to="/book-bridal-makeup-package-karnataka" replace />} />
           <Route path="/legal" element={<Navigate to="/privacy" replace />} />
+          <Route path="/party-and-non-bridal-makeup-karnatka" element={<Navigate to="/party-and-non-bridal-makeup-karnataka" replace />} />
+          <Route path="/hire-celebrirt-makeup-artist-for-wedding" element={<Navigate to="/hire-celebrity-makeup-artist-for-wedding" replace />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
