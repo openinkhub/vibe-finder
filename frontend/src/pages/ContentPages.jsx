@@ -9,7 +9,7 @@ import { TiltCard } from "../components/fx/TiltCard";
 import Contact from "../components/Contact";
 import Testimonials from "../components/Testimonials";
 import { servicePages, locationPages, staticPages, blogPosts, legalLinks } from "../content/site";
-import { getPage, pagesByGroup, headerMenu, legalKeyByPath } from "../lib/pages";
+import { getPage, pagesByGroup, headerMenu, legalKeyByPath, BOOKING_PATH } from "../lib/pages";
 import { PortfolioGallery } from "./PortfolioPage";
 import legal from "../content/legal.json";
 
@@ -69,6 +69,18 @@ const ChildCards = ({ items }) => (
   </Section>
 );
 
+const ComingSoon = () => (
+  <Section>
+    <Reveal>
+      <div className="bg-[#FBE9F0] rounded-3xl p-8 sm:p-12 border border-[#F1DCE3] text-center" data-testid="coming-soon">
+        <div className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Coming soon</div>
+        <p className="mt-3 font-display text-2xl sm:text-3xl text-[#4A2530]">We're putting the finishing touches on this page.</p>
+        <p className="mt-3 text-sm sm:text-base text-[#5C4E52] max-w-xl mx-auto">Community perks, member stories and workshop invites will appear here shortly. In the meantime, say hello on WhatsApp or start an enquiry.</p>
+      </div>
+    </Reveal>
+  </Section>
+);
+
 const Siblings = ({ page }) => {
   const others = pagesByGroup(page.group).filter((p) => p.path !== page.path);
   if (!others.length) return null;
@@ -93,7 +105,7 @@ export const SheetPage = () => {
       <div data-testid={`sheet-page-${pathname.slice(1)}`}>
         <Hero page={page} image={content?.image} />
         <SeoIntro page={page} ctaTo={`/contact?service=${encodeURIComponent(content?.service || page.name)}`} />
-        {hub ? <ChildCards items={hub.children} /> : <Body page={content} />}
+        {hub ? <ChildCards items={hub.children} /> : page.comingSoon ? <ComingSoon /> : <Body page={content} />}
         {page.group === "Portfolio" && <PortfolioGallery />}
         {!hub && <Siblings page={page} />}
       </div>
@@ -102,7 +114,7 @@ export const SheetPage = () => {
 };
 
 export const ContactPage = () => {
-  const { page } = usePage();
+  const { page, pathname } = usePage();
   const { search } = useLocation();
   const service = new URLSearchParams(search).get("service");
   if (service) sessionStorage.setItem("rk_service", service);
@@ -111,7 +123,7 @@ export const ContactPage = () => {
       <div data-testid="contact-page">
         <Hero page={page} />
         <SeoIntro page={page} onCta={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} />
-        <Contact />
+        <Contact showBooking={pathname !== BOOKING_PATH} />
       </div>
     </PageShell>
   );
@@ -124,7 +136,7 @@ export const TestimonialsPage = () => {
       <div data-testid="testimonials-page">
         <Hero page={page} />
         <SeoIntro page={page} />
-        <Testimonials />
+        <Testimonials showLink={false} />
       </div>
     </PageShell>
   );

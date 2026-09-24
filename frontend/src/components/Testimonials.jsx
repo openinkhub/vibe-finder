@@ -1,10 +1,11 @@
 import React from "react";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { testimonials } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 
-const Testimonials = () => {
+const Testimonials = ({ showLink = true }) => {
   return (
     <section id="testimonials" className="relative bg-[#FBE9F0] py-20 md:py-32 overflow-hidden scroll-mt-20" data-testid="testimonials-section">
       <div className="absolute -bottom-24 -left-24 w-[380px] h-[380px] rounded-full bg-[#E62E6B]/15 blur-3xl" />
@@ -31,6 +32,11 @@ const Testimonials = () => {
             </Reveal>
           ))}
         </div>
+        {showLink && (
+          <div className="mt-10 text-center">
+            <Link to="/testimonials" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="testimonials-all-link">Read all testimonials <ArrowUpRight size={16} /></Link>
+          </div>
+        )}
       </div>
     </section>
   );

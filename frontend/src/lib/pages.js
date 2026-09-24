@@ -23,3 +23,9 @@ export const footerColumns = [
 ];
 
 export const legalKeyByPath = { "/privacy": "privacy", "/terms": "terms", "/refund": "refunds", "/disclaimer": "disclaimer", "/delivery": "delivery", "/cookies": "cookies" };
+
+export const BOOKING_PATH = "/premium-bridal-makeup-booking";
+export const processPages = ["Makeup Trial", "Skin Consultation", "HD Makeup", "Airbrush Makeup"].map((n) => pages.find((p) => p.group === "Experience" && p.name === n));
+
+const pricingMap = [["self", "/self-makeup-classes-karnataka"], ["party", "/party-makeup-artist-bangalore"], ["non-bridal", "/non-bridal-makeup"], ["non bridal", "/non-bridal-makeup"], ["engagement", "/engagement-makeup"], ["editorial", "/editorial-makeup"], ["fashion", "/fashion-makeup"], ["groom", "/pre-wedding-photoshoot-makeup-artist"], ["bridal", "/bridal-makeup-artist-bangalore"]];
+export const pricingPath = (title = "") => { const t = title.toLowerCase(); return (pricingMap.find(([k]) => t.includes(k)) || [])[1] || "/bridal-makeup-bangalore"; };

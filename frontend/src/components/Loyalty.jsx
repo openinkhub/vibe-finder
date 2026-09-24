@@ -1,6 +1,7 @@
 import React from "react";
 import { Gift } from "lucide-react";
-import { loyaltyPoints, loyaltyImage, brand } from "../mock/mock";
+import { Link } from "react-router-dom";
+import { loyaltyPoints, loyaltyImage } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 
@@ -28,9 +29,9 @@ const Loyalty = () => {
               </Reveal>
             ))}
           </div>
-          <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="mt-8 sm:mt-9 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="loyalty-join-btn">
+          <Link to="/community" className="mt-8 sm:mt-9 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="loyalty-join-btn">
             <Gift size={18} /> Join the Community
-          </a>
+          </Link>
         </Reveal>
       </div>
     </section>

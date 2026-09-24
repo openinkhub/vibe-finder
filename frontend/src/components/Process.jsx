@@ -1,5 +1,7 @@
 import React from "react";
-import { process } from "../mock/mock";
+import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
+import { processPages } from "../lib/pages";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 
@@ -12,14 +14,17 @@ const Process = () => {
           <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">From enquiry to wedding day</h2>
         </Reveal>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6" style={{ perspective: 1200 }}>
-          {process.map((p, i) => (
-            <Reveal key={p.no} delay={i * 0.1}>
-              <TiltCard className="h-full bg-white rounded-3xl p-6 sm:p-8 border border-[#F1DCE3] hover:shadow-2xl hover:shadow-[#E62E6B]/20 transition-shadow duration-300" data-testid={`process-card-${p.no}`}>
-                <div className="w-10 h-10 rounded-full bg-[#FBE9F0] text-[#E62E6B] font-mono text-sm flex items-center justify-center" style={{ transform: "translateZ(30px)" }}>{p.no}</div>
-                <h3 className="font-display text-xl font-bold text-[#4A2530] mt-5">{p.title}</h3>
-                <p className="mt-3 text-sm text-[#5C4E52] leading-relaxed">{p.desc}</p>
-                <div className="absolute top-6 right-6 w-8 h-px bg-[#F4B7CE]" />
-              </TiltCard>
+          {processPages.map((p, i) => (
+            <Reveal key={p.path} delay={i * 0.1}>
+              <Link to={p.path} className="block h-full" data-testid={`process-card-${p.path.slice(1)}`}>
+                <TiltCard className="h-full flex flex-col bg-white rounded-3xl p-6 sm:p-8 border border-[#F1DCE3] hover:shadow-2xl hover:shadow-[#E62E6B]/20 transition-shadow duration-300">
+                  <div className="w-10 h-10 rounded-full bg-[#FBE9F0] text-[#E62E6B] font-mono text-sm flex items-center justify-center" style={{ transform: "translateZ(30px)" }}>{String(i + 1).padStart(2, "0")}</div>
+                  <h3 className="font-display text-xl font-bold text-[#4A2530] mt-5">{p.name}</h3>
+                  <p className="mt-3 text-sm text-[#5C4E52] leading-relaxed flex-1">{p.heroSub}</p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#E62E6B] group-hover:gap-2.5 transition-all">{p.heroHeadline} <ArrowUpRight size={15} /></span>
+                  <div className="absolute top-6 right-6 w-8 h-px bg-[#F4B7CE]" />
+                </TiltCard>
+              </Link>
             </Reveal>
           ))}
         </div>
