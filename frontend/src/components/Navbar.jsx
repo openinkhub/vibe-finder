@@ -14,6 +14,7 @@ const slug = (s) => s.toLowerCase().replace(/\s+/g, "-");
 
 const Dropdown = ({ m, pathname, linkCls }) => {
   const [open, setOpen] = useState(false);
+  useEffect(() => { setOpen(false); }, [pathname]);
   const active = pathname === m.to || m.children.some((c) => c.path === pathname);
   const key = slug(m.label);
   return (

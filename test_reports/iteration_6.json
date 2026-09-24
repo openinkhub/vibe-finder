@@ -1,0 +1,22 @@
+{
+  "summary": "Frontend-only regression for the 53-page sheet-driven directory. Verified Home hero eyebrow/title + SEO intro + document.title + og:image (webp, 200) + og:image:alt; desktop header (8 nav items, dropdowns with 8/4/7/5 links, click closes + navigates); mobile menu at 390px lists all 8 groups and mobile-nav-experience-hd-makeup routes to /hd-makeup; 10 sample sheet pages render (page-hero, seo-intro, seo-h1/heading/cta, no redirect); /bridal-makeup-bangalore & /makeup-course-training-bangalore render 8 & 4 child-cards; /hd-makeup CTA is 'Confirm your Booking'; /engagement-makeup CTA is 'Book Your Free Consultation' and page-body present; sibling-links on /bridal-makeup-artist-in-bangalore; parallax-item-0 on /south-indian-bridal-makeup-artist-in-karnataka & /portfolio; contact-section on /premium-bridal-makeup-booking; /contact?service=Party preselects Party in the form and seo-cta scrolls to contact-section; /testimonials, /blog, /archive render hero+seo-intro+content; /portfolio renders navbar + page-hero + seo-intro + <h2 data-testid=morph-title> + parallax-item-0; legal pages /privacy /terms /refund /disclaimer render hero+seo-intro+6 legal-tabs+legal-section-{key}, /delivery & /cookies show legal-placeholder, /legal→/privacy; redirects /look-lab→/corporate-professional-makeup-services (looklab-page, looklab-section, hero+seo above) with looklab-tryon-btn href=/book-bridal-makeup-package-karnataka; /try-on→/book-bridal-makeup-package-karnataka (face-studio-section); unknown route → /; footer Banashankari href=/pre-wedding-makeup-artist, Look Lab href=/corporate-professional-makeup-services, footer-admin present, nav-book-btn navigates to /contact; exactly one <h1> on /, /hd-makeup, /portfolio, /contact, /privacy; no horizontal overflow at 390px on /hd-makeup and /contact; zero console errors across all visited pages (only an INFO 'TFLite XNNPACK delegate' from the Look Lab AI showcase which is expected).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "SeoIntro renders an <h1> even on pages where PageShell/other components may also emit an <h1>; currently one-h1 rule holds for the sampled pages but adding more will require care.",
+    "App.js `special` map is instantiated as JSX at module scope which means all special components (Landing, PortfolioPage, ContactPage, LookLabPage, TryOnPage, TestimonialsPage, BlogPage) mount lifecycle indirectly the first time the Routes render each; consider using element factories to reduce initial parse cost, but not a functional issue."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "100% (71/71 checks)"},
+  "test_credentials": "not required (public pages only)",
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Sheet-driven pages (pages.json) power routing via allPages + special map + LegalPage/SheetPage in App.js. Data-testids verified: hero-eyebrow/title/subtitle, seo-intro, seo-h1, seo-h1-heading, seo-h1-sub, seo-conclusion, seo-cta, page-hero/eyebrow/title/subtitle/body, child-card-N, sibling-links, parallax-item-N, morph-title, contact-section, legal-tabs, legal-section-{privacy|terms|refunds|disclaimer}, legal-placeholder, looklab-page/section/tryon-btn, face-studio-section, nav-{home,about-us,services,academy,portfolio,contact-us,blog,experience}, {services|academy|portfolio|experience}-dropdown, nav-book-btn, mobile-menu-btn, mobile-menu, mobile-nav-experience-hd-makeup, footer-admin. All 71 assertions passed."
+}
