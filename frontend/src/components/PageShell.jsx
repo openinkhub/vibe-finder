@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Phone, MessageCircle, Instagram } from "lucide-react";
+import { ArrowUpRight, Phone, Instagram } from "lucide-react";
+import { FaWhatsapp, FaFacebookF, FaXTwitter, FaLinkedinIn } from "react-icons/fa6";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import FloatingButtons from "./FloatingButtons";
@@ -54,7 +55,10 @@ export const AuthorBio = () => (
           <span className="text-[#5C4E52]">📍 Based in Bangalore</span>
           <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-1.5 text-[#E62E6B]"><Phone size={14} /> {brand.phone}</a>
           <a href={brand.instagramUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><Instagram size={14} /> Instagram</a>
-          <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#25D366]"><MessageCircle size={14} /> WhatsApp</a>
+          <a href={brand.facebookUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaFacebookF size={13} /> Facebook</a>
+          <a href={brand.twitterUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaXTwitter size={13} /> X</a>
+          <a href={brand.linkedinUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaLinkedinIn size={13} /> LinkedIn</a>
+          <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#25D366]"><FaWhatsapp size={14} /> WhatsApp</a>
         </div>
       </div>
     </div>

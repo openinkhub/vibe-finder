@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Phone, MapPin, Instagram, MessageCircle, Check, Loader2, Sparkles, X, CalendarCheck } from "lucide-react";
+import { Phone, MapPin, Instagram, Check, Loader2, Sparkles, X, CalendarCheck } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { brand } from "../mock/mock";
 import { BOOKING_PATH, COURSE_SERVICES } from "../lib/pages";
@@ -80,7 +81,7 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
 
           <div className="mt-8 sm:mt-9 flex flex-wrap gap-3">
             {showBooking && <Link to={BOOKING_PATH} className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-lg shadow-[#E62E6B]/25" data-testid="contact-book-slot-btn"><CalendarCheck size={18} /> Book Your Slot</Link>}
-            <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#25D366] text-white font-medium hover:bg-[#1eb959] hover:-translate-y-0.5 transition-all" data-testid="contact-whatsapp-btn"><MessageCircle size={18} /> Chat on WhatsApp</a>
+            <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#25D366] text-white font-medium hover:bg-[#1eb959] hover:-translate-y-0.5 transition-all" data-testid="contact-whatsapp-btn"><FaWhatsapp size={18} /> Chat on WhatsApp</a>
             <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#E62E6B] hover:text-white transition-colors" data-testid="contact-call-btn"><Phone size={18} /> Call now</a>
           </div>
 

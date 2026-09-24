@@ -12,6 +12,9 @@ export const brand = {
   location: "1st Floor, 1314, 32nd Cross Rd, 1st Stage, Kumaraswamy Layout, Bengaluru, Karnataka 560070, India",
   instagram: "@makeupbyrekhakrishnamurthy",
   instagramUrl: "https://www.instagram.com/makeupbyrekhakrishnamurthy/",
+  facebookUrl: "https://www.facebook.com/makeupbyrekhakrishnamurthy/",
+  twitterUrl: "https://x.com/MakeupbyRekha",
+  linkedinUrl: "https://www.linkedin.com/in/rekha-krishnamurthy-6b998839",
   whatsappUrl: "https://wa.me/919845480507?text=Hello!%20I%20am%20looking%20for%20a%20makeup%20artist.",
 };
 

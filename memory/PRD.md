@@ -74,6 +74,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-09 x: **Testimonials page (`/testimonials`) fleshed out** with new `pageBodies["/testimonials"]` content: "What Our Happy Clients Are Saying", "What Matters Most to Them" (bullets), "How They're Referring Us Today" (word-of-mouth/tagging), "Clients Who Keep Coming Back" (repeat-booking narrative), rendered above the Featurable Google-reviews widget (already added previous session). Wired via `RichBody` in `TestimonialsPage`. Verified via screenshot desktop+mobile.
 
+- 2026-09 y: **Social media icons added** — installed `react-icons` (fa6 set) for authentic brand logos. Footer now has a 4-icon row (Instagram/Facebook/X/LinkedIn) below contact details + a "Chat on WhatsApp" line; `AuthorBio` sidebar (shown on all content pages) also lists Facebook/X/LinkedIn alongside Instagram/WhatsApp. Sticky `FloatingButtons` bar now uses the real `FaWhatsapp` brand icon (was generic lucide `MessageCircle`) next to the Phone icon, both responsively sized (20px/22px mobile → scales on sm:). Same WhatsApp icon swap applied in `Contact.jsx`, `BookMeCompact.jsx`, `RichBody.jsx` CTAs for consistency. New `brand.facebookUrl`/`twitterUrl`/`linkedinUrl` added to mock.js. Verified via screenshot desktop+mobile.
+
 ## Backlog
 - P1: Replace `/public/og-image.webp` with the user's original banner (upload it as a file — the inline chat image wasn't retrievable).
 - P1: Body copy for the remaining sheet pages without a docx yet; Delivery & Cookies policy text.

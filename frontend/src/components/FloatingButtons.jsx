@@ -1,5 +1,6 @@
 import React from "react";
-import { Phone, MessageCircle } from "lucide-react";
+import { Phone } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { brand } from "../mock/mock";
 
@@ -14,7 +15,7 @@ const FloatingButtons = () => {
         aria-label="Call"
         data-testid="floating-call-btn"
       >
-        <Phone size={20} />
+        <Phone size={20} className="sm:w-6 sm:h-6" />
       </motion.a>
       <motion.a
         whileHover={{ scale: 1.12, rotateY: 18 }}
@@ -26,7 +27,7 @@ const FloatingButtons = () => {
         aria-label="WhatsApp"
         data-testid="floating-whatsapp-btn"
       >
-        <MessageCircle size={24} />
+        <FaWhatsapp size={22} className="sm:w-6 sm:h-6" />
       </motion.a>
     </div>
   );

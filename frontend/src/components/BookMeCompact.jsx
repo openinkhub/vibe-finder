@@ -3,6 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { ContactShadows } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, MessageCircle, CalendarCheck } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import { brand } from "../mock/mock";
 
 const Glossy = (p) => <meshPhysicalMaterial roughness={0.2} metalness={0.35} clearcoat={1} clearcoatRoughness={0.08} {...p} />;
@@ -54,7 +55,7 @@ export const BookMeCompact = ({ onBook }) => {
             <p className="text-sm text-[#5C4E52] mt-1">Free consultation · no visit charge for party, event & wedding bookings.</p>
             <div className="mt-4 grid sm:grid-cols-3 gap-2">
               <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full border border-[#E62E6B] text-[#E62E6B] text-sm font-medium hover:bg-[#E62E6B] hover:text-white transition-colors" data-testid="bookme-call"><Phone size={15} /> Call</a>
-              <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-[#25D366] text-white text-sm font-medium" data-testid="bookme-whatsapp"><MessageCircle size={15} /> WhatsApp</a>
+              <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-[#25D366] text-white text-sm font-medium" data-testid="bookme-whatsapp"><FaWhatsapp size={16} /> WhatsApp</a>
               <button onClick={onBook} className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57]" data-testid="bookme-form"><CalendarCheck size={15} /> Book form</button>
             </div>
           </motion.div>

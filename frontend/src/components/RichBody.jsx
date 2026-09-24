@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Check, X, ArrowUpRight, ArrowRight, MessageCircle, Phone } from "lucide-react";
+import { Check, X, ArrowUpRight, ArrowRight, Phone } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import { brand } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";
 import { AuthorBio } from "./PageShell";
@@ -12,7 +13,7 @@ const P = ({ children }) => <p className="text-sm sm:text-base text-[#5C4E52] le
 const Cta = ({ c }) => {
   const cls = c.secondary ? "inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#E62E6B] hover:text-white transition-colors" : "inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25";
   const tid = `body-cta-${c.label.toLowerCase().replace(/[^a-z]+/g, "-")}`;
-  if (c.href === "whatsapp") return <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className={cls} data-testid={tid}><MessageCircle size={16} /> {c.label}</a>;
+  if (c.href === "whatsapp") return <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className={cls} data-testid={tid}><FaWhatsapp size={16} /> {c.label}</a>;
   if (c.href === "tel") return <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className={cls} data-testid={tid}><Phone size={16} /> {c.label}</a>;
   return c.scrollTo
     ? <button onClick={() => scrollToId(c.scrollTo)} className={cls} data-testid={tid}>{c.label} <ArrowUpRight size={16} /></button>

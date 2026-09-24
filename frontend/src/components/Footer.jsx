@@ -1,10 +1,18 @@
 import React from "react";
-import { Instagram, Phone, MapPin, ArrowUpRight } from "lucide-react";
+import { Phone, MapPin, ArrowUpRight } from "lucide-react";
+import { FaInstagram, FaFacebookF, FaXTwitter, FaLinkedinIn, FaWhatsapp } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { brand } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";
 import { footerColumns } from "../lib/pages";
+
+const socialLinks = [
+  { key: "instagram", href: brand.instagramUrl, icon: FaInstagram, label: "Instagram" },
+  { key: "facebook", href: brand.facebookUrl, icon: FaFacebookF, label: "Facebook" },
+  { key: "twitter", href: brand.twitterUrl, icon: FaXTwitter, label: "X (Twitter)" },
+  { key: "linkedin", href: brand.linkedinUrl, icon: FaLinkedinIn, label: "LinkedIn" },
+];
 
 const Col = ({ title, children, delay = 0, className = "" }) => (
   <Reveal delay={delay} className={className}>
@@ -32,8 +40,23 @@ const Footer = () => {
               <li className="flex items-center gap-3 text-sm"><Phone size={16} className="text-[#E62E6B]" /><a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="hover:text-[#E62E6B]">{brand.phone}</a></li>
               <li className="flex items-center gap-3 text-sm"><MapPin size={16} className="text-[#E62E6B]" /><span>{brand.location}</span></li>
               <li className="flex items-center gap-3 text-sm"><MapPin size={16} className="text-[#E62E6B]" /><a href="https://share.google/nu7HoWg5cktHMEnHr" target="_blank" rel="noreferrer" className="hover:text-[#E62E6B]" data-testid="footer-locate-google-link">Locate us on Google</a></li>
-              <li className="flex items-center gap-3 text-sm"><Instagram size={16} className="text-[#E62E6B] shrink-0" /><a href={brand.instagramUrl} target="_blank" rel="noreferrer" className="hover:text-[#E62E6B] break-all">{brand.instagram}</a></li>
+              <li className="flex items-center gap-3 text-sm"><FaWhatsapp size={16} className="text-[#25D366] shrink-0" /><a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="hover:text-[#25D366]">Chat on WhatsApp</a></li>
             </ul>
+            <div className="mt-6 flex items-center gap-3" data-testid="footer-social-icons">
+              {socialLinks.map(({ key, href, icon: Icon, label }) => (
+                <a
+                  key={key}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={label}
+                  data-testid={`footer-social-${key}`}
+                  className="w-9 h-9 flex items-center justify-center rounded-full bg-white border border-[#F1DCE3] text-[#4A2530] hover:bg-[#E62E6B] hover:text-white hover:-translate-y-0.5 transition-all"
+                >
+                  <Icon size={15} />
+                </a>
+              ))}
+            </div>
           </Reveal>
           {footerColumns.map((c, i) => (
             <Col key={c.title} title={c.title} delay={0.05 * (i + 1)} className="lg:col-span-2">
