@@ -10,7 +10,74 @@ export const communityFaq = [
   ["What is the price of editorial makeup?", "Editorial Makeup is price on request, with customisation available."],
 ];
 
+const CONNECTING_EXPERIENCE = { h: "Connecting the Experience Pages", p: ["These Experience pages work together rather than as separate services. Bridal Experience helps plan the complete wedding journey. Makeup Trial helps evaluate the desired makeup direction. Skin Consultation focuses on preparation. HD Makeup and Airbrush Makeup help you choose an appropriate makeup format. Together, they can support Bridal, Engagement, Non-Bridal, Party, Groom, Fashion, Editorial, and Photoshoot requirements. The goal is simple: understand the occasion, understand the person, plan the makeup correctly, and create a look that feels appropriate, comfortable, and personal."] };
+
 export const pageBodies = {
+  "/bridal-experience": {
+    sections: [
+      { h: "Your Bridal Experience Starts Before the Makeup", p: ["Bridal makeup is not only about the final look. It is about planning the right makeup approach for your skin, features, outfit, jewellery, functions, photography, and comfort. Rekha Krishnamurthy's Bridal Experience is designed to help you prepare for the wedding day with greater clarity and confidence."] },
+      { h: "Why Choose This Experience?", p: ["Every bride has different skin, features, preferences, outfits, and wedding traditions. A bridal experience allows these details to be understood before the main event. The focus is on creating a bridal look that feels like you while being suitable for the ceremony, celebration, lighting, photography, and duration of the function."] },
+      { h: "Why Plan It Now?", p: ["Your wedding makeup affects more than the makeup itself. Skin preparation, makeup style, hair, draping, outfit changes, photography, and timing all need to work together. Planning early gives you time to understand your options and make decisions without last-minute pressure."] },
+      { h: "How the Bridal Experience Works", bullets: ["Your preferred bridal makeup direction", "Skin preparation requirements", "Makeup finish and coverage", "Hair and styling requirements", "Suitability of HD or Airbrush makeup", "Outfit and jewellery coordination", "Function-wise makeup planning", "Photography and lighting considerations", "Timing and preparation requirements"] },
+      { h: "Where It Fits Into Your Wedding Services", items: [["Bridal Makeup", "Complete wedding-day bridal look."], ["Engagement Makeup", "A lighter or different look for the engagement."], ["Non-Bridal Makeup", "Family members and accompanying guests."], ["Party Makeup", "Receptions and celebrations."], ["Groom Makeup", "Coordinated grooming for the groom."], ["Fashion Makeup", "Pre-wedding or creative events."], ["Editorial Makeup", "Concept-led wedding or fashion projects."], ["Photoshoot Makeup", "Pre-wedding and wedding photography."]] },
+      { h: "Key Benefits", bullets: ["Better clarity before the wedding", "More confident makeup decisions", "Better coordination between makeup and styling", "Opportunity to discuss skin and comfort", "Function-specific planning", "Reduced last-minute uncertainty"] },
+      { h: "When Is It Useful?", p: ["It is particularly useful when you have multiple wedding functions, a specific bridal look in mind, concerns about your skin or makeup finish, or want to understand the complete makeup plan before your wedding day."] },
+      CONNECTING_EXPERIENCE,
+      { h: "Ready to Plan Your Bridal Experience?", p: ["Share your wedding date and functions, and Rekha will help you plan the complete makeup journey."], ctas: [{ label: "Book a Consultation", to: "/contact?service=Bridal" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
+    ],
+  },
+  "/makeup-trial": {
+    sections: [
+      { h: "Know Your Look Before Your Important Day", p: ["A Makeup Trial gives you an opportunity to understand how a planned makeup look works with your features, skin, outfit, jewellery, and personal preference before the actual event. It is especially useful when the makeup look is important and you want greater confidence before the final appointment."] },
+      { h: "Why Choose a Makeup Trial?", p: ["A reference image may look different on another person. Your facial structure, skin, features, colouring, outfit, and preferred finish can change how the same makeup style appears. A trial helps move the conversation from an idea to a more personalised makeup direction."] },
+      { h: "Why Do It Now?", p: ["A trial is most useful when you still have enough time to adjust your makeup direction, discuss concerns, prepare your skin, or make decisions about HD or Airbrush makeup. It can reduce uncertainty before the actual event."] },
+      { h: "How It Works", bullets: ["Desired makeup style", "Base and finish", "Eye makeup", "Lip colour", "Contouring and definition", "Lashes", "Overall balance", "Comfort and personal preference"] },
+      { h: "Use Cases Across Services", items: [["Bridal Makeup", "Test the wedding-day direction."], ["Engagement Makeup", "Finalise a special-event look."], ["Party Makeup", "Understand a more defined occasion look."], ["Non-Bridal Makeup", "Plan makeup for an important family event."], ["Photoshoot Makeup", "Test how the makeup translates on camera."], ["Fashion Makeup", "Evaluate a creative look."], ["Editorial Makeup", "Discuss a concept-specific appearance."], ["Groom Makeup", "Understand a natural and polished grooming direction."]] },
+      { h: "Benefits", bullets: ["Greater confidence before the event", "Better understanding of the final look", "Opportunity to discuss preferences", "Helps identify changes before the main appointment", "Supports better event-day planning"] },
+      { h: "When Is a Trial Most Useful?", p: ["Consider a trial when the event is important, the makeup style is new to you, you have a specific reference look, or you want to make decisions before the actual makeup appointment."] },
+      CONNECTING_EXPERIENCE,
+      { h: "Ready to Book a Makeup Trial?", p: ["Tell Rekha about your event and the look you're considering, and she'll help you plan a trial ahead of the big day."], ctas: [{ label: "Book a Consultation", to: "/contact" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
+    ],
+  },
+  "/skin-consultation": {
+    sections: [
+      { h: "Understand Your Skin Before Choosing Your Makeup", p: ["Good makeup starts with understanding the skin it is being applied to. A Skin Consultation focuses on your current skin condition, concerns, preparation needs, and how these factors may affect your makeup experience."] },
+      { h: "Why Choose a Skin Consultation?", p: ["Different skin types and concerns can influence makeup preparation, finish, comfort, and longevity. Understanding your skin before an important event allows your makeup plan to be more considered rather than relying on last-minute changes."] },
+      { h: "Why Now?", p: ["Skin preparation should not be treated as a last-minute step before a wedding or event. If you have concerns about dryness, oiliness, texture, sensitivity, uneven appearance, or makeup sitting differently on certain areas, discussing them early gives you more time to prepare."] },
+      { h: "How It Helps", bullets: ["Your skin preparation requirements", "What your makeup may need from the skin", "Areas requiring additional preparation", "Suitable expectations for makeup finish", "How to prepare before the event", "Questions to discuss before your appointment"] },
+      { h: "Skin Consultation Across Services", items: [["Bridal Makeup", "Preparation for long wedding functions."], ["Engagement Makeup", "Polished skin for close-up photography."], ["Non-Bridal Makeup", "Preparation for family and social events."], ["Party Makeup", "Smoother preparation for occasion makeup."], ["Groom Makeup", "Preparation for a clean, natural finish."], ["Fashion Makeup", "Preparation for professional photography."], ["Editorial Makeup", "Preparation for creative makeup applications."], ["Photoshoot Makeup", "Preparation for camera-focused work."]] },
+      { h: "Benefits", bullets: ["Better understanding of your skin", "More realistic expectations", "Better preparation before makeup", "Opportunity to address concerns early", "More informed makeup decisions"] },
+      { h: "When Is It Useful?", p: ["A Skin Consultation is particularly useful before weddings, major celebrations, photoshoots, or any event where you want your makeup preparation to be planned rather than rushed."] },
+      CONNECTING_EXPERIENCE,
+      { h: "Ready to Book a Skin Consultation?", p: ["Share your skin concerns and event date, and Rekha will help you plan the right preparation."], ctas: [{ label: "Book a Consultation", to: "/contact" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
+    ],
+  },
+  "/hd-makeup": {
+    sections: [
+      { h: "Makeup Designed for Detail and Photography", p: ["HD Makeup is designed for occasions where your makeup needs to look polished while maintaining a refined appearance under photography and close-up viewing. It is suitable when both the event experience and the camera matter."] },
+      { h: "Why Choose HD Makeup?", p: ["Wedding and event photography captures details that may not always be obvious in person. HD Makeup focuses on creating a well-balanced finish that works with your features, styling, lighting, and photography requirements."] },
+      { h: "Why Now?", p: ["Choosing the makeup format early helps you plan the overall look, especially when your event includes professional photography, video, multiple functions, or long periods of wear."] },
+      { h: "How HD Makeup Fits the Occasion", bullets: ["Skin preparation", "Desired coverage", "Face structure", "Eye makeup", "Lip makeup", "Hair styling", "Outfit and draping", "Photography requirements", "Event duration"] },
+      { h: "Use Cases Across Services", items: [["Bridal Makeup", "Weddings and major bridal functions."], ["Engagement Makeup", "Engagement ceremonies and celebrations."], ["Non-Bridal Makeup", "Family members and guests."], ["Party Makeup", "Celebrations and social events."], ["Groom Makeup", "Polished groom appearance."], ["Fashion Makeup", "Portfolio and fashion shoots."], ["Editorial Makeup", "Professional creative work."], ["Photoshoot Makeup", "Camera-focused photography."]] },
+      { h: "Benefits", bullets: ["Suitable for photography-focused occasions", "Professional, polished appearance", "Can be planned around the event and styling", "Works with different makeup looks", "Supports complete makeup, hair and styling coordination"] },
+      { h: "HD Bridal Makeup Rate", cardTable: [["HD Bridal Makeup", "₹30,000 per session", "Full-face makeup, premium eyelashes, hair styling, hair extensions as required, and outfit styling including saree or lehenga draping at the location. Additional outfit or saree changes and waiting time are charged separately."]] },
+      CONNECTING_EXPERIENCE,
+      { h: "Ready to Book HD Makeup?", p: ["Tell Rekha about your event and photography plans, and she'll help you plan a camera-ready HD look."], ctas: [{ label: "Book a Consultation", to: "/contact?service=Bridal" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
+    ],
+  },
+  "/airbrush-makeup": {
+    sections: [
+      { h: "Lightweight Makeup for Important Occasions", p: ["Airbrush Makeup is an option for clients looking for a lightweight, refined makeup application for an important event. The right choice depends on your skin, desired finish, event requirements, photography, and personal preference."] },
+      { h: "Why Choose Airbrush Makeup?", p: ["Airbrush makeup can be considered when you prefer a lightweight-feeling application and want a polished finish suitable for an important occasion. The choice should be based on your individual requirements rather than simply following a trend."] },
+      { h: "Why Now?", p: ["Understanding the makeup format before your event gives you time to consider your skin preparation, desired finish, photography requirements, and overall styling. This is particularly important for brides and clients with major photography commitments."] },
+      { h: "How Airbrush Makeup Is Planned", bullets: ["Skin preparation", "Desired finish", "Coverage requirements", "Facial features", "Eye and lip makeup", "Hair styling", "Outfit and draping", "Photography", "Event duration"] },
+      { h: "Use Cases Across Services", items: [["Bridal Makeup", "Wedding and bridal celebrations."], ["Engagement Makeup", "Important engagement functions."], ["Party Makeup", "Special occasions."], ["Non-Bridal Makeup", "Selected event requirements."], ["Groom Makeup", "Where an appropriate lightweight finish is preferred."], ["Photoshoot Makeup", "When the project requires a specific camera-ready finish."], ["Fashion Makeup", "Depending on the creative brief."], ["Editorial Makeup", "Depending on the concept and production requirements."]] },
+      { h: "Benefits", bullets: ["Lightweight-feeling makeup option", "Refined appearance", "Suitable for important occasions", "Can be planned around photography", "Can be coordinated with hair and outfit styling"] },
+      { h: "Airbrush Bridal Makeup Rate", cardTable: [["Airbrush Bridal Makeup", "₹40,000 per session", "Full-face makeup, premium eyelashes, hair styling, hair extensions as required, and outfit styling including saree or lehenga draping at the location. Additional outfit or saree changes and waiting time are charged separately."]] },
+      CONNECTING_EXPERIENCE,
+      { h: "Ready to Book Airbrush Makeup?", p: ["Tell Rekha about your event and preferred finish, and she'll help you decide if Airbrush is right for you."], ctas: [{ label: "Book a Consultation", to: "/contact?service=Bridal" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
+    ],
+  },
   "/contact": {
     sections: [
       { h: "Let's Talk About Your Makeup Plans", p: ["Planning a wedding, engagement, celebration, photoshoot, or special event? Share your requirements with Rekha Krishnamurthy and start a conversation about your makeup look."] },
