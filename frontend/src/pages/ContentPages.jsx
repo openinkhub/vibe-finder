@@ -9,7 +9,8 @@ import { TiltCard } from "../components/fx/TiltCard";
 import Contact from "../components/Contact";
 import Testimonials from "../components/Testimonials";
 import { servicePages, locationPages, staticPages, blogPosts, legalLinks } from "../content/site";
-import { getPage, pagesByGroup, headerMenu, legalKeyByPath, BOOKING_PATH } from "../lib/pages";
+import { getPage, pagesByGroup, headerMenu, legalKeyByPath, BOOKING_PATH, enquiryServiceFor } from "../lib/pages";
+import { BatchBanner } from "../components/BatchBanner";
 import { PortfolioGallery } from "./PortfolioPage";
 import { RichBody } from "../components/RichBody";
 import { pageBodies } from "../content/pageBodies";
@@ -104,7 +105,7 @@ const Siblings = ({ page }) => {
 
 const Hero = ({ page, image }) => {
   const resolved = usePageImage(page);
-  return <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image === null ? null : image ?? resolved} cta={page.heroCta} ctaTo={page.heroCta ? `/contact?service=${encodeURIComponent(page.group === "Academy" ? "Courses" : page.name)}` : "/contact"} />;
+  return <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image === null ? null : image ?? resolved} cta={page.heroCta} ctaTo={`/contact?service=${encodeURIComponent(enquiryServiceFor(page))}`} />;
 };
 
 export const SheetPage = () => {
@@ -116,7 +117,8 @@ export const SheetPage = () => {
     <PageShell page={page} title={page.name}>
       <div data-testid={`sheet-page-${pathname.slice(1)}`}>
         <Hero page={page} />
-        <SeoIntro page={page} ctaTo={`/contact?service=${encodeURIComponent(content?.service || page.name)}`} />
+        {page.group === "Academy" && <BatchBanner page={page} />}
+        <SeoIntro page={page} ctaTo={`/contact?service=${encodeURIComponent(enquiryServiceFor(page))}`} />
         {hub ? <ChildCards items={hub.children} /> : pageBodies[pathname] ? <RichBody body={pageBodies[pathname]} /> : page.comingSoon ? <ComingSoon /> : <Body page={content} />}
         {page.group === "Portfolio" && <PortfolioGallery />}
         {!hub && <Siblings page={page} />}

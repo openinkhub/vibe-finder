@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Phone, MapPin, Instagram, MessageCircle, Check, Loader2, Sparkles, X, CalendarCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { brand } from "../mock/mock";
-import { BOOKING_PATH } from "../lib/pages";
+import { BOOKING_PATH, COURSE_SERVICES } from "../lib/pages";
 import { scrollToId } from "./Navbar";
 import { api, errorText, imgUrl } from "../lib/api";
 import { VoiceEnquiry } from "./VoiceEnquiry";
@@ -112,7 +112,8 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
                 <div><label className="block text-sm text-[#5C4E52] mb-2">Phone</label><input name="phone" value={form.phone} onChange={handle} required placeholder="+91" className={inputCls} data-testid="contact-phone-input" /></div>
                 <div><label className="block text-sm text-[#5C4E52] mb-2">Service</label>
                   <select name="service" value={form.service} onChange={handle} className={inputCls} data-testid="contact-service-select">
-                    {["Bridal", "Engagement", "Non-Bridal", "Party", "Editorial", "Fashion", "Courses"].map((s) => <option key={s}>{s}</option>)}
+                    <optgroup label="Makeup">{["Bridal", "Engagement", "Non-Bridal", "Party", "Editorial", "Fashion"].map((s) => <option key={s}>{s}</option>)}</optgroup>
+                    <optgroup label="Courses & workshops">{COURSE_SERVICES.map((s) => <option key={s}>{s}</option>)}</optgroup>
                   </select>
                 </div>
               </div>

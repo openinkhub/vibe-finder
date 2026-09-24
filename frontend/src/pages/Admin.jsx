@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { LogOut, RefreshCw, Phone, Mail, Calendar, Sparkles, Trash2, Loader2, Lock, ArrowLeft, Bell, BellRing, Mic, Inbox, IndianRupee, Images, Scissors, CalendarDays, MessageCircle, Image as ImageIcon } from "lucide-react";
+import { LogOut, RefreshCw, Phone, Mail, Calendar, Sparkles, Trash2, Loader2, Lock, ArrowLeft, Bell, BellRing, Mic, Inbox, IndianRupee, Images, Scissors, CalendarDays, MessageCircle, Image as ImageIcon, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { api, errorText, TOKEN_KEY, imgUrl } from "../lib/api";
@@ -8,6 +8,8 @@ import { PortfolioEditor } from "./admin/PortfolioEditor";
 import { ServicesEditor } from "./admin/ServicesEditor";
 import { CalendarEditor } from "./admin/CalendarEditor";
 import { HeroImagesEditor } from "./admin/HeroImagesEditor";
+import { BatchesEditor } from "./admin/BatchesEditor";
+import { COURSE_SERVICES } from "../lib/pages";
 import { brand } from "../mock/mock";
 
 const STATUSES = ["new", "replied", "booked", "closed"];
@@ -58,7 +60,7 @@ const EnquiryCard = ({ e, onStatus, onDelete }) => (
         {e.look_image && <img src={imgUrl(e.look_image)} alt={e.look || "look"} className="w-16 h-20 rounded-xl object-cover border border-[#F1DCE3] shrink-0" data-testid={`enquiry-look-image-${e.id}`} />}
         <div>
         <div className="font-display text-xl text-[#4A2530] flex items-center gap-2">{e.seen === false && <span className="w-2 h-2 rounded-full bg-[#E62E6B] animate-pulse" title="New" />}{e.name}{e.source === "voice" && <span className="inline-flex items-center gap-1 text-[10px] font-mono uppercase bg-[#FBE9F0] text-[#E62E6B] px-2 py-0.5 rounded-full"><Mic size={10} /> voice</span>}</div>
-        <div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82] mt-1">{e.service}{e.date ? ` · ${e.date}` : ""} · {new Date(e.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</div>
+              <div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82] mt-1 flex items-center gap-2 flex-wrap">{COURSE_SERVICES.includes(e.service) ? <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#4A2530] text-white" data-testid={`enquiry-course-tag-${e.id}`}><GraduationCap size={10} /> {e.service}</span> : e.service}{e.date ? ` · ${e.date}` : ""} · {new Date(e.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}{e.terms_accepted && <span className="px-2 py-0.5 rounded-full bg-[#FBE9F0] text-[#E62E6B]" data-testid={`enquiry-terms-tag-${e.id}`}>T&C accepted</span>}</div>
         </div>
       </div>
       <span className={`px-3 py-1 rounded-full text-xs font-medium ${STATUS_STYLE[e.status]}`} data-testid={`enquiry-status-${e.id}`}>{e.status}</span>
@@ -159,7 +161,7 @@ export default function Admin() {
 
       <main className="max-w-[1100px] mx-auto px-5 sm:px-8 py-8 sm:py-12">
         <div className="flex flex-wrap gap-2 mb-8" data-testid="admin-tabs">
-          {[["enquiries", "Enquiries", Inbox], ["calendar", "Calendar", CalendarDays], ["services", "Services", Scissors], ["pricing", "Pricing", IndianRupee], ["portfolio", "Portfolio", Images], ["heroes", "Page heroes", ImageIcon]].map(([k, label, Icon]) => (
+          {[["enquiries", "Enquiries", Inbox], ["calendar", "Calendar", CalendarDays], ["services", "Services", Scissors], ["pricing", "Pricing", IndianRupee], ["portfolio", "Portfolio", Images], ["heroes", "Page heroes", ImageIcon], ["batches", "Batches", GraduationCap]].map(([k, label, Icon]) => (
             <button key={k} onClick={() => setTab(k)} className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium border transition-colors ${tab === k ? "bg-[#E62E6B] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`admin-tab-${k}`}>
               <Icon size={15} /> {label}{k === "enquiries" && stats?.unseen > 0 && <span className={`ml-1 px-1.5 rounded-full text-[10px] ${tab === k ? "bg-white text-[#E62E6B]" : "bg-[#E62E6B] text-white"}`}>{stats.unseen}</span>}
             </button>
@@ -171,6 +173,7 @@ export default function Admin() {
         {tab === "pricing" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Pricing cards</h1><PricingEditor /></>)}
         {tab === "portfolio" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Portfolio photos</h1><PortfolioEditor /></>)}
         {tab === "heroes" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Page hero images</h1><HeroImagesEditor /></>)}
+        {tab === "batches" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Academy</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Next batch dates</h1><BatchesEditor /></>)}
         {tab === "enquiries" && (<>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>

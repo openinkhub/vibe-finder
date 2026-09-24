@@ -153,6 +153,32 @@ class PageImage(BaseModel):
     image: str
 
 
+class BatchIn(BaseModel):
+    date: str = Field(..., max_length=10)
+    note: Optional[str] = Field(default=None, max_length=160)
+
+
+class Batch(BatchIn):
+    path: str
+
+
+@router.get("/content/batches", response_model=List[Batch])
+async def list_batches():
+    return await _db.course_batches.find({}, {"_id": 0}).to_list(50)
+
+
+@router.put("/content/batches/{slug}", response_model=Batch)
+async def set_batch(slug: str, body: BatchIn, _: dict = Depends(require_admin)):
+    doc = {"path": f"/{slug}", **body.model_dump(), "updated_at": datetime.now(timezone.utc).isoformat()}
+    await _db.course_batches.update_one({"path": doc["path"]}, {"$set": doc}, upsert=True)
+    return doc
+
+
+@router.delete("/content/batches/{slug}", status_code=204)
+async def clear_batch(slug: str, _: dict = Depends(require_admin)):
+    await _db.course_batches.delete_one({"path": f"/{slug}"})
+
+
 @router.get("/content/page-images", response_model=List[PageImage])
 async def list_page_images():
     return await _db.page_images.find({}, {"_id": 0}).to_list(200)
