@@ -148,6 +148,31 @@ async def delete_portfolio(item_id: str, _: dict = Depends(require_admin)):
         raise HTTPException(status_code=404, detail="Not found")
 
 
+class PageImage(BaseModel):
+    path: str
+    image: str
+
+
+@router.get("/content/page-images", response_model=List[PageImage])
+async def list_page_images():
+    return await _db.page_images.find({}, {"_id": 0}).to_list(200)
+
+
+@router.put("/content/page-images/{slug}", response_model=PageImage)
+async def set_page_image(slug: str, file: UploadFile = File(...), _: dict = Depends(require_admin)):
+    ext = (file.filename or "x.jpg").rsplit(".", 1)[-1]
+    url = await store_image(await file.read(), ext, "heroes")
+    doc = {"path": f"/{slug}", "image": url, "updated_at": datetime.now(timezone.utc).isoformat()}
+    await _db.page_images.update_one({"path": doc["path"]}, {"$set": doc}, upsert=True)
+    return doc
+
+
+@router.delete("/content/page-images/{slug}", status_code=204)
+async def reset_page_image(slug: str, _: dict = Depends(require_admin)):
+    await _db.page_images.delete_one({"path": f"/{slug}"})
+
+
+
 DEFAULT_SERVICES = [
     {"no": "01", "title": "Bridal Makeup", "desc": "HD & airbrush bridal looks that last from the muhurtham to the last dance — trial included.", "cta": "Book bridal", "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"},
     {"no": "02", "title": "Engagement Makeup", "desc": "Soft-glam for rings, rokas and pre-wedding shoots that photograph beautifully.", "cta": "Book engagement", "image": "https://images.unsplash.com/photo-1594647210801-5124307f3d51"},

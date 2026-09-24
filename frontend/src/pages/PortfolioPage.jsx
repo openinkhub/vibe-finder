@@ -9,6 +9,7 @@ import { TiltCard } from "../components/fx/TiltCard";
 import { PageShell, PageHero } from "../components/PageShell";
 import { SeoIntro } from "../components/SeoIntro";
 import { getPage } from "../lib/pages";
+import { usePageImage } from "../hooks/usePageImages";
 
 const Stage = ({ progress, index, total, src, name }) => {
   const seg = 1 / total;
@@ -103,10 +104,11 @@ export const PortfolioGallery = () => {
 export default function PortfolioPage() {
   const showcase = useShowcase();
   const page = getPage("/portfolio");
+  const image = usePageImage(page);
   return (
     <PageShell page={page} title="Portfolio">
       <div className="bg-[#F4F1EA]" data-testid="portfolio-page">
-        <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={page.image} />
+        <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image} />
         <SeoIntro page={page} />
         <ScrollTransformation showcase={showcase} />
         <PortfolioGallery />

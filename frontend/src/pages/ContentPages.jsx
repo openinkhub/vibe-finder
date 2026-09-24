@@ -11,6 +11,7 @@ import Testimonials from "../components/Testimonials";
 import { servicePages, locationPages, staticPages, blogPosts, legalLinks } from "../content/site";
 import { getPage, pagesByGroup, headerMenu, legalKeyByPath, BOOKING_PATH } from "../lib/pages";
 import { PortfolioGallery } from "./PortfolioPage";
+import { usePageImage, usePageImages, heroImage } from "../hooks/usePageImages";
 import legal from "../content/legal.json";
 
 const Section = ({ children, className = "" }) => <section className={`max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 pb-14 md:pb-20 ${className}`}>{children}</section>;
@@ -50,24 +51,30 @@ const Body = ({ page }) => (
   </Section>
 );
 
-const ChildCards = ({ items }) => (
+const ChildCards = ({ items }) => {
+  const map = usePageImages();
+  return (
   <Section>
     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" data-testid="child-cards">
       {items.map((c, i) => (
         <Reveal key={c.path} delay={i * 0.06}>
           <Link to={c.path} data-testid={`child-card-${c.path.slice(1)}`}>
-            <TiltCard className="bg-white rounded-3xl p-6 border border-[#F1DCE3] h-full hover:border-[#E62E6B] transition-colors">
-              <div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{c.eyebrow}</div>
-              <h3 className="font-display text-xl text-[#4A2530] mt-2">{c.name}</h3>
-              <p className="text-sm text-[#5C4E52] mt-2">{c.heroSub}</p>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm text-[#E62E6B]">{c.heroHeadline} <ArrowUpRight size={14} /></span>
+            <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full hover:border-[#E62E6B] transition-colors">
+              <img src={heroImage(c, map)} alt={c.name} className="w-full h-44 object-cover" />
+              <div className="p-6">
+                <div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{c.eyebrow}</div>
+                <h3 className="font-display text-xl text-[#4A2530] mt-2">{c.name}</h3>
+                <p className="text-sm text-[#5C4E52] mt-2">{c.heroSub}</p>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm text-[#E62E6B]">{c.heroHeadline} <ArrowUpRight size={14} /></span>
+              </div>
             </TiltCard>
           </Link>
         </Reveal>
       ))}
     </div>
   </Section>
-);
+  );
+};
 
 const ComingSoon = () => (
   <Section>
@@ -93,7 +100,10 @@ const Siblings = ({ page }) => {
   );
 };
 
-const Hero = ({ page, image }) => <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image ?? page.image} ctaTo="/contact" />;
+const Hero = ({ page, image }) => {
+  const resolved = usePageImage(page);
+  return <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image === null ? null : image ?? resolved} ctaTo="/contact" />;
+};
 
 export const SheetPage = () => {
   const { page, pathname } = usePage();
@@ -103,7 +113,7 @@ export const SheetPage = () => {
   return (
     <PageShell page={page} title={page.name}>
       <div data-testid={`sheet-page-${pathname.slice(1)}`}>
-        <Hero page={page} image={content?.image} />
+        <Hero page={page} />
         <SeoIntro page={page} ctaTo={`/contact?service=${encodeURIComponent(content?.service || page.name)}`} />
         {hub ? <ChildCards items={hub.children} /> : page.comingSoon ? <ComingSoon /> : <Body page={content} />}
         {page.group === "Portfolio" && <PortfolioGallery />}

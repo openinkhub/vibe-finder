@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { LogOut, RefreshCw, Phone, Mail, Calendar, Sparkles, Trash2, Loader2, Lock, ArrowLeft, Bell, BellRing, Mic, Inbox, IndianRupee, Images, Scissors, CalendarDays, MessageCircle } from "lucide-react";
+import { LogOut, RefreshCw, Phone, Mail, Calendar, Sparkles, Trash2, Loader2, Lock, ArrowLeft, Bell, BellRing, Mic, Inbox, IndianRupee, Images, Scissors, CalendarDays, MessageCircle, Image as ImageIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { api, errorText, TOKEN_KEY, imgUrl } from "../lib/api";
@@ -7,6 +7,7 @@ import { PricingEditor } from "./admin/PricingEditor";
 import { PortfolioEditor } from "./admin/PortfolioEditor";
 import { ServicesEditor } from "./admin/ServicesEditor";
 import { CalendarEditor } from "./admin/CalendarEditor";
+import { HeroImagesEditor } from "./admin/HeroImagesEditor";
 import { brand } from "../mock/mock";
 
 const STATUSES = ["new", "replied", "booked", "closed"];
@@ -158,7 +159,7 @@ export default function Admin() {
 
       <main className="max-w-[1100px] mx-auto px-5 sm:px-8 py-8 sm:py-12">
         <div className="flex flex-wrap gap-2 mb-8" data-testid="admin-tabs">
-          {[["enquiries", "Enquiries", Inbox], ["calendar", "Calendar", CalendarDays], ["services", "Services", Scissors], ["pricing", "Pricing", IndianRupee], ["portfolio", "Portfolio", Images]].map(([k, label, Icon]) => (
+          {[["enquiries", "Enquiries", Inbox], ["calendar", "Calendar", CalendarDays], ["services", "Services", Scissors], ["pricing", "Pricing", IndianRupee], ["portfolio", "Portfolio", Images], ["heroes", "Page heroes", ImageIcon]].map(([k, label, Icon]) => (
             <button key={k} onClick={() => setTab(k)} className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium border transition-colors ${tab === k ? "bg-[#E62E6B] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`admin-tab-${k}`}>
               <Icon size={15} /> {label}{k === "enquiries" && stats?.unseen > 0 && <span className={`ml-1 px-1.5 rounded-full text-[10px] ${tab === k ? "bg-white text-[#E62E6B]" : "bg-[#E62E6B] text-white"}`}>{stats.unseen}</span>}
             </button>
@@ -169,6 +170,7 @@ export default function Admin() {
         {tab === "services" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Services</h1><ServicesEditor /></>)}
         {tab === "pricing" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Pricing cards</h1><PricingEditor /></>)}
         {tab === "portfolio" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Portfolio photos</h1><PortfolioEditor /></>)}
+        {tab === "heroes" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Page hero images</h1><HeroImagesEditor /></>)}
         {tab === "enquiries" && (<>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>

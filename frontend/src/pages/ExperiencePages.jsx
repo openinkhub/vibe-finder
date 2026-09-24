@@ -5,13 +5,15 @@ import { SeoIntro } from "../components/SeoIntro";
 import LookLab from "../components/lab/LookLab";
 import FaceStudio from "../components/studio/FaceStudio";
 import { getPage } from "../lib/pages";
+import { usePageImage } from "../hooks/usePageImages";
 
 const Experience = ({ children, testid }) => {
   const page = getPage(useLocation().pathname);
+  const image = usePageImage(page);
   return (
     <PageShell page={page} title={page?.name}>
       <div data-testid={testid}>
-        <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={page.image} />
+        <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image} />
         <SeoIntro page={page} />
         {children}
       </div>
