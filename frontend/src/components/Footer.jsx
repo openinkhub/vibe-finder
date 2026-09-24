@@ -31,6 +31,7 @@ const Footer = () => {
             <ul className="mt-6 space-y-3">
               <li className="flex items-center gap-3 text-sm"><Phone size={16} className="text-[#E62E6B]" /><a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="hover:text-[#E62E6B]">{brand.phone}</a></li>
               <li className="flex items-center gap-3 text-sm"><MapPin size={16} className="text-[#E62E6B]" /><span>{brand.location}</span></li>
+              <li className="flex items-center gap-3 text-sm"><MapPin size={16} className="text-[#E62E6B]" /><a href="https://share.google/nu7HoWg5cktHMEnHr" target="_blank" rel="noreferrer" className="hover:text-[#E62E6B]" data-testid="footer-locate-google-link">Locate us on Google</a></li>
               <li className="flex items-center gap-3 text-sm"><Instagram size={16} className="text-[#E62E6B] shrink-0" /><a href={brand.instagramUrl} target="_blank" rel="noreferrer" className="hover:text-[#E62E6B] break-all">{brand.instagram}</a></li>
             </ul>
           </Reveal>
