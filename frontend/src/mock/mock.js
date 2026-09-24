@@ -52,7 +52,7 @@ export const heroVideoPoster = "/hero-poster.jpg";
 export const heroStats = [
   { value: "14+", label: "Years in craft" },
   { value: "500+", label: "Brides styled" },
-  { value: "5.0", label: "Google rating" },
+  { value: "4.9", label: "Google rating" },
 ];
 
 export const locationTicker = [
