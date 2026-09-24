@@ -32,9 +32,6 @@ const Hero = ({ page }) => {
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F4F1EA] to-transparent" />
       </div>
 
-      <div className="absolute top-20 sm:top-24 left-5 sm:left-6 md:left-10 z-10 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] text-[#8B7F82]">No. 001 / SS26</div>
-      <div className="hidden md:block absolute top-24 right-10 z-10 font-mono text-[11px] tracking-[0.2em] text-[#8B7F82] text-right">Bridal · HD · Golden Hour</div>
-
       <div className="relative z-10 max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 w-full pt-28 sm:pt-32 md:pt-24 pb-12 sm:pb-14">
         <div className="max-w-[660px]">
           <div className="flex items-center gap-2.5 fade-up">
