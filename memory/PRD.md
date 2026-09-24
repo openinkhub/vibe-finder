@@ -48,6 +48,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-06 l: **About Us & Booking page content** from user's docx → `src/content/pageBodies.js` rendered by `components/RichBody.jsx` (sections, quote, bullets/don'ts, who-I-work-with cards, numbered steps, 20-point T&C list, CTAs, AEO FAQ sidebar). About: "Talk to Rekha" → /contact, "Explore Bridal Makeup Services" → bridal page. Booking (/premium-bridal-makeup-booking): content above the enquiry form; "Check Bridal Makeup Availability" scrolls to the form. Internal notes from the docs (AEO targets → turned into FAQ; "Important Note" legal review advice) not published. authorBio now says 14 years (per About doc); other EEAT copy still says 9 years — flagged to user.
 
+- 2026-06 m: **14 years everywhere** (hero stat 14+, About "Fourteen years…", author bio, service pages, about-stats). **Booking T&C checkbox** on /premium-bridal-makeup-booking form only (`Contact requireTerms`): required, submit disabled until checked, link scrolls to `#booking-terms` (RichBody terms section); enquiry payload sends `terms_accepted: true` (field added to EnquiryIn).
+
 ## Backlog
 - P1: Replace `/public/og-image.webp` with the user's original banner (upload it as a file — the inline chat image wasn't retrievable).
 - P1: Body copy for the ~32 new sheet pages (currently hero + H1 block + author bio only); Delivery & Cookies policy text.

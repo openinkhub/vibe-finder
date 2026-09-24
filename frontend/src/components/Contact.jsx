@@ -3,6 +3,7 @@ import { Phone, MapPin, Instagram, MessageCircle, Check, Loader2, Sparkles, X, C
 import { Link } from "react-router-dom";
 import { brand } from "../mock/mock";
 import { BOOKING_PATH } from "../lib/pages";
+import { scrollToId } from "./Navbar";
 import { api, errorText, imgUrl } from "../lib/api";
 import { VoiceEnquiry } from "./VoiceEnquiry";
 import { BookMeCompact } from "./BookMeCompact";
@@ -10,7 +11,8 @@ import { Availability } from "./Availability";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 
-const Contact = ({ showBooking = true }) => {
+const Contact = ({ showBooking = true, requireTerms = false }) => {
+  const [agreed, setAgreed] = useState(false);
   const [form, setForm] = useState(() => ({ name: "", email: "", phone: "", service: sessionStorage.getItem("rk_service") || "Bridal", date: "", message: "" }));
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
@@ -32,8 +34,9 @@ const Contact = ({ showBooking = true }) => {
     setError("");
     setSending(true);
     try {
-      await api.post("/enquiries", { ...form, email: form.email || null, date: form.date || null, message: form.message || null, look: look || null, look_image: lookImage || null, source });
+      await api.post("/enquiries", { ...form, email: form.email || null, date: form.date || null, message: form.message || null, look: look || null, look_image: lookImage || null, source, terms_accepted: requireTerms ? true : null });
       setSent(true);
+      setAgreed(false);
       setForm({ name: "", email: "", phone: "", service: "Bridal", date: "", message: "" });
       sessionStorage.removeItem("rk_selected_look");
       sessionStorage.removeItem("rk_selected_look_image");
@@ -115,7 +118,13 @@ const Contact = ({ showBooking = true }) => {
               </div>
               <div><label className="block text-sm text-[#5C4E52] mb-2">Event date</label><input type="date" name="date" value={form.date} onChange={handle} className={inputCls} data-testid="contact-date-input" /></div>
               <div><label className="block text-sm text-[#5C4E52] mb-2">Message</label><textarea name="message" value={form.message} onChange={handle} rows={4} placeholder="Tell us about your event & vision..." className={`${inputCls} resize-none`} data-testid="contact-message-input" /></div>
-              <button type="submit" disabled={sending} className="w-full py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-xl shadow-[#E62E6B]/30 disabled:opacity-60 inline-flex items-center justify-center gap-2" data-testid="contact-submit-btn">{sending && <Loader2 size={16} className="animate-spin" />} {sending ? "Sending…" : "Send Enquiry"}</button>
+              {requireTerms && (
+                <label className="flex items-start gap-3 text-sm text-[#5C4E52] cursor-pointer" data-testid="contact-terms-label">
+                  <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} required className="mt-1 w-4 h-4 accent-[#E62E6B]" data-testid="contact-terms-checkbox" />
+                  <span>I agree to the <a href="#booking-terms" onClick={(e) => { e.preventDefault(); scrollToId("booking-terms"); }} className="text-[#E62E6B] underline underline-offset-2 hover:text-[#C81F57]" data-testid="contact-terms-link">booking terms & conditions</a>.</span>
+                </label>
+              )}
+              <button type="submit" disabled={sending || (requireTerms && !agreed)} className="w-full py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-xl shadow-[#E62E6B]/30 disabled:opacity-60 inline-flex items-center justify-center gap-2" data-testid="contact-submit-btn">{sending && <Loader2 size={16} className="animate-spin" />} {sending ? "Sending…" : "Send Enquiry"}</button>
             </form>
           </TiltCard>
         </Reveal>

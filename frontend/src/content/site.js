@@ -16,11 +16,11 @@ export const legalLinks = [
 
 export const servicePages = [
   {
-    slug: "bridal-makeup-artist-bangalore", menu: "Bridal", eyebrow: "Trusted by Brides Across Bangalore", title: "Bridal Makeup, Perfected Over 9+ Years",
+    slug: "bridal-makeup-artist-bangalore", menu: "Bridal", eyebrow: "Trusted by Brides Across Bangalore", title: "Bridal Makeup, Perfected Over 14 Years",
     subtitle: "From the first consultation to your last wedding function, every look is planned around your skin, your outfit, and your story — not a template.",
     image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9", service: "Bridal",
     body: [
-      "After nine years and 320+ weddings, I've learned that no two brides — or their skin, lighting, or outfits — are ever the same. That's why every bridal booking with me starts with a real consultation, not a fixed package: we talk through your outfit colour and fabric, your venue's lighting, your jewellery, and any skin concerns well before I open my kit.",
+      "After fourteen years and 320+ weddings, I've learned that no two brides — or their skin, lighting, or outfits — are ever the same. That's why every bridal booking with me starts with a real consultation, not a fixed package: we talk through your outfit colour and fabric, your venue's lighting, your jewellery, and any skin concerns well before I open my kit.",
       "A promise I keep: I do not double-book wedding dates. Once you're confirmed, my team and I are there exclusively for you.",
     ],
     bullets: [
@@ -36,7 +36,7 @@ export const servicePages = [
   },
   {
     slug: "engagement-makeup", menu: "Engagement", eyebrow: "Your First “Yes” to the Camera", title: "Engagement Makeup That Photographs as Beautifully as It Feels",
-    subtitle: "A personalised consultation, premium products, and nine years of experience reading skin tones under every kind of event lighting.",
+    subtitle: "A personalised consultation, premium products, and fourteen years of experience reading skin tones under every kind of event lighting.",
     image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51", service: "Engagement",
     body: [
       "Engagement photos get looked at — and re-looked at — for years, which is exactly why I treat the consultation as seriously as I do for a wedding day. Before I touch a single brush, we go through your vision, a skin consultation, your outfit and jewellery, and the exact time and venue — because morning light at a garden venue needs a very different approach from an evening indoor reception.",
@@ -49,7 +49,7 @@ export const servicePages = [
     subtitle: "Because looking your best at someone else's wedding takes its own kind of expertise — coordinated, camera-ready, and comfortable for a full day of events.",
     image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2", service: "Non-Bridal",
     body: [
-      "Styling a bridal party is a different skill from styling the bride herself — the goal is a cohesive, photo-ready look across multiple faces and skin tones, often on a tighter timeline, without anyone looking “over-done” next to the bride. Over nine years of wedding-season bookings I've built a process specifically for this: quick skin-tone matching, a look that photographs consistently across a group, and a hairstyle-to-makeup pairing that holds up through a full day.",
+      "Styling a bridal party is a different skill from styling the bride herself — the goal is a cohesive, photo-ready look across multiple faces and skin tones, often on a tighter timeline, without anyone looking “over-done” next to the bride. Over fourteen years of wedding-season bookings I've built a process specifically for this: quick skin-tone matching, a look that photographs consistently across a group, and a hairstyle-to-makeup pairing that holds up through a full day.",
       `Every non-bridal booking uses the same premium product line and hygiene standards as our bridal services (${BRANDS} — tools sanitised before every use).`,
     ],
     faq: [["Can you do makeup for the full bridal party in one sitting?", "Yes — up to six faces in a single session with an assistant; larger groups are scheduled in waves."], ["Will our looks be coordinated with the bride's makeup style?", "Yes — we align the look and intensity so the whole party photographs well together."]],

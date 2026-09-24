@@ -47,7 +47,7 @@ export const heroVideoWebm = "/hero-bg.webm";
 export const heroVideoPoster = "/hero-poster.jpg";
 
 export const heroStats = [
-  { value: "9+", label: "Years in craft" },
+  { value: "14+", label: "Years in craft" },
   { value: "500+", label: "Brides styled" },
   { value: "5.0", label: "Google rating" },
 ];
@@ -57,7 +57,7 @@ export const locationTicker = [
 ];
 
 export const aboutStats = [
-  { value: "9 yrs", label: "Professional practice" },
+  { value: "14 yrs", label: "Professional practice" },
   { value: "500+", label: "Weddings & shoots" },
   { value: "120+", label: "Artists trained" },
 ];

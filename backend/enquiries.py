@@ -28,6 +28,7 @@ class EnquiryIn(BaseModel):
     look: Optional[str] = Field(default=None, max_length=80)
     look_image: Optional[str] = Field(default=None, max_length=600)
     source: Optional[str] = Field(default="form", max_length=20)
+    terms_accepted: Optional[bool] = None
 
 
 class Enquiry(EnquiryIn):

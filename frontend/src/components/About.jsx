@@ -26,7 +26,7 @@ const About = () => {
           <Reveal delay={0.15}>
             <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">About the artist</span>
             <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-[1.06] mt-4 sm:mt-5">
-              Nine years of listening to faces before <span className="italic text-[#E62E6B]">painting</span> them.
+              Fourteen years of listening to faces before <span className="italic text-[#E62E6B]">painting</span> them.
             </h2>
             <p className="mt-5 sm:mt-6 text-[#5C4E52] leading-relaxed text-sm sm:text-base">
               Widely regarded as the <span className="font-semibold text-[#4A2530]">best bridal makeup artist in Bangalore</span>, Rekha believes the best makeup is the kind that disappears into the person wearing it — a foundation that behaves like skin, a base built to survive twelve hours and a hundred hugs, an eye that photographs the way it feels.

@@ -136,7 +136,7 @@ export const ContactPage = () => {
         <Hero page={page} />
         <SeoIntro page={page} onCta={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} />
         {pageBodies[pathname] && <RichBody body={pageBodies[pathname]} />}
-        <Contact showBooking={pathname !== BOOKING_PATH} />
+        <Contact showBooking={pathname !== BOOKING_PATH} requireTerms={pathname === BOOKING_PATH} />
       </div>
     </PageShell>
   );

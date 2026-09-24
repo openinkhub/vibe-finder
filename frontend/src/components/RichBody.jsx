@@ -18,7 +18,7 @@ const Cta = ({ c }) => {
 
 const Block = ({ s, i }) => (
   <Reveal delay={Math.min(i, 3) * 0.05}>
-    <div className="space-y-4" data-testid={`body-section-${i}`}>
+    <div className="space-y-4 scroll-mt-28" id={s.terms ? "booking-terms" : undefined} data-testid={`body-section-${i}`}>
       <H>{s.h}</H>
       {s.quote && <p className="font-display italic text-xl sm:text-2xl text-[#E62E6B] border-l-2 border-[#E62E6B] pl-4">{s.quote}</p>}
       {s.p?.map((t, k) => <P key={k}>{t}</P>)}
