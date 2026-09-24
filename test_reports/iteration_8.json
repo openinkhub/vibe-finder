@@ -1,0 +1,37 @@
+{
+  "summary": "Iteration 8: End-to-end testing of new features (brochure PDF+lead capture, batch banner with seats+countdown+auto-hide, embedded booking panels, restructured admin with Service/Course tabs and Accept/Reject buttons, plus regression on portfolio pages rich body). 16/16 backend pytest tests PASS, all frontend flows verified via Playwright with 0 page errors.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "portfolio_rich_body": "PASS - all 7 portfolio pages render data-testid='body-faq' sidebar with 4 Q&A entries each (/south-indian-bridal-makeup-artist-in-karnataka, /book-engagement-makeup-artist-near-me, /best-makeup-for-south-indian-brides, /party-makeup-near-me, /bridal-makeup-educator-karnataka, /hire-celebrirt-makeup-artist-for-wedding, /makeup-artist-for-pre-wedding-shoot). Main paragraph section, 'Explore the Work', 'Plan Your Look' with CTA buttons all visible.",
+    "batch_banner": "PASS - future date (today+10) renders 'Next batch · Starts in 10 days' countdown, formatted date '4 October 2026', 'Only 3 seats left' chip. Past date (2020-01-01) → banner auto-hides. Blank seats defaults to 5 (verified via API).",
+    "brochure_download": "PASS - /api/brochure/request mode=download returns valid PDF (%PDF header, 2662 bytes for Bridal). UI dialog opens, fills email, downloads Bridal-Brochure.pdf successfully. Academy brochure also works.",
+    "brochure_email_sandbox": "PASS - Resend sandbox rejects test@example.com → backend returns 502 with clear message; frontend surfaces error toast; no crash. Expected sandbox behavior.",
+    "brochure_validation": "PASS - invalid path→404, invalid email→400",
+    "booking_panel_service": "PASS - /bridal-makeup-artist-bangalore renders data-testid='booking-panel-service' (light, 'Check availability'). Submit with name+phone → success toast + enquiry created (verified in admin as TEST_iter8_ui / Bridal).",
+    "booking_panel_course": "PASS - /makeup-educator-beauty-mentor-karnataka renders data-testid='booking-panel-course' (dark plum, 'Reserve your seat', 'Save your spot in Launchpad', 'Reserve My Seat' CTA). Submit works, success toast shown.",
+    "admin_tabs_restructure": "PASS - top nav has 'Service Enquiries' + 'Course Enquiries' tabs (old single 'Enquiries' tab removed). Each tab has stats row (Total/New/Replied/Booked/Closed) and card list correctly split by COURSE_SERVICES.",
+    "admin_accept_reject": "PASS - each enquiry card exposes Accept + Reject buttons alongside Mark New/Replied/Booked/Closed. Accept click → status booked, success toast, 0 page errors. Reject on course tab → status closed. POST /api/enquiries/{id}/accept and /reject return 200. Nonexistent id → 404. Unauth → 401/403.",
+    "look_image_none_fix": "PASS - Regression: creating enquiry with no email and no look_image, then POST /accept → 200, background email task no longer raises AttributeError. Confirmed current alerts.py uses `(enquiry.get('look_image') or '')`. Prior AttributeError stack traces in backend.err.log are all from pre-fix server processes.",
+    "backend_pytest": "16/16 passed (3.78s) - see /app/test_reports/pytest/iter8_results.xml"
+  },
+  "test_report_links": ["/app/backend/tests/test_iter8_new_features.py", "/app/test_reports/pytest/iter8_results.xml"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Content: only the sidebar FAQ block uses data-testid='body-faq'; individual sidebar Q&A pairs don't carry data-testid='body-qa' (that testid is reserved for inline Q&A sections in main body — none of the 7 new portfolio pages use inline QAs, so 0 body-qa nodes render). If the spec intended per-question testids for the sidebar too, RichBody.jsx line 52 area needs an extra data-testid on each pair. Not a functional bug.",
+    "brochure.py: /api/brochure/request stores lead but has no rate-limiting — a malicious client could spam PDF generation (2.6 KB * reportlab CPU each). Consider adding IP/email throttle.",
+    "enquiries.py accept/reject endpoints don't validate that the enquiry isn't already booked/closed — accepting an already-closed enquiry silently re-flips and sends another email. Consider guarding against duplicate state transitions.",
+    "brochure.py _send_brochure_email: the returned bool is only used to decide 502; the async task in BackgroundTasks (send_brochure_alert) is fire-and-forget with no retry. Fine for MVP."
+  ],
+  "updated_files": ["/app/backend/tests/test_iter8_new_features.py"],
+  "success_rate": {"backend": "100% (16/16 pytest)", "frontend": "100% (all flows PASS, 0 page errors)"},
+  "test_credentials": "admin@rekhakrishnamurthy.com / Rekha@Admin2026 (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "None persistent. Created & cleaned up: TEST_iter8_lead, TEST_iter8_noemail, TEST_iter8_svc, TEST_iter8_course, TEST_iter8_ui, TEST_iter8_course_ui enquiries; TEST_iter8_banner batch on makeup-educator-beauty-mentor-karnataka (cleared). All test artifacts removed.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 8 verified all 5 new feature areas: (1) 7 Portfolio pages rich body + sidebar FAQ, (2) batch banner countdown/seats/auto-hide with fallback=5, (3) brochure PDF download + Resend email (sandbox 502 handled gracefully), (4) embedded booking panels (dark plum course vs light service variants both submit successfully), (5) admin restructure to Service/Course tabs with Accept/Reject that call new /accept /reject endpoints. The look_image=None bg-email crash is FIXED (alerts.py line 28). Known sandbox limitation: Resend can only actually deliver mail to reks5555@gmail.com; any other recipient triggers a graceful 502→toast, no crash. Old stale AttributeError traces exist in /var/log/supervisor/backend.err.log from before the fix — they are NOT recurring."
+}
