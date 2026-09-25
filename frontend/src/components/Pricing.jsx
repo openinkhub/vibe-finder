@@ -7,6 +7,7 @@ import { pricingPath } from "../lib/pages";
 import { scrollToId } from "./Navbar";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
+import { shortCta } from "../lib/ctaLabel";
 
 const Pricing = () => {
   const [pricing, setPricing] = useState(fallback);
@@ -40,7 +41,10 @@ const Pricing = () => {
 
         <p className="mt-8 sm:mt-10 text-center text-sm text-[#8B7F82] max-w-2xl mx-auto">Final pricing depends on look, location and event duration — confirmed free of charge at consultation.</p>
         <div className="mt-6 sm:mt-8 text-center">
-          <button onClick={() => scrollToId("contact")} className="px-8 py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="pricing-book-btn">Book Your Free Consultation</button>
+          <button onClick={() => scrollToId("contact")} className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-[#E62E6B] text-white text-sm sm:text-base font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="pricing-book-btn">
+            <span className="sm:hidden">{shortCta("Consult on Pricing")}</span>
+            <span className="hidden sm:inline">Consult on Pricing</span>
+          </button>
         </div>
       </div>
     </section>

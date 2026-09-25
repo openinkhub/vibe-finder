@@ -3,6 +3,7 @@ import { Play, Check, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { heroStats, heroVideo, heroVideoWebm, heroVideoPoster } from "../mock/mock";
 import { scrollToId } from "./Navbar";
+import { shortCta } from "../lib/ctaLabel";
 
 const Headline = ({ text }) => text.split(/["“”]/).map((part, i) => part ? <span key={i} className={`fade-up delay-${Math.min(3, Math.floor(i / 2) + 1)} ${i % 2 ? "italic font-bold text-[#E62E6B]" : ""}`}>{part}</span> : null);
 
@@ -23,12 +24,14 @@ const Hero = ({ page }) => {
   return (
     <section id="top" className="relative overflow-hidden bg-[#F4F1EA] grain min-h-[100svh] flex flex-col justify-center" data-testid="hero-section">
       <div className="absolute inset-0 z-0">
-        <video ref={videoRef} className="w-full h-full object-cover" poster={heroVideoPoster} autoPlay loop muted playsInline preload="auto">
+        <img src={heroVideoPoster} alt="Rekha Krishnamurthy bridal makeup" className="w-full h-full object-cover md:hidden" data-testid="hero-mobile-image" />
+        <video ref={videoRef} className="hidden md:block w-full h-full object-cover" poster={heroVideoPoster} autoPlay loop muted playsInline preload="auto">
           <source src={heroVideoWebm} type="video/webm" />
           <source src={heroVideo} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-r from-[#F4F1EA] via-[#F4F1EA]/92 to-[#F4F1EA]/25 md:to-[#F4F1EA]/5" />
         <div className="absolute inset-0 bg-[#F4F1EA]/35 md:bg-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_38%,rgba(230,46,107,0.24),transparent_55%)] md:bg-[radial-gradient(circle_at_78%_45%,rgba(230,46,107,0.14),transparent_60%)]" />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F4F1EA] to-transparent" />
       </div>
 
@@ -48,8 +51,9 @@ const Hero = ({ page }) => {
           </p>
 
           <div className="fade-up delay-4 mt-8 sm:mt-9 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 sm:gap-5">
-            <motion.button whileHover={{ y: -3, scale: 1.02 }} whileTap={{ scale: 0.97 }} onClick={() => scrollToId("contact")} className="px-7 sm:px-8 py-4 rounded-full bg-[#E62E6B] text-white text-[15px] font-medium hover:bg-[#C81F57] transition-colors duration-300 shadow-xl shadow-[#E62E6B]/30" data-testid="hero-book-btn">
-              Book Your Free Consultation
+            <motion.button whileHover={{ y: -3, scale: 1.02 }} whileTap={{ scale: 0.97 }} onClick={() => scrollToId("contact")} className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-[#E62E6B] text-white text-sm sm:text-[15px] font-medium hover:bg-[#C81F57] transition-colors duration-300 shadow-xl shadow-[#E62E6B]/30" data-testid="hero-book-btn">
+              <span className="sm:hidden">{shortCta("Book Your Free Consultation")}</span>
+              <span className="hidden sm:inline">Book Your Free Consultation</span>
             </motion.button>
             <button onClick={() => scrollToId("reels")} className="group flex items-center gap-3 text-[#4A2530]" data-testid="hero-reel-btn">
               <span className="w-12 h-12 rounded-full border border-[#F4B7CE] bg-white/70 backdrop-blur flex items-center justify-center text-[#E62E6B] group-hover:bg-[#E62E6B] group-hover:border-[#E62E6B] group-hover:text-white transition-all duration-300">
