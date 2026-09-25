@@ -54,7 +54,7 @@ const Login = ({ onLogin }) => {
   );
 };
 
-const EnquiryCard = ({ e, onStatus, onAccept, onReject, onDelete }) => (
+const EnquiryCard = ({ e, onStatus, onAccept, onReject, onDelete, busy }) => (
   <div className={`bg-white rounded-3xl p-5 sm:p-6 border ${e.seen === false ? "border-[#E62E6B]/60 shadow-lg shadow-[#E62E6B]/10" : "border-[#F1DCE3]"}`} data-testid={`enquiry-card-${e.id}`}>
     <div className="flex flex-wrap items-start justify-between gap-3">
       <div className="flex items-start gap-3">
@@ -74,8 +74,16 @@ const EnquiryCard = ({ e, onStatus, onAccept, onReject, onDelete }) => (
     </div>
     {e.message && <p className="mt-3 text-sm text-[#5C4E52] leading-relaxed bg-[#FBFAF7] rounded-xl px-4 py-3">{e.message}</p>}
     <div className="mt-4 flex flex-wrap items-center gap-2">
-      <button onClick={() => onAccept(e.id)} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#1c7a45]/10 text-[#1c7a45] border border-[#1c7a45]/30 hover:bg-[#1c7a45] hover:text-white transition-colors" data-testid={`enquiry-accept-${e.id}`}><CheckCircle2 size={13} /> Accept</button>
-      <button onClick={() => onReject(e.id)} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#C81F57]/10 text-[#C81F57] border border-[#C81F57]/30 hover:bg-[#C81F57] hover:text-white transition-colors" data-testid={`enquiry-reject-${e.id}`}><XCircle size={13} /> Reject</button>
+      {e.status === "booked" ? (
+        <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#1c7a45]/10 text-[#1c7a45] border border-[#1c7a45]/30" data-testid={`enquiry-accepted-locked-${e.id}`}><CheckCircle2 size={13} /> Accepted</span>
+      ) : e.status === "closed" ? (
+        <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#C81F57]/10 text-[#C81F57] border border-[#C81F57]/30" data-testid={`enquiry-rejected-locked-${e.id}`}><XCircle size={13} /> Rejected</span>
+      ) : (
+        <>
+          <button onClick={() => onAccept(e.id)} disabled={busy} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#1c7a45]/10 text-[#1c7a45] border border-[#1c7a45]/30 hover:bg-[#1c7a45] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed" data-testid={`enquiry-accept-${e.id}`}>{busy ? <Loader2 size={13} className="animate-spin" /> : <CheckCircle2 size={13} />} Accept</button>
+          <button onClick={() => onReject(e.id)} disabled={busy} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#C81F57]/10 text-[#C81F57] border border-[#C81F57]/30 hover:bg-[#C81F57] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed" data-testid={`enquiry-reject-${e.id}`}>{busy ? <Loader2 size={13} className="animate-spin" /> : <XCircle size={13} />} Reject</button>
+        </>
+      )}
       {STATUSES.filter((s) => s !== e.status).map((s) => (
         <button key={s} onClick={() => onStatus(e.id, s)} className="px-3 py-1.5 rounded-full text-xs font-medium border border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B] hover:text-[#E62E6B] transition-colors capitalize" data-testid={`enquiry-set-${s}-${e.id}`}>Mark {s}</button>
       ))}
@@ -120,6 +128,7 @@ export default function Admin() {
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState("service-enquiries");
   const [notify, setNotify] = useState(() => typeof Notification !== "undefined" && Notification.permission === "granted");
+  const [actioningId, setActioningId] = useState(null);
   const prevUnseen = useRef(null);
 
   const logout = useCallback(() => { localStorage.removeItem(TOKEN_KEY); setUser(false); }, []);
@@ -164,10 +173,14 @@ export default function Admin() {
     try { await api.patch(`/enquiries/${id}`, { status }); toast.success(`Marked ${status}`); refresh(); } catch (err) { toast.error(errorText(err)); }
   };
   const accept = async (id) => {
-    try { await api.post(`/enquiries/${id}/accept`); toast.success("Accepted — confirmation email sent"); refresh(); } catch (err) { toast.error(errorText(err)); }
+    if (actioningId) return;
+    setActioningId(id);
+    try { await api.post(`/enquiries/${id}/accept`); toast.success("Accepted — confirmation email sent"); await refresh(); } catch (err) { toast.error(errorText(err)); } finally { setActioningId(null); }
   };
   const reject = async (id) => {
-    try { await api.post(`/enquiries/${id}/reject`); toast.success("Rejected — email sent"); refresh(); } catch (err) { toast.error(errorText(err)); }
+    if (actioningId) return;
+    setActioningId(id);
+    try { await api.post(`/enquiries/${id}/reject`); toast.success("Rejected — email sent"); await refresh(); } catch (err) { toast.error(errorText(err)); } finally { setActioningId(null); }
   };
   const remove = async (id) => {
     if (!window.confirm("Delete this enquiry?")) return;
@@ -240,7 +253,7 @@ export default function Admin() {
           <>
             <EnquiriesSection group="service" title="Who's waiting to hear from you" items={serviceItems} filter={serviceFilter} setFilter={setServiceFilter} stats={groupStats("service")} unseen={groupUnseen("service")} markSeen={markSeen} />
             <div className="space-y-4" data-testid="admin-enquiry-list-service-cards">
-              {serviceItems.map((e) => <EnquiryCard key={e.id} e={e} onStatus={setStatus} onAccept={accept} onReject={reject} onDelete={remove} />)}
+              {serviceItems.map((e) => <EnquiryCard key={e.id} e={e} onStatus={setStatus} onAccept={accept} onReject={reject} onDelete={remove} busy={actioningId === e.id} />)}
             </div>
           </>
         )}
@@ -248,7 +261,7 @@ export default function Admin() {
           <>
             <EnquiriesSection group="course" title="Academy leads to follow up" items={courseItems} filter={courseFilter} setFilter={setCourseFilter} stats={groupStats("course")} unseen={groupUnseen("course")} markSeen={markSeen} />
             <div className="space-y-4" data-testid="admin-enquiry-list-course-cards">
-              {courseItems.map((e) => <EnquiryCard key={e.id} e={e} onStatus={setStatus} onAccept={accept} onReject={reject} onDelete={remove} />)}
+              {courseItems.map((e) => <EnquiryCard key={e.id} e={e} onStatus={setStatus} onAccept={accept} onReject={reject} onDelete={remove} busy={actioningId === e.id} />)}
             </div>
           </>
         )}
