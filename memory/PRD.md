@@ -88,6 +88,8 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
   Verified via testing_agent iteration_12: backend 17/17 pytest (new `test_blog_cms.py`), frontend 100% (full browser-driven create/edit/delete via Admin UI, webp<100kb conversion confirmed, schema tags confirmed on Services/Academy/About/Blog pages, static SEO files confirmed, no regressions).
 - Also fixed production deploy blocker: `camera-controls@3.1.2` required Node≥22 vs build container's Node 20.19.2 — pinned to `3.1.0` via `resolutions` in package.json. Installed GTM (GTM-WL72CXFB) site-wide via index.html.
 
+- 2026-09 ad: Installed **Openink Hub / AI-SEO tracking** snippet in `index.html` before `</body>` (site key `ohk_ecae82a60be7971042020a5a`). Added `RouteTracker` component in `App.js` (inside `<BrowserRouter>`) that calls `window.OpeninkTrack('virtual_pageview', {path})` on every SPA route change (skips initial mount since the script's own `pageview` event covers first load). Verified via screenshot: initial `pageview` beacon fires on load + `virtual_pageview` fires correctly on navigating to `/blog`.
+
 ## Backlog
 - P1: Replace `/public/og-image.webp` with the user's original banner (upload it as a file — the inline chat image wasn't retrievable).
 - P1: Body copy for the remaining sheet pages without a docx yet; Delivery & Cookies policy text.

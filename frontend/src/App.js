@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { scrollToId } from "./components/Navbar";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import "./App.css";
 import { Toaster } from "./components/ui/sonner";
 import Navbar from "./components/Navbar";
@@ -76,10 +76,21 @@ const special = {
   "/book-bridal-makeup-package-karnataka": <TryOnPage />,
 };
 
+const RouteTracker = () => {
+  const location = useLocation();
+  const isFirst = useRef(true);
+  useEffect(() => {
+    if (isFirst.current) { isFirst.current = false; return; }
+    if (window.OpeninkTrack) window.OpeninkTrack("virtual_pageview", { path: location.pathname });
+  }, [location.pathname]);
+  return null;
+};
+
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <RouteTracker />
         <Routes>
           {allPages.map((p) => <Route key={p.path} path={p.path} element={special[p.path] || (legalKeyByPath[p.path] ? <LegalPage /> : <SheetPage />)} />)}
           <Route path="/blog/:slug" element={<BlogPostPage />} />
