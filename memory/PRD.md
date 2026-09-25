@@ -80,6 +80,9 @@ Pixel-perfect clone of an editorial "contact-sheet" bridal makeup artist portfol
 
 - 2026-09 aa: Hero checklist chip "Makeup from ₹999" was stale (missed during earlier pricing-card update) — fixed to "Makeup from ₹4,999" in `Hero.jsx`; also synced matching FAQ answer in mock.js. Verified via screenshot desktop+mobile.
 
+- 2026-09 ab: **Google Tag Manager (GTM-WL72CXFB) installed** — head script added as high as possible in `<head>` and noscript iframe right after opening `<body>` in `/app/frontend/public/index.html`, applies to every route (CRA single index.html). Verified `dataLayer` initializes on load via screenshot check.
+- **Deployment build fix**: production build was failing at `yarn install` with `camera-controls@3.1.2` requiring Node >=22 (build container is Node 20.19.2) — pinned `"camera-controls": "3.1.0"` in `frontend/package.json` `resolutions` (compatible with Node >=20.11.0, satisfies `@react-three/drei`'s `^3.1.0` range). Verified `yarn install` (strict, no `--ignore-engines`) and `yarn build` both succeed locally.
+
 ## Backlog
 - P1: Replace `/public/og-image.webp` with the user's original banner (upload it as a file — the inline chat image wasn't retrievable).
 - P1: Body copy for the remaining sheet pages without a docx yet; Delivery & Cookies policy text.
