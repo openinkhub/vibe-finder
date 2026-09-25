@@ -29,12 +29,13 @@ import { SheetPage, ContactPage, TestimonialsPage, BlogPage, LegalPage } from ".
 import BlogPostPage from "./pages/BlogPostPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { SeoIntro } from "./components/SeoIntro";
-import { useSeo } from "./components/Seo";
+import { useSeo, useJsonLd } from "./components/Seo";
 import { allPages, getPage, legalKeyByPath } from "./lib/pages";
 
 const Landing = () => {
   const page = getPage("/");
   useSeo(page);
+  useJsonLd(page);
   useEffect(() => {
     const target = sessionStorage.getItem("rk_scroll_to") || (window.location.hash ? window.location.hash.slice(1) : "");
     if (target) { sessionStorage.removeItem("rk_scroll_to"); setTimeout(() => scrollToId(target), 400); }
