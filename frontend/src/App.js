@@ -27,6 +27,7 @@ import PortfolioPage from "./pages/PortfolioPage";
 import { LookLabPage, TryOnPage } from "./pages/ExperiencePages";
 import { SheetPage, ContactPage, TestimonialsPage, BlogPage, LegalPage } from "./pages/ContentPages";
 import BlogPostPage from "./pages/BlogPostPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import { SeoIntro } from "./components/SeoIntro";
 import { useSeo } from "./components/Seo";
 import { allPages, getPage, legalKeyByPath } from "./lib/pages";
@@ -100,7 +101,7 @@ function App() {
           <Route path="/legal" element={<Navigate to="/privacy" replace />} />
           <Route path="/party-and-non-bridal-makeup-karnatka" element={<Navigate to="/party-and-non-bridal-makeup-karnataka" replace />} />
           <Route path="/hire-celebrirt-makeup-artist-for-wedding" element={<Navigate to="/hire-celebrity-makeup-artist-for-wedding" replace />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-center" richColors />

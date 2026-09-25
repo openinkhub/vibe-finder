@@ -72,6 +72,8 @@ export const useJsonLd = (page, faq) => {
       description: page.metaDescription,
       url: page.canonical,
       isPartOf: { "@id": `${SITE_URL}/#website` },
+      author: { "@type": "Person", name: "Rekha Krishnamurthy", url: `${SITE_URL}/about-us` },
+      publisher: { "@id": `${SITE_URL}/#organization` },
     };
     injectJsonLd("ld-json-webpage", webPage);
     injectJsonLd("ld-json-breadcrumb", breadcrumb);
