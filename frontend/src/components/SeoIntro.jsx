@@ -8,7 +8,8 @@ export const SeoIntro = ({ page, ctaTo = "/contact", onCta, className = "" }) =>
   if (!page) return null;
   const btn = "mt-8 inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#E62E6B] text-white text-sm sm:text-base font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25";
   const heroCtaResolved = page.heroCta || "Book Your Free Consultation";
-  const displayCta = page.cta === heroCtaResolved ? (/book/i.test(heroCtaResolved) ? "Enquire Now" : "Confirm your Booking") : page.cta;
+  const isDuplicate = page.cta === heroCtaResolved || shortCta(page.cta) === shortCta(heroCtaResolved);
+  const displayCta = isDuplicate ? (/book/i.test(heroCtaResolved) ? "Enquire Now" : "Confirm your Booking") : page.cta;
   const label = <><span className="sm:hidden">{shortCta(displayCta)}</span><span className="hidden sm:inline">{displayCta}</span></>;
   return (
     <section className={`max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 pb-14 md:pb-20 ${className}`} data-testid="seo-intro">
