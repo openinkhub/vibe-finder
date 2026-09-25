@@ -1,0 +1,25 @@
+{
+  "summary": "Full test of new Blog CMS + technical SEO. Backend: 17/17 pytest tests pass covering blog list/get/create/update/delete, WEBP auto-conversion (<100KB verified via HEAD), FAQ→FAQPage schema, X-API-Key auth (valid/invalid/absent), API key regeneration invalidating old key, static SEO files (robots.txt, sitemap.xml >=50 urls incl. blog slugs, llms.txt, llms-full.txt, favicons), and content/enquiry regression. Frontend: Admin Blog tab renders API key card (Show/Copy/Regenerate) + 3 seeded posts with edit/delete + New post button. Created a full post via the admin form (title, meta, category, publish date, excerpt, body with bold toolbar, FAQ Q/A, JPG upload) — persisted to DB (verified via GET /api/blog) and appears on public /blog listing. Public blog detail page shows title/date/'By Rekha Krishnamurthy'/featured image and 5 JSON-LD blocks including BlogPosting + Person + FAQPage. Services page (/bridal-makeup-artist-bangalore) has 5 JSON-LD blocks: Service + BreadcrumbList + WebPage + global Organization/WebSite/LocalBusiness. Academy page (/self-makeup-classes-karnataka) has Course + BreadcrumbList + WebPage. /about-us has Person 'Rekha Krishnamurthy'. index.html contains favicon <link rel=icon> tags + global Organization/WebSite/LocalBusiness JSON-LD. Home + WhatsApp/Call floating buttons still render. Test post cleaned up.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/test_blog_cms.py",
+    "/app/test_reports/pytest/iter12.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Minor: blog.py update_post uses require_admin (not require_admin_or_api_key), so third-party API key can create but not update posts. This matches the spec (posting API is create-only) but worth noting.",
+    "Minor: regenerate_sitemap() writes to /app/frontend/public/sitemap.xml directly — as flagged by main agent, this is a preview-env-only mechanism and will not work in a real production static build. Not a bug for this environment.",
+    "Minor: /api/blog list endpoint returns Optional/nullable interlink_url/alt_text — Pydantic BlogOut uses default '' which coerces correctly; verified."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_blog_cms.py (new)"
+  ],
+  "success_rate": {"backend": "100% (17/17)", "frontend": "100%"},
+  "test_credentials": "admin@rekhakrishnamurthy.com / Rekha@Admin2026 (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "None persisted. Created 1 UI test blog post 'TEST UI Blog Post Iter12' and deleted it after verification. Enquiry TEST_user was created via regression test (existing behavior).",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Blog CMS is fully functional end-to-end. Pytest file at /app/backend/tests/test_blog_cms.py is idempotent (cleans up its own created post) and safe for regression re-runs. Admin form data-testids used: blog-title-input, blog-meta-title-input, blog-meta-desc-input, blog-focus-input, blog-category-input, blog-excerpt-input, blog-body-input, blog-md-btn-{bold,italic,h2,h3,list,quote}, blog-faq-add, blog-image-file-input, blog-image-pick-btn, blog-save-btn, blog-edit-{id}, blog-delete-{id}. Academy pages are the 4 in pages.json with group='Academy' (e.g. /self-makeup-classes-karnataka) — /makeup-academy-bangalore does NOT exist as a page. Featurable widget + hero stats still show 4.9 (iter11 fix intact).",
+  "rca of the issue": "N/A — no blocking issues found."
+}
