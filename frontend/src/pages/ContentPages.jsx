@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Link, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { Check, ArrowUpRight, MapPin } from "lucide-react";
@@ -8,7 +8,7 @@ import { Reveal } from "../components/fx/Reveal";
 import { TiltCard } from "../components/fx/TiltCard";
 import Contact from "../components/Contact";
 import Testimonials from "../components/Testimonials";
-import { servicePages, locationPages, staticPages, blogPosts, legalLinks } from "../content/site";
+import { servicePages, locationPages, staticPages, legalLinks } from "../content/site";
 import { getPage, pagesByGroup, headerMenu, legalKeyByPath, BOOKING_PATH, enquiryServiceFor } from "../lib/pages";
 import { BatchBanner } from "../components/BatchBanner";
 import { PortfolioGallery } from "./PortfolioPage";
@@ -18,6 +18,7 @@ import { BrochureCta } from "../components/BrochureCta";
 import { BookingPanel } from "../components/BookingPanel";
 import { usePageImage, usePageImages, heroImage } from "../hooks/usePageImages";
 import legal from "../content/legal.json";
+import { api, imgUrl } from "../lib/api";
 
 const Section = ({ children, className = "" }) => <section className={`max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 pb-14 md:pb-20 ${className}`}>{children}</section>;
 
@@ -131,7 +132,7 @@ export const SheetPage = () => {
   const content = findBody(pathname.slice(1));
   const hub = headerMenu.find((m) => m.to === pathname && m.children);
   return (
-    <PageShell page={page} title={page.name}>
+    <PageShell page={page} title={page.name} faq={pageBodies[pathname]?.faq}>
       <div data-testid={`sheet-page-${pathname.slice(1)}`}>
         <Hero page={page} />
         {page.group === "Academy" && <BatchBanner page={page} />}
@@ -151,7 +152,7 @@ export const ContactPage = () => {
   const service = new URLSearchParams(search).get("service");
   if (service) sessionStorage.setItem("rk_service", service);
   return (
-    <PageShell page={page} title="Contact">
+    <PageShell page={page} title="Contact" faq={pageBodies[pathname]?.faq}>
       <div data-testid="contact-page">
         <Hero page={page} cta="Jump to Enquiry Form" onCta={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} />
         <SeoIntro page={page} onCta={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} />
@@ -179,6 +180,8 @@ export const TestimonialsPage = () => {
 
 export const BlogPage = () => {
   const { page } = usePage();
+  const [posts, setPosts] = useState([]);
+  useEffect(() => { api.get("/blog").then((r) => setPosts(r.data)).catch(() => setPosts([])); }, []);
   return (
     <PageShell page={page} title="Blog">
       <div data-testid="blog-page">
@@ -186,12 +189,14 @@ export const BlogPage = () => {
         <SeoIntro page={page} />
         <Section>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {blogPosts.map((p, i) => (
+            {posts.map((p, i) => (
               <Reveal key={p.slug} delay={i * 0.08}>
-                <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full" data-testid={`blog-card-${i}`}>
-                  <img src={p.image} alt={p.title} className="w-full h-48 object-cover" />
-                  <div className="p-6"><div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{p.date}</div><h3 className="font-display text-xl text-[#4A2530] mt-2">{p.title}</h3><p className="text-sm text-[#5C4E52] mt-2">{p.excerpt}</p><span className="mt-4 inline-flex items-center gap-1 text-sm text-[#E62E6B]">Read soon <ArrowUpRight size={14} /></span></div>
-                </TiltCard>
+                <Link to={`/blog/${p.slug}`} data-testid={`blog-card-${i}`}>
+                  <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full">
+                    <img src={imgUrl(p.featured_image)} alt={p.alt_text || p.title} className="w-full h-48 object-cover" />
+                    <div className="p-6"><div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{p.category} · {p.publish_date}</div><h3 className="font-display text-xl text-[#4A2530] mt-2">{p.title}</h3><p className="text-sm text-[#5C4E52] mt-2">{p.excerpt}</p><span className="mt-4 inline-flex items-center gap-1 text-sm text-[#E62E6B]">Read more <ArrowUpRight size={14} /></span></div>
+                  </TiltCard>
+                </Link>
               </Reveal>
             ))}
           </div>

@@ -16,6 +16,7 @@ import studio
 import content
 import availability
 import brochure
+import blog
 from storage import init_storage
 
 mongo_url = os.environ['MONGO_URL']
@@ -31,6 +32,7 @@ content.init(db)
 studio.init(db)
 availability.init(db)
 brochure.init(db)
+blog.init(db)
 
 
 @api_router.get("/")
@@ -44,6 +46,7 @@ api_router.include_router(studio.router)
 api_router.include_router(content.router)
 api_router.include_router(availability.router)
 api_router.include_router(brochure.router)
+api_router.include_router(blog.router)
 app.include_router(api_router)
 
 app.add_middleware(
@@ -65,6 +68,8 @@ async def on_startup():
     await db.enquiries.create_index("status")
     await content.seed_content()
     await content.seed_services()
+    await blog.seed_blog()
+    await blog.regenerate_sitemap()
     await db.bookings.create_index("date")
     try:
         init_storage()

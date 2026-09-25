@@ -126,6 +126,7 @@ input[type="range"]::-webkit-slider-thumb { appearance: none; width: 18px; heigh
     .fade-up, .animate-marquee { animation: none !important; }
 }
 
+.legal-md h2 { font-family: 'Playfair Display', serif; color: #4A2530; font-size: 1.4rem; margin: 2rem 0 .75rem; }
 .legal-md h3 { font-family: 'Playfair Display', serif; color: #4A2530; font-size: 1.15rem; margin: 1.5rem 0 .5rem; }
 .legal-md p { margin: .6rem 0; }
 .legal-md ul { list-style: disc; padding-left: 1.4rem; margin: .5rem 0; }

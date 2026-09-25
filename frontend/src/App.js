@@ -26,6 +26,7 @@ import Admin from "./pages/Admin";
 import PortfolioPage from "./pages/PortfolioPage";
 import { LookLabPage, TryOnPage } from "./pages/ExperiencePages";
 import { SheetPage, ContactPage, TestimonialsPage, BlogPage, LegalPage } from "./pages/ContentPages";
+import BlogPostPage from "./pages/BlogPostPage";
 import { SeoIntro } from "./components/SeoIntro";
 import { useSeo } from "./components/Seo";
 import { allPages, getPage, legalKeyByPath } from "./lib/pages";
@@ -81,6 +82,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {allPages.map((p) => <Route key={p.path} path={p.path} element={special[p.path] || (legalKeyByPath[p.path] ? <LegalPage /> : <SheetPage />)} />)}
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/look-lab" element={<Navigate to="/corporate-professional-makeup-services" replace />} />
           <Route path="/try-on" element={<Navigate to="/book-bridal-makeup-package-karnataka" replace />} />

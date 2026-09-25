@@ -9,10 +9,11 @@ import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 import { brand } from "../mock/mock";
 import { authorBio } from "../content/site";
-import { useSeo } from "./Seo";
+import { useSeo, useJsonLd } from "./Seo";
 
-export const PageShell = ({ children, title, page }) => {
+export const PageShell = ({ children, title, page, faq }) => {
   useSeo(page);
+  useJsonLd(page, faq);
   useEffect(() => { window.scrollTo(0, 0); if (title && !page) document.title = `${title} · Rekha Krishnamurthy`; }, [title, page]);
   return (
     <div className="bg-[#F4F1EA] min-h-screen">

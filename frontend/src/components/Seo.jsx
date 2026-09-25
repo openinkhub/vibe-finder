@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 export const OG_IMAGE_ALT = "Makeup By Rekha Krishnamurthy";
+const SITE_URL = "https://rekhakrishnamurthy.com";
 
 const setTag = (selector, attrs) => {
   let el = document.head.querySelector(selector);
@@ -29,4 +30,82 @@ export const useSeo = (page) => {
     setTag('meta[name="twitter:image"]', { name: "twitter:image", content: image });
     setTag('meta[name="twitter:image:alt"]', { name: "twitter:image:alt", content: OG_IMAGE_ALT });
   }, [page]);
+};
+
+const AUTHOR_PERSON = {
+  "@type": "Person",
+  name: "Rekha Krishnamurthy",
+  jobTitle: "Bridal & Celebrity Makeup Artist",
+  url: `${SITE_URL}/about-us`,
+  sameAs: [
+    "https://www.instagram.com/makeupbyrekhakrishnamurthy/",
+    "https://www.facebook.com/makeupbyrekhakrishnamurthy/",
+    "https://x.com/MakeupbyRekha",
+    "https://www.linkedin.com/in/rekha-krishnamurthy-6b998839",
+  ],
+};
+
+export const injectJsonLd = (id, data) => {
+  let el = document.getElementById(id);
+  if (!data) { if (el) el.remove(); return; }
+  if (!el) { el = document.createElement("script"); el.id = id; el.type = "application/ld+json"; document.head.appendChild(el); }
+  el.textContent = JSON.stringify(data);
+};
+
+export const useJsonLd = (page, faq) => {
+  useEffect(() => {
+    if (!page) return;
+    const segments = (page.path || "/").split("/").filter(Boolean);
+    const breadcrumb = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        ...segments.map((seg, i) => ({ "@type": "ListItem", position: i + 2, name: page.h1 || page.name, item: `${SITE_URL}/${segments.slice(0, i + 1).join("/")}` })),
+      ],
+    };
+    const webPage = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": page.canonical,
+      name: page.metaTitle,
+      description: page.metaDescription,
+      url: page.canonical,
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+    };
+    injectJsonLd("ld-json-webpage", webPage);
+    injectJsonLd("ld-json-breadcrumb", breadcrumb);
+
+    if (page.group === "Services") {
+      injectJsonLd("ld-json-entity", {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        serviceType: page.h1 || page.name,
+        name: page.h1 || page.name,
+        description: page.metaDescription,
+        provider: { "@type": "Person", name: "Rekha Krishnamurthy" },
+        areaServed: "Bangalore, Karnataka, India",
+      });
+    } else if (page.group === "Academy") {
+      injectJsonLd("ld-json-entity", {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        name: page.h1 || page.name,
+        description: page.metaDescription,
+        provider: { "@type": "Organization", name: "Rekha Krishnamurthy Makeup & Academy", sameAs: SITE_URL },
+      });
+    } else if (page.path === "/about-us") {
+      injectJsonLd("ld-json-entity", { "@context": "https://schema.org", ...AUTHOR_PERSON });
+    } else {
+      injectJsonLd("ld-json-entity", null);
+    }
+
+    injectJsonLd("ld-json-faq", faq && faq.length ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faq.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+    } : null);
+
+    return () => { ["ld-json-webpage", "ld-json-breadcrumb", "ld-json-entity", "ld-json-faq"].forEach((id) => injectJsonLd(id, null)); };
+  }, [page, faq]);
 };
