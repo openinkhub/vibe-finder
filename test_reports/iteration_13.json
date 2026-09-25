@@ -1,0 +1,30 @@
+{
+  "summary": "Iteration 13 focused on the new accept/reject idempotency guard (enquiries.py) and the locked-badge UI in Admin.jsx EnquiryCard. Ran 10 backend pytest cases (login, list/stats, accept-idempotent, reject-idempotent, closed->accept, booked->reject, PATCH regression, 404s, auth). All 10 passed. Ran Playwright UI flow: seeded two public enquiries, logged into /admin as the seeded admin, clicked Accept on one card and Reject on the other. Both showed the success toast, status transitioned to booked/closed, Accept/Reject buttons were replaced by the locked badges (enquiry-accepted-locked-{id} / enquiry-rejected-locked-{id}), and the original action buttons were removed from DOM (so a rapid re-click cannot fire another request from the same card). All admin tabs render including page-heroes (data-testid is admin-tab-heroes, not admin-tab-page-heroes as review-request assumed). Homepage loads with correct title. Batch banner smoke: /api/content/batches currently returns [] so BatchBanner correctly does not render on /makeup-educator-beauty-mentor-karnataka — this is expected null-state, not a regression (no batch is configured). No console errors observed. Test enquiries cleaned up after run.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_enquiry_accept_reject.py",
+    "/app/test_reports/pytest/iter13.xml"
+  ],
+  "action_items": [
+    "Optional: seed at least one active batch in Admin > Batches so a live smoke test of BatchBanner (batch-banner, batch-countdown, batch-seats, batch-cta) is possible on academy pages — currently /api/content/batches returns [] so banner is intentionally hidden.",
+    "Minor: review-request referenced tab id 'admin-tab-page-heroes' but actual data-testid is 'admin-tab-heroes' (only relevant for future test scripts, code is fine)."
+  ],
+  "critical_code_review_comments": [
+    "enquiries.py idempotency guard is correct and side-effect-free: checks existing status and returns early without dispatching background email tasks — this properly prevents duplicate emails on repeated accept/reject calls (verified by asserting updated_at is unchanged on second call).",
+    "Admin.jsx accept()/reject() handlers use a single shared actioningId, meaning while one card is being accepted/rejected ALL other cards' Accept/Reject buttons on the page are disabled (busy prop is passed based on actioningId === e.id, but the early-return `if (actioningId) return;` blocks new clicks globally). This is fine for single-admin usage and prevents any race, but could feel unresponsive on a long list — consider a Set of in-flight ids if UX becomes an issue. Not blocking.",
+    "After accept/reject the code calls refresh() which is a full re-fetch — acceptable but could be optimized by locally patching the item in state to avoid the extra list+stats round-trip."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100% (10/10)", "frontend": "100% (accept+reject lock, tabs, homepage, no console errors)"},
+  "test_credentials": "admin@rekhakrishnamurthy.com / Rekha@Admin2026 (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "Created two public enquiries TEST_UI_accept_ui and TEST_UI_reject_ui via POST /api/enquiries; deleted both after the run. Backend pytest also creates/cleans TEST_* enquiries per test.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Accept/reject idempotency + locked-badge UI verified end-to-end. Reusable regression suite at /app/backend/tests/test_enquiry_accept_reject.py. Note tab id is admin-tab-heroes (not admin-tab-page-heroes). Batch banner smoke deferred until a batch document is seeded via /api/content/batches (admin CRUD).",
+  "rca of the issue": "N/A — no defects found this iteration."
+}
