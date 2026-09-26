@@ -1,34 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Play, Check, Star } from "lucide-react";
 import { motion } from "framer-motion";
-import { heroStats, heroVideo, heroVideoWebm, heroVideoPoster } from "../mock/mock";
+import { heroStats, heroVideoPoster } from "../mock/mock";
 import { scrollToId } from "./Navbar";
 import { shortCta } from "../lib/ctaLabel";
 
 const Headline = ({ text }) => text.split(/["“”]/).map((part, i) => part ? <span key={i} className={`fade-up delay-${Math.min(3, Math.floor(i / 2) + 1)} ${i % 2 ? "italic font-bold text-[#E62E6B]" : ""}`}>{part}</span> : null);
 
 const Hero = ({ page }) => {
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.muted = true;
-    const tryPlay = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
-    v.load();
-    tryPlay();
-    v.addEventListener("canplay", tryPlay);
-    return () => v.removeEventListener("canplay", tryPlay);
-  }, []);
-
   return (
     <section id="top" className="relative overflow-hidden bg-[#F4F1EA] grain min-h-[100svh] flex flex-col justify-center" data-testid="hero-section">
       <div className="absolute inset-0 z-0">
-        <img src={heroVideoPoster} alt="Rekha Krishnamurthy bridal makeup" className="w-full h-full object-cover md:hidden [filter:contrast(1.6)_saturate(1.5)_brightness(0.92)]" data-testid="hero-mobile-image" />
-        <video ref={videoRef} className="hidden md:block w-full h-full object-cover" poster={heroVideoPoster} autoPlay loop muted playsInline preload="auto">
-          <source src={heroVideoWebm} type="video/webm" />
-          <source src={heroVideo} type="video/mp4" />
-        </video>
+        <img src={heroVideoPoster} alt="Rekha Krishnamurthy bridal makeup" className="w-full h-full object-cover" data-testid="hero-mobile-image" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#F4F1EA]/60 via-[#F4F1EA]/15 to-transparent md:hidden" />
         <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-[#F4F1EA] via-[#F4F1EA]/92 to-[#F4F1EA]/5" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_38%,rgba(230,46,107,0.24),transparent_55%)] md:bg-[radial-gradient(circle_at_78%_45%,rgba(230,46,107,0.14),transparent_60%)]" />
