@@ -29,8 +29,8 @@ const Hero = ({ page }) => {
           <source src={heroVideoWebm} type="video/webm" />
           <source src={heroVideo} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#F4F1EA] via-[#F4F1EA]/92 to-[#F4F1EA]/25 md:to-[#F4F1EA]/5" />
-        <div className="absolute inset-0 bg-[#F4F1EA]/35 md:bg-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F4F1EA]/60 via-[#F4F1EA]/15 to-transparent md:hidden" />
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-[#F4F1EA] via-[#F4F1EA]/92 to-[#F4F1EA]/5" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_38%,rgba(230,46,107,0.24),transparent_55%)] md:bg-[radial-gradient(circle_at_78%_45%,rgba(230,46,107,0.14),transparent_60%)]" />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F4F1EA] to-transparent" />
       </div>
@@ -42,7 +42,7 @@ const Hero = ({ page }) => {
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] text-[#8B7F82] uppercase" data-testid="hero-eyebrow">{page.eyebrow}</span>
           </div>
 
-          <h2 className="font-display text-[#4A2530] mt-5 sm:mt-6 text-[40px] leading-[1.04] sm:text-[56px] md:text-[66px] lg:text-[72px] font-medium" data-testid="hero-title">
+          <h2 className="font-display text-[#4A2530] mt-5 sm:mt-6 text-[40px] leading-[1.04] sm:text-[56px] md:text-[66px] lg:text-[72px] font-medium [text-shadow:0_2px_20px_rgba(244,241,234,0.8)] md:[text-shadow:none]" data-testid="hero-title">
             <Headline text={page.heroHeadline} />
           </h2>
 
