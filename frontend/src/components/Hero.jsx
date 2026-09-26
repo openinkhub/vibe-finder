@@ -24,7 +24,7 @@ const Hero = ({ page }) => {
   return (
     <section id="top" className="relative overflow-hidden bg-[#F4F1EA] grain min-h-[100svh] flex flex-col justify-center" data-testid="hero-section">
       <div className="absolute inset-0 z-0">
-        <img src={heroVideoPoster} alt="Rekha Krishnamurthy bridal makeup" className="w-full h-full object-cover md:hidden" data-testid="hero-mobile-image" />
+        <img src={heroVideoPoster} alt="Rekha Krishnamurthy bridal makeup" className="w-full h-full object-cover md:hidden [filter:contrast(1.6)_saturate(1.5)_brightness(0.92)]" data-testid="hero-mobile-image" />
         <video ref={videoRef} className="hidden md:block w-full h-full object-cover" poster={heroVideoPoster} autoPlay loop muted playsInline preload="auto">
           <source src={heroVideoWebm} type="video/webm" />
           <source src={heroVideo} type="video/mp4" />
