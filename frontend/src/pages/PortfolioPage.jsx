@@ -9,7 +9,7 @@ import { TiltCard } from "../components/fx/TiltCard";
 import { PageShell, PageHero } from "../components/PageShell";
 import { SeoIntro } from "../components/SeoIntro";
 import { getPage } from "../lib/pages";
-import { usePageImage } from "../hooks/usePageImages";
+import { usePageImage, heroImageAlt, usePageImages } from "../hooks/usePageImages";
 
 const Stage = ({ progress, index, total, src, name }) => {
   const seg = 1 / total;
@@ -88,7 +88,7 @@ const ParallaxItem = ({ p, d, sx, sy, i }) => {
   return (
     <motion.div style={{ x, y, rotateX, rotateY, z: d }} className={`${i % 3 === 1 ? "md:mt-16" : i % 3 === 2 ? "md:-mt-8" : ""}`} data-testid={`parallax-item-${i}`}>
       <TiltCard max={6} className="rounded-2xl overflow-hidden shadow-[0_30px_70px_-30px_rgba(74,37,48,0.45)]">
-        <img src={imgUrl(p.image)} alt={p.caption} loading="lazy" className="w-full h-[220px] sm:h-[280px] md:h-[340px] object-cover" />
+        <img src={imgUrl(p.image)} alt={p.alt_text || p.caption} loading="lazy" className="w-full h-[220px] sm:h-[280px] md:h-[340px] object-cover" />
         <div className="absolute bottom-3 left-3 font-mono text-[10px] text-white bg-[#E62E6B]/90 px-2 py-1 rounded">{p.cat} · {p.caption}</div>
       </TiltCard>
     </motion.div>
@@ -104,11 +104,12 @@ export const PortfolioGallery = () => {
 export default function PortfolioPage() {
   const showcase = useShowcase();
   const page = getPage("/portfolio");
+  const map = usePageImages();
   const image = usePageImage(page);
   return (
     <PageShell page={page} title="Portfolio">
       <div className="bg-[#F4F1EA]" data-testid="portfolio-page">
-        <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image} />
+        <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image} imageAlt={heroImageAlt(page, map)} />
         <SeoIntro page={page} />
         <ScrollTransformation showcase={showcase} />
         <PortfolioGallery />

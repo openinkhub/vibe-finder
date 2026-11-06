@@ -26,7 +26,7 @@ export const PageShell = ({ children, title, page, faq }) => {
   );
 };
 
-export const PageHero = ({ eyebrow, title, subtitle, image, cta = "Book Your Free Consultation", ctaTo = "/contact", onCta }) => (
+export const PageHero = ({ eyebrow, title, subtitle, image, imageAlt, cta = "Book Your Free Consultation", ctaTo = "/contact", onCta }) => (
   <section className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-14 items-center pb-12 md:pb-20" data-testid="page-hero">
     <Reveal>
       {eyebrow && <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]" data-testid="page-eyebrow">{eyebrow}</span>}
@@ -39,7 +39,7 @@ export const PageHero = ({ eyebrow, title, subtitle, image, cta = "Book Your Fre
     {image && (
       <Reveal delay={0.1}>
         <TiltCard max={6} className="rounded-[24px] overflow-hidden shadow-[0_30px_80px_-30px_rgba(230,46,107,0.45)]">
-          <img src={image} alt={title} className="w-full h-[300px] sm:h-[380px] md:h-[460px] object-cover" />
+          <img src={image} alt={imageAlt || title} className="w-full h-[300px] sm:h-[380px] md:h-[460px] object-cover" />
         </TiltCard>
       </Reveal>
     )}

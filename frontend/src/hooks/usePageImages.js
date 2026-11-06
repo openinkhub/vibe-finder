@@ -6,7 +6,7 @@ let pending = null;
 const listeners = new Set();
 
 const fetchMap = () => {
-  if (!pending) pending = api.get("/content/page-images").then((r) => { cache = Object.fromEntries(r.data.map((x) => [x.path, x.image])); listeners.forEach((fn) => fn(cache)); return cache; }).catch(() => (cache = cache || {})).finally(() => { pending = null; });
+  if (!pending) pending = api.get("/content/page-images").then((r) => { cache = Object.fromEntries(r.data.map((x) => [x.path, { image: x.image, alt_text: x.alt_text }])); listeners.forEach((fn) => fn(cache)); return cache; }).catch(() => (cache = cache || {})).finally(() => { pending = null; });
   return pending;
 };
 
@@ -22,6 +22,7 @@ export const usePageImages = () => {
   return map;
 };
 
-export const heroImage = (page, map) => (page ? imgUrl(map?.[page.path]) || page.image : null);
+export const heroImage = (page, map) => (page ? imgUrl(map?.[page.path]?.image) || page.image : null);
+export const heroImageAlt = (page, map) => (page ? map?.[page.path]?.alt_text || page.h1 || page.name : "");
 
 export const usePageImage = (page) => heroImage(page, usePageImages());

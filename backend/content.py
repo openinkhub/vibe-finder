@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 
 from auth import require_admin
 from storage import put_object, get_object, APP_NAME, MIME
+from images import to_webp
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -65,6 +66,7 @@ class PortfolioItem(BaseModel):
     id: str
     cat: str
     caption: str
+    alt_text: str = ""
     image: str
     order: int = 0
 
@@ -72,6 +74,7 @@ class PortfolioItem(BaseModel):
 class PortfolioPatch(BaseModel):
     cat: Optional[str] = Field(default=None, max_length=40)
     caption: Optional[str] = Field(default=None, max_length=120)
+    alt_text: Optional[str] = Field(default=None, max_length=150)
 
 
 @router.get("/content/pricing", response_model=List[Pricing])
@@ -122,12 +125,32 @@ async def store_image(data: bytes, ext: str, folder: str) -> str:
     return f"/api/files/{result['path']}"
 
 
+async def store_processed_image(data: bytes, folder: str, max_dim: int = 1920, target_bytes: int = 200 * 1024) -> str:
+    """Resize + re-encode as WEBP so uploads match the site's standard photo size/weight,
+    then store. Used for Portfolio and Hero images."""
+    if len(data) > MAX_UPLOAD:
+        raise HTTPException(status_code=413, detail="Image must be under 8 MB")
+    try:
+        webp_bytes = await asyncio.to_thread(to_webp, data, max_dim, target_bytes)
+    except Exception as e:
+        logger.error("image processing failed: %s", str(e)[:200])
+        raise HTTPException(status_code=400, detail="Could not process this image — please try a different file")
+    path = f"{APP_NAME}/{folder}/{uuid.uuid4()}.webp"
+    try:
+        result = await asyncio.to_thread(put_object, path, webp_bytes, "image/webp")
+    except Exception as e:
+        logger.error("storage upload failed: %s", str(e)[:200])
+        raise HTTPException(status_code=502, detail="Image storage unavailable — please try again")
+    await _db.files.insert_one({"id": str(uuid.uuid4()), "storage_path": result["path"], "content_type": "image/webp", "size": result.get("size"), "is_deleted": False, "created_at": datetime.now(timezone.utc).isoformat()})
+    return f"/api/files/{result['path']}"
+
+
 @router.post("/content/portfolio", response_model=PortfolioItem, status_code=201)
-async def create_portfolio(file: UploadFile = File(...), cat: str = Form("Bridal"), caption: str = Form(""), _: dict = Depends(require_admin)):
-    ext = (file.filename or "x.jpg").rsplit(".", 1)[-1]
-    url = await store_image(await file.read(), ext, "portfolio")
+async def create_portfolio(file: UploadFile = File(...), cat: str = Form("Bridal"), caption: str = Form(""), alt_text: str = Form(""), _: dict = Depends(require_admin)):
+    url = await store_processed_image(await file.read(), "portfolio", max_dim=1800, target_bytes=200 * 1024)
     count = await _db.portfolio.count_documents({})
-    doc = {"id": str(uuid.uuid4()), "cat": cat[:40], "caption": caption[:120] or f"{cat} · Studio", "image": url, "order": count, "is_deleted": False, "created_at": datetime.now(timezone.utc).isoformat()}
+    final_caption = caption[:120] or f"{cat} · Studio"
+    doc = {"id": str(uuid.uuid4()), "cat": cat[:40], "caption": final_caption, "alt_text": alt_text[:150] or f"{final_caption} — makeup by Rekha Krishnamurthy", "image": url, "order": count, "is_deleted": False, "created_at": datetime.now(timezone.utc).isoformat()}
     await _db.portfolio.insert_one(dict(doc))
     return doc
 
@@ -151,6 +174,7 @@ async def delete_portfolio(item_id: str, _: dict = Depends(require_admin)):
 class PageImage(BaseModel):
     path: str
     image: str
+    alt_text: str = ""
 
 
 class BatchIn(BaseModel):
@@ -189,10 +213,9 @@ async def list_page_images():
 
 
 @router.put("/content/page-images/{slug}", response_model=PageImage)
-async def set_page_image(slug: str, file: UploadFile = File(...), _: dict = Depends(require_admin)):
-    ext = (file.filename or "x.jpg").rsplit(".", 1)[-1]
-    url = await store_image(await file.read(), ext, "heroes")
-    doc = {"path": f"/{slug}", "image": url, "updated_at": datetime.now(timezone.utc).isoformat()}
+async def set_page_image(slug: str, file: UploadFile = File(...), alt_text: str = Form(""), _: dict = Depends(require_admin)):
+    url = await store_processed_image(await file.read(), "heroes", max_dim=1920, target_bytes=220 * 1024)
+    doc = {"path": f"/{slug}", "image": url, "alt_text": alt_text[:150], "updated_at": datetime.now(timezone.utc).isoformat()}
     await _db.page_images.update_one({"path": doc["path"]}, {"$set": doc}, upsert=True)
     return doc
 

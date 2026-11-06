@@ -16,7 +16,7 @@ import { RichBody } from "../components/RichBody";
 import { pageBodies, communityFaq } from "../content/pageBodies";
 import { BrochureCta } from "../components/BrochureCta";
 import { BookingPanel } from "../components/BookingPanel";
-import { usePageImage, usePageImages, heroImage } from "../hooks/usePageImages";
+import { usePageImages, heroImage, heroImageAlt } from "../hooks/usePageImages";
 import legal from "../content/legal.json";
 import { api, imgUrl } from "../lib/api";
 
@@ -66,7 +66,7 @@ const ChildCards = ({ items }) => {
         <Reveal key={c.path} delay={i * 0.06}>
           <Link to={c.path} data-testid={`child-card-${c.path.slice(1)}`}>
             <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full hover:border-[#E62E6B] transition-colors">
-              <img src={heroImage(c, map)} alt={c.name} className="w-full h-44 object-cover" />
+              <img src={heroImage(c, map)} alt={heroImageAlt(c, map)} className="w-full h-44 object-cover" />
               <div className="p-6">
                 <div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{c.eyebrow}</div>
                 <h3 className="font-display text-xl text-[#4A2530] mt-2">{c.name}</h3>
@@ -122,8 +122,10 @@ const Siblings = ({ page }) => {
 };
 
 const Hero = ({ page, image, cta, onCta }) => {
-  const resolved = usePageImage(page);
-  return <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image === null ? null : image ?? resolved} cta={cta ?? page.heroCta} ctaTo={`/contact?service=${encodeURIComponent(enquiryServiceFor(page))}`} onCta={onCta} />;
+  const map = usePageImages();
+  const resolved = heroImage(page, map);
+  const alt = heroImageAlt(page, map);
+  return <PageHero eyebrow={page.eyebrow} title={page.heroHeadline} subtitle={page.heroSub} image={image === null ? null : image ?? resolved} imageAlt={alt} cta={cta ?? page.heroCta} ctaTo={`/contact?service=${encodeURIComponent(enquiryServiceFor(page))}`} onCta={onCta} />;
 };
 
 export const SheetPage = () => {

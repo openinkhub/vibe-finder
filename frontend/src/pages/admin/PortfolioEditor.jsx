@@ -11,6 +11,7 @@ export const PortfolioEditor = () => {
   const [items, setItems] = useState([]);
   const [cat, setCat] = useState("Bridal");
   const [caption, setCaption] = useState("");
+  const [altText, setAltText] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -29,10 +30,10 @@ export const PortfolioEditor = () => {
     setBusy(true);
     try {
       const fd = new FormData();
-      fd.append("file", file); fd.append("cat", cat); fd.append("caption", caption);
+      fd.append("file", file); fd.append("cat", cat); fd.append("caption", caption); fd.append("alt_text", altText);
       await api.post("/content/portfolio", fd, { timeout: 120000 });
       toast.success("Photo added to the portfolio");
-      pick(null); setCaption(""); if (fileRef.current) fileRef.current.value = "";
+      pick(null); setCaption(""); setAltText(""); if (fileRef.current) fileRef.current.value = "";
       load();
     } catch (err) { toast.error(errorText(err)); } finally { setBusy(false); }
   };
@@ -58,7 +59,8 @@ export const PortfolioEditor = () => {
             <select value={cat} onChange={(e) => setCat(e.target.value)} className={inputCls} data-testid="portfolio-cat-select">{CATS.map((c) => <option key={c}>{c}</option>)}</select>
             <input placeholder="Caption, e.g. Bridal · Golden Hour" value={caption} onChange={(e) => setCaption(e.target.value)} className={inputCls} data-testid="portfolio-caption-input" />
           </div>
-          <p className="text-xs text-[#8B7F82]">JPG, PNG or WebP up to 8 MB. Photos are stored securely and appear instantly in the Portfolio contact sheet.</p>
+          <input placeholder="Alt text (optional — defaults to the caption)" value={altText} onChange={(e) => setAltText(e.target.value)} className={`${inputCls} w-full`} data-testid="portfolio-alt-input" />
+          <p className="text-xs text-[#8B7F82]">JPG, PNG or WebP up to 8 MB. Photos are automatically resized and compressed to WebP, then appear instantly in the Portfolio contact sheet.</p>
           <button type="submit" disabled={busy || !file} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] disabled:opacity-50" data-testid="portfolio-upload-btn">{busy ? <Loader2 size={15} className="animate-spin" /> : <Upload size={15} />} Upload photo</button>
         </div>
       </form>
@@ -66,11 +68,12 @@ export const PortfolioEditor = () => {
       <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3" data-testid="portfolio-admin-grid">
         {items.map((p) => (
           <div key={p.id} className="relative bg-white rounded-2xl overflow-hidden border border-[#F1DCE3] group" data-testid={`portfolio-admin-item-${p.id}`}>
-            <img src={imgUrl(p.image)} alt={p.caption} className="w-full h-40 object-cover" loading="lazy" />
+            <img src={imgUrl(p.image)} alt={p.alt_text || p.caption} className="w-full h-40 object-cover" loading="lazy" />
             {editing === p.id ? (
               <div className="p-2 space-y-2">
                 <select value={edit.cat} onChange={(e) => setEdit({ ...edit, cat: e.target.value })} className={`${inputCls} w-full`} data-testid="portfolio-edit-cat">{CATS.map((c) => <option key={c}>{c}</option>)}</select>
-                <input value={edit.caption} onChange={(e) => setEdit({ ...edit, caption: e.target.value })} className={`${inputCls} w-full`} data-testid="portfolio-edit-caption" />
+                <input value={edit.caption} onChange={(e) => setEdit({ ...edit, caption: e.target.value })} placeholder="Caption" className={`${inputCls} w-full`} data-testid="portfolio-edit-caption" />
+                <input value={edit.alt_text} onChange={(e) => setEdit({ ...edit, alt_text: e.target.value })} placeholder="Alt text" className={`${inputCls} w-full`} data-testid="portfolio-edit-alt" />
                 <div className="flex gap-2">
                   <button onClick={saveEdit} className="flex-1 py-1.5 rounded-full bg-[#E62E6B] text-white text-xs flex items-center justify-center gap-1" data-testid="portfolio-edit-save"><Check size={12} /> Save</button>
                   <button onClick={() => setEditing(null)} className="flex-1 py-1.5 rounded-full border border-[#F1DCE3] text-[#8B7F82] text-xs flex items-center justify-center gap-1"><X size={12} /> Cancel</button>
@@ -81,7 +84,7 @@ export const PortfolioEditor = () => {
                 <div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{p.cat}</div>
                 <div className="text-sm text-[#4A2530] truncate">{p.caption}</div>
                 <div className="mt-2 flex gap-2">
-                  <button onClick={() => { setEditing(p.id); setEdit({ cat: p.cat, caption: p.caption }); }} className="flex-1 py-1.5 rounded-full border border-[#F1DCE3] text-[#4A2530] text-xs flex items-center justify-center gap-1 hover:border-[#E62E6B]" data-testid={`portfolio-edit-${p.id}`}><Pencil size={12} /> Edit</button>
+                  <button onClick={() => { setEditing(p.id); setEdit({ cat: p.cat, caption: p.caption, alt_text: p.alt_text || "" }); }} className="flex-1 py-1.5 rounded-full border border-[#F1DCE3] text-[#4A2530] text-xs flex items-center justify-center gap-1 hover:border-[#E62E6B]" data-testid={`portfolio-edit-${p.id}`}><Pencil size={12} /> Edit</button>
                   <button onClick={() => remove(p.id)} className="w-8 h-8 rounded-full border border-[#F1DCE3] text-[#8B7F82] hover:text-[#C81F57] flex items-center justify-center" aria-label="Remove" data-testid={`portfolio-delete-${p.id}`}><Trash2 size={13} /></button>
                 </div>
               </div>
