@@ -8,6 +8,7 @@ import { shortCta } from "../lib/ctaLabel";
 const Headline = ({ text }) => text.split(/["“”]/).map((part, i) => part ? <span key={i} className={`fade-up delay-${Math.min(3, Math.floor(i / 2) + 1)} ${i % 2 ? "italic font-bold text-[#E62E6B]" : ""}`}>{part}</span> : null);
 
 const Hero = ({ page }) => {
+
   return (
     <section id="top" className="relative overflow-hidden bg-[#F4F1EA] grain min-h-[100svh] flex flex-col justify-center" data-testid="hero-section">
       <div className="absolute inset-0 z-0">
