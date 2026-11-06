@@ -62,7 +62,7 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
         <Reveal className="min-w-0">
           <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Get in touch</span>
           <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Let's talk about your date</h2>
-          <p className="mt-5 sm:mt-6 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-md">Tell us the event, the city and the vibe — we'll come back with availability and a package that fits. Consultation is always free, and there's no visit charge for party, event or wedding bookings.</p>
+          <p className="mt-5 sm:mt-6 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-md">Tell us about your event: Bridal/Non-Bridal, Date/Venue/Location, Event Timing & No. of People who require our assistance, and anything else relevant. We shall revert back and let you know our availability with our best quote. You can simply reach us on a WhatsApp call for a quick response.</p>
 
           <div className="mt-8 sm:mt-9 space-y-5">
             <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className={contactRow} data-testid="contact-phone-link">
