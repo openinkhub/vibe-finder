@@ -9,7 +9,7 @@ export const brand = {
   phone: "+91 98454 80507",
   whatsapp: "+91 98454 80507",
   email: "hello@rekhakrishnamurthy.in",
-  location: "1st Floor, 1314, 32nd Cross Rd, 1st Stage, Kumaraswamy Layout, Bengaluru, Karnataka 560070, India",
+  location: "1st Floor, 1314, 32nd Cross Rd, 1st Stage, Kumaraswamy Layout, Bengaluru, Karnataka 560078, India",
   instagram: "@makeupbyrekhakrishnamurthy",
   instagramUrl: "https://www.instagram.com/makeupbyrekhakrishnamurthy/",
   facebookUrl: "https://www.facebook.com/makeupbyrekhakrishnamurthy/",

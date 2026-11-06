@@ -8,7 +8,7 @@ const labelCls = "block text-xs font-mono uppercase tracking-wider text-[#8B7F82
 
 const slugify = (t) => t.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-const EMPTY = { title: "", slug: "", meta_title: "", meta_description: "", focus_keyword: "", category: "General", publish_date: new Date().toISOString().slice(0, 10), excerpt: "", body: "", interlink_url: "", alt_text: "" };
+const EMPTY = { title: "", slug: "", meta_title: "", meta_description: "", focus_keyword: "", category: "General", publish_date: new Date().toISOString().slice(0, 10), excerpt: "", key_takeaway: "", body: "", interlink_url: "", alt_text: "" };
 
 const TOOLBAR = [
   { icon: Bold, wrap: ["**", "**"], label: "Bold" },
@@ -126,6 +126,12 @@ const PostForm = ({ item, onSave, onCancel }) => {
       <div>
         <label className={labelCls}>Excerpt</label>
         <textarea required rows={2} value={f.excerpt} onChange={(e) => setF({ ...f, excerpt: e.target.value })} className={inputCls} data-testid="blog-excerpt-input" />
+      </div>
+
+      <div>
+        <label className={labelCls}>Key Takeaway (AEO/GEO)</label>
+        <textarea rows={2} maxLength={400} placeholder="A short, quotable answer summarising the article — shown right after the title and surfaced to AI answer engines (ChatGPT, Google AI Overviews, Perplexity)." value={f.key_takeaway} onChange={(e) => setF({ ...f, key_takeaway: e.target.value })} className={inputCls} data-testid="blog-key-takeaway-input" />
+        <p className="text-xs text-[#8B7F82] mt-1">Optional but recommended — a 1-2 sentence direct answer that AI engines can quote. Appears in a highlighted box after the title and in the article's schema markup.</p>
       </div>
 
       <div>

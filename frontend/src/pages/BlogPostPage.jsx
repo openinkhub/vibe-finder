@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import { ArrowLeft, CalendarDays, Tag } from "lucide-react";
+import { ArrowLeft, CalendarDays, Tag, Sparkles } from "lucide-react";
 import { PageShell, AuthorBio } from "../components/PageShell";
 import { Reveal } from "../components/fx/Reveal";
 import { injectJsonLd } from "../components/Seo";
@@ -53,6 +53,15 @@ const BlogPostPage = () => {
               <span className="inline-flex items-center gap-1"><CalendarDays size={12} /> {post.publish_date}</span>
             </div>
             <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl text-[#4A2530] mt-4 leading-tight" data-testid="blog-post-title">{post.title}</h1>
+            {post.key_takeaway && (
+              <div className="mt-6 flex gap-3 rounded-2xl border border-[#F1DCE3] bg-[#FBE9F0] px-5 py-4" data-testid="blog-key-takeaway">
+                <Sparkles size={18} className="text-[#E62E6B] shrink-0 mt-0.5" />
+                <div>
+                  <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#E62E6B]">Key takeaway</div>
+                  <p className="mt-1 text-sm sm:text-base text-[#4A2530] font-medium leading-relaxed">{post.key_takeaway}</p>
+                </div>
+              </div>
+            )}
             <div className="mt-4 text-sm text-[#5C4E52]">By {post.author}</div>
           </Reveal>
         </Section>

@@ -36,9 +36,9 @@ AUTHOR_SCHEMA = {
 }
 
 DEFAULT_POSTS = [
-    {"slug": "how-far-in-advance-to-book-bridal-makeup", "title": "How far in advance should you book your bridal makeup artist?", "meta_title": "How Far in Advance to Book Bridal Makeup | Rekha Krishnamurthy", "meta_description": "Wedding-season Bangalore fills 3–6 months out. Here's how to lock your muhurtham morning without stress.", "focus_keyword": "book bridal makeup artist in advance", "category": "Bridal Tips", "publish_date": "2026-05-01", "excerpt": "Wedding-season Bangalore fills 3–6 months out. Here's how to lock your muhurtham morning without stress.", "body": "Wedding-season Bangalore fills 3–6 months out. Here's how to lock your muhurtham morning without stress.\n\nPopular dates during peak wedding season get booked quickly, especially auspicious muhurtham mornings. Reaching out as soon as you have a confirmed date — even before the venue is finalised — gives you the best chance of securing your preferred artist and trial slot.", "faqs": [], "interlink_url": "/bridal-experience", "featured_image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9", "alt_text": "Bridal makeup artist preparing a bride"},
-    {"slug": "hd-vs-airbrush-makeup", "title": "HD vs Airbrush makeup: which one is right for your wedding?", "meta_title": "HD vs Airbrush Makeup for Weddings | Rekha Krishnamurthy", "meta_description": "Both photograph beautifully — the choice depends on skin type, weather and how long your functions run.", "focus_keyword": "HD vs airbrush makeup for wedding", "category": "Bridal Tips", "publish_date": "2026-04-01", "excerpt": "Both photograph beautifully — the choice depends on skin type, weather and how long your functions run.", "body": "Both photograph beautifully — the choice depends on skin type, weather and how long your functions run.\n\nHD makeup uses cream and powder formulas and tends to suit most skin types across long functions. Airbrush makeup uses a fine mist application for an ultra-lightweight, breathable finish that many brides love in humid weather.", "faqs": [], "interlink_url": "/hd-makeup", "featured_image": "https://images.unsplash.com/photo-1594647210801-5124307f3d51", "alt_text": "HD and airbrush makeup comparison"},
-    {"slug": "south-indian-bridal-look-checklist", "title": "The South Indian bridal look checklist", "meta_title": "South Indian Bridal Look Checklist | Rekha Krishnamurthy", "meta_description": "Kanjeevaram colour matching, temple-jewellery hair and kohl that lasts twelve hours.", "focus_keyword": "south indian bridal look checklist", "category": "Bridal Tips", "publish_date": "2026-03-01", "excerpt": "Kanjeevaram colour matching, temple-jewellery hair and kohl that lasts twelve hours.", "body": "Kanjeevaram colour matching, temple-jewellery hair and kohl that lasts twelve hours.\n\nFrom matching your base to the undertones of your Kanjeevaram silk, to styling hair that carries the weight of temple jewellery through hours of rituals, a South Indian bridal look has its own set of planning details worth getting right.", "faqs": [], "interlink_url": "/south-indian-bridal-makeup-artist-in-karnataka", "featured_image": "https://images.unsplash.com/photo-1587271315307-eaebc181c749", "alt_text": "South Indian bridal look with temple jewellery"},
+    {"slug": "how-far-in-advance-to-book-bridal-makeup", "title": "How far in advance should you book your bridal makeup artist?", "meta_title": "How Far in Advance to Book Bridal Makeup | Rekha Krishnamurthy", "meta_description": "Wedding-season Bangalore fills 3–6 months out. Here's how to lock your muhurtham morning without stress.", "focus_keyword": "book bridal makeup artist in advance", "category": "Bridal Tips", "publish_date": "2026-05-01", "excerpt": "Wedding-season Bangalore fills 3–6 months out. Here's how to lock your muhurtham morning without stress.", "key_takeaway": "Book your bridal makeup artist 3–6 months before a peak wedding-season date in Bangalore, and as soon as possible for auspicious muhurtham mornings — even before the venue is confirmed.", "body": "Wedding-season Bangalore fills 3–6 months out. Here's how to lock your muhurtham morning without stress.\n\nPopular dates during peak wedding season get booked quickly, especially auspicious muhurtham mornings. Reaching out as soon as you have a confirmed date — even before the venue is finalised — gives you the best chance of securing your preferred artist and trial slot.", "faqs": [], "interlink_url": "/bridal-experience", "featured_image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9", "alt_text": "Bridal makeup artist preparing a bride"},
+    {"slug": "hd-vs-airbrush-makeup", "title": "HD vs Airbrush makeup: which one is right for your wedding?", "meta_title": "HD vs Airbrush Makeup for Weddings | Rekha Krishnamurthy", "meta_description": "Both photograph beautifully — the choice depends on skin type, weather and how long your functions run.", "focus_keyword": "HD vs airbrush makeup for wedding", "category": "Bridal Tips", "publish_date": "2026-04-01", "excerpt": "Both photograph beautifully — the choice depends on skin type, weather and how long your functions run.", "key_takeaway": "HD makeup suits most skin types across long functions; airbrush gives an ultra-lightweight, breathable finish that's ideal in humid weather. Neither is universally better — the right choice depends on your skin, the season and how long your functions run.", "body": "Both photograph beautifully — the choice depends on skin type, weather and how long your functions run.\n\nHD makeup uses cream and powder formulas and tends to suit most skin types across long functions. Airbrush makeup uses a fine mist application for an ultra-lightweight, breathable finish that many brides love in humid weather.", "faqs": [], "interlink_url": "/hd-makeup", "featured_image": "https://images.unsplash.com/photo-1594647210801-5124307f3d51", "alt_text": "HD and airbrush makeup comparison"},
+    {"slug": "south-indian-bridal-look-checklist", "title": "The South Indian bridal look checklist", "meta_title": "South Indian Bridal Look Checklist | Rekha Krishnamurthy", "meta_description": "Kanjeevaram colour matching, temple-jewellery hair and kohl that lasts twelve hours.", "focus_keyword": "south indian bridal look checklist", "category": "Bridal Tips", "publish_date": "2026-03-01", "excerpt": "Kanjeevaram colour matching, temple-jewellery hair and kohl that lasts twelve hours.", "key_takeaway": "A South Indian bridal look should plan base makeup around your Kanjeevaram silk's undertones, style hair to carry temple jewellery through hours of rituals, and use long-wear kohl and lip colour built for a full-day ceremony.", "body": "Kanjeevaram colour matching, temple-jewellery hair and kohl that lasts twelve hours.\n\nFrom matching your base to the undertones of your Kanjeevaram silk, to styling hair that carries the weight of temple jewellery through hours of rituals, a South Indian bridal look has its own set of planning details worth getting right.", "faqs": [], "interlink_url": "/south-indian-bridal-makeup-artist-in-karnataka", "featured_image": "https://images.unsplash.com/photo-1587271315307-eaebc181c749", "alt_text": "South Indian bridal look with temple jewellery"},
 ]
 
 
@@ -139,6 +139,7 @@ class BlogOut(BaseModel):
     author: str = "Rekha Krishnamurthy"
     publish_date: str
     excerpt: str
+    key_takeaway: Optional[str] = ""
     body: str
     faqs: List[FAQItem] = []
     interlink_url: Optional[str] = ""
@@ -175,6 +176,8 @@ def build_schema(post: dict) -> dict:
         "datePublished": post.get("publish_date"),
         "publisher": {"@type": "Organization", "name": "Rekha Krishnamurthy Makeup & Academy", "logo": {"@type": "ImageObject", "url": f"{SITE_URL}/logo.png"}},
     }
+    if post.get("key_takeaway"):
+        article["abstract"] = post["key_takeaway"]
     faq_schema = None
     if post.get("faqs"):
         faq_schema = {
@@ -213,6 +216,7 @@ async def create_post(
     category: str = Form("General"),
     publish_date: str = Form(""),
     excerpt: str = Form(""),
+    key_takeaway: str = Form(""),
     body: str = Form(""),
     faqs: str = Form("[]"),
     interlink_url: str = Form(""),
@@ -239,6 +243,7 @@ async def create_post(
         "author": "Rekha Krishnamurthy",
         "publish_date": publish_date or now[:10],
         "excerpt": excerpt[:300],
+        "key_takeaway": key_takeaway[:400],
         "body": body,
         "faqs": faq_list,
         "interlink_url": interlink_url[:200],
@@ -264,6 +269,7 @@ async def update_post(
     category: str = Form("General"),
     publish_date: str = Form(""),
     excerpt: str = Form(""),
+    key_takeaway: str = Form(""),
     body: str = Form(""),
     faqs: str = Form("[]"),
     interlink_url: str = Form(""),
@@ -287,6 +293,7 @@ async def update_post(
         "category": category[:40] or "General",
         "publish_date": publish_date or existing["publish_date"],
         "excerpt": excerpt[:300],
+        "key_takeaway": key_takeaway[:400],
         "body": body,
         "faqs": faq_list,
         "interlink_url": interlink_url[:200],
