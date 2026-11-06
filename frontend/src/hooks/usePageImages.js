@@ -22,7 +22,8 @@ export const usePageImages = () => {
   return map;
 };
 
-export const heroImage = (page, map) => (page ? imgUrl(map?.[page.path]?.image) || page.image : null);
-export const heroImageAlt = (page, map) => (page ? map?.[page.path]?.alt_text || page.h1 || page.name : "");
+const mapKey = (page) => (page.path === "/" ? "/home" : page.path);
+export const heroImage = (page, map) => (page ? imgUrl(map?.[mapKey(page)]?.image) || page.image : null);
+export const heroImageAlt = (page, map) => (page ? map?.[mapKey(page)]?.alt_text || page.h1 || page.name : "");
 
 export const usePageImage = (page) => heroImage(page, usePageImages());

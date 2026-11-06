@@ -3,11 +3,19 @@ import { useScroll, motion, useTransform } from "framer-motion";
 import { aboutStats } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
+import { usePageImages, heroImage, heroImageAlt } from "../hooks/usePageImages";
+import { getPage } from "../lib/pages";
+
+const FALLBACK_IMG = "https://images.unsplash.com/photo-1600685890506-593fdf55949b";
 
 const About = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const map = usePageImages();
+  const homePage = getPage("/");
+  const artistImg = heroImage(homePage, map) || FALLBACK_IMG;
+  const artistAlt = heroImageAlt(homePage, map) || "Studio, Bengaluru";
 
   return (
     <section id="about" ref={ref} className="relative bg-[#F4F1EA] py-20 md:py-32 scroll-mt-20 overflow-hidden" data-testid="about-section">
@@ -16,7 +24,7 @@ const About = () => {
           <Reveal>
             <div className="relative">
               <TiltCard max={7} className="rounded-[24px] overflow-hidden shadow-[0_30px_80px_-30px_rgba(230,46,107,0.45)]">
-                <motion.img style={{ y: imgY }} src="https://images.unsplash.com/photo-1600685890506-593fdf55949b" alt="Studio, Bengaluru" className="w-full h-[360px] sm:h-[420px] md:h-[560px] object-cover scale-110" />
+                <motion.img style={{ y: imgY }} src={artistImg} alt={artistAlt} className="w-full h-[360px] sm:h-[420px] md:h-[560px] object-cover scale-110" />
                 <div className="absolute bottom-4 left-4 font-mono text-[11px] tracking-[0.15em] text-white bg-[#E62E6B]/90 backdrop-blur px-3 py-1.5 rounded">Studio · Bengaluru</div>
               </TiltCard>
               <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-20 h-20 sm:w-24 sm:h-24 border-t-2 border-l-2 border-[#E62E6B] rounded-tl-[24px] pointer-events-none" />

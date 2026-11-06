@@ -12,7 +12,7 @@ const Row = ({ page, map }) => {
   const [altBusy, setAltBusy] = useState(false);
   const [alt, setAlt] = useState(map[page.path]?.alt_text || "");
   const fileRef = useRef(null);
-  const slug = page.path.slice(1);
+  const slug = page.path.length > 1 ? page.path.slice(1) : "home";
   const custom = !!map[page.path]?.image;
 
   useEffect(() => { setAlt(map[page.path]?.alt_text || ""); }, [map, page.path]);
