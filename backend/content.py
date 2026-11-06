@@ -177,6 +177,10 @@ class PageImage(BaseModel):
     alt_text: str = ""
 
 
+class PageImageAltPatch(BaseModel):
+    alt_text: str = Field(default="", max_length=150)
+
+
 class BatchIn(BaseModel):
     date: str = Field(..., max_length=10)
     note: Optional[str] = Field(default=None, max_length=160)
@@ -217,6 +221,15 @@ async def set_page_image(slug: str, file: UploadFile = File(...), alt_text: str 
     url = await store_processed_image(await file.read(), "heroes", max_dim=1920, target_bytes=220 * 1024)
     doc = {"path": f"/{slug}", "image": url, "alt_text": alt_text[:150], "updated_at": datetime.now(timezone.utc).isoformat()}
     await _db.page_images.update_one({"path": doc["path"]}, {"$set": doc}, upsert=True)
+    return doc
+
+
+@router.patch("/content/page-images/{slug}", response_model=PageImage)
+async def patch_page_image_alt(slug: str, body: PageImageAltPatch, _: dict = Depends(require_admin)):
+    path = f"/{slug}"
+    existing = await _db.page_images.find_one({"path": path}, {"_id": 0}) or {}
+    doc = {"path": path, "image": existing.get("image", ""), "alt_text": body.alt_text[:150], "updated_at": datetime.now(timezone.utc).isoformat()}
+    await _db.page_images.update_one({"path": path}, {"$set": doc}, upsert=True)
     return doc
 
 

@@ -1,0 +1,41 @@
+{
+  "summary": "Tested Portfolio + Page-hero upload pipeline (WEBP resize/compress) and alt_text wiring end-to-end. Backend: 10/10 pytest pass (WEBP output, max dims 1800/1920 respected, sizes under 200KB/220KB targets, alt_text persist on create/patch, 422 on >150 chars, 400 on non-image, 401 without auth, hero reset). Frontend: Admin Page heroes (alt input, upload with alt, thumbnail+toast update, alt persists after reload, Reset removes override + clears alt), Admin Portfolio (alt input with correct placeholder, upload w/ cat+caption+alt, form clears, edit shows 3 prefilled fields, Save persists all 3), public pages (/, /portfolio, /bridal-makeup-bangalore, /makeup-course-training-bangalore, /about-us) -> 0 broken images, 0 missing/empty/undefined alt; custom hero alt shows on /about-us; legacy portfolio items (alt_text '') fall back to caption. All 9 admin tabs load with no console errors. Two code-level defects found in the image helper (EXIF orientation, transparency).",
+  "backend_issues": {
+    "critical": [
+      {"endpoint": "POST /api/content/portfolio, PUT /api/content/page-images/{slug} (images.py to_webp)", "issue": "EXIF orientation is ignored. Portrait phone photos (EXIF Orientation=6/8) get stored sideways after re-encoding to WEBP, because the re-encode drops EXIF and the pixels are never rotated. Reproduced: 400x200 JPEG with Orientation=6 is stored as 400x200 (should be 200x400). Fix: `from PIL import ImageOps; img = ImageOps.exif_transpose(Image.open(...))` before convert('RGB').", "priority": "HIGH"}
+    ],
+    "minor": [
+      {"endpoint": "images.py to_webp", "issue": "convert('RGB') on RGBA/transparent PNGs turns transparent areas black (verified pixel (0,0,0)). Paste onto a white or theme (#FBFAF7) background first."},
+      {"endpoint": "images.py to_webp", "issue": "For very detailed images, the fallback loop that shrinks at quality 40 can go far below max_dim (worst-case noisy 3000x4000 test image ended up as 691x921 for portfolio and 982x736 for the hero). Hero banners shown at full width could look soft. Consider a minimum dimension (e.g. stop at 1200px for heroes) or a higher target size for heroes."},
+      {"endpoint": "MAX_UPLOAD 8MB check", "issue": "The 8MB limit is checked on the raw upload before compression, so high-res DSLR exports (10-25MB) are rejected even though the server would compress them. This matches the UI copy, but you could raise the limit now that output is always compressed."},
+      {"endpoint": "Image.resize", "issue": "No resample filter is passed; LANCZOS would give sharper downscales. Also no Image.MAX_IMAGE_PIXELS / decompression-bomb guard beyond Pillow's default warning."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {"flow": "Admin Page heroes alt text", "issue": "You can only save alt text by uploading a new image; there is no way to edit the alt of an existing hero on its own. Typing in the alt field and not clicking Change silently does nothing. Also, the Row's `alt` state is set once from `map` at mount (useState initializer), so if a row mounts before /content/page-images resolves, the input shows empty, and the next 'Change' sends alt_text='' and wipes the saved alt. In testing the cache was already warm, so this was not observed.", "affected_selectors": ["[data-testid^='hero-alt-']"]}
+    ],
+    "design_issues": []
+  },
+  "test_report_links": ["/app/backend/tests/test_iter16_image_pipeline.py", "/app/test_reports/pytest/iter16.xml"],
+  "action_items": [
+    "HIGH: Add ImageOps.exif_transpose() in images.to_webp before convert('RGB') so phone portrait photos are not stored sideways.",
+    "Flatten RGBA/LA/P-with-transparency images onto a white/theme background before converting to RGB.",
+    "Add a way to save hero alt text without re-uploading (e.g. PATCH /content/page-images/{slug} {alt_text} plus a Save button or save on blur), and sync the Row's alt state when `map` changes (useEffect on map[page.path]?.alt_text).",
+    "Optional: set a minimum dimension floor in the to_webp shrink loop (especially for heroes) and use Image.LANCZOS."
+  ],
+  "critical_code_review_comments": [
+    "images.to_webp: no exif_transpose (orientation bug), alpha goes black, no resample filter, and the shrink fallback can over-downscale.",
+    "create_portfolio stores alt_text as `{caption} — makeup by Rekha Krishnamurthy` when none is given. That is good for SEO, but a later PATCH of the caption leaves the old caption inside alt_text, so alt and caption drift apart.",
+    "HeroImagesEditor Row: useState(() => map[...]) does not re-sync when the map loads or refreshes.",
+    "Legacy seeded portfolio docs have no alt_text field (the API returns ''); the frontend fallback `p.alt_text || p.caption` handles this correctly."
+  ],
+  "updated_files": ["/app/backend/tests/test_iter16_image_pipeline.py"],
+  "success_rate": {"backend": "100% (10/10 API tests); 1 HIGH code defect found via direct unit check (EXIF)", "frontend": "100% of requested flows passed"},
+  "seed_data_creation": "None left behind. All TEST_ portfolio items were deleted by id and the /about-us hero override was reset. DATA INCIDENT (self-caused, fully restored): in one UI run my script picked the wrong grid item (the grid had not finished loading) and edited, then soft-deleted, the seeded portfolio item 67499b99-eb6b-4bf8-ad79-50b21cc377e8 ('Fashion · Runway'). I restored it directly in Mongo to cat=Fashion, caption='Fashion · Runway', is_deleted=False, with alt_text unset as it was originally. It is verified back in GET /api/content/portfolio at order 8.",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Run with `-n 0` (the pytest.ini xdist flags need it): REACT_APP_BACKEND_URL=... pytest tests/test_iter16_image_pipeline.py -n 0. The test images must be smooth (noise generated at 1/4 size then upscaled); pure full-res noise JPEGs go over 8MB and get a 413. The test refuses to run if /about-us already has a custom hero. Upload takes about 5s. In Playwright, wait for the portfolio grid items to load before taking an id snapshot.",
+  "test_credentials": "admin@rekhakrishnamurthy.com / Rekha@Admin2026 (from /app/memory/test_credentials.md) - working"
+}
