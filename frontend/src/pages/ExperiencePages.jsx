@@ -2,8 +2,8 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { PageShell, PageHero } from "../components/PageShell";
 import { SeoIntro } from "../components/SeoIntro";
-import LookLab from "../components/lab/LookLab";
-import FaceStudio from "../components/studio/FaceStudio";
+import CorporateMakeup from "../components/CorporateMakeup";
+import BridalPackages from "../components/BridalPackages";
 import { getPage } from "../lib/pages";
 import { usePageImage } from "../hooks/usePageImages";
 
@@ -21,5 +21,5 @@ const Experience = ({ children, testid }) => {
   );
 };
 
-export const LookLabPage = () => <Experience testid="looklab-page"><LookLab /></Experience>;
-export const TryOnPage = () => <Experience testid="tryon-page"><FaceStudio /></Experience>;
+export const LookLabPage = () => <Experience testid="looklab-page"><CorporateMakeup /></Experience>;
+export const TryOnPage = () => <Experience testid="tryon-page"><BridalPackages /></Experience>;
