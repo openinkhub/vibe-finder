@@ -47,7 +47,8 @@ const Services = () => {
                   </div>
                 </div>
                 <div className="col-start-2 md:col-start-auto flex items-center gap-2 text-[#E62E6B] font-medium text-sm md:justify-self-end">
-                  View {s.name} portfolio
+                  <span className="hidden md:inline">View {s.name} portfolio</span>
+                  <span className="md:hidden">Explore</span>
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>

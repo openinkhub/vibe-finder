@@ -22,6 +22,7 @@ import FAQ from "./components/FAQ";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import FloatingButtons from "./components/FloatingButtons";
+import { MobileBookBar } from "./components/MobileBookBar";
 import Admin from "./pages/Admin";
 import PortfolioPage from "./pages/PortfolioPage";
 import { LookLabPage, TryOnPage } from "./pages/ExperiencePages";
@@ -62,6 +63,7 @@ const Landing = () => {
     <Contact />
     <Footer />
     <FloatingButtons />
+    <MobileBookBar />
   </>
   );
 };

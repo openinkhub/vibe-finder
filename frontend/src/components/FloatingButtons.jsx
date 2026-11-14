@@ -6,7 +6,7 @@ import { brand } from "../mock/mock";
 
 const FloatingButtons = () => {
   return (
-    <div className="fixed right-4 sm:right-5 bottom-5 sm:bottom-6 z-40 flex flex-col gap-3" data-testid="floating-buttons">
+    <div className="fixed right-4 sm:right-5 bottom-20 lg:bottom-5 z-40 flex flex-col gap-3" data-testid="floating-buttons">
       <motion.a
         whileHover={{ scale: 1.12, rotateY: 18 }}
         whileTap={{ scale: 0.94 }}

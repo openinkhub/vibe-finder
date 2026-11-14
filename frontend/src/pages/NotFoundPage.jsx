@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FloatingButtons from "../components/FloatingButtons";
+import { MobileBookBar } from "../components/MobileBookBar";
 
 const setMetaRobots = (content) => {
   let el = document.head.querySelector('meta[name="robots"]');
@@ -34,6 +35,7 @@ const NotFoundPage = () => {
       </main>
       <Footer />
       <FloatingButtons />
+      <MobileBookBar />
     </div>
   );
 };

@@ -28,9 +28,9 @@ const Footer = () => {
     <footer className="relative bg-[#FBE9F0] text-[#4A2530] overflow-hidden" data-testid="footer">
       <div className="h-1.5 bg-[#E62E6B]" />
       <div className="absolute -top-32 -right-24 w-[380px] h-[380px] rounded-full bg-[#E62E6B]/15 blur-3xl" />
-      <div className="relative max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 pt-14 sm:pt-20 pb-8 sm:pb-10">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
-          <Reveal className="sm:col-span-2 lg:col-span-4">
+      <div className="relative max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 pt-14 sm:pt-20 pb-24 sm:pb-10">
+        <div className="grid grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-10 lg:gap-8">
+          <Reveal className="col-span-2 lg:col-span-4">
             <Link to="/" className="inline-block" data-testid="footer-logo-link" aria-label="Rekha Krishnamurthy Makeup & Academy">
               <motion.img src={brand.logo} alt="Rekha Krishnamurthy Makeup & Academy" className="h-12 sm:h-14 w-auto" whileHover={{ rotateY: 12, scale: 1.04 }} transition={{ type: "spring", stiffness: 240, damping: 18 }} style={{ transformPerspective: 600 }} />
             </Link>

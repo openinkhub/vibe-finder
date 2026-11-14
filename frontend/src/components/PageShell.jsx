@@ -5,6 +5,7 @@ import { FaWhatsapp, FaFacebookF, FaXTwitter, FaLinkedinIn } from "react-icons/f
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import FloatingButtons from "./FloatingButtons";
+import { MobileBookBar } from "./MobileBookBar";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 import { brand } from "../mock/mock";
@@ -22,6 +23,7 @@ export const PageShell = ({ children, title, page, faq }) => {
       <main className="pt-24 sm:pt-28">{children}</main>
       <Footer />
       <FloatingButtons />
+      <MobileBookBar />
     </div>
   );
 };
