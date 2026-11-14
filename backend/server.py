@@ -7,6 +7,7 @@ load_dotenv(ROOT_DIR / '.env')
 import os
 import logging
 from fastapi import FastAPI, APIRouter
+from fastapi.responses import Response
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 
@@ -38,6 +39,13 @@ blog.init(db)
 @api_router.get("/")
 async def root():
     return {"message": "Rekha Krishnamurthy API", "ok": True}
+
+
+@api_router.get("/sitemap.xml", response_class=Response)
+async def sitemap_endpoint():
+    """Dynamic sitemap — always includes latest blog posts (production-safe)."""
+    xml = await blog.get_sitemap_xml()
+    return Response(content=xml, media_type="application/xml")
 
 
 api_router.include_router(auth.router)

@@ -2,9 +2,13 @@
  * parsing via cheerio, safe on any CPU architecture). For every route in
  * pages.json, clones build/index.html and rewrites title/meta/canonical/OG/
  * Twitter tags + injects WebPage/BreadcrumbList/Service|Course|Person JSON-LD
- * so crawlers that don't execute JS see correct, unique per-page SEO tags. */
+ * so crawlers that don't execute JS see correct, unique per-page SEO tags.
+ * Also fetches published blog posts from the backend API (if available) and
+ * generates per-post static HTML files for complete SEO coverage. */
 const fs = require("fs");
 const path = require("path");
+const https = require("https");
+const http = require("http");
 const cheerio = require("cheerio");
 
 const BUILD_DIR = path.join(__dirname, "..", "build");
@@ -75,3 +79,74 @@ for (const page of pages) {
   written += 1;
 }
 console.log(`SEO tag injection done. Wrote ${written}/${pages.length} static pages (no headless browser used).`);
+
+/* ── Blog post SSR prerendering ──────────────────────────────────────────── */
+function fetchJson(url) {
+  return new Promise((resolve) => {
+    const lib = url.startsWith("https") ? https : http;
+    lib.get(url, { timeout: 8000 }, (res) => {
+      let data = "";
+      res.on("data", (c) => (data += c));
+      res.on("end", () => {
+        try { resolve(JSON.parse(data)); } catch { resolve(null); }
+      });
+    }).on("error", () => resolve(null)).on("timeout", () => resolve(null));
+  });
+}
+
+function injectBlogPost(post) {
+  const $ = cheerio.load(template);
+  const canonical = `${SITE_URL}/blog/${post.slug}`;
+  const ogImg = post.featured_image || `${SITE_URL}/og-image.webp`;
+  const title = post.meta_title || post.title;
+  const desc = post.meta_description || post.excerpt || "";
+  $("title").text(title);
+  $('meta[name="description"]').attr("content", desc);
+  $('link[rel="canonical"]').attr("href", canonical);
+  $('meta[property="og:title"]').attr("content", title);
+  $('meta[property="og:description"]').attr("content", desc);
+  $('meta[property="og:url"]').attr("content", canonical);
+  $('meta[property="og:image"]').attr("content", ogImg);
+  $('meta[property="og:image:alt"]').attr("content", post.title);
+  $('meta[name="twitter:title"]').attr("content", title);
+  $('meta[name="twitter:description"]').attr("content", desc);
+  $('meta[name="twitter:image"]').attr("content", ogImg);
+  const article = {
+    "@context": "https://schema.org", "@type": "BlogPosting",
+    mainEntityOfPage: canonical, headline: post.title,
+    description: desc, image: ogImg,
+    author: { "@type": "Person", name: "Rekha Krishnamurthy", url: `${SITE_URL}/about-us` },
+    publisher: { "@type": "Organization", name: "Rekha Krishnamurthy Makeup & Academy", logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` } },
+    datePublished: post.publish_date,
+  };
+  if (post.key_takeaway) article.abstract = post.key_takeaway;
+  const breadcrumb = {
+    "@context": "https://schema.org", "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title, item: canonical },
+    ],
+  };
+  $("head").append(`<script type="application/ld+json">${JSON.stringify(article)}</script>`);
+  $("head").append(`<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>`);
+  const outPath = path.join(BUILD_DIR, "blog", post.slug, "index.html");
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+  fs.writeFileSync(outPath, $.html());
+  return post.slug;
+}
+
+(async () => {
+  const apiBase = process.env.REACT_APP_BACKEND_URL || "http://localhost:8001/api";
+  const postsUrl = `${apiBase}/api/blog`.replace(/\/api\/api\//, "/api/");
+  const posts = await fetchJson(postsUrl);
+  if (!Array.isArray(posts) || posts.length === 0) {
+    console.log("Blog SSR: no posts returned from API (skipped — no posts or API unavailable).");
+    return;
+  }
+  let blogWritten = 0;
+  for (const post of posts) {
+    if (post.slug) { injectBlogPost(post); blogWritten += 1; }
+  }
+  console.log(`Blog SSR: wrote ${blogWritten} blog post static pages.`);
+})();

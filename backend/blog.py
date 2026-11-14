@@ -314,18 +314,62 @@ async def delete_post(post_id: str, _: dict = Depends(require_admin)):
     await regenerate_sitemap()
 
 
+_PRIORITY = {
+    "/": ("1.0", "weekly"),
+    "Services": ("0.8", "monthly"),
+    "Academy": ("0.8", "monthly"),
+    "Portfolio": ("0.7", "monthly"),
+    "Header": ("0.9", "monthly"),
+    "Experience": ("0.6", "monthly"),
+    "Service area": ("0.6", "monthly"),
+    "Service Location": ("0.6", "monthly"),
+    "Explore": ("0.6", "monthly"),
+}
+
+
+async def get_sitemap_xml() -> str:
+    import pathlib
+    pages_path = pathlib.Path(__file__).parent.parent / "frontend" / "src" / "content" / "pages.json"
+    pages = json.loads(pages_path.read_text())
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    entries: list[str] = []
+    for p in pages:
+        if not p.get("canonical") or p.get("path") == "/admin":
+            continue
+        prio, freq = _PRIORITY.get(p.get("path", ""), _PRIORITY.get(p.get("group", ""), ("0.6", "monthly")))
+        entries.append(
+            f"  <url>\n"
+            f"    <loc>{p['canonical']}</loc>\n"
+            f"    <lastmod>{today}</lastmod>\n"
+            f"    <changefreq>{freq}</changefreq>\n"
+            f"    <priority>{prio}</priority>\n"
+            f"  </url>"
+        )
+    posts = await _db.blog_posts.find({}, {"_id": 0, "slug": 1, "updated_at": 1, "publish_date": 1}).to_list(1000)
+    for post in posts:
+        raw_date = post.get("updated_at") or post.get("publish_date") or today
+        post_date = raw_date[:10] if isinstance(raw_date, str) else (raw_date.strftime("%Y-%m-%d") if hasattr(raw_date, "strftime") else today)
+        entries.append(
+            f"  <url>\n"
+            f"    <loc>{SITE_URL}/blog/{post['slug']}</loc>\n"
+            f"    <lastmod>{post_date}</lastmod>\n"
+            f"    <changefreq>weekly</changefreq>\n"
+            f"    <priority>0.7</priority>\n"
+            f"  </url>"
+        )
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "\n".join(entries)
+        + "\n</urlset>\n"
+    )
+
+
 async def regenerate_sitemap():
     try:
         import pathlib
-        pages_path = pathlib.Path(__file__).parent.parent / "frontend" / "src" / "content" / "pages.json"
         sitemap_path = pathlib.Path(__file__).parent.parent / "frontend" / "public" / "sitemap.xml"
-        pages = json.loads(pages_path.read_text())
-        urls = [p["canonical"] for p in pages if p.get("canonical")]
-        posts = await _db.blog_posts.find({}, {"_id": 0, "slug": 1}).to_list(1000)
-        urls += [f"{SITE_URL}/blog/{p['slug']}" for p in posts]
-        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-        body = "\n".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod></url>" for u in urls)
-        xml = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{body}\n</urlset>\n'
+        xml = await get_sitemap_xml()
         sitemap_path.write_text(xml)
     except Exception as e:
         logger.error("sitemap regeneration failed: %s", str(e)[:200])
