@@ -11,6 +11,12 @@ export const SeoIntro = ({ page, ctaTo = "/contact", onCta, className = "" }) =>
   const isDuplicate = page.cta === heroCtaResolved || shortCta(page.cta) === shortCta(heroCtaResolved);
   const displayCta = isDuplicate ? (/book/i.test(heroCtaResolved) ? "Enquire Now" : "Confirm your Booking") : page.cta;
   const label = <><span className="sm:hidden">{shortCta(displayCta)}</span><span className="hidden sm:inline">{displayCta}</span></>;
+  const parseBold = (text) => {
+    if (!text || !text.includes("**")) return text;
+    return text.split(/\*\*(.+?)\*\*/).map((part, i) =>
+      i % 2 === 1 ? <strong key={i} className="font-semibold text-[#4A2530]">{part}</strong> : part
+    );
+  };
   return (
     <section className={`max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 pb-14 md:pb-20 ${className}`} data-testid="seo-intro">
       <Reveal>
@@ -19,7 +25,7 @@ export const SeoIntro = ({ page, ctaTo = "/contact", onCta, className = "" }) =>
           <div className="relative max-w-3xl">
             <h1 className="font-display text-[#4A2530] text-3xl sm:text-4xl lg:text-5xl leading-[1.08]" data-testid="seo-h1">{page.h1}</h1>
             <h2 className="mt-4 text-base md:text-lg font-medium text-[#4A2530]" data-testid="seo-h1-heading">{page.h1Heading}</h2>
-            {page.h1Sub && <p className="mt-3 text-sm sm:text-base text-[#5C4E52] leading-relaxed" data-testid="seo-h1-sub">{page.h1Sub}</p>}
+            {page.h1Sub && <p className="mt-3 text-sm sm:text-base text-[#5C4E52] leading-relaxed" data-testid="seo-h1-sub">{parseBold(page.h1Sub)}</p>}
             {page.conclusion && <p className="mt-5 pl-4 border-l-2 border-[#E62E6B] text-sm sm:text-base text-[#5C4E52] leading-relaxed italic" data-testid="seo-conclusion">{page.conclusion}</p>}
             {onCta
               ? <button onClick={onCta} className={btn} data-testid="seo-cta">{label} <ArrowUpRight size={16} /></button>
