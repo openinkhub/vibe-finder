@@ -137,8 +137,9 @@ function injectBlogPost(post) {
 }
 
 (async () => {
-  const apiBase = process.env.REACT_APP_BACKEND_URL || "http://localhost:8001/api";
-  const postsUrl = `${apiBase}/api/blog`.replace(/\/api\/api\//, "/api/");
+  // Always use localhost at build time — the backend runs on the same machine
+  // during the postbuild step, and the external URL may not be reachable yet.
+  const postsUrl = "http://localhost:8001/api/blog";
   const posts = await fetchJson(postsUrl);
   if (!Array.isArray(posts) || posts.length === 0) {
     console.log("Blog SSR: no posts returned from API (skipped — no posts or API unavailable).");
