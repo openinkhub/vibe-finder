@@ -109,11 +109,12 @@ export const portfolio = [
 export const portfolioFilters = ["All Frames", "Bridal", "Editorial", "Fashion", "Reels"];
 
 export const reels = [
-  { title: "Airbrush base, start to finish", time: "0:34", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51" },
-  { title: "Bridal trial walkthrough", time: "0:51", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9" },
-  { title: "Editorial smoky eye", time: "0:22", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2" },
-  { title: "Draping tips for sarees", time: "1:04", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749" },
-  { title: "Runway quick-change", time: "0:40", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39" },
+  { title: "Airbrush base, start to finish", time: "0:34", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51", url: "https://www.instagram.com/reel/CvKfxEaPCIj/" },
+  { title: "Bridal trial walkthrough", time: "0:51", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9", url: "https://www.instagram.com/reel/CvchPNhP05O/" },
+  { title: "Editorial smoky eye", time: "0:22", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2", url: "https://www.instagram.com/reel/CuhS8YrvNMK/" },
+  { title: "Draping tips for sarees", time: "1:04", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749", url: "https://www.instagram.com/reel/CZq3UYZjyLZ/" },
+  { title: "Runway quick-change", time: "0:40", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39", url: "https://www.instagram.com/reel/Cj476jXDFIE/" },
+  { title: "Bridal transformation", time: "0:58", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6", url: "https://www.instagram.com/reel/Cvhq45Av5tT/" },
 ];
 
 export const process = [

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Phone, MapPin, Instagram, Check, Loader2, Sparkles, X, CalendarCheck } from "lucide-react";
+import { Phone, MapPin, Instagram, Mail, Check, Loader2, Sparkles, X, CalendarCheck } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { brand } from "../mock/mock";
@@ -76,6 +76,10 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
             <a href={brand.instagramUrl} target="_blank" rel="noreferrer" className={contactRow} data-testid="contact-instagram-link">
               <span className={iconBox}><Instagram size={20} /></span>
               <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">Instagram</div><div className="text-[#4A2530] group-hover:text-[#E62E6B] transition-colors break-all">{brand.instagram}</div></div>
+            </a>
+            <a href={`mailto:${brand.email}`} className={contactRow} data-testid="contact-email-link">
+              <span className={iconBox}><Mail size={20} /></span>
+              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">Email</div><div className="text-[#4A2530] group-hover:text-[#E62E6B] transition-colors break-all">{brand.email}</div></div>
             </a>
           </div>
 

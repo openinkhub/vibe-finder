@@ -14,10 +14,10 @@ const Reels = () => {
           <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">Process reels — trials, transformations, and technique — the way this work is actually watched now.</p>
         </Reveal>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4" style={{ perspective: 1400 }}>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4" style={{ perspective: 1400 }}>
           {reels.map((r, i) => (
             <Reveal key={r.title} delay={i * 0.07} rotate={18}>
-              <TiltCard as="button" max={12} className="w-full rounded-2xl overflow-hidden aspect-[9/14] bg-[#FBE9F0] text-left shadow-[0_24px_60px_-30px_rgba(230,46,107,0.55)]" data-testid={`reel-card-${i}`}>
+              <TiltCard as="a" href={r.url} target="_blank" rel="noreferrer" max={12} className="w-full rounded-2xl overflow-hidden aspect-[9/14] bg-[#FBE9F0] text-left shadow-[0_24px_60px_-30px_rgba(230,46,107,0.55)]" data-testid={`reel-card-${i}`}>
                 <img src={r.image} alt={r.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#E62E6B]/90 via-[#E62E6B]/10 to-transparent" />
                 <div className="absolute inset-0 flex items-center justify-center">

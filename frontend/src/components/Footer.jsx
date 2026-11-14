@@ -1,5 +1,5 @@
 import React from "react";
-import { Phone, MapPin, ArrowUpRight } from "lucide-react";
+import { Phone, MapPin, ArrowUpRight, Mail } from "lucide-react";
 import { FaInstagram, FaFacebookF, FaXTwitter, FaLinkedinIn, FaWhatsapp } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -41,6 +41,7 @@ const Footer = () => {
               <li className="flex items-center gap-3 text-sm"><MapPin size={16} className="text-[#E62E6B]" /><span>{brand.location}</span></li>
               <li className="flex items-center gap-3 text-sm"><MapPin size={16} className="text-[#E62E6B]" /><a href="https://share.google/nu7HoWg5cktHMEnHr" target="_blank" rel="noreferrer" className="hover:text-[#E62E6B]" data-testid="footer-locate-google-link">Locate us on Google</a></li>
               <li className="flex items-center gap-3 text-sm"><FaWhatsapp size={16} className="text-[#25D366] shrink-0" /><a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="hover:text-[#25D366]">Chat on WhatsApp</a></li>
+              <li className="flex items-center gap-3 text-sm"><Mail size={16} className="text-[#E62E6B] shrink-0" /><a href={`mailto:${brand.email}`} className="hover:text-[#E62E6B] break-all">{brand.email}</a></li>
             </ul>
             <div className="mt-6 flex items-center gap-3" data-testid="footer-social-icons">
               {socialLinks.map(({ key, href, icon: Icon, label }) => (
