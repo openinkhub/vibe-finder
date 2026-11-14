@@ -20,7 +20,7 @@ CONTACT = {"phone": "+91 98454 80507", "whatsapp": "wa.me/919845480507", "email"
 
 BROCHURE = {
     "/bridal-makeup-artist-bangalore": {
-        "title": "Bridal Makeup, Perfected Over 14 Years", "tagline": "HD & airbrush bridal looks planned around your skin, outfit and story — trial included, no visit charge.",
+        "title": "Bridal Makeup, Perfected Over 14 Years", "tagline": "HD & airbrush bridal looks planned around your skin, outfit and story.",
         "highlights": ["Pre-wedding shoot makeup coordinated to outfit, location & shoot theme", "Sangeet makeup built to survive a full night on the dance floor", "Full wedding-day consultation on skin, outfit & jewellery", "Only premium brands — MAC, Bobbi Brown, Estée Lauder, HUDA Beauty & more", "One bride, one date — we never double-book"],
         "details": [("Experience", "14 years · 320+ weddings"), ("Trial", "In-person or video consultation included"), ("Booking window", "3–6 months ahead for wedding season"), ("Visit charge", "None, across Bangalore")],
     },
@@ -36,7 +36,7 @@ BROCHURE = {
     },
     "/party-makeup-artist-bangalore": {
         "title": "Party Makeup for Birthdays, Anniversaries & Every Night Out", "tagline": "HD and Airbrush techniques styled to the venue lighting and your outfit — not a one-look-fits-all party face.",
-        "highlights": ["Built for dim restaurant lighting, camera flash & dance floors", "Hairstyle chosen to complement your outfit", "Birthdays, anniversaries or someone else's celebration — same premium standard", "No visit charge across Bangalore", "1–2 weeks booking lead time recommended"],
+        "highlights": ["Built for dim restaurant lighting, camera flash & dance floors", "Hairstyle chosen to complement your outfit", "Birthdays, anniversaries or someone else's celebration — same premium standard", "On-location service across Bangalore", "1–2 weeks booking lead time recommended"],
         "details": [("Best booked", "1–2 weeks ahead"), ("Technique", "HD & Airbrush"), ("Visit charge", "None, across Bangalore")],
     },
     "/pre-wedding-photoshoot-makeup-artist": {

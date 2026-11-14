@@ -52,7 +52,7 @@ export const BookMeCompact = ({ onBook }) => {
         {open && (
           <motion.div initial={{ opacity: 0, y: 16, rotateX: -20 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} exit={{ opacity: 0, y: 10 }} style={{ transformPerspective: 800 }} className="px-5 pb-5 -mt-2" data-testid="bookme-reveal">
             <div className="font-display text-xl text-[#4A2530]">Book me</div>
-            <p className="text-sm text-[#5C4E52] mt-1">Free consultation · no visit charge for party, event & wedding bookings.</p>
+            <p className="text-sm text-[#5C4E52] mt-1">Free consultation on every enquiry.</p>
             <div className="mt-4 grid sm:grid-cols-3 gap-2">
               <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full border border-[#E62E6B] text-[#E62E6B] text-sm font-medium hover:bg-[#E62E6B] hover:text-white transition-colors" data-testid="bookme-call"><Phone size={15} /> Call</a>
               <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-[#25D366] text-white text-sm font-medium" data-testid="bookme-whatsapp"><FaWhatsapp size={16} /> WhatsApp</a>

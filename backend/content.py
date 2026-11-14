@@ -17,12 +17,12 @@ _db = None
 MAX_UPLOAD = 8 * 1024 * 1024
 
 DEFAULT_PRICING = [
-    {"price": "Starting ₹7,999/person/session", "title": "Party Makeup", "desc": "Event-ready glam, no visit charge.", "featured": False},
+    {"price": "Starting ₹7,999/person/session", "title": "Party Makeup", "desc": "Event-ready glam.", "featured": False},
     {"price": "Starting ₹9,999/person/session", "title": "Non-Bridal Makeup", "desc": "For the wedding party, family & guests.", "featured": False},
     {"price": "Starting ₹19,999/session", "title": "Engagement Makeup", "desc": "Soft-glam for rings & pre-wedding shoots.", "featured": False},
     {"price": "Starting ₹9,999 onwards", "title": "Fashion Makeup", "desc": "Customised looks for portfolio & fashion shoots.", "featured": False},
     {"price": "₹4,999/session", "title": "Groom Makeup", "desc": "Camera-ready grooming for the big day.", "featured": False},
-    {"price": "Starting ₹29,999/session", "title": "Bridal Makeup", "desc": "HD/airbrush, trial included, no visit charge.", "featured": True},
+    {"price": "Starting ₹29,999/session", "title": "Bridal Makeup", "desc": "HD/airbrush bridal looks crafted around you.", "featured": True},
 ]
 DEFAULT_PORTFOLIO = [
     {"cat": "Bridal", "caption": "Bridal · f/2.8 · Golden Hour", "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"},
@@ -240,10 +240,10 @@ async def reset_page_image(slug: str, _: dict = Depends(require_admin)):
 
 
 DEFAULT_SERVICES = [
-    {"no": "01", "title": "Bridal Makeup", "desc": "HD & airbrush bridal looks that last from the muhurtham to the last dance — trial included.", "cta": "Book bridal", "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"},
+    {"no": "01", "title": "Bridal Makeup", "desc": "HD & airbrush bridal looks planned around your skin, outfit and story.", "cta": "Book bridal", "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"},
     {"no": "02", "title": "Engagement Makeup", "desc": "Soft-glam for rings, rokas and pre-wedding shoots that photograph beautifully.", "cta": "Book engagement", "image": "https://images.unsplash.com/photo-1594647210801-5124307f3d51"},
     {"no": "03", "title": "Non-Bridal Makeup", "desc": "Sisters, mothers, bridesmaids — polished looks for everyone in the wedding party.", "cta": "Book non-bridal", "image": "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2"},
-    {"no": "04", "title": "Party Makeup", "desc": "Event-ready glam for receptions, galas and celebrations — no visit charge.", "cta": "Book party", "image": "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6"},
+    {"no": "04", "title": "Party Makeup", "desc": "Event-ready glam for receptions, galas and celebrations.", "cta": "Book party", "image": "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6"},
     {"no": "05", "title": "Editorial & Fashion", "desc": "Runway, campaign and cover-story makeup scoped to your brief and shoot.", "cta": "Enquire", "image": "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39"},
     {"no": "06", "title": "Self-Grooming Courses", "desc": "Hands-on classes to master your own everyday and occasion looks.", "cta": "View courses", "image": "https://images.unsplash.com/photo-1551184451-76b762941ad6"},
 ]

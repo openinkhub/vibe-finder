@@ -20,7 +20,7 @@ const Pricing = () => {
         <Reveal className="text-center max-w-2xl mx-auto">
           <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Transparent pricing</span>
           <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Prices Starting <span className="italic text-[#E62E6B]">@₹8,000/-*</span></h2>
-          <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">Free consultation on every enquiry. No visit charge for party, event or wedding bookings.</p>
+          <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">Free consultation on every enquiry.</p>
         </Reveal>
 
         <div className="mt-10 md:mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" style={{ perspective: 1200 }}>
@@ -39,7 +39,7 @@ const Pricing = () => {
           ))}
         </div>
 
-        <p className="mt-8 sm:mt-10 text-center text-sm text-[#8B7F82] max-w-2xl mx-auto">Final pricing depends on look, location and event duration — confirmed free of charge at consultation.</p>
+        <p className="mt-8 sm:mt-10 text-center text-sm text-[#8B7F82] max-w-2xl mx-auto">Every Bridal look is unique. Your Quote is personalized based on your look, location and event requirements. Outstation Charges Extra*</p>
         <div className="mt-6 sm:mt-8 text-center">
           <button onClick={() => scrollToId("contact")} className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-[#E62E6B] text-white text-sm sm:text-base font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="pricing-book-btn">
             <span className="sm:hidden">{shortCta("Consult on Pricing")}</span>

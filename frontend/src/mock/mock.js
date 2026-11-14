@@ -84,12 +84,12 @@ export const services = [
 ];
 
 export const pricing = [
-  { price: "Starting ₹7,999/person/session", title: "Party Makeup", desc: "Event-ready glam, no visit charge." },
+  { price: "Starting ₹7,999/person/session", title: "Party Makeup", desc: "Event-ready glam." },
   { price: "Starting ₹9,999/person/session", title: "Non-Bridal Makeup", desc: "For the wedding party, family & guests." },
   { price: "Starting ₹19,999/session", title: "Engagement Makeup", desc: "Soft-glam for rings & pre-wedding shoots." },
   { price: "Starting ₹9,999 onwards", title: "Fashion Makeup", desc: "Customised looks for portfolio & fashion shoots." },
   { price: "₹4,999/session", title: "Groom Makeup", desc: "Camera-ready grooming for the big day." },
-  { price: "Starting ₹29,999/session", title: "Bridal Makeup", desc: "HD/airbrush, trial included, no visit charge.", featured: true },
+  { price: "Starting ₹29,999/session", title: "Bridal Makeup", desc: "HD/airbrush bridal looks crafted around you.", featured: true },
 ];
 
 export const areas = ["HSR Layout", "JP Nagar", "Jayanagar", "Banashankari", "+ Bangalore-wide on request"];
@@ -158,5 +158,5 @@ export const faqs = [
   { q: "Do you travel for destination weddings?", a: "Yes. Rekha travels across India for destination weddings and fashion assignments. Travel and stay are scoped transparently at consultation." },
   { q: "Is a trial session included?", a: "A pre-wedding trial is included with the bridal package so we can perfect your base, eyes and draping together before the big day." },
   { q: "What courses do you offer?", a: "Professional HD & bridal certification, an airbrush machine masterclass, and self-grooming & everyday makeup classes — all small-batch and hands-on at the Bangalore studio." },
-  { q: "Is there a visit charge, and what does pricing start at?", a: "Makeup starts at ₹4,999, and there's no visit charge for party, event or wedding bookings within Bangalore. Final pricing is confirmed free of charge at consultation." },
+  { q: "Is there a visit charge, and what does pricing start at?", a: "Makeup starts at ₹8,000. Final pricing is personalized based on your look, location and event requirements. Outstation charges extra." },
 ];

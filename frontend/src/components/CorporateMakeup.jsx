@@ -18,7 +18,7 @@ const INCLUDES = [
   "On-camera colour calibration — colours read true on screen",
   "Long-wear, transfer-proof formulas for all-day performance",
   "Blotting, touch-up guidance between sessions",
-  "On-location service across Bangalore — no extra visit charge",
+  "On-location service across Bangalore",
 ];
 
 const STEPS = [
@@ -116,7 +116,7 @@ const CorporateMakeup = () => (
               <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md rounded-2xl px-5 py-4 flex items-center gap-4 shadow-xl">
                 <Sparkles size={22} className="text-[#E62E6B] shrink-0" />
                 <div>
-                  <div className="font-display text-sm font-bold text-[#4A2530]">On-Location. No Visit Charge.</div>
+                  <div className="font-display text-sm font-bold text-[#4A2530]">On-Location Service.</div>
                   <div className="text-xs text-[#5C4E52] mt-0.5">Rekha comes to your studio, office or event venue across Bangalore.</div>
                 </div>
               </div>

@@ -36,7 +36,7 @@ export const BookingPanel = ({ page }) => {
             <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-4 ${isCourse ? "bg-[#E62E6B]" : "bg-[#FBE9F0] text-[#E62E6B]"}`}>{isCourse ? <GraduationCap size={20} /> : <CalendarCheck size={20} />}</div>
             <div className={`font-mono text-[10px] tracking-[0.24em] uppercase ${isCourse ? "text-[#F4B7CE]" : "text-[#E62E6B]"}`}>{isCourse ? "Reserve your seat" : "Check availability"}</div>
             <h3 className={`font-display text-2xl sm:text-3xl mt-2 ${isCourse ? "text-white" : "text-[#4A2530]"}`}>{isCourse ? `Save your spot in ${page.name}` : `Ready to book ${page.name.toLowerCase()} makeup?`}</h3>
-            <p className={`text-sm mt-3 ${isCourse ? "text-white/75" : "text-[#5C4E52]"}`}>{isCourse ? "Seats are limited per batch. Leave your details and we'll hold a spot while you decide." : "Share your details and we'll confirm your date — no visit charge across Bangalore."}</p>
+            <p className={`text-sm mt-3 ${isCourse ? "text-white/75" : "text-[#5C4E52]"}`}>{isCourse ? "Seats are limited per batch. Leave your details and we'll hold a spot while you decide." : "Share your details and we'll confirm your date across Bangalore."}</p>
           </div>
           <form onSubmit={submit} className="space-y-3" data-testid="booking-panel-form">
             {sent && <div className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm ${isCourse ? "bg-white/10 text-white" : "bg-[#EAF7EF] text-[#1c7a45]"}`} data-testid="booking-panel-success"><Check size={16} /> Thanks! We'll be in touch shortly.</div>}

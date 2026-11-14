@@ -34,7 +34,7 @@ const PACKAGES = [
       "Bridal trial (1 session)",
       "Wedding day bridal makeup",
       "1 additional event (Mehendi / Sangeet)",
-      "On-location — no visit charge",
+      "On-location service",
     ],
     best: true,
   },
@@ -97,7 +97,7 @@ const BridalPackages = () => (
           {[
             { v: "500+", l: "Weddings & shoots" },
             { v: "14+ yrs", l: "Professional experience" },
-            { v: "On-Location", l: "No extra visit charge" },
+            { v: "On-Location", l: "Across Karnataka" },
             { v: "Trial included", l: "In all bridal packages" },
           ].map(({ v, l }) => (
             <div key={l} className="pt-6 sm:pt-0 sm:px-8 first:pt-0 first:sm:pl-0">
@@ -240,7 +240,7 @@ const BridalPackages = () => (
                 <MapPin size={20} className="text-[#E62E6B] mt-0.5 shrink-0" />
                 <div>
                   <div className="font-display text-base font-bold text-[#4A2530]">On-Location. Everywhere in Karnataka.</div>
-                  <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">Rekha travels to your home, hotel or venue — no studio visit required. No additional visit charge within Bangalore.</p>
+                  <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">Rekha travels to your home, hotel or venue — no studio visit required. Outstation charges extra.</p>
                   <Link to="/contact" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#E62E6B] hover:gap-2.5 transition-all" data-testid="bridal-pkg-location-link">
                     Check availability <ArrowUpRight size={14} />
                   </Link>

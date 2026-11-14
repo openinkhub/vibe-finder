@@ -60,9 +60,9 @@ export const servicePages = [
     image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6", service: "Party",
     body: [
       "Party makeup has its own set of practical challenges: dim restaurant lighting, flash photography, a late night that shouldn't mean touch-ups every hour. I use HD and Airbrush techniques specifically chosen for how they hold up under different lighting — camera flash, string lights, dance floors — paired with a hairstyle that complements your outfit.",
-      `Whether it's a birthday, anniversary dinner, or you're part of someone else's celebration, the same premium product standards apply (${BRANDS}). Party, event and wedding bookings carry no visit charge across Bangalore.`,
+      `Whether it's a birthday, anniversary dinner, or you're part of someone else's celebration, the same premium product standards apply (${BRANDS}). On-location service across Bangalore.`,
     ],
-    faq: [["Do you travel to a venue or home for party makeup bookings?", "Yes — on-site service across Bangalore with no visit charge."], ["How long before the event should I book?", "1–2 weeks is ideal; same-week slots are possible outside wedding season."]],
+    faq: [["Do you travel to a venue or home for party makeup bookings?", "Yes — on-site service across Bangalore. Outstation charges extra."], ["How long before the event should I book?", "1–2 weeks is ideal; same-week slots are possible outside wedding season."]],
   },
   {
     slug: "editorial-makeup", menu: "Editorial", eyebrow: "Where Makeup Becomes Art Direction", title: "Editorial Makeup, Built Around the Mood Board",
@@ -98,13 +98,13 @@ export const servicePages = [
 
 export const locationPages = [
   { slug: "bridal-makeup-Bangalore", area: "HSR Layout", title: "Bridal Makeup Artist in HSR Layout, Bangalore", service: "Bridal", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9",
-    body: ["Serving brides across HSR Layout and Sector 1–7 with on-site bridal, engagement and reception makeup — no visit charge. Early muhurtham slots, HD and airbrush finishes, and one bride per date.", "Popular venues we've worked at nearby include garden banquets in Agara and community halls along 27th Main; we plan travel and setup time around your venue and photographer."] },
+    body: ["Serving brides across HSR Layout and Sector 1–7 with on-site bridal, engagement and reception makeup. Early muhurtham slots, HD and airbrush finishes, and one bride per date.", "Popular venues we've worked at nearby include garden banquets in Agara and community halls along 27th Main; we plan travel and setup time around your venue and photographer."] },
   { slug: "party-and-non-bridal-makeup-karnataka", area: "JP Nagar", title: "Party & Non-Bridal Makeup in JP Nagar", service: "Party", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6",
     body: ["Our studio base is close to JP Nagar — the fastest slot for party, event and bridesmaid bookings across Phases 1–9, Sarakki and Puttenahalli.", "Group bookings for the bridal party, birthday glam and anniversary dinners, with HD/airbrush technique chosen for restaurant and flash lighting."] },
   { slug: "best-bridal-makup-artist-in-bangalore", area: "Jayanagar", title: "Best Bridal Makeup Artist in Jayanagar, Bangalore", service: "Bridal", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749",
     body: ["Rated 5.0 on Google across 146 reviews — Jayanagar brides choose us for traditional South Indian bridal looks that photograph beautifully in temple and kalyana-mantapa lighting.", "From 4th Block to South End Circle, we arrive with a full kit, sanitised tools and a plan built at your free consultation."] },
   { slug: "pre-wedding-makeup-artist", area: "Banashankari", title: "Pre-Wedding Photoshoot Makeup Artist — Banashankari", service: "Engagement", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51",
-    body: ["Pre-wedding shoots around Banashankari, Turahalli forest and the Big Banyan Tree need makeup that survives sun, wind and outfit changes — that's exactly what we plan for.", "Multiple looks per shoot, photographer coordination and touch-ups on location, with no visit charge."] },
+    body: ["Pre-wedding shoots around Banashankari, Turahalli forest and the Big Banyan Tree need makeup that survives sun, wind and outfit changes — that's exactly what we plan for.", "Multiple looks per shoot, photographer coordination and touch-ups on location."] },
 ];
 
 export const staticPages = {
@@ -114,7 +114,7 @@ export const staticPages = {
     body: ["Small-batch training at the Bangalore studio — for artists building a career, and for anyone who wants to master their own face.", "Tracks include Professional Bridal Makeup Certification, HD & Airbrush Masterclass, Self-Grooming for Everyday & Occasions, and Hairstyling for Brides. Every course is hands-on with live models and premium kits."],
     bullets: [["Professional Bridal Certification", "6 weeks · live brides · portfolio shoot included"], ["HD & Airbrush Masterclass", "2 days · camera tests under studio & daylight"], ["Self-Grooming Class", "1 day · your own kit, your own face — from ₹999"]] },
   "personal-shopping": { eyebrow: "Personal Shopping", title: "Buy fewer products that work better for you", image: "https://images.unsplash.com/photo-1677691257363-eebd2abeafec",
-    body: ["Consultation is always free, and there's no visit charge for party, event or wedding bookings. Tell us the event, the city and the vibe — we'll come back with availability and a package that fits."] },
+    body: ["Consultation is always free. Tell us the event, the city and the vibe — we'll come back with availability and a package that fits."] },
 };
 
 export const blogPosts = [
