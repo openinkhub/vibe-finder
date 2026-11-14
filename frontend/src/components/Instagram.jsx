@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Instagram as IgIcon, Heart, MessageCircle } from "lucide-react";
-import { instagramFeed, brand } from "../mock/mock";
+import { instagramFeed as mockFeed, brand } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
+import { api, imgUrl } from "../lib/api";
 
 const Instagram = () => {
+  const [items, setItems] = useState(mockFeed);
+
+  useEffect(() => {
+    api.get("/content/feed").then((r) => { if (r.data?.length) setItems(r.data); }).catch(() => {});
+  }, []);
+
   return (
     <section className="relative bg-[#F4F1EA] py-20 md:py-28" data-testid="instagram-section">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
@@ -18,10 +25,10 @@ const Instagram = () => {
           </a>
         </Reveal>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4" style={{ perspective: 1200 }}>
-          {instagramFeed.map((p, i) => (
-            <Reveal key={p.caption} delay={i * 0.06} rotate={16}>
-              <TiltCard as="a" max={12} href={brand.instagramUrl} target="_blank" rel="noreferrer" className="block aspect-square overflow-hidden rounded-2xl shadow-[0_20px_50px_-30px_rgba(230,46,107,0.5)]" data-testid={`instagram-item-${i}`}>
-                <img src={p.image} alt={p.caption} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+          {items.map((p, i) => (
+            <Reveal key={p.id || p.caption} delay={i * 0.06} rotate={16}>
+              <TiltCard as="a" max={12} href={p.url || brand.instagramUrl} target="_blank" rel="noreferrer" className="block aspect-square overflow-hidden rounded-2xl shadow-[0_20px_50px_-30px_rgba(230,46,107,0.5)]" data-testid={`instagram-item-${i}`}>
+                <img src={imgUrl(p.image)} alt={p.caption} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-[#E62E6B]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 p-4 text-center">
                   <p className="text-white text-xs leading-snug">{p.caption}</p>
                   <div className="flex items-center gap-4 text-white text-sm">

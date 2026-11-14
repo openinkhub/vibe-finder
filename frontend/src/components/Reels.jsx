@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Play } from "lucide-react";
-import { reels } from "../mock/mock";
+import { reels as mockReels } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
+import { api } from "../lib/api";
 
 const Reels = () => {
+  const [items, setItems] = useState(mockReels);
+
+  useEffect(() => {
+    api.get("/content/reels").then((r) => { if (r.data?.length) setItems(r.data); }).catch(() => {});
+  }, []);
+
   return (
     <section id="reels" className="relative bg-[#EBE6DB] py-20 md:py-28 scroll-mt-20" data-testid="reels-section">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
@@ -15,9 +22,9 @@ const Reels = () => {
         </Reveal>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4" style={{ perspective: 1400 }}>
-          {reels.map((r, i) => (
-            <Reveal key={r.title} delay={i * 0.07} rotate={18}>
-              <TiltCard as="a" href={r.url} target="_blank" rel="noreferrer" max={12} className="w-full rounded-2xl overflow-hidden aspect-[9/14] bg-[#FBE9F0] text-left shadow-[0_24px_60px_-30px_rgba(230,46,107,0.55)]" data-testid={`reel-card-${i}`}>
+          {items.map((r, i) => (
+            <Reveal key={r.id || r.title} delay={i * 0.07} rotate={18}>
+              <TiltCard as="a" href={r.url || "#"} target={r.url ? "_blank" : "_self"} rel="noreferrer" max={12} className="w-full rounded-2xl overflow-hidden aspect-[9/14] bg-[#FBE9F0] text-left shadow-[0_24px_60px_-30px_rgba(230,46,107,0.55)]" data-testid={`reel-card-${i}`}>
                 <img src={r.image} alt={r.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#E62E6B]/90 via-[#E62E6B]/10 to-transparent" />
                 <div className="absolute inset-0 flex items-center justify-center">

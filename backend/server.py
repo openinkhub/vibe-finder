@@ -81,6 +81,7 @@ async def on_startup():
     await db.enquiries.create_index("status")
     await content.seed_content()
     await content.seed_services()
+    await content.seed_reels_and_feed()
     await blog.seed_blog()
     await blog.regenerate_sitemap()
     await db.bookings.create_index("date")

@@ -239,6 +239,24 @@ async def reset_page_image(slug: str, _: dict = Depends(require_admin)):
 
 
 
+DEFAULT_REELS = [
+    {"title": "Airbrush base, start to finish", "time": "0:34", "url": "https://www.instagram.com/reel/CvKfxEaPCIj/", "image": "https://images.unsplash.com/photo-1594647210801-5124307f3d51"},
+    {"title": "Bridal trial walkthrough", "time": "0:51", "url": "https://www.instagram.com/reel/CvchPNhP05O/", "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"},
+    {"title": "Editorial smoky eye", "time": "0:22", "url": "https://www.instagram.com/reel/CuhS8YrvNMK/", "image": "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2"},
+    {"title": "Draping tips for sarees", "time": "1:04", "url": "https://www.instagram.com/reel/CZq3UYZjyLZ/", "image": "https://images.unsplash.com/photo-1587271315307-eaebc181c749"},
+    {"title": "Runway quick-change", "time": "0:40", "url": "https://www.instagram.com/reel/Cj476jXDFIE/", "image": "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39"},
+    {"title": "Bridal transformation", "time": "0:58", "url": "https://www.instagram.com/reel/Cvhq45Av5tT/", "image": "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6"},
+]
+
+DEFAULT_FEED = [
+    {"caption": "Golden-hour bridal glow", "likes": "1,204", "comments": "38", "url": "https://www.instagram.com/reel/CvKfxEaPCIj/", "image": "https://images.unsplash.com/photo-1600685890506-593fdf55949b"},
+    {"caption": "Red & gold, always a classic", "likes": "982", "comments": "21", "url": "https://www.instagram.com/reel/CvchPNhP05O/", "image": "https://images.unsplash.com/photo-1677691257363-eebd2abeafec"},
+    {"caption": "Trial day magic — base built to last 12 hrs", "likes": "1,540", "comments": "54", "url": "https://www.instagram.com/reel/CuhS8YrvNMK/", "image": "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6"},
+    {"caption": "Temple jewellery + soft eye", "likes": "2,110", "comments": "76", "url": "https://www.instagram.com/reel/CZq3UYZjyLZ/", "image": "https://images.unsplash.com/photo-1587271315307-eaebc181c749"},
+    {"caption": "Reception look, all airbrush", "likes": "876", "comments": "19", "url": "https://www.instagram.com/reel/Cj476jXDFIE/", "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"},
+    {"caption": "Behind the brush at the studio", "likes": "1,332", "comments": "44", "url": "https://www.instagram.com/reel/Cvhq45Av5tT/", "image": "https://images.unsplash.com/photo-1551184451-76b762941ad6"},
+]
+
 DEFAULT_SERVICES = [
     {"no": "01", "title": "Bridal Makeup", "desc": "HD & airbrush bridal looks planned around your skin, outfit and story.", "cta": "Book bridal", "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"},
     {"no": "02", "title": "Engagement Makeup", "desc": "Soft-glam for rings, rokas and pre-wedding shoots that photograph beautifully.", "cta": "Book engagement", "image": "https://images.unsplash.com/photo-1594647210801-5124307f3d51"},
@@ -247,6 +265,14 @@ DEFAULT_SERVICES = [
     {"no": "05", "title": "Editorial & Fashion", "desc": "Runway, campaign and cover-story makeup scoped to your brief and shoot.", "cta": "Enquire", "image": "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39"},
     {"no": "06", "title": "Self-Grooming Courses", "desc": "Hands-on classes to master your own everyday and occasion looks.", "cta": "View courses", "image": "https://images.unsplash.com/photo-1551184451-76b762941ad6"},
 ]
+
+
+async def seed_reels_and_feed():
+    now = datetime.now(timezone.utc).isoformat()
+    if await _db.reels.count_documents({}) == 0:
+        await _db.reels.insert_many([{**r, "id": str(uuid.uuid4()), "order": i, "is_deleted": False, "created_at": now} for i, r in enumerate(DEFAULT_REELS)])
+    if await _db.instagram_feed.count_documents({}) == 0:
+        await _db.instagram_feed.insert_many([{**f, "id": str(uuid.uuid4()), "order": i, "is_deleted": False, "created_at": now} for i, f in enumerate(DEFAULT_FEED)])
 
 
 async def seed_services():
@@ -308,3 +334,99 @@ async def serve_file(path: str):
     except Exception:
         raise HTTPException(status_code=502, detail="Storage unavailable")
     return Response(content=data, media_type=record.get("content_type") or ct, headers={"Cache-Control": "public, max-age=31536000, immutable"})
+
+
+# ── Reels ──────────────────────────────────────────────────────────────────────
+
+class ReelItem(BaseModel):
+    id: str
+    title: str
+    time: str = ""
+    url: str = ""
+    image: str
+    order: int = 0
+
+
+class ReelPatch(BaseModel):
+    title: Optional[str] = Field(default=None, max_length=120)
+    time: Optional[str] = Field(default=None, max_length=10)
+    url: Optional[str] = Field(default=None, max_length=300)
+
+
+@router.get("/content/reels", response_model=List[ReelItem])
+async def list_reels():
+    return await _db.reels.find({"is_deleted": False}, {"_id": 0}).sort("order", 1).to_list(20)
+
+
+@router.post("/content/reels", response_model=ReelItem, status_code=201)
+async def create_reel(file: UploadFile = File(...), title: str = Form(""), time: str = Form(""), url: str = Form(""), _: dict = Depends(require_admin)):
+    image_url = await store_processed_image(await file.read(), "reels", max_dim=900, target_bytes=120 * 1024)
+    count = await _db.reels.count_documents({})
+    doc = {"id": str(uuid.uuid4()), "title": title[:120] or "Reel", "time": time[:10], "url": url[:300], "image": image_url, "order": count, "is_deleted": False, "created_at": datetime.now(timezone.utc).isoformat()}
+    await _db.reels.insert_one(dict(doc))
+    return doc
+
+
+@router.patch("/content/reels/{item_id}", response_model=ReelItem)
+async def patch_reel(item_id: str, body: ReelPatch, _: dict = Depends(require_admin)):
+    patch = {k: v for k, v in body.model_dump().items() if v is not None}
+    res = await _db.reels.find_one_and_update({"id": item_id, "is_deleted": False}, {"$set": patch}, projection={"_id": 0}, return_document=True)
+    if not res:
+        raise HTTPException(status_code=404, detail="Not found")
+    return res
+
+
+@router.delete("/content/reels/{item_id}", status_code=204)
+async def delete_reel(item_id: str, _: dict = Depends(require_admin)):
+    res = await _db.reels.update_one({"id": item_id, "is_deleted": False}, {"$set": {"is_deleted": True}})
+    if res.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Not found")
+
+
+# ── Instagram Feed ─────────────────────────────────────────────────────────────
+
+class FeedItem(BaseModel):
+    id: str
+    caption: str = ""
+    likes: str = ""
+    comments: str = ""
+    url: str = ""
+    image: str
+    order: int = 0
+
+
+class FeedPatch(BaseModel):
+    caption: Optional[str] = Field(default=None, max_length=200)
+    likes: Optional[str] = Field(default=None, max_length=20)
+    comments: Optional[str] = Field(default=None, max_length=20)
+    url: Optional[str] = Field(default=None, max_length=300)
+
+
+@router.get("/content/feed", response_model=List[FeedItem])
+async def list_feed():
+    return await _db.instagram_feed.find({"is_deleted": False}, {"_id": 0}).sort("order", 1).to_list(20)
+
+
+@router.post("/content/feed", response_model=FeedItem, status_code=201)
+async def create_feed_item(file: UploadFile = File(...), caption: str = Form(""), likes: str = Form(""), comments: str = Form(""), url: str = Form(""), _: dict = Depends(require_admin)):
+    image_url = await store_processed_image(await file.read(), "feed", max_dim=800, target_bytes=100 * 1024)
+    count = await _db.instagram_feed.count_documents({})
+    doc = {"id": str(uuid.uuid4()), "caption": caption[:200], "likes": likes[:20], "comments": comments[:20], "url": url[:300], "image": image_url, "order": count, "is_deleted": False, "created_at": datetime.now(timezone.utc).isoformat()}
+    await _db.instagram_feed.insert_one(dict(doc))
+    return doc
+
+
+@router.patch("/content/feed/{item_id}", response_model=FeedItem)
+async def patch_feed_item(item_id: str, body: FeedPatch, _: dict = Depends(require_admin)):
+    patch = {k: v for k, v in body.model_dump().items() if v is not None}
+    res = await _db.instagram_feed.find_one_and_update({"id": item_id, "is_deleted": False}, {"$set": patch}, projection={"_id": 0}, return_document=True)
+    if not res:
+        raise HTTPException(status_code=404, detail="Not found")
+    return res
+
+
+@router.delete("/content/feed/{item_id}", status_code=204)
+async def delete_feed_item(item_id: str, _: dict = Depends(require_admin)):
+    res = await _db.instagram_feed.update_one({"id": item_id, "is_deleted": False}, {"$set": {"is_deleted": True}})
+    if res.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Not found")
