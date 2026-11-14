@@ -41,6 +41,11 @@ async def root():
     return {"message": "Rekha Krishnamurthy API", "ok": True}
 
 
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+
+
 @api_router.get("/sitemap.xml", response_class=Response)
 async def sitemap_endpoint():
     """Dynamic sitemap — always includes latest blog posts (production-safe)."""

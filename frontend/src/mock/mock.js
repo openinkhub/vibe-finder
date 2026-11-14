@@ -8,7 +8,7 @@ export const brand = {
   role: "Bridal Makeup Artist",
   phone: "+91 98454 80507",
   whatsapp: "+91 98454 80507",
-  email: "hello@rekhakrishnamurthy.in",
+  email: "contact@rekhakrishnamurthy.com",
   location: "1st Floor, 1314, 32nd Cross Rd, 1st Stage, Kumaraswamy Layout, Bengaluru, Karnataka 560078, India",
   instagram: "@makeupbyrekhakrishnamurthy",
   instagramUrl: "https://www.instagram.com/makeupbyrekhakrishnamurthy/",
