@@ -48,25 +48,31 @@ export const PageHero = ({ eyebrow, title, subtitle, image, imageAlt, cta = "Boo
   </section>
 );
 
-export const AuthorBio = () => (
-  <Reveal>
-    <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#F1DCE3] flex flex-col sm:flex-row gap-5 sm:gap-7 items-start" data-testid="author-bio">
-      <img src={brand.logo} alt="Rekha Krishnamurthy" className="h-12 w-auto shrink-0" />
-      <div>
-        <div className="font-display text-xl text-[#4A2530]">{authorBio.title}</div>
-        <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">{authorBio.text}</p>
-        <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-          <span className="text-[#5C4E52]">📍 Based in Bangalore</span>
-          <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-1.5 text-[#E62E6B]"><Phone size={14} /> {brand.phone}</a>
-          <a href={brand.instagramUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><Instagram size={14} /> Instagram</a>
-          <a href={brand.facebookUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaFacebookF size={13} /> Facebook</a>
-          <a href={brand.twitterUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaXTwitter size={13} /> X</a>
-          <a href={brand.linkedinUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaLinkedinIn size={13} /> LinkedIn</a>
-          <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#25D366]"><FaWhatsapp size={14} /> WhatsApp</a>
+export const AuthorBio = () => {
+  const parseBold = (text) =>
+    text.split(/\*\*(.+?)\*\*/).map((p, i) =>
+      i % 2 === 1 ? <strong key={i} className="font-semibold text-[#4A2530]">{p}</strong> : p
+    );
+  return (
+    <Reveal>
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#F1DCE3] flex flex-col sm:flex-row gap-5 sm:gap-7 items-start" data-testid="author-bio">
+        <img src={brand.logo} alt="Rekha Krishnamurthy" className="h-12 w-auto shrink-0" />
+        <div>
+          <div className="font-display text-xl text-[#4A2530]">{authorBio.title}</div>
+          <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">{parseBold(authorBio.text)}</p>
+          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            <span className="text-[#5C4E52]">📍 Based in Bangalore</span>
+            <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-1.5 text-[#E62E6B]"><Phone size={14} /> {brand.phone}</a>
+            <a href={brand.instagramUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><Instagram size={14} /> Instagram</a>
+            <a href={brand.facebookUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaFacebookF size={13} /> Facebook</a>
+            <a href={brand.twitterUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaXTwitter size={13} /> X</a>
+            <a href={brand.linkedinUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaLinkedinIn size={13} /> LinkedIn</a>
+            <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#25D366]"><FaWhatsapp size={14} /> WhatsApp</a>
+          </div>
         </div>
       </div>
-    </div>
-  </Reveal>
-);
+    </Reveal>
+  );
+};
 
 export default PageShell;
