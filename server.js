@@ -13,6 +13,9 @@ const { seedAdmin } = require("./server/lib/auth");
 const { syncReferencedFiles } = require("./server/lib/storage");
 const content = require("./server/routes/content");
 const blog = require("./server/routes/blog");
+const { BLOG_REDIRECTS, RETIRED_SLUGS } = require("./server/lib/blogSeo");
+const { marked } = require("marked");
+const sanitizeHtml = require("sanitize-html");
 
 const app = express();
 const BUILD_DIR = path.join(__dirname, "frontend", "build");
@@ -97,14 +100,25 @@ async function blogHtml(slug) {
   if (post.key_takeaway) article.abstract = post.key_takeaway;
   const crumbs = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: SITE_URL }, { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` }, { "@type": "ListItem", position: 3, name: post.title, item: canonical }] };
   const safe = (o) => JSON.stringify(o).replace(/</g, "\\u003c");
-  $("head").append(`<script type="application/ld+json">${safe(article)}</script>`);
-  $("head").append(`<script type="application/ld+json">${safe(crumbs)}</script>`);
+  // The template is the home page's HTML: drop its page-specific schema, then add this post's.
+  // Ids match the ones the browser code uses, so it updates these instead of adding duplicates.
+  $("#ld-json-webpage, #ld-json-breadcrumb, #ld-json-entity, #ld-json-faq").remove();
+  $("head").append(`<script type="application/ld+json" id="ld-json-blogposting">${safe(article)}</script>`);
+  $("head").append(`<script type="application/ld+json" id="ld-json-breadcrumb">${safe(crumbs)}</script>`);
+  const faq = blog.buildSchema(post).faq;
+  if (faq) $("head").append(`<script type="application/ld+json" id="ld-json-blogfaq">${safe(faq)}</script>`);
+  // Readable article in the HTML for crawlers that don't run JavaScript; React replaces it on load.
+  // The body's own "# Title" line becomes an h2 so the page has a single h1.
+  const bodyHtml = sanitizeHtml(marked.parse(String(post.body || "").replace(/^#\s+/m, "## ")), { allowedTags: sanitizeHtml.defaults.allowedTags.concat(["h1", "h2", "img"]), allowedAttributes: { a: ["href", "title"], img: ["src", "alt"] } });
+  const esc = (t) => String(t || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  $("#root").html(`<main class="prerender"><article><p><a href="/blog">Journal</a></p><h1>${esc(post.title)}</h1><p>By Rekha Krishnamurthy · ${esc(post.publish_date)}</p><img src="${esc(post.featured_image)}" alt="${esc(post.alt_text || post.title)}"/>${bodyHtml}</article></main>`);
   return $.html();
 }
 
 const blogCache = new Map();
 app.get("/blog/:slug", ah(async (req, res, next) => {
   const key = req.params.slug;
+  if (BLOG_REDIRECTS[key]) return res.redirect(301, BLOG_REDIRECTS[key]);
   const hit = blogCache.get(key);
   if (hit && Date.now() - hit.t < 5 * 60 * 1000) return res.type("html").send(hit.html);
   const html = await blogHtml(key);
@@ -113,13 +127,48 @@ app.get("/blog/:slug", ah(async (req, res, next) => {
   res.type("html").send(html);
 }));
 
-// Prerendered pages live at build/<route>/index.html; anything else falls back to the SPA shell.
+// The SPA shell with an empty #root (the built index.html carries the home page's snapshot and schema).
+let shellCache = null;
+function spaShell() {
+  if (shellCache) return shellCache;
+  const html = readHtml(path.join(BUILD_DIR, "index.html"));
+  if (!html) return null;
+  const $ = cheerio.load(html);
+  $("#root").empty();
+  $("#ld-json-webpage, #ld-json-breadcrumb, #ld-json-entity, #ld-json-faq").remove();
+  shellCache = $.html();
+  return shellCache;
+}
+
+// Blog index pages: the post list rendered from the database into the HTML, for crawlers.
+async function blogIndexHtml(urlPath) {
+  const html = readHtml(path.join(BUILD_DIR, urlPath.slice(1), "index.html"));
+  if (!html) return null;
+  const posts = await getDb().collection("blog_posts").find({ slug: { $nin: RETIRED_SLUGS } }, { projection: { _id: 0, slug: 1, title: 1, excerpt: 1, publish_date: 1 } }).sort({ publish_date: -1 }).limit(500).toArray();
+  const esc = (t) => String(t || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const $ = cheerio.load(html);
+  const h1 = urlPath === "/archive" ? "Makeup Advice Archive" : "Makeup & Bridal Beauty Journal";
+  $("#root").html(`<main class="prerender"><h1>${h1}</h1><ul>${(Array.isArray(posts) ? posts : []).map((p) => `<li><a href="/blog/${esc(p.slug)}">${esc(p.title)}</a> <span>${esc(p.publish_date)}</span><p>${esc(p.excerpt)}</p></li>`).join("")}</ul></main>`);
+  return $.html();
+}
+
+const listCache = new Map();
+app.get(["/blog", "/archive"], ah(async (req, res, next) => {
+  const hit = listCache.get(req.path);
+  if (hit && Date.now() - hit.t < 5 * 60 * 1000) return res.set("Cache-Control", "no-cache").type("html").send(hit.html);
+  const html = await blogIndexHtml(req.path);
+  if (!html) return next();
+  listCache.set(req.path, { html, t: Date.now() });
+  res.set("Cache-Control", "no-cache").type("html").send(html);
+}));
+
+// Pre-built pages live at build/<route>/index.html; anything else gets the empty SPA shell.
 app.get("*", (req, res, next) => {
   if (req.method !== "GET") return next();
   const clean = decodeURIComponent(req.path).replace(/\/+$/, "") || "/";
   if (clean.includes("..")) return next();
   const candidate = clean === "/" ? path.join(BUILD_DIR, "index.html") : path.join(BUILD_DIR, clean, "index.html");
-  const html = readHtml(candidate) || readHtml(path.join(BUILD_DIR, "index.html"));
+  const html = readHtml(candidate) || spaShell();
   if (!html) return res.status(503).send("Site is building — please refresh in a minute.");
   res.set("Cache-Control", "no-cache").type("html").send(html);
 });

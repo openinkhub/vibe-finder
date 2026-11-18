@@ -51,6 +51,7 @@ const buildJsonLd = (page) => {
 };
 
 let written = 0;
+let snapshots = 0;
 for (const page of pages) {
   if (page.path === "/admin") continue;
   const $ = cheerio.load(template);
@@ -68,17 +69,24 @@ for (const page of pages) {
   $('meta[name="twitter:description"]').attr("content", page.ogDescription);
   $('meta[name="twitter:image"]').attr("content", image);
 
+  // Idempotent: clear anything a previous run added to the template.
+  $("#ld-json-webpage, #ld-json-breadcrumb, #ld-json-entity").remove();
+  $("#root").empty();
   const { webPage, breadcrumb, entity } = buildJsonLd(page);
   $("head").append(`<script type="application/ld+json" id="ld-json-webpage">${JSON.stringify(webPage)}</script>`);
   $("head").append(`<script type="application/ld+json" id="ld-json-breadcrumb">${JSON.stringify(breadcrumb)}</script>`);
   if (entity) $("head").append(`<script type="application/ld+json" id="ld-json-entity">${JSON.stringify(entity)}</script>`);
+
+  // Readable page content for crawlers that don't run JavaScript (see scripts/prerender-snapshots.js).
+  const snap = path.join(__dirname, "..", "prerender", (page.path === "/" ? "index" : page.path.replace(/^\//, "").replace(/\//g, "__")) + ".html");
+  if (fs.existsSync(snap)) { $("#root").html(fs.readFileSync(snap, "utf8")); snapshots += 1; }
 
   const outPath = page.path === "/" ? path.join(BUILD_DIR, "index.html") : path.join(BUILD_DIR, page.path.replace(/^\//, ""), "index.html");
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, $.html());
   written += 1;
 }
-console.log(`SEO tag injection done. Wrote ${written}/${pages.length} static pages (no headless browser used).`);
+console.log(`SEO tag injection done. Wrote ${written}/${pages.length} static pages, ${snapshots} with pre-rendered content.`);
 
 /* ── Blog post SSR prerendering ──────────────────────────────────────────── */
 function fetchJson(url) {

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { api, imgUrl } from "../lib/api";
 import { portfolio as fallback } from "../mock/mock";
-import { useShowcase } from "../components/lab/LookLab";
+import { useShowcase } from "../hooks/useShowcase";
 import { LAB_LOOKS } from "../components/lab/faceTexture";
 import { Reveal } from "../components/fx/Reveal";
 import { TiltCard } from "../components/fx/TiltCard";

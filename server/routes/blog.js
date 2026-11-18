@@ -7,6 +7,7 @@ const { getDb, HttpError, ah, uuid, nowIso, cut, clean } = require("../lib/core"
 const { requireAdmin, currentUser } = require("../lib/auth");
 const { storeProcessedImage } = require("../lib/storage");
 const D = require("../lib/defaults.json");
+const { BLOG_REDIRECTS, RETIRED_SLUGS, extractFaqs } = require("../lib/blogSeo");
 
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 * 1024 * 1024 } });
@@ -70,8 +71,10 @@ function buildSchema(post) {
     publisher: { "@type": "Organization", name: "Rekha Krishnamurthy Makeup & Academy", logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` } },
   };
   if (post.key_takeaway) article.abstract = post.key_takeaway;
-  const faq = post.faqs && post.faqs.length
-    ? { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: post.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) }
+  // FAQ markup: the post's FAQ field, or else the "Frequently Asked Questions" section in its body.
+  const faqList = post.faqs && post.faqs.length ? post.faqs : extractFaqs(post.body);
+  const faq = faqList.length
+    ? { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqList.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) }
     : null;
   return { article, faq, author: { "@context": "https://schema.org", ...AUTHOR_SCHEMA } };
 }
@@ -101,7 +104,7 @@ async function sitemapXml() {
     const [prio, freq] = PRIORITY[p.path] || PRIORITY[p.group] || ["0.6", "monthly"];
     entries.push(url(p.canonical, today, freq, prio));
   }
-  for (const post of await posts().find({}, { projection: { _id: 0, slug: 1, updated_at: 1, publish_date: 1 } }).limit(1000).toArray()) {
+  for (const post of await posts().find({ slug: { $nin: RETIRED_SLUGS } }, { projection: { _id: 0, slug: 1, updated_at: 1, publish_date: 1 } }).limit(1000).toArray()) {
     const raw = post.updated_at || post.publish_date || today;
     entries.push(url(`${SITE_URL}/blog/${post.slug}`, String(raw).slice(0, 10), "weekly", "0.7"));
   }
@@ -118,10 +121,14 @@ router.post("/blog/api-key/regenerate", requireAdmin, ah(async (_q, res) => {
   res.json({ api_key: value });
 }));
 
-router.get("/blog", ah(async (_q, res) => res.json(clean(await posts().find({}).sort({ publish_date: -1 }).limit(500).toArray()))));
+router.get("/blog", ah(async (_q, res) => res.json(clean(await posts().find({ slug: { $nin: RETIRED_SLUGS } }).sort({ publish_date: -1 }).limit(500).toArray()))));
 
 router.get("/blog/:slug", ah(async (req, res) => {
-  const post = await posts().findOne({ slug: req.params.slug }, { projection: { _id: 0 } });
+  // A retired post's API call returns the post it was merged into (browsers get a 301 from the page route).
+  const target = BLOG_REDIRECTS[req.params.slug];
+  const slug = target && target.startsWith("/blog/") ? target.slice(6) : req.params.slug;
+  if (target && slug === req.params.slug) throw new HttpError(404, "Post not found");
+  const post = await posts().findOne({ slug: target && !target.startsWith("/blog/") ? "__none__" : slug }, { projection: { _id: 0 } });
   if (!post) throw new HttpError(404, "Post not found");
   res.json({ ...post, schema: buildSchema(post) });
 }));
@@ -171,4 +178,4 @@ router.delete("/blog/:id", requireAdmin, ah(async (req, res) => {
   res.status(204).end();
 }));
 
-module.exports = { router, seedBlog, getOrCreateApiKey, sitemapXml };
+module.exports = { router, seedBlog, getOrCreateApiKey, sitemapXml, buildSchema };

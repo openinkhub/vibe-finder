@@ -12,11 +12,7 @@ import { sampleFace } from "../../mock/mock";
 
 const MAX = 768;
 
-export const useShowcase = () => {
-  const [data, setData] = useState(null);
-  useEffect(() => { api.get("/studio/showcase", { timeout: 180000 }).then((r) => setData(r.data)).catch(() => setData({ before: "/sample-face.jpg", looks: [] })); }, []);
-  return data;
-};
+export { useShowcase } from "../../hooks/useShowcase";
 
 const fitCanvas = (source, w, h) => {
   const s = Math.min(1, MAX / Math.max(w, h));

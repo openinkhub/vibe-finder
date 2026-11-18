@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { scrollToId } from "./components/Navbar";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import "./App.css";
@@ -23,15 +23,30 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import FloatingButtons from "./components/FloatingButtons";
 import { MobileBookBar } from "./components/MobileBookBar";
-import Admin from "./pages/Admin";
-import PortfolioPage from "./pages/PortfolioPage";
-import { LookLabPage, TryOnPage } from "./pages/ExperiencePages";
 import { SheetPage, ContactPage, TestimonialsPage, BlogPage, LegalPage } from "./pages/ContentPages";
-import BlogPostPage from "./pages/BlogPostPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { SeoIntro } from "./components/SeoIntro";
 import { useSeo, useJsonLd } from "./components/Seo";
 import { allPages, getPage, legalKeyByPath } from "./lib/pages";
+import { lazyRoute } from "./lib/lazyRoute";
+
+// Heavier, less-visited routes load as separate chunks.
+const Admin = lazyRoute(() => import("./pages/Admin"));
+const PortfolioPage = lazyRoute(() => import("./pages/PortfolioPage"));
+const LookLabPage = lazyRoute(() => import("./pages/ExperiencePages"), "LookLabPage");
+const TryOnPage = lazyRoute(() => import("./pages/ExperiencePages"), "TryOnPage");
+const BlogPostPage = lazyRoute(() => import("./pages/BlogPostPage"));
+
+// Called before the first render so the current route's chunk is already in memory.
+export const preloadRoute = (path) => {
+  const p = path.replace(/\/+$/, "") || "/";
+  if (p === "/admin") return Admin.preload();
+  if (p === "/portfolio") return PortfolioPage.preload();
+  if (p === "/corporate-professional-makeup-services") return LookLabPage.preload();
+  if (p === "/book-bridal-makeup-package-karnataka") return TryOnPage.preload();
+  if (p.startsWith("/blog/")) return BlogPostPage.preload();
+  return Promise.resolve();
+};
 
 const Landing = () => {
   const page = getPage("/");
@@ -95,6 +110,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <RouteTracker />
+        <Suspense fallback={<div className="min-h-screen" />}>
         <Routes>
           {allPages.map((p) => <Route key={p.path} path={p.path} element={special[p.path] || (legalKeyByPath[p.path] ? <LegalPage /> : <SheetPage />)} />)}
           <Route path="/blog/:slug" element={<BlogPostPage />} />
@@ -106,6 +122,7 @@ function App() {
           <Route path="/hire-celebrirt-makeup-artist-for-wedding" element={<Navigate to="/hire-celebrity-makeup-artist-for-wedding" replace />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </Suspense>
       </BrowserRouter>
       <Toaster position="top-center" richColors />
     </div>

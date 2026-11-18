@@ -73,7 +73,7 @@ const BlogPostPage = () => {
         <Section>
           <Reveal delay={0.1}>
             <article className="legal-md text-sm sm:text-base text-[#5C4E52] leading-relaxed mt-8" data-testid="blog-post-body">
-              <ReactMarkdown>{post.body}</ReactMarkdown>
+              <ReactMarkdown components={{ h1: "h2" }}>{post.body}</ReactMarkdown>
               {post.faqs?.map((f, i) => (
                 <div key={i} className="mt-6">
                   <h3 className="font-display text-lg sm:text-xl text-[#4A2530]">{f.q}</h3>

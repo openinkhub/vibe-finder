@@ -51,3 +51,10 @@ Use the temporary domain Hostinger gives you for testing.
 - Face Studio (AI try-on) and voice enquiry need `GEMINI_API_KEY` / `OPENAI_API_KEY`;
   without them those two features show a friendly "not available" message.
 - Local run: `npm install && npm run build && cp .env.example .env` (fill it in) `&& npm start`.
+
+## Pre-rendered page content (SEO / AI crawlers)
+`frontend/prerender/*.html` holds a snapshot of each page's rendered content. The build puts it into
+that page's HTML so crawlers that don't run JavaScript can read it. Refresh it after changing page
+text, prices, services or other admin content — see the instructions at the top of
+`scripts/prerender-snapshots.js`. Blog posts and the blog index are rendered by the server from the
+database on every request, so they never go stale.

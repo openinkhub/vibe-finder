@@ -101,7 +101,7 @@ export const pageBodies = {
       { h: "If You Are Booking for Someone Else", p: ["If you are enquiring for a bride, family member, friend, or another person, share their event details and requirements so the service can be discussed accurately."] },
       { h: "For Professional Makeup and Creative Projects", p: ["For fashion, editorial, portfolio, or photoshoot requirements, share the project concept, date, location, number of looks, and creative requirements."] },
       { h: "Need a Makeup Course or Workshop?", p: ["If you are interested in self-grooming, self-makeup, or professional makeup training, share your learning goals and preferred programme."], ctas: [{ label: "Explore Academy", to: "/makeup-course-training-bangalore", secondary: true }] },
-      { h: "Contact Details", details: [["Phone", "+91 98454 80507"], ["Email", "hello@rekhakrishnamurthy.in"], ["Location", "1st Floor, 1314, 32nd Cross Rd, 1st Stage, Kumaraswamy Layout, Bengaluru, Karnataka 560078, India"]], ctas: [{ label: "Check Availability", scrollTo: "contact" }, { label: "Send an Enquiry", scrollTo: "contact" }] },
+      { h: "Contact Details", details: [["Phone", "+91 98454 80507"], ["Email", "contact@rekhakrishnamurthy.com"], ["Location", "1st Floor, 1314, 32nd Cross Rd, 1st Stage, Kumaraswamy Layout, Bengaluru, Karnataka 560078, India"]], ctas: [{ label: "Check Availability", scrollTo: "contact" }, { label: "Send an Enquiry", scrollTo: "contact" }] },
     ],
   },
   "/about-us": {

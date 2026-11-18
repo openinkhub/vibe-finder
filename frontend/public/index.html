@@ -11,7 +11,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#E62E6B" />
-        <meta name="description" content="Book a personalised bridal makeup artist in Bangalore for weddings, HD and airbrush makeup, engagements and celebrations." />
+        <meta name="description" content="Makeup artist and educator in Bangalore with 14 years' experience in bridal, engagement, party and editorial makeup, plus self-grooming and pro courses." />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Rekha Krishnamurthy Makeup & Academy" />
         <meta property="og:title" content="Bridal Makeup Artist Bangalore | Rekha Krishnamurthy" />
@@ -34,53 +34,121 @@
         <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet" />
+        <!-- Fonts load without blocking the first paint (text shows in a fallback font, then swaps). -->
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&amp;family=Jost:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Inter:wght@600&amp;display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&amp;family=Jost:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Inter:wght@600&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&amp;family=Jost:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Inter:wght@600&amp;display=swap" /></noscript>
+        <!-- The logo is the largest element in the first screen on mobile. -->
+        <link rel="preload" as="image" href="%PUBLIC_URL%/logo.png" fetchpriority="high" />
         <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://rekhakrishnamurthy.com/#organization",
+      "name": "Rekha Krishnamurthy Makeup & Academy",
+      "url": "https://rekhakrishnamurthy.com/",
+      "logo": "https://rekhakrishnamurthy.com/logo.png",
+      "image": "https://rekhakrishnamurthy.com/og-image.webp",
+      "founder": {
+        "@type": "Person",
+        "name": "Rekha Krishnamurthy"
+      },
+      "sameAs": [
+        "https://www.instagram.com/makeupbyrekhakrishnamurthy/",
+        "https://www.facebook.com/makeupbyrekhakrishnamurthy/",
+        "https://x.com/MakeupbyRekha",
+        "https://www.linkedin.com/in/rekha-krishnamurthy-6b998839"
+      ],
+      "email": "contact@rekhakrishnamurthy.com"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://rekhakrishnamurthy.com/#website",
+      "url": "https://rekhakrishnamurthy.com/",
+      "name": "Rekha Krishnamurthy Makeup & Academy",
+      "publisher": {
+        "@id": "https://rekhakrishnamurthy.com/#organization"
+      }
+    },
+    {
+      "@type": "BeautySalon",
+      "@id": "https://rekhakrishnamurthy.com/#localbusiness",
+      "name": "Rekha Krishnamurthy Makeup & Academy",
+      "image": "https://rekhakrishnamurthy.com/og-image.webp",
+      "telephone": "+91-98454-80507",
+      "priceRange": "₹₹",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1st Floor, 1314, 32nd Cross Rd, 1st Stage, Kumaraswamy Layout",
+        "addressLocality": "Bengaluru",
+        "addressRegion": "Karnataka",
+        "postalCode": "560078",
+        "addressCountry": "IN"
+      },
+      "url": "https://rekhakrishnamurthy.com/",
+      "email": "contact@rekhakrishnamurthy.com",
+      "logo": "https://rekhakrishnamurthy.com/logo.png",
+      "parentOrganization": {
+        "@id": "https://rekhakrishnamurthy.com/#organization"
+      },
+      "sameAs": [
+        "https://www.instagram.com/makeupbyrekhakrishnamurthy/",
+        "https://www.facebook.com/makeupbyrekhakrishnamurthy/",
+        "https://x.com/MakeupbyRekha",
+        "https://www.linkedin.com/in/rekha-krishnamurthy-6b998839"
+      ],
+      "areaServed": [
         {
-          "@context": "https://schema.org",
-          "@graph": [
-            {
-              "@type": "Organization",
-              "@id": "https://rekhakrishnamurthy.com/#organization",
-              "name": "Rekha Krishnamurthy Makeup & Academy",
-              "url": "https://rekhakrishnamurthy.com/",
-              "logo": "https://rekhakrishnamurthy.com/logo.png",
-              "image": "https://rekhakrishnamurthy.com/og-image.webp",
-              "founder": { "@type": "Person", "name": "Rekha Krishnamurthy" },
-              "sameAs": [
-                "https://www.instagram.com/makeupbyrekhakrishnamurthy/",
-                "https://www.facebook.com/makeupbyrekhakrishnamurthy/",
-                "https://x.com/MakeupbyRekha",
-                "https://www.linkedin.com/in/rekha-krishnamurthy-6b998839"
-              ]
-            },
-            {
-              "@type": "WebSite",
-              "@id": "https://rekhakrishnamurthy.com/#website",
-              "url": "https://rekhakrishnamurthy.com/",
-              "name": "Rekha Krishnamurthy Makeup & Academy",
-              "publisher": { "@id": "https://rekhakrishnamurthy.com/#organization" }
-            },
-            {
-              "@type": "LocalBusiness",
-              "@id": "https://rekhakrishnamurthy.com/#localbusiness",
-              "name": "Rekha Krishnamurthy Makeup & Academy",
-              "image": "https://rekhakrishnamurthy.com/og-image.webp",
-              "telephone": "+91-98454-80507",
-              "priceRange": "₹₹",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "1st Floor, 1314, 32nd Cross Rd, 1st Stage, Kumaraswamy Layout",
-                "addressLocality": "Bengaluru",
-                "addressRegion": "Karnataka",
-                "postalCode": "560078",
-                "addressCountry": "IN"
-              },
-              "url": "https://rekhakrishnamurthy.com/"
-            }
-          ]
+          "@type": "Place",
+          "name": "Bengaluru"
+        },
+        {
+          "@type": "Place",
+          "name": "HSR Layout"
+        },
+        {
+          "@type": "Place",
+          "name": "JP Nagar"
+        },
+        {
+          "@type": "Place",
+          "name": "Jayanagar"
+        },
+        {
+          "@type": "Place",
+          "name": "Banashankari"
+        },
+        {
+          "@type": "Place",
+          "name": "Indiranagar"
+        },
+        {
+          "@type": "Place",
+          "name": "Koramangala"
+        },
+        {
+          "@type": "Place",
+          "name": "Hosur"
+        },
+        {
+          "@type": "Place",
+          "name": "Tumakuru"
+        },
+        {
+          "@type": "Place",
+          "name": "Hoskote"
+        },
+        {
+          "@type": "Place",
+          "name": "Chikkaballapur"
         }
-        </script>
+      ]
+    }
+  ]
+}
+</script>
         <!--
         manifest.json provides metadata used when your web app is installed on a
         user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -94,7 +162,7 @@
         work correctly both with client-side routing and a non-root public URL.
         Learn how to configure a non-root public URL by running `npm run build`.
         -->
-        <title>Bridal Makeup Artist Bangalore | Rekha Krishnamurthy</title>
+        <title>Rekha Krishnamurthy | Makeup Artist &amp; Academy, Bangalore</title>
         <script>window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"&&e.message&&e.message.includes("PerformanceServerTiming")){e.stopImmediatePropagation();e.preventDefault()}},true);</script>
     </head>
     <body>

@@ -70,7 +70,6 @@ const Footer = () => {
           <p className="font-mono text-xs text-[#8B7F82]">© {new Date().getFullYear()} Rekha Krishnamurthy. All rights reserved.</p>
           <div className="flex items-center gap-4 font-mono text-xs text-[#8B7F82]">
             <span>Bridal · HD · Airbrush · Self-Grooming</span>
-            <Link to="/admin" className="hover:text-[#E62E6B]" data-testid="footer-admin">Studio admin</Link>
           </div>
         </div>
       </div>

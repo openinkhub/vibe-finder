@@ -1,51 +1,40 @@
-import React, { useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { ContactShadows } from "@react-three/drei";
+import React, { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, MessageCircle, CalendarCheck } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { brand } from "../mock/mock";
 
-const Glossy = (p) => <meshPhysicalMaterial roughness={0.2} metalness={0.35} clearcoat={1} clearcoatRoughness={0.08} {...p} />;
+const BookMeCanvas = lazy(() => import("./BookMeCanvas"));
 
-const Compact = ({ open, onToggle, hovered, setHovered }) => {
-  const lid = useRef();
-  const group = useRef();
-  useFrame((state, dt) => {
-    const target = open ? -1.9 : 0;
-    lid.current.rotation.x += (target - lid.current.rotation.x) * Math.min(1, dt * 5);
-    const s = hovered && !open ? 1.05 : 1;
-    group.current.scale.setScalar(group.current.scale.x + (s - group.current.scale.x) * Math.min(1, dt * 8));
-    group.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.15 + (open ? 0 : 0.3);
-  });
-  return (
-    <group ref={group} rotation={[0.55, 0.3, 0]} position={[0, -0.2, 0]} onClick={(e) => { e.stopPropagation(); onToggle(); }} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)}>
-      <mesh><cylinderGeometry args={[1.2, 1.2, 0.28, 72]} /><Glossy color="#E62E6B" /></mesh>
-      <mesh position={[0, 0.15, 0]}><cylinderGeometry args={[1.05, 1.05, 0.03, 72]} /><meshStandardMaterial color="#F4B7CE" roughness={0.9} /></mesh>
-      <mesh position={[0, 0.2, 0]} rotation={[Math.PI / 2, 0, 0]}><torusGeometry args={[0.55, 0.05, 16, 64]} /><Glossy color="#F6CFE0" roughness={0.7} metalness={0} /></mesh>
-      <group ref={lid} position={[0, 0.14, -1.2]}>
-        <mesh position={[0, 0.1, 1.2]}><cylinderGeometry args={[1.2, 1.2, 0.2, 72]} /><Glossy color="#E62E6B" /></mesh>
-        <mesh position={[0, 0.0, 1.2]} rotation={[Math.PI, 0, 0]}><cylinderGeometry args={[1.05, 1.05, 0.02, 72]} /><meshStandardMaterial color="#FFFFFF" metalness={1} roughness={0.05} /></mesh>
-        <mesh position={[0, 0.21, 1.2]}><cylinderGeometry args={[0.35, 0.35, 0.02, 48]} /><Glossy color="#E3B47A" metalness={0.95} roughness={0.15} /></mesh>
-      </group>
-    </group>
-  );
-};
+// Flat stand-in shown until the 3D compact has loaded (or while it's off-screen).
+const CompactPlaceholder = () => (
+  <div className="h-full w-full flex items-center justify-center" aria-hidden="true">
+    <div className="w-40 h-40 rounded-full bg-gradient-to-br from-[#F28FB0] to-[#E62E6B] shadow-[0_20px_40px_rgba(110,44,60,0.25)]" />
+  </div>
+);
 
 export const BookMeCompact = ({ onBook }) => {
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const wrap = useRef(null);
+  const [show3d, setShow3d] = useState(false);
+  // Only fetch the 3D code when the card scrolls near the viewport.
+  useEffect(() => {
+    const el = wrap.current;
+    if (!el || !("IntersectionObserver" in window)) { setShow3d(true); return; }
+    const io = new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting)) { setShow3d(true); io.disconnect(); } }, { rootMargin: "300px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   return (
     <div className="relative rounded-[28px] bg-white border border-[#F1DCE3] overflow-hidden" data-testid="bookme-compact">
       <div className="absolute top-4 left-4 z-10 font-mono text-[10px] tracking-[0.2em] uppercase text-[#8B7F82]">{open ? "Compact open" : "Tap the compact"}</div>
-      <div className={`h-64 sm:h-72 relative overflow-hidden ${hovered ? "cursor-pointer" : ""}`} data-testid="bookme-canvas-wrap">
-        <Canvas dpr={[1, 1.5]} camera={{ position: [0, 1.6, 4.4], fov: 36 }} gl={{ alpha: true, antialias: true }} onPointerMissed={() => open && setOpen(false)}>
-          <ambientLight intensity={1} />
-          <directionalLight position={[3, 6, 4]} intensity={2} color="#FFF4F7" />
-          <pointLight position={[-4, 2, 3]} intensity={8} color="#F4B7CE" />
-          <Compact open={open} onToggle={() => setOpen((v) => !v)} hovered={hovered} setHovered={setHovered} />
-          <ContactShadows position={[0, -0.6, 0]} opacity={0.35} scale={6} blur={2.4} color="#6E2C3C" />
-        </Canvas>
+      <div className={`h-64 sm:h-72 relative overflow-hidden ${hovered ? "cursor-pointer" : ""}`} data-testid="bookme-canvas-wrap" ref={wrap}>
+        {show3d ? (
+          <Suspense fallback={<CompactPlaceholder />}>
+            <BookMeCanvas open={open} setOpen={setOpen} hovered={hovered} setHovered={setHovered} />
+          </Suspense>
+        ) : <CompactPlaceholder />}
       </div>
       <button onClick={() => setOpen((v) => !v)} className="absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full bg-[#FBE9F0] text-[#E62E6B] text-xs font-medium" data-testid="bookme-toggle-btn">{open ? "Close" : "Open"}</button>
       <AnimatePresence>
