@@ -139,6 +139,16 @@ const PORT = Number(process.env.PORT || 3000);
 async function start() {
   await connect();
   const db = getDb();
+  // No JWT_SECRET configured? Generate one once and keep it in the database.
+  if (!process.env.JWT_SECRET) {
+    const doc = await db.collection("settings").findOne({ key: "jwt_secret" });
+    let value = doc && doc.value;
+    if (!value) {
+      value = require("crypto").randomBytes(48).toString("base64url");
+      await db.collection("settings").updateOne({ key: "jwt_secret" }, { $set: { value } }, { upsert: true });
+    }
+    process.env.JWT_SECRET = value;
+  }
   await seedAdmin();
   await db.collection("enquiries").createIndex({ created_at: 1 });
   await db.collection("enquiries").createIndex({ status: 1 });
