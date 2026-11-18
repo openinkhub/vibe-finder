@@ -1,0 +1,625 @@
+{
+ "DEFAULT_PRICING": [
+  {
+   "price": "Starting ₹7,999/person/session",
+   "title": "Party Makeup",
+   "desc": "Event-ready glam.",
+   "featured": false
+  },
+  {
+   "price": "Starting ₹9,999/person/session",
+   "title": "Non-Bridal Makeup",
+   "desc": "For the wedding party, family & guests.",
+   "featured": false
+  },
+  {
+   "price": "Starting ₹19,999/session",
+   "title": "Engagement Makeup",
+   "desc": "Soft-glam for rings & pre-wedding shoots.",
+   "featured": false
+  },
+  {
+   "price": "Starting ₹9,999 onwards",
+   "title": "Fashion Makeup",
+   "desc": "Customised looks for portfolio & fashion shoots.",
+   "featured": false
+  },
+  {
+   "price": "₹4,999/session",
+   "title": "Groom Makeup",
+   "desc": "Camera-ready grooming for the big day.",
+   "featured": false
+  },
+  {
+   "price": "Starting ₹29,999/session",
+   "title": "Bridal Makeup",
+   "desc": "HD/airbrush bridal looks crafted around you.",
+   "featured": true
+  }
+ ],
+ "DEFAULT_PORTFOLIO": [
+  {
+   "cat": "Bridal",
+   "caption": "Bridal · f/2.8 · Golden Hour",
+   "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"
+  },
+  {
+   "cat": "Reels",
+   "caption": "Reel · Look Trial",
+   "image": "https://images.unsplash.com/photo-1594647210801-5124307f3d51"
+  },
+  {
+   "cat": "Editorial",
+   "caption": "Editorial · Studio Flash",
+   "image": "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2"
+  },
+  {
+   "cat": "Fashion",
+   "caption": "Fashion · Backstage",
+   "image": "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39"
+  },
+  {
+   "cat": "Bridal",
+   "caption": "Bridal · Airbrush Base",
+   "image": "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6"
+  },
+  {
+   "cat": "Reels",
+   "caption": "Reel · GRWM",
+   "image": "https://images.unsplash.com/photo-1551184451-76b762941ad6"
+  },
+  {
+   "cat": "Editorial",
+   "caption": "Editorial · Cover Story",
+   "image": "https://images.unsplash.com/photo-1677691257363-eebd2abeafec"
+  },
+  {
+   "cat": "Bridal",
+   "caption": "Bridal · Reception",
+   "image": "https://images.unsplash.com/photo-1587271315307-eaebc181c749"
+  },
+  {
+   "cat": "Fashion",
+   "caption": "Fashion · Runway",
+   "image": "https://images.unsplash.com/photo-1708735808460-2b131ddefb27"
+  }
+ ],
+ "DEFAULT_REELS": [
+  {
+   "title": "Airbrush base, start to finish",
+   "time": "0:34",
+   "url": "https://www.instagram.com/reel/CvKfxEaPCIj/",
+   "image": "https://images.unsplash.com/photo-1594647210801-5124307f3d51"
+  },
+  {
+   "title": "Bridal trial walkthrough",
+   "time": "0:51",
+   "url": "https://www.instagram.com/reel/CvchPNhP05O/",
+   "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"
+  },
+  {
+   "title": "Editorial smoky eye",
+   "time": "0:22",
+   "url": "https://www.instagram.com/reel/CuhS8YrvNMK/",
+   "image": "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2"
+  },
+  {
+   "title": "Draping tips for sarees",
+   "time": "1:04",
+   "url": "https://www.instagram.com/reel/CZq3UYZjyLZ/",
+   "image": "https://images.unsplash.com/photo-1587271315307-eaebc181c749"
+  },
+  {
+   "title": "Runway quick-change",
+   "time": "0:40",
+   "url": "https://www.instagram.com/reel/Cj476jXDFIE/",
+   "image": "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39"
+  },
+  {
+   "title": "Bridal transformation",
+   "time": "0:58",
+   "url": "https://www.instagram.com/reel/Cvhq45Av5tT/",
+   "image": "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6"
+  }
+ ],
+ "DEFAULT_FEED": [
+  {
+   "caption": "Golden-hour bridal glow",
+   "likes": "1,204",
+   "comments": "38",
+   "url": "https://www.instagram.com/reel/CvKfxEaPCIj/",
+   "image": "https://images.unsplash.com/photo-1600685890506-593fdf55949b"
+  },
+  {
+   "caption": "Red & gold, always a classic",
+   "likes": "982",
+   "comments": "21",
+   "url": "https://www.instagram.com/reel/CvchPNhP05O/",
+   "image": "https://images.unsplash.com/photo-1677691257363-eebd2abeafec"
+  },
+  {
+   "caption": "Trial day magic — base built to last 12 hrs",
+   "likes": "1,540",
+   "comments": "54",
+   "url": "https://www.instagram.com/reel/CuhS8YrvNMK/",
+   "image": "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6"
+  },
+  {
+   "caption": "Temple jewellery + soft eye",
+   "likes": "2,110",
+   "comments": "76",
+   "url": "https://www.instagram.com/reel/CZq3UYZjyLZ/",
+   "image": "https://images.unsplash.com/photo-1587271315307-eaebc181c749"
+  },
+  {
+   "caption": "Reception look, all airbrush",
+   "likes": "876",
+   "comments": "19",
+   "url": "https://www.instagram.com/reel/Cj476jXDFIE/",
+   "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"
+  },
+  {
+   "caption": "Behind the brush at the studio",
+   "likes": "1,332",
+   "comments": "44",
+   "url": "https://www.instagram.com/reel/Cvhq45Av5tT/",
+   "image": "https://images.unsplash.com/photo-1551184451-76b762941ad6"
+  }
+ ],
+ "DEFAULT_SERVICES": [
+  {
+   "no": "01",
+   "title": "Bridal Makeup",
+   "desc": "HD & airbrush bridal looks planned around your skin, outfit and story.",
+   "cta": "Book bridal",
+   "image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9"
+  },
+  {
+   "no": "02",
+   "title": "Engagement Makeup",
+   "desc": "Soft-glam for rings, rokas and pre-wedding shoots that photograph beautifully.",
+   "cta": "Book engagement",
+   "image": "https://images.unsplash.com/photo-1594647210801-5124307f3d51"
+  },
+  {
+   "no": "03",
+   "title": "Non-Bridal Makeup",
+   "desc": "Sisters, mothers, bridesmaids — polished looks for everyone in the wedding party.",
+   "cta": "Book non-bridal",
+   "image": "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2"
+  },
+  {
+   "no": "04",
+   "title": "Party Makeup",
+   "desc": "Event-ready glam for receptions, galas and celebrations.",
+   "cta": "Book party",
+   "image": "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6"
+  },
+  {
+   "no": "05",
+   "title": "Editorial & Fashion",
+   "desc": "Runway, campaign and cover-story makeup scoped to your brief and shoot.",
+   "cta": "Enquire",
+   "image": "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39"
+  },
+  {
+   "no": "06",
+   "title": "Self-Grooming Courses",
+   "desc": "Hands-on classes to master your own everyday and occasion looks.",
+   "cta": "View courses",
+   "image": "https://images.unsplash.com/photo-1551184451-76b762941ad6"
+  }
+ ],
+ "DEFAULT_POSTS": [
+  {
+   "slug": "how-far-in-advance-to-book-bridal-makeup",
+   "title": "How far in advance should you book your bridal makeup artist?",
+   "meta_title": "How Far in Advance to Book Bridal Makeup | Rekha Krishnamurthy",
+   "meta_description": "Wedding-season Bangalore fills 3–6 months out. Here's how to lock your muhurtham morning without stress.",
+   "focus_keyword": "book bridal makeup artist in advance",
+   "category": "Bridal Tips",
+   "publish_date": "2026-05-01",
+   "excerpt": "Wedding-season Bangalore fills 3–6 months out. Here's how to lock your muhurtham morning without stress.",
+   "key_takeaway": "Book your bridal makeup artist 3–6 months before a peak wedding-season date in Bangalore, and as soon as possible for auspicious muhurtham mornings — even before the venue is confirmed.",
+   "body": "Wedding-season Bangalore fills 3–6 months out. Here's how to lock your muhurtham morning without stress.\n\nPopular dates during peak wedding season get booked quickly, especially auspicious muhurtham mornings. Reaching out as soon as you have a confirmed date — even before the venue is finalised — gives you the best chance of securing your preferred artist and trial slot.",
+   "faqs": [],
+   "interlink_url": "/bridal-experience",
+   "featured_image": "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9",
+   "alt_text": "Bridal makeup artist preparing a bride"
+  },
+  {
+   "slug": "hd-vs-airbrush-makeup",
+   "title": "HD vs Airbrush makeup: which one is right for your wedding?",
+   "meta_title": "HD vs Airbrush Makeup for Weddings | Rekha Krishnamurthy",
+   "meta_description": "Both photograph beautifully — the choice depends on skin type, weather and how long your functions run.",
+   "focus_keyword": "HD vs airbrush makeup for wedding",
+   "category": "Bridal Tips",
+   "publish_date": "2026-04-01",
+   "excerpt": "Both photograph beautifully — the choice depends on skin type, weather and how long your functions run.",
+   "key_takeaway": "HD makeup suits most skin types across long functions; airbrush gives an ultra-lightweight, breathable finish that's ideal in humid weather. Neither is universally better — the right choice depends on your skin, the season and how long your functions run.",
+   "body": "Both photograph beautifully — the choice depends on skin type, weather and how long your functions run.\n\nHD makeup uses cream and powder formulas and tends to suit most skin types across long functions. Airbrush makeup uses a fine mist application for an ultra-lightweight, breathable finish that many brides love in humid weather.",
+   "faqs": [],
+   "interlink_url": "/hd-makeup",
+   "featured_image": "https://images.unsplash.com/photo-1594647210801-5124307f3d51",
+   "alt_text": "HD and airbrush makeup comparison"
+  },
+  {
+   "slug": "south-indian-bridal-look-checklist",
+   "title": "The South Indian bridal look checklist",
+   "meta_title": "South Indian Bridal Look Checklist | Rekha Krishnamurthy",
+   "meta_description": "Kanjeevaram colour matching, temple-jewellery hair and kohl that lasts twelve hours.",
+   "focus_keyword": "south indian bridal look checklist",
+   "category": "Bridal Tips",
+   "publish_date": "2026-03-01",
+   "excerpt": "Kanjeevaram colour matching, temple-jewellery hair and kohl that lasts twelve hours.",
+   "key_takeaway": "A South Indian bridal look should plan base makeup around your Kanjeevaram silk's undertones, style hair to carry temple jewellery through hours of rituals, and use long-wear kohl and lip colour built for a full-day ceremony.",
+   "body": "Kanjeevaram colour matching, temple-jewellery hair and kohl that lasts twelve hours.\n\nFrom matching your base to the undertones of your Kanjeevaram silk, to styling hair that carries the weight of temple jewellery through hours of rituals, a South Indian bridal look has its own set of planning details worth getting right.",
+   "faqs": [],
+   "interlink_url": "/south-indian-bridal-makeup-artist-in-karnataka",
+   "featured_image": "https://images.unsplash.com/photo-1587271315307-eaebc181c749",
+   "alt_text": "South Indian bridal look with temple jewellery"
+  }
+ ],
+ "SHOWCASE_LOOKS": [
+  {
+   "key": "natural",
+   "name": "Natural",
+   "lips": "#C98A7A",
+   "blush": "#EFC0B4",
+   "eyes": "#B89078",
+   "intensity": 0.45,
+   "liner": false,
+   "gloss": true
+  },
+  {
+   "key": "bridal",
+   "name": "Bridal",
+   "lips": "#B3122E",
+   "blush": "#E8788A",
+   "eyes": "#8A4B2E",
+   "intensity": 0.9,
+   "liner": true,
+   "gloss": true
+  },
+  {
+   "key": "editorial",
+   "name": "Editorial",
+   "lips": "#7A1F3D",
+   "blush": "#D98A9C",
+   "eyes": "#4A2530",
+   "intensity": 0.95,
+   "liner": true,
+   "gloss": false
+  },
+  {
+   "key": "glam",
+   "name": "Glam",
+   "lips": "#E62E6B",
+   "blush": "#F28FB0",
+   "eyes": "#6E2C3C",
+   "intensity": 1.0,
+   "liner": true,
+   "gloss": true
+  }
+ ],
+ "CONTACT": {
+  "phone": "+91 98454 80507",
+  "whatsapp": "wa.me/919845480507",
+  "email": "hello@rekhakrishnamurthy.in",
+  "website": "rekhakrishnamurthy.com"
+ },
+ "BROCHURE": {
+  "/bridal-makeup-artist-bangalore": {
+   "title": "Bridal Makeup, Perfected Over 14 Years",
+   "tagline": "HD & airbrush bridal looks planned around your skin, outfit and story.",
+   "highlights": [
+    "Pre-wedding shoot makeup coordinated to outfit, location & shoot theme",
+    "Sangeet makeup built to survive a full night on the dance floor",
+    "Full wedding-day consultation on skin, outfit & jewellery",
+    "Only premium brands — MAC, Bobbi Brown, Estée Lauder, HUDA Beauty & more",
+    "One bride, one date — we never double-book"
+   ],
+   "details": [
+    [
+     "Experience",
+     "14 years · 320+ weddings"
+    ],
+    [
+     "Trial",
+     "In-person or video consultation included"
+    ],
+    [
+     "Booking window",
+     "3–6 months ahead for wedding season"
+    ],
+    [
+     "Visit charge",
+     "None, across Bangalore"
+    ]
+   ]
+  },
+  "/engagement-makeup": {
+   "title": "Engagement Makeup That Photographs as Beautifully as It Feels",
+   "tagline": "A personalised consultation, premium products, and fourteen years of reading skin tones under every kind of event lighting.",
+   "highlights": [
+    "Consultation covers your vision, skin, outfit, jewellery, venue & timing",
+    "Approach adapts to garden daylight or an evening indoor reception",
+    "From intimate family engagements to large staged ceremonies",
+    "International hygiene standards on every booking",
+    "Around 90 minutes makeup + 30–45 minutes hair"
+   ],
+   "details": [
+    [
+     "Duration",
+     "~90 min makeup + 30–45 min hair"
+    ],
+    [
+     "Outfit match",
+     "Discussed at consultation"
+    ],
+    [
+     "Visit charge",
+     "None, across Bangalore"
+    ]
+   ]
+  },
+  "/non-bridal-makeup": {
+   "title": "Non-Bridal Makeup for Bridesmaids, Sisters & Family",
+   "tagline": "Coordinated, camera-ready and comfortable looks for the wedding party — without anyone looking over-done next to the bride.",
+   "highlights": [
+    "Quick skin-tone matching across multiple faces",
+    "A look that photographs consistently across the group",
+    "Hairstyle-to-makeup pairing that holds through a full day",
+    "Up to 6 faces in one sitting with an assistant; larger groups scheduled in waves",
+    "Same premium products & hygiene standards as bridal bookings"
+   ],
+   "details": [
+    [
+     "Group size",
+     "Up to 6 in one sitting"
+    ],
+    [
+     "Coordination",
+     "Aligned to the bride's look & intensity"
+    ],
+    [
+     "Visit charge",
+     "None, across Bangalore"
+    ]
+   ]
+  },
+  "/party-makeup-artist-bangalore": {
+   "title": "Party Makeup for Birthdays, Anniversaries & Every Night Out",
+   "tagline": "HD and Airbrush techniques styled to the venue lighting and your outfit — not a one-look-fits-all party face.",
+   "highlights": [
+    "Built for dim restaurant lighting, camera flash & dance floors",
+    "Hairstyle chosen to complement your outfit",
+    "Birthdays, anniversaries or someone else's celebration — same premium standard",
+    "On-location service across Bangalore",
+    "1–2 weeks booking lead time recommended"
+   ],
+   "details": [
+    [
+     "Best booked",
+     "1–2 weeks ahead"
+    ],
+    [
+     "Technique",
+     "HD & Airbrush"
+    ],
+    [
+     "Visit charge",
+     "None, across Bangalore"
+    ]
+   ]
+  },
+  "/pre-wedding-photoshoot-makeup-artist": {
+   "title": "Groom & Pre-Wedding Looks With Natural Definition",
+   "tagline": "Camera-ready grooming and makeup planning for grooms and pre-wedding shoots, matched to the event and photography style.",
+   "highlights": [
+    "Designed to look natural both on camera and in person",
+    "Coordinated with photographer, location and outfit changes",
+    "Suited to ceremonies, pre-wedding shoots & wedding-day photography",
+    "Skin prep and long-wear techniques for full-day events",
+    "Planned around your shoot schedule and lighting"
+   ],
+   "details": [
+    [
+     "Focus",
+     "Grooms & couples"
+    ],
+    [
+     "Best booked",
+     "2–4 weeks ahead"
+    ],
+    [
+     "Visit charge",
+     "None, across Bangalore"
+    ]
+   ]
+  },
+  "/editorial-makeup": {
+   "title": "Editorial Makeup, Built Around the Mood Board",
+   "tagline": "From glossy and nude to bold and unconventional — makeup that's briefed, referenced, and executed like a shoot.",
+   "highlights": [
+    "Starts with your mood board & creative direction",
+    "Translated into an achievable, camera-accurate look",
+    "Coordinated with photographer and stylist on set",
+    "Suited to studio and natural light shoots",
+    "Premium products chosen for how they photograph"
+   ],
+   "details": [
+    [
+     "Best for",
+     "Photographers, models, brands & production teams"
+    ],
+    [
+     "Process",
+     "Mood board → consultation → shoot-day execution"
+    ],
+    [
+     "Visit charge",
+     "On enquiry, per brief"
+    ]
+   ]
+  },
+  "/fashion-makeup": {
+   "title": "Fashion Makeup for Shows, Shoots & Statement Looks",
+   "tagline": "Avant-garde or barely-there — fashion makeup built around the narrative your shoot or show is telling.",
+   "highlights": [
+    "Range from a 'no-makeup' look to dramatic avant-garde looks",
+    "Understands the narrative before choosing technique",
+    "Executes for runway lighting or studio flash",
+    "Backstage & runway experience across Bangalore fashion weeks",
+    "Same premium products chosen for longevity on camera"
+   ],
+   "details": [
+    [
+     "Best for",
+     "Designers, models, photographers & brands"
+    ],
+    [
+     "Experience",
+     "Backstage & runway assignments"
+    ],
+    [
+     "Visit charge",
+     "On enquiry, per brief"
+    ]
+   ]
+  },
+  "/south-indian-bridal-makeup-karnataka": {
+   "title": "Photo Shoot & Premium South Indian Bridal Makeup",
+   "tagline": "Pre-wedding shoots, portfolio sessions and traditional South Indian bridal looks — built for how the lens sees skin.",
+   "highlights": [
+    "A base that reads like skin at f/2.8",
+    "Colour that survives both flash and golden hour",
+    "Traditional South Indian bridal detailing — kohl, temple jewellery-ready hair, Kanjeevaram-matched tones",
+    "Planned with your photographer around location & outfit changes",
+    "Multiple looks per shoot, scheduled into the timeline"
+   ],
+   "details": [
+    [
+     "Best for",
+     "Couples, photographers & models"
+    ],
+    [
+     "Style",
+     "Traditional South Indian bridal + shoot-ready"
+    ],
+    [
+     "Visit charge",
+     "None, across Bangalore"
+    ]
+   ]
+  },
+  "/makeup-educator-beauty-mentor-karnataka": {
+   "title": "Professional Makeup Artist Launchpad",
+   "tagline": "Learn the Craft. Build the Confidence. Launch Your Career.",
+   "highlights": [
+    "120 hours across 20 intensive six-hour sessions",
+    "Skin, base, eyes, lips, bridal & occasion makeup",
+    "Hairstyling, draping & jewellery/outfit coordination",
+    "Kit-building, hygiene, pricing & client consultation",
+    "Final assessment + certificate on successful completion"
+   ],
+   "details": [
+    [
+     "Duration",
+     "20 Sessions · 120 Hours"
+    ],
+    [
+     "Timings",
+     "11 AM – 5 PM"
+    ],
+    [
+     "Level",
+     "Beginner to Emerging Professional"
+    ],
+    [
+     "Course Fee",
+     "₹1,50,000/-"
+    ]
+   ]
+  },
+  "/self-makeup-classes-karnataka": {
+   "title": "Comprehensive Bridal Artistry Program",
+   "tagline": "Master Bridal Makeup. Build the Confidence to Work With Brides.",
+   "highlights": [
+    "Bridal skin prep, complexion & long-wear techniques",
+    "Bridal eye artistry — soft, traditional & modern glam",
+    "Brows, lashes, lips & face sculpting",
+    "Bridal consultation & expectation management",
+    "Certificate on successful completion & final assessment"
+   ],
+   "details": [
+    [
+     "Duration",
+     "60 Hours"
+    ],
+    [
+     "Format",
+     "Demonstration + Theory + Hands-on"
+    ],
+    [
+     "Level",
+     "Beginner to Emerging Professional"
+    ],
+    [
+     "Course Fee",
+     "₹1,00,000/-"
+    ]
+   ]
+  },
+  "/personal-shopping": {
+   "title": "Personal Makeup Shopping Consultation",
+   "tagline": "Shop Smarter. Choose Better. Build a Makeup Kit That Works for You.",
+   "highlights": [
+    "Review your existing makeup collection",
+    "Identify what you actually need vs. unnecessary duplication",
+    "Shade & undertone guidance for complexion products",
+    "Prioritise purchases according to your budget",
+    "Build a practical, versatile makeup collection"
+   ],
+   "details": [
+    [
+     "Format",
+     "One-on-one consultation"
+    ],
+    [
+     "Focus",
+     "Practical, budget-friendly shopping"
+    ],
+    [
+     "Fee",
+     "Shared on enquiry"
+    ]
+   ]
+  },
+  "/self-grooming-classes": {
+   "title": "Self-Grooming Makeup Workshop",
+   "tagline": "Learn Your Face. Understand Your Makeup. Build Your Confidence.",
+   "highlights": [
+    "Understand your face shape & key features",
+    "Choose products that suit your own routine",
+    "Everyday & occasion makeup techniques",
+    "Hands-on guided practice with feedback",
+    "Build lasting confidence, not just a look"
+   ],
+   "details": [
+    [
+     "Format",
+     "Practical hands-on workshop"
+    ],
+    [
+     "Level",
+     "Beginners welcome"
+    ],
+    [
+     "Fee",
+     "Shared on enquiry"
+    ]
+   ]
+  }
+ }
+}

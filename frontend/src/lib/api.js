@@ -1,6 +1,8 @@
 import axios from "axios";
 
-export const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+// Empty REACT_APP_BACKEND_URL = same origin (API served by the same Express app).
+export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "";
+export const API = `${BACKEND_URL}/api`;
 export const TOKEN_KEY = "rk_admin_token";
 
 export const api = axios.create({ baseURL: API });
@@ -10,7 +12,7 @@ api.interceptors.request.use((c) => {
   return c;
 });
 
-export const imgUrl = (u) => (u && u.startsWith("/api") ? `${process.env.REACT_APP_BACKEND_URL}${u}` : u);
+export const imgUrl = (u) => (u && u.startsWith("/api") ? `${BACKEND_URL}${u}` : u);
 
 export const errorText = (e, fallback = "Something went wrong. Please try again.") => {
   const d = e?.response?.data?.detail;

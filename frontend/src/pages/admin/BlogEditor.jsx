@@ -170,7 +170,7 @@ const ApiKeyCard = () => {
   const [key, setKey] = useState("");
   const [show, setShow] = useState(false);
   const [busy, setBusy] = useState(false);
-  const API = process.env.REACT_APP_BACKEND_URL + "/api";
+  const API = (process.env.REACT_APP_BACKEND_URL || window.location.origin) + "/api";
 
   const load = () => api.get("/blog/api-key").then((r) => setKey(r.data.api_key)).catch((e) => toast.error(errorText(e)));
   useEffect(() => { load(); }, []);
