@@ -8,9 +8,10 @@ let db;
 async function connect() {
   const url = process.env.MONGODB_URI || process.env.MONGO_URL;
   if (!url) throw new Error("MONGODB_URI (or MONGO_URL) is not set");
-  client = new MongoClient(url, { serverSelectionTimeoutMS: 15000 });
-  await client.connect();
-  db = client.db(process.env.DB_NAME || "rekha");
+  const c = new MongoClient(url, { serverSelectionTimeoutMS: 15000 });
+  await c.connect();
+  client = c;
+  db = c.db(process.env.DB_NAME || "rekha");
   return db;
 }
 

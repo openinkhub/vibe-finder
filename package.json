@@ -2,15 +2,16 @@
   "name": "rekha-krishnamurthy-site",
   "version": "1.0.0",
   "private": true,
-  "description": "rekhakrishnamurthy.com — React frontend + Express API, deployed as one Hostinger Node.js Web App",
+  "description": "rekhakrishnamurthy.com \u2014 React frontend + Express API, deployed as one Hostinger Node.js Web App",
   "main": "server.js",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "build": "npm --prefix frontend install --legacy-peer-deps --no-audit --no-fund && CI=false GENERATE_SOURCEMAP=false npm --prefix frontend run build",
+    "build": "node scripts/build-frontend.js",
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "postinstall": "node scripts/build-frontend.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

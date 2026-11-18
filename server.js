@@ -136,7 +136,9 @@ app.use((err, _req, res, _next) => {
 
 const PORT = Number(process.env.PORT || 3000);
 
-async function start() {
+// Database setup runs after the server is already listening (Hostinger requires listen()
+// within a few seconds). Until it finishes, API calls answer 503 "Database not connected".
+async function initDatabase() {
   await connect();
   const db = getDb();
   // No JWT_SECRET configured? Generate one once and keep it in the database.
@@ -159,16 +161,23 @@ async function start() {
     await blog.seedBlog();
   }
   await blog.getOrCreateApiKey();
-  app.listen(PORT, () => console.log(`Rekha site listening on :${PORT}`));
+  console.log("Database ready");
   // Copy images from the old site in the background (only when FILES_FALLBACK_ORIGIN is set).
   syncReferencedFiles().catch((e) => console.error("Image sync failed:", e.message));
 }
 
-if (require.main === module) {
-  start().catch((e) => {
-    console.error("Startup failed:", e);
-    process.exit(1);
-  });
+async function initWithRetry(attempt = 1) {
+  try {
+    await initDatabase();
+  } catch (e) {
+    const wait = Math.min(60, attempt * 5);
+    console.error(`Database setup failed (attempt ${attempt}): ${e.message} — retrying in ${wait}s`);
+    setTimeout(() => initWithRetry(attempt + 1), wait * 1000);
+  }
 }
 
-module.exports = { app, start };
+// Listen unconditionally at load time (no require.main guard — Hostinger loads the entry file itself).
+app.listen(PORT, () => console.log(`Rekha site listening on :${PORT}`));
+initWithRetry();
+
+module.exports = { app };
