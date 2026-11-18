@@ -3,7 +3,7 @@ const fs = require("fs");
 const multer = require("multer");
 const { getDb, HttpError, ah, uuid, nowIso, cut, clean } = require("../lib/core");
 const { requireAdmin } = require("../lib/auth");
-const { storeImage, storeProcessedImage, resolveSafe, MIME } = require("../lib/storage");
+const { storeImage, storeProcessedImage, resolveSafe, MIME, fetchFromFallback } = require("../lib/storage");
 const D = require("../lib/defaults.json");
 
 const router = express.Router();
@@ -171,7 +171,7 @@ router.get(/^\/files\/(.+)$/, ah(async (req, res) => {
   try {
     await fs.promises.access(full, fs.constants.R_OK);
   } catch {
-    throw new HttpError(404, "File not found");
+    if (!(await fetchFromFallback(rel))) throw new HttpError(404, "File not found");
   }
   const ext = rel.split(".").pop().toLowerCase();
   res.set("Cache-Control", "public, max-age=31536000, immutable");

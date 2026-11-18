@@ -11,11 +11,12 @@ built React site from `frontend/build`. It replaces the old Python/FastAPI backe
    MongoDB Compass → connect → create database `rekha` → Add Data → Import JSON file.
 
 ## 2. Images
-Upload the zip's `images/` folder contents so that this path exists on the server:
+Set `FILES_FALLBACK_ORIGIN=https://rekhakrishnamurthy.com` while the old site is still live.
+On start the app copies every image the database refers to into `~/rekha-uploads/rekha-makeup/...`
+(and fetches any missing image on first request). Check the app log for
+`Image sync ... copied`. After go-live, remove the variable.
 
-    ~/rekha-uploads/rekha-makeup/<folder>/<file>
-
-(Hostinger File Manager → home directory → create `rekha-uploads`, upload `rekha-makeup/` into it.)
+Manual alternative: upload the zip's `images/rekha-makeup` folder to `~/rekha-uploads/`.
 If you use a different folder, set `UPLOAD_DIR` to its full path.
 
 ## 3. Create the Web App

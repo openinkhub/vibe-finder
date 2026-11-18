@@ -10,6 +10,7 @@ const cheerio = require("cheerio");
 
 const { connect, getDb, HttpError, ah } = require("./server/lib/core");
 const { seedAdmin } = require("./server/lib/auth");
+const { syncReferencedFiles } = require("./server/lib/storage");
 const content = require("./server/routes/content");
 const blog = require("./server/routes/blog");
 
@@ -149,6 +150,8 @@ async function start() {
   }
   await blog.getOrCreateApiKey();
   app.listen(PORT, () => console.log(`Rekha site listening on :${PORT}`));
+  // Copy images from the old site in the background (only when FILES_FALLBACK_ORIGIN is set).
+  syncReferencedFiles().catch((e) => console.error("Image sync failed:", e.message));
 }
 
 if (require.main === module) {

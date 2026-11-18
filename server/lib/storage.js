@@ -69,4 +69,57 @@ async function storeProcessedImage(data, folder, maxDim = 1920, targetBytes = 20
   return writeObject(`${APP_NAME}/${folder}/${uuid()}.webp`, webp, "image/webp");
 }
 
-module.exports = { APP_NAME, MIME, MAX_UPLOAD, uploadDir, resolveSafe, storeImage, storeProcessedImage };
+// ── Migration helper: copy images from the old site ──
+// When FILES_FALLBACK_ORIGIN is set (e.g. https://rekhakrishnamurthy.com while it still runs on
+// Emergent), a missing /api/files/... image is downloaded from that origin once and saved locally.
+const fallbackOrigin = () => (process.env.FILES_FALLBACK_ORIGIN || "").replace(/\/+$/, "");
+const inflight = new Map();
+
+async function fetchFromFallback(rel) {
+  const origin = fallbackOrigin();
+  if (!origin) return false;
+  if (inflight.has(rel)) return inflight.get(rel);
+  const job = (async () => {
+    try {
+      const r = await fetch(`${origin}/api/files/${rel.split("/").map(encodeURIComponent).join("/")}`, { signal: AbortSignal.timeout(30000) });
+      if (!r.ok) return false;
+      const buf = Buffer.from(await r.arrayBuffer());
+      const full = resolveSafe(rel);
+      await fs.promises.mkdir(path.dirname(full), { recursive: true });
+      await fs.promises.writeFile(full + ".part", buf);
+      await fs.promises.rename(full + ".part", full);
+      return true;
+    } catch (e) {
+      console.warn(`fallback fetch failed for ${rel}: ${e.message}`);
+      return false;
+    } finally {
+      inflight.delete(rel);
+    }
+  })();
+  inflight.set(rel, job);
+  return job;
+}
+
+// On startup: find every /api/files/... path referenced in the content and copy the missing ones.
+async function syncReferencedFiles() {
+  if (!fallbackOrigin()) return;
+  const db = getDb();
+  const paths = new Set();
+  for (const name of ["blog_posts", "portfolio", "page_images", "services", "reels", "instagram_feed", "showcase"]) {
+    for (const doc of await db.collection(name).find({}).toArray()) {
+      for (const m of JSON.stringify(doc).matchAll(/\/api\/files\/([^"\\\s)]+)/g)) paths.add(m[1]);
+    }
+  }
+  let copied = 0, present = 0, failed = 0;
+  for (const rel of paths) {
+    try {
+      await fs.promises.access(resolveSafe(rel));
+      present++;
+    } catch {
+      (await fetchFromFallback(rel)) ? copied++ : failed++;
+    }
+  }
+  console.log(`Image sync from ${fallbackOrigin()}: ${paths.size} referenced, ${present} already here, ${copied} copied, ${failed} failed`);
+}
+
+module.exports = { APP_NAME, MIME, MAX_UPLOAD, uploadDir, resolveSafe, storeImage, storeProcessedImage, fetchFromFallback, syncReferencedFiles };
