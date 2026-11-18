@@ -1,7 +1,7 @@
 import React from "react";
 import { Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/motion";
 import { brand } from "../mock/mock";
 
 const FloatingButtons = () => {

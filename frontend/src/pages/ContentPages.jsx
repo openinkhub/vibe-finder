@@ -13,7 +13,8 @@ import { getPage, pagesByGroup, headerMenu, legalKeyByPath, BOOKING_PATH, enquir
 import { BatchBanner } from "../components/BatchBanner";
 import { PortfolioGallery } from "./PortfolioPage";
 import { RichBody } from "../components/RichBody";
-import { pageBodies, communityFaq } from "../content/pageBodies";
+import { communityFaq } from "../content/bodies/shared";
+import { usePageBody } from "../lib/pageBody";
 import { BrochureCta } from "../components/BrochureCta";
 import { BookingPanel } from "../components/BookingPanel";
 import { usePageImages, heroImage, heroImageAlt } from "../hooks/usePageImages";
@@ -130,16 +131,17 @@ const Hero = ({ page, image, cta, onCta }) => {
 
 export const SheetPage = () => {
   const { page, pathname } = usePage();
+  const body = usePageBody(pathname);
   if (!page) return <Navigate to="/" replace />;
   const content = findBody(pathname.slice(1));
   const hub = headerMenu.find((m) => m.to === pathname && m.children);
   return (
-    <PageShell page={page} title={page.name} faq={pageBodies[pathname]?.faq}>
+    <PageShell page={page} title={page.name} faq={body?.faq}>
       <div data-testid={`sheet-page-${pathname.slice(1)}`}>
         <Hero page={page} />
         {page.group === "Academy" && <BatchBanner page={page} />}
         <SeoIntro page={page} ctaTo={`/contact?service=${encodeURIComponent(enquiryServiceFor(page))}`} />
-        {hub ? <ChildCards items={hub.children} /> : pageBodies[pathname] ? <RichBody body={pageBodies[pathname]} /> : page.comingSoon ? <ComingSoon faq={pathname === "/community" ? communityFaq : undefined} /> : <Body page={content} />}
+        {hub ? <ChildCards items={hub.children} /> : body ? <RichBody body={body} /> : body === undefined ? <div className="min-h-[60vh]" /> : page.comingSoon ? <ComingSoon faq={pathname === "/community" ? communityFaq : undefined} /> : <Body page={content} />}
         {page.group === "Portfolio" && <PortfolioGallery />}
         {!hub && (page.group === "Services" || page.group === "Academy") && (<><BrochureCta page={page} /><BookingPanel page={page} /></>)}
         {!hub && <Siblings page={page} />}
@@ -152,13 +154,14 @@ export const ContactPage = () => {
   const { page, pathname } = usePage();
   const { search } = useLocation();
   const service = new URLSearchParams(search).get("service");
+  const body = usePageBody(pathname);
   if (service) sessionStorage.setItem("rk_service", service);
   return (
-    <PageShell page={page} title="Contact" faq={pageBodies[pathname]?.faq}>
+    <PageShell page={page} title="Contact" faq={body?.faq}>
       <div data-testid="contact-page">
         <Hero page={page} cta="Jump to Enquiry Form" onCta={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} />
         <SeoIntro page={page} onCta={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} />
-        {pageBodies[pathname] && <RichBody body={pageBodies[pathname]} />}
+        {body && <RichBody body={body} />}
         <Contact showBooking={pathname !== BOOKING_PATH} requireTerms={pathname === BOOKING_PATH} />
       </div>
     </PageShell>
@@ -168,12 +171,13 @@ export const ContactPage = () => {
 export const TestimonialsPage = () => {
   const { page } = usePage();
   const { pathname } = useLocation();
+  const body = usePageBody(pathname);
   return (
     <PageShell page={page} title="Testimonials">
       <div data-testid="testimonials-page">
         <Hero page={page} />
         <SeoIntro page={page} />
-        {pageBodies[pathname] && <RichBody body={pageBodies[pathname]} />}
+        {body && <RichBody body={body} />}
         <Testimonials showLink={false} />
       </div>
     </PageShell>

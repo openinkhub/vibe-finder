@@ -2,6 +2,31 @@ import React, { useEffect, useRef, useState } from "react";
 import { Plus, Pencil, Trash2, Check, X, Loader2, Upload, Bold, Italic, Heading2, Heading3, List, Quote, Copy, RefreshCw, Key } from "lucide-react";
 import { toast } from "sonner";
 import { api, errorText, imgUrl } from "../../lib/api";
+import { ScoreBadge, CheckList, SeoItemPanel, useSeoReport } from "./SeoPanel";
+
+// Live SEO checklist for the post being edited (scored on the server, same rules as the report).
+const PostChecklist = ({ f, faqs }) => {
+  const [res, setRes] = useState(null);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    if (!f.title && !f.body) return undefined;
+    const t = setTimeout(async () => {
+      setBusy(true);
+      try { const { data } = await api.post("/seo/analyze-post", { ...f, faqs }); setRes(data); } catch { /* keep the last result */ } finally { setBusy(false); }
+    }, 900);
+    return () => clearTimeout(t);
+  }, [f, faqs]);
+  return (
+    <div className="bg-[#FBFAF7] border border-[#F1DCE3] rounded-2xl p-4" data-testid="blog-seo-checklist">
+      <div className="flex items-center gap-3 mb-3">
+        <span className="font-mono text-[11px] uppercase tracking-wider text-[#8B7F82]">SEO checklist</span>
+        {busy && <Loader2 size={13} className="animate-spin text-[#E62E6B]" />}
+        {res && [["seo", "SEO"], ["content", "Content"], ["readability", "Readability"]].map(([k, l]) => <span key={k} className="inline-flex items-center gap-1 text-xs text-[#5C4E52]"><ScoreBadge score={res.scores[k]} /> {l}</span>)}
+      </div>
+      {res ? <CheckList results={res.results} compact /> : <p className="text-xs text-[#8B7F82]">Start writing to see the checklist.</p>}
+    </div>
+  );
+};
 
 const inputCls = "w-full px-3.5 py-2.5 rounded-xl border border-[#F1DCE3] bg-[#FBFAF7] text-[#4A2530] text-sm focus:outline-none focus:border-[#E62E6B] transition-all";
 const labelCls = "block text-xs font-mono uppercase tracking-wider text-[#8B7F82] mb-1.5";
@@ -158,6 +183,8 @@ const PostForm = ({ item, onSave, onCancel }) => {
         <FaqEditor faqs={faqs} setFaqs={setFaqs} />
       </div>
 
+      <PostChecklist f={f} faqs={faqs} />
+
       <div className="flex gap-3 pt-2">
         <button type="submit" disabled={busy} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] disabled:opacity-60" data-testid="blog-save-btn">{busy ? <Loader2 size={15} className="animate-spin" /> : <Check size={15} />} Publish</button>
         <button type="button" onClick={onCancel} className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#F1DCE3] text-[#8B7F82] text-sm font-medium" data-testid="blog-cancel-btn"><X size={15} /> Cancel</button>
@@ -203,6 +230,9 @@ const ApiKeyCard = () => {
 };
 
 export const BlogEditor = () => {
+  const { report, reload: reloadSeo } = useSeoReport();
+  const [seoOpen, setSeoOpen] = useState(null);
+  const seoOf = (slug) => (report ? report.items.find((x) => x.path === `/blog/${slug}`) : null);
   const [items, setItems] = useState([]);
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState(null);
@@ -215,7 +245,7 @@ export const BlogEditor = () => {
       if (id) await api.put(`/blog/${id}`, fd);
       else await api.post("/blog", fd);
       toast.success("Post published — live on the site");
-      setAdding(false); setEditing(null); load();
+      setAdding(false); setEditing(null); load(); reloadSeo(true);
     } catch (e) { toast.error(errorText(e)); }
   };
   const remove = async (id) => {
@@ -231,6 +261,8 @@ export const BlogEditor = () => {
         {!adding && <button onClick={() => { setAdding(true); setEditing(null); }} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] shrink-0" data-testid="blog-add-btn"><Plus size={15} /> New post</button>}
       </div>
 
+      {seoOpen && <SeoItemPanel path={seoOpen} onClose={() => setSeoOpen(null)} onChanged={() => { load(); reloadSeo(true); }} />}
+      {report && <p className="text-xs text-[#8B7F82] mb-4">Scores: SEO · Content · Readability. Open a post's report for the full checklist; site-wide tools are in the SEO tab.</p>}
       {adding && <div className="mb-6"><PostForm item={EMPTY} onSave={save} onCancel={() => setAdding(false)} /></div>}
 
       <div className="space-y-3">
@@ -244,6 +276,12 @@ export const BlogEditor = () => {
               <div className="font-display text-lg text-[#4A2530] truncate">{p.title}</div>
               <div className="text-sm text-[#5C4E52] truncate">{p.excerpt}</div>
             </div>
+            {seoOf(p.slug) && (
+              <button onClick={() => setSeoOpen(`/blog/${p.slug}`)} className="hidden sm:flex items-center gap-1.5 shrink-0" title="SEO report" data-testid={`blog-seo-${p.id}`}>
+                <ScoreBadge score={seoOf(p.slug).scores.seo} label="SEO" /><ScoreBadge score={seoOf(p.slug).scores.content} label="Content" /><ScoreBadge score={seoOf(p.slug).scores.readability} label="Readability" />
+                <span className="text-xs font-medium text-[#E62E6B] ml-1">Report</span>
+              </button>
+            )}
             <button onClick={() => { setEditing(p.id); setAdding(false); }} className="w-9 h-9 rounded-full border border-[#F1DCE3] text-[#4A2530] hover:text-[#E62E6B] flex items-center justify-center shrink-0" aria-label="Edit" data-testid={`blog-edit-${p.id}`}><Pencil size={14} /></button>
             <button onClick={() => remove(p.id)} className="w-9 h-9 rounded-full border border-[#F1DCE3] text-[#8B7F82] hover:text-[#C81F57] flex items-center justify-center shrink-0" aria-label="Delete" data-testid={`blog-delete-${p.id}`}><Trash2 size={14} /></button>
           </div>

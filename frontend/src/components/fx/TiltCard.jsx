@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from "@/lib/motion";
 import { isTouch } from "../../hooks/useIsMobile";
 
 export const TiltCard = ({ children, className = "", max = 10, glare = true, as = "div", lift = true, ...rest }) => {

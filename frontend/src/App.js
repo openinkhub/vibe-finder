@@ -1,34 +1,19 @@
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { scrollToId } from "./components/Navbar";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import "./App.css";
 import { Toaster } from "./components/ui/sonner";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Marquee from "./components/Marquee";
-import About from "./components/About";
-import WhoWeServe from "./components/WhoWeServe";
-import Services from "./components/Services";
-import Pricing from "./components/Pricing";
-import Areas from "./components/Areas";
-import Portfolio from "./components/Portfolio";
-import Reels from "./components/Reels";
-import Process from "./components/Process";
-import Academy from "./components/Academy";
-import Loyalty from "./components/Loyalty";
-import Testimonials from "./components/Testimonials";
-import Instagram from "./components/Instagram";
-import FAQ from "./components/FAQ";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
 import FloatingButtons from "./components/FloatingButtons";
 import { MobileBookBar } from "./components/MobileBookBar";
-import { SheetPage, ContactPage, TestimonialsPage, BlogPage, LegalPage } from "./pages/ContentPages";
 import NotFoundPage from "./pages/NotFoundPage";
 import { SeoIntro } from "./components/SeoIntro";
 import { useSeo, useJsonLd } from "./components/Seo";
 import { allPages, getPage, legalKeyByPath } from "./lib/pages";
 import { lazyRoute } from "./lib/lazyRoute";
+import { loadPageBody } from "./lib/pageBody";
+import { LazyMotion, domAnimation } from "./lib/motion";
 
 // Heavier, less-visited routes load as separate chunks.
 const Admin = lazyRoute(() => import("./pages/Admin"));
@@ -36,6 +21,12 @@ const PortfolioPage = lazyRoute(() => import("./pages/PortfolioPage"));
 const LookLabPage = lazyRoute(() => import("./pages/ExperiencePages"), "LookLabPage");
 const TryOnPage = lazyRoute(() => import("./pages/ExperiencePages"), "TryOnPage");
 const BlogPostPage = lazyRoute(() => import("./pages/BlogPostPage"));
+const contentPages = () => import("./pages/ContentPages");
+const SheetPage = lazyRoute(contentPages, "SheetPage");
+const ContactPage = lazyRoute(contentPages, "ContactPage");
+const TestimonialsPage = lazyRoute(contentPages, "TestimonialsPage");
+const BlogPage = lazyRoute(contentPages, "BlogPage");
+const LegalPage = lazyRoute(contentPages, "LegalPage");
 
 // Called before the first render so the current route's chunk is already in memory.
 export const preloadRoute = (path) => {
@@ -45,38 +36,37 @@ export const preloadRoute = (path) => {
   if (p === "/corporate-professional-makeup-services") return LookLabPage.preload();
   if (p === "/book-bridal-makeup-package-karnataka") return TryOnPage.preload();
   if (p.startsWith("/blog/")) return BlogPostPage.preload();
-  return Promise.resolve();
+  if (p === "/") return Promise.resolve();
+  // Every other page (service, academy, legal, contact, blog list) lives in the content-pages chunk.
+  return Promise.all([SheetPage.preload(), ContactPage.preload(), TestimonialsPage.preload(), BlogPage.preload(), LegalPage.preload(), loadPageBody(p)]);
 };
+
+// The home page's sections below the first screen load as their own chunk, once the browser
+// is idle, so the first screen becomes interactive sooner. The HTML already contains them.
+const LandingRest = lazyRoute(() => import("./components/LandingRest"));
+const whenIdle = (fn) => (window.requestIdleCallback ? window.requestIdleCallback(fn, { timeout: 1500 }) : setTimeout(fn, 300));
 
 const Landing = () => {
   const page = getPage("/");
   useSeo(page);
   useJsonLd(page);
+  const [rest, setRest] = useState(false);
+  const [jump] = useState(() => !!(sessionStorage.getItem("rk_scroll_to") || window.location.hash || window.scrollY > 200));
   useEffect(() => {
+    const show = () => LandingRest.preload().then(() => setRest(true));
+    if (jump) show(); else whenIdle(show);
+  }, [jump]);
+  useEffect(() => {
+    if (!rest) return;
     const target = sessionStorage.getItem("rk_scroll_to") || (window.location.hash ? window.location.hash.slice(1) : "");
     if (target) { sessionStorage.removeItem("rk_scroll_to"); setTimeout(() => scrollToId(target), 400); }
-  }, []);
+  }, [rest]);
   return (
   <>
     <Navbar />
     <Hero page={page} />
     <SeoIntro page={page} onCta={() => scrollToId("contact")} className="pt-14 md:pt-20" />
-    <Marquee />
-    <About />
-    <WhoWeServe />
-    <Services />
-    <Pricing />
-    <Areas />
-    <Portfolio />
-    <Reels />
-    <Process />
-    <Academy />
-    <Loyalty />
-    <Testimonials />
-    <Instagram />
-    <FAQ />
-    <Contact />
-    <Footer />
+    {rest ? <LandingRest all={jump} /> : <div style={{ minHeight: "100vh" }} />}
     <FloatingButtons />
     <MobileBookBar />
   </>
@@ -107,6 +97,7 @@ const RouteTracker = () => {
 
 function App() {
   return (
+    <LazyMotion features={domAnimation}>
     <div className="App">
       <BrowserRouter>
         <RouteTracker />
@@ -126,6 +117,7 @@ function App() {
       </BrowserRouter>
       <Toaster position="top-center" richColors />
     </div>
+    </LazyMotion>
   );
 }
 

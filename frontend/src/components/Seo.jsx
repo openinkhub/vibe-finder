@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { loadSeoOverrides, seoOverrideFor, dropServerOnlySchema } from "../lib/seoClient";
 
 export const OG_IMAGE_ALT = "Makeup By Rekha Krishnamurthy";
 const SITE_URL = "https://rekhakrishnamurthy.com";
@@ -9,13 +10,32 @@ const setTag = (selector, attrs) => {
   Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
 };
 
-export const useSeo = (page) => {
+// Page data merged with any SEO settings saved in the admin.
+export const useSeoPage = (page) => {
+  const [ready, setReady] = useState(0);
+  useEffect(() => { let on = true; loadSeoOverrides().then(() => on && setReady((n) => n + 1)); return () => { on = false; }; }, []);
+  return useMemo(() => mergeOverride(page), [page, ready]); // eslint-disable-line react-hooks/exhaustive-deps
+};
+
+const mergeOverride = (page) => {
+  if (!page) return page;
+  const o = seoOverrideFor(page.path);
+  if (!o) return page;
+  const metaTitle = o.seo_title || page.metaTitle;
+  const metaDescription = o.meta_description || page.metaDescription;
+  return { ...page, metaTitle, metaDescription, canonical: o.canonical || page.canonical, ogTitle: o.og_title || (o.seo_title ? metaTitle : page.ogTitle), ogDescription: o.og_description || (o.meta_description ? metaDescription : page.ogDescription), ogImage: o.og_image, robots: o.noindex || o.nofollow ? `${o.noindex ? "noindex" : "index"},${o.nofollow ? "nofollow" : "follow"}` : null };
+};
+
+export const useSeo = (rawPage) => {
+  const page = useSeoPage(rawPage);
   useEffect(() => {
     if (!page) return;
-    const image = `${window.location.origin}/og-image.webp`;
+    dropServerOnlySchema(page.path);
+    const image = page.ogImage ? new URL(page.ogImage, window.location.origin).href : `${window.location.origin}/og-image.webp`;
     document.title = page.metaTitle;
     setTag('meta[name="description"]', { name: "description", content: page.metaDescription });
     setTag('link[rel="canonical"]', { rel: "canonical", href: page.canonical });
+    setTag('meta[name="robots"]', { name: "robots", content: page.robots || "index, follow, max-image-preview:large" });
     setTag('meta[property="og:type"]', { property: "og:type", content: "website" });
     setTag('meta[property="og:site_name"]', { property: "og:site_name", content: "Rekha Krishnamurthy Makeup & Academy" });
     setTag('meta[property="og:title"]', { property: "og:title", content: page.ogTitle });
@@ -102,6 +122,7 @@ export const useJsonLd = (page, faq) => {
       injectJsonLd("ld-json-entity", null);
     }
 
+    if (faq && faq.length) { const auto = document.getElementById("ld-json-autofaq"); if (auto) auto.remove(); }
     injectJsonLd("ld-json-faq", faq && faq.length ? {
       "@context": "https://schema.org",
       "@type": "FAQPage",

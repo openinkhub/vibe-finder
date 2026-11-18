@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useScroll, motion, useTransform } from "framer-motion";
+import { useScroll, motion, useTransform } from "@/lib/motion";
 import { aboutStats } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";

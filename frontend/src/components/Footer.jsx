@@ -1,7 +1,7 @@
 import React from "react";
 import { Phone, MapPin, ArrowUpRight, Mail } from "lucide-react";
 import { FaInstagram, FaFacebookF, FaXTwitter, FaLinkedinIn, FaWhatsapp } from "react-icons/fa6";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/motion";
 import { Link } from "react-router-dom";
 import { brand } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";

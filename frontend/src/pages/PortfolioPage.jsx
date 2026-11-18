@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "@/lib/motion";
 import { api, imgUrl } from "../lib/api";
 import { portfolio as fallback } from "../mock/mock";
 import { useShowcase } from "../hooks/useShowcase";

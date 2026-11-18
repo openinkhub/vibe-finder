@@ -1,7 +1,5 @@
 const express = require("express");
 const crypto = require("crypto");
-const fs = require("fs");
-const path = require("path");
 const multer = require("multer");
 const { getDb, HttpError, ah, uuid, nowIso, cut, clean } = require("../lib/core");
 const { requireAdmin, currentUser } = require("../lib/auth");
@@ -14,7 +12,6 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 
 const posts = () => getDb().collection("blog_posts");
 const settings = () => getDb().collection("settings");
 const SITE_URL = process.env.SITE_URL || "https://rekhakrishnamurthy.com";
-const PAGES_JSON = path.join(__dirname, "..", "..", "frontend", "src", "content", "pages.json");
 
 const AUTHOR_SCHEMA = {
   "@type": "Person",
@@ -92,26 +89,10 @@ function parseFaqs(raw) {
 
 const storeFeatured = (buf) => storeProcessedImage(buf, "blog", 1600, 100 * 1024, 300);
 
-const PRIORITY = { "/": ["1.0", "weekly"], Services: ["0.8", "monthly"], Academy: ["0.8", "monthly"], Portfolio: ["0.7", "monthly"], Header: ["0.9", "monthly"], Experience: ["0.6", "monthly"], "Service area": ["0.6", "monthly"], "Service Location": ["0.6", "monthly"], Explore: ["0.6", "monthly"] };
 
-async function sitemapXml() {
-  const pages = JSON.parse(fs.readFileSync(PAGES_JSON, "utf8"));
-  const today = new Date().toISOString().slice(0, 10);
-  const url = (loc, lastmod, freq, prio) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>`;
-  const entries = [];
-  for (const p of pages) {
-    if (!p.canonical || p.path === "/admin") continue;
-    const [prio, freq] = PRIORITY[p.path] || PRIORITY[p.group] || ["0.6", "monthly"];
-    entries.push(url(p.canonical, today, freq, prio));
-  }
-  for (const post of await posts().find({ slug: { $nin: RETIRED_SLUGS } }, { projection: { _id: 0, slug: 1, updated_at: 1, publish_date: 1 } }).limit(1000).toArray()) {
-    const raw = post.updated_at || post.publish_date || today;
-    entries.push(url(`${SITE_URL}/blog/${post.slug}`, String(raw).slice(0, 10), "weekly", "0.7"));
-  }
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join("\n")}\n</urlset>\n`;
-}
 
-router.get("/sitemap.xml", ah(async (_q, res) => res.type("application/xml").send(await sitemapXml())));
+// Same sitemap as /sitemap.xml (honours the SEO settings saved in the admin).
+router.get("/sitemap.xml", ah(async (_q, res) => res.type("application/xml").send(await require("../lib/seo/site").sitemapXml())));
 
 router.get("/blog/api-key", requireAdmin, ah(async (_q, res) => res.json({ api_key: await getOrCreateApiKey() })));
 
@@ -178,4 +159,4 @@ router.delete("/blog/:id", requireAdmin, ah(async (req, res) => {
   res.status(204).end();
 }));
 
-module.exports = { router, seedBlog, getOrCreateApiKey, sitemapXml, buildSchema };
+module.exports = { router, seedBlog, getOrCreateApiKey, buildSchema };

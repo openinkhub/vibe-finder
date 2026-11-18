@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { LogOut, RefreshCw, Phone, Mail, Calendar, Sparkles, Trash2, Loader2, Lock, ArrowLeft, Bell, BellRing, Mic, Inbox, IndianRupee, Images, Scissors, CalendarDays, MessageCircle, Image as ImageIcon, GraduationCap, BookOpen, CheckCircle2, XCircle, Newspaper } from "lucide-react";
+import { LogOut, RefreshCw, Phone, Mail, Calendar, Sparkles, Trash2, Loader2, Lock, ArrowLeft, Bell, BellRing, Mic, Inbox, IndianRupee, Images, Scissors, CalendarDays, MessageCircle, Image as ImageIcon, GraduationCap, BookOpen, CheckCircle2, XCircle, Newspaper, SearchCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { api, errorText, TOKEN_KEY, imgUrl } from "../lib/api";
@@ -10,6 +10,7 @@ import { CalendarEditor } from "./admin/CalendarEditor";
 import { HeroImagesEditor } from "./admin/HeroImagesEditor";
 import { BatchesEditor } from "./admin/BatchesEditor";
 import { BlogEditor } from "./admin/BlogEditor";
+import { SeoPanel } from "./admin/SeoPanel";
 import { COURSE_SERVICES } from "../lib/pages";
 import { brand } from "../mock/mock";
 
@@ -232,6 +233,7 @@ export default function Admin() {
             ["heroes", "Page heroes", ImageIcon, 0],
             ["batches", "Batches", BookOpen, 0],
             ["blog", "Blog", Newspaper, 0],
+            ["seo", "SEO", SearchCheck, 0],
           ].map(([k, label, Icon, badge]) => (
             <button key={k} onClick={() => setTab(k)} className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium border transition-colors ${tab === k ? "bg-[#E62E6B] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`admin-tab-${k}`}>
               <Icon size={15} /> {label}{badge > 0 && <span className={`ml-1 px-1.5 rounded-full text-[10px] ${tab === k ? "bg-white text-[#E62E6B]" : "bg-[#E62E6B] text-white"}`}>{badge}</span>}
@@ -246,6 +248,7 @@ export default function Admin() {
         {tab === "heroes" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Page hero images</h1><HeroImagesEditor /></>)}
         {tab === "batches" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Academy</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Next batch dates</h1><BatchesEditor /></>)}
         {tab === "blog" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Blog posts</h1><BlogEditor /></>)}
+        {tab === "seo" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Search & AI visibility</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">SEO</h1><SeoPanel /></>)}
 
         {(tab === "service-enquiries" || tab === "course-enquiries") && stats?.alerts && !stats.alerts.email && <p className="mb-6 text-xs text-[#8B7F82] bg-white border border-[#F1DCE3] rounded-xl px-4 py-2.5 inline-block" data-testid="admin-alerts-note">In-app alerts are on. Email alerts will switch on automatically once RESEND_API_KEY and ALERT_TO_EMAIL are added to the backend .env.</p>}
 

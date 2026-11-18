@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# generated before each build from src/content/pageBodies.js
+/src/content/bodies/

@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/motion";
 import { Link } from "react-router-dom";
 import { pagesByGroup } from "../lib/pages";
 import { usePageImages, heroImage, heroImageAlt } from "../hooks/usePageImages";

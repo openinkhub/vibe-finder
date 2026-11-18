@@ -2,24 +2,20 @@
 // Serves the API under /api and the built React site (frontend/build) from one process.
 require("dotenv").config();
 const express = require("express");
-const path = require("path");
-const fs = require("fs");
 const compression = require("compression");
 const cookieParser = require("cookie-parser");
-const cheerio = require("cheerio");
 
 const { connect, getDb, HttpError, ah } = require("./server/lib/core");
 const { seedAdmin } = require("./server/lib/auth");
 const { syncReferencedFiles } = require("./server/lib/storage");
 const content = require("./server/routes/content");
 const blog = require("./server/routes/blog");
-const { BLOG_REDIRECTS, RETIRED_SLUGS } = require("./server/lib/blogSeo");
-const { marked } = require("marked");
-const sanitizeHtml = require("sanitize-html");
+const seo = require("./server/routes/seo");
+const R = require("./server/lib/render");
+const site = require("./server/lib/seo/site");
 
 const app = express();
-const BUILD_DIR = path.join(__dirname, "frontend", "build");
-const SITE_URL = process.env.SITE_URL || "https://rekhakrishnamurthy.com";
+const BUILD_DIR = R.BUILD_DIR;
 
 app.set("trust proxy", true);
 app.disable("x-powered-by");
@@ -44,6 +40,11 @@ if (origins.length) {
 // ── API ──
 const api = express.Router();
 api.get("/", (_q, res) => res.json({ message: "Rekha Krishnamurthy API", ok: true }));
+// Any successful change (posts, page images, settings) refreshes the server-rendered pages and SEO report.
+api.use((req, res, next) => {
+  if (req.method !== "GET") res.on("finish", () => { if (res.statusCode < 400 && !req.path.startsWith("/seo/vitals")) seo.refresh(); });
+  next();
+});
 api.use(require("./server/routes/auth"));
 api.use(require("./server/routes/enquiries"));
 api.use(require("./server/routes/studio"));
@@ -51,6 +52,7 @@ api.use(content.router);
 api.use(require("./server/routes/availability"));
 api.use(require("./server/routes/brochure"));
 api.use(blog.router);
+api.use(seo.router);
 api.use((_q, _r, next) => next(new HttpError(404, "Not Found")));
 app.use("/api", api);
 
@@ -58,120 +60,56 @@ app.get("/health", ah(async (_q, res) => {
   await getDb().command({ ping: 1 });
   res.json({ status: "ok" });
 }));
-app.get("/sitemap.xml", ah(async (_q, res) => res.type("application/xml").send(await blog.sitemapXml())));
+const textRoute = (type, fn) => ah(async (_q, res) => res.set("Cache-Control", "public, max-age=600").type(type).send(await fn()));
+app.get("/sitemap.xml", textRoute("application/xml", site.sitemapXml));
+app.get("/robots.txt", textRoute("text/plain", site.robotsTxt));
+app.get("/llms.txt", textRoute("text/plain", site.llmsTxt));
+
+// Redirects (built-in + added in the admin) run before anything is served.
+app.use(ah(async (req, res, next) => {
+  if (req.method !== "GET" && req.method !== "HEAD") return next();
+  if (req.path.startsWith("/api/") || req.path.startsWith("/static/")) return next();
+  const r = (await site.getRedirects())[site.normPath(req.path)];
+  if (!r) return next();
+  const qs = req.originalUrl.includes("?") ? req.originalUrl.slice(req.originalUrl.indexOf("?")) : "";
+  res.redirect(r.code || 301, r.to + (r.to.includes("?") ? "" : qs));
+}));
 
 // ── Frontend ──
 app.use(express.static(BUILD_DIR, { index: false, redirect: false, maxAge: "1h", setHeaders: (res, p) => {
   if (/[\\/]static[\\/]/.test(p)) res.set("Cache-Control", "public, max-age=31536000, immutable");
 } }));
 
-const readHtml = (p) => {
-  try {
-    return fs.readFileSync(p, "utf8");
-  } catch {
-    return null;
-  }
-};
+const sendHtml = (res, html, status = 200) => res.status(status).set("Cache-Control", "no-cache").type("html").send(html);
 
-// Blog posts: render per-post SEO tags at request time (replaces the build-time
-// prerender, which needed the old backend running during the build).
-async function blogHtml(slug) {
-  const template = readHtml(path.join(BUILD_DIR, "index.html"));
-  if (!template) return null;
-  const post = await getDb().collection("blog_posts").findOne({ slug }, { projection: { _id: 0 } });
-  if (!post) return null;
-  const $ = cheerio.load(template);
-  const canonical = `${SITE_URL}/blog/${post.slug}`;
-  const img = post.featured_image ? (post.featured_image.startsWith("/") ? SITE_URL + post.featured_image : post.featured_image) : `${SITE_URL}/og-image.webp`;
-  const title = post.meta_title || post.title;
-  const desc = post.meta_description || post.excerpt || "";
-  $("title").text(title);
-  $('meta[name="description"]').attr("content", desc);
-  $('link[rel="canonical"]').attr("href", canonical);
-  $('meta[property="og:title"]').attr("content", title);
-  $('meta[property="og:description"]').attr("content", desc);
-  $('meta[property="og:url"]').attr("content", canonical);
-  $('meta[property="og:image"]').attr("content", img);
-  $('meta[property="og:image:alt"]').attr("content", post.title);
-  $('meta[name="twitter:title"]').attr("content", title);
-  $('meta[name="twitter:description"]').attr("content", desc);
-  $('meta[name="twitter:image"]').attr("content", img);
-  const article = { "@context": "https://schema.org", "@type": "BlogPosting", mainEntityOfPage: canonical, headline: post.title, description: desc, image: img, author: { "@type": "Person", name: "Rekha Krishnamurthy", url: `${SITE_URL}/about-us` }, publisher: { "@type": "Organization", name: "Rekha Krishnamurthy Makeup & Academy", logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` } }, datePublished: post.publish_date };
-  if (post.key_takeaway) article.abstract = post.key_takeaway;
-  const crumbs = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: SITE_URL }, { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` }, { "@type": "ListItem", position: 3, name: post.title, item: canonical }] };
-  const safe = (o) => JSON.stringify(o).replace(/</g, "\\u003c");
-  // The template is the home page's HTML: drop its page-specific schema, then add this post's.
-  // Ids match the ones the browser code uses, so it updates these instead of adding duplicates.
-  $("#ld-json-webpage, #ld-json-breadcrumb, #ld-json-entity, #ld-json-faq").remove();
-  $("head").append(`<script type="application/ld+json" id="ld-json-blogposting">${safe(article)}</script>`);
-  $("head").append(`<script type="application/ld+json" id="ld-json-breadcrumb">${safe(crumbs)}</script>`);
-  const faq = blog.buildSchema(post).faq;
-  if (faq) $("head").append(`<script type="application/ld+json" id="ld-json-blogfaq">${safe(faq)}</script>`);
-  // Readable article in the HTML for crawlers that don't run JavaScript; React replaces it on load.
-  // The body's own "# Title" line becomes an h2 so the page has a single h1.
-  const bodyHtml = sanitizeHtml(marked.parse(String(post.body || "").replace(/^#\s+/m, "## ")), { allowedTags: sanitizeHtml.defaults.allowedTags.concat(["h1", "h2", "img"]), allowedAttributes: { a: ["href", "title"], img: ["src", "alt"] } });
-  const esc = (t) => String(t || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-  $("#root").html(`<main class="prerender"><article><p><a href="/blog">Journal</a></p><h1>${esc(post.title)}</h1><p>By Rekha Krishnamurthy · ${esc(post.publish_date)}</p><img src="${esc(post.featured_image)}" alt="${esc(post.alt_text || post.title)}"/>${bodyHtml}</article></main>`);
-  return $.html();
-}
-
-const blogCache = new Map();
 app.get("/blog/:slug", ah(async (req, res, next) => {
-  const key = req.params.slug;
-  if (BLOG_REDIRECTS[key]) return res.redirect(301, BLOG_REDIRECTS[key]);
-  const hit = blogCache.get(key);
-  if (hit && Date.now() - hit.t < 5 * 60 * 1000) return res.type("html").send(hit.html);
-  const html = await blogHtml(key);
+  const html = await R.cached(`blog:${req.params.slug}`, () => R.blogHtml(req.params.slug, { buildSchema: blog.buildSchema }));
   if (!html) return next();
-  blogCache.set(key, { html, t: Date.now() });
-  res.type("html").send(html);
+  sendHtml(res, html);
 }));
 
-// The SPA shell with an empty #root (the built index.html carries the home page's snapshot and schema).
-let shellCache = null;
-function spaShell() {
-  if (shellCache) return shellCache;
-  const html = readHtml(path.join(BUILD_DIR, "index.html"));
-  if (!html) return null;
-  const $ = cheerio.load(html);
-  $("#root").empty();
-  $("#ld-json-webpage, #ld-json-breadcrumb, #ld-json-entity, #ld-json-faq").remove();
-  shellCache = $.html();
-  return shellCache;
-}
-
-// Blog index pages: the post list rendered from the database into the HTML, for crawlers.
-async function blogIndexHtml(urlPath) {
-  const html = readHtml(path.join(BUILD_DIR, urlPath.slice(1), "index.html"));
-  if (!html) return null;
-  const posts = await getDb().collection("blog_posts").find({ slug: { $nin: RETIRED_SLUGS } }, { projection: { _id: 0, slug: 1, title: 1, excerpt: 1, publish_date: 1 } }).sort({ publish_date: -1 }).limit(500).toArray();
-  const esc = (t) => String(t || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-  const $ = cheerio.load(html);
-  const h1 = urlPath === "/archive" ? "Makeup Advice Archive" : "Makeup & Bridal Beauty Journal";
-  $("#root").html(`<main class="prerender"><h1>${h1}</h1><ul>${(Array.isArray(posts) ? posts : []).map((p) => `<li><a href="/blog/${esc(p.slug)}">${esc(p.title)}</a> <span>${esc(p.publish_date)}</span><p>${esc(p.excerpt)}</p></li>`).join("")}</ul></main>`);
-  return $.html();
-}
-
-const listCache = new Map();
 app.get(["/blog", "/archive"], ah(async (req, res, next) => {
-  const hit = listCache.get(req.path);
-  if (hit && Date.now() - hit.t < 5 * 60 * 1000) return res.set("Cache-Control", "no-cache").type("html").send(hit.html);
-  const html = await blogIndexHtml(req.path);
+  const html = await R.cached(`list:${req.path}`, () => R.blogIndexHtml(req.path));
   if (!html) return next();
-  listCache.set(req.path, { html, t: Date.now() });
-  res.set("Cache-Control", "no-cache").type("html").send(html);
+  sendHtml(res, html);
 }));
 
-// Pre-built pages live at build/<route>/index.html; anything else gets the empty SPA shell.
-app.get("*", (req, res, next) => {
-  if (req.method !== "GET") return next();
-  const clean = decodeURIComponent(req.path).replace(/\/+$/, "") || "/";
-  if (clean.includes("..")) return next();
-  const candidate = clean === "/" ? path.join(BUILD_DIR, "index.html") : path.join(BUILD_DIR, clean, "index.html");
-  const html = readHtml(candidate) || spaShell();
-  if (!html) return res.status(503).send("Site is building — please refresh in a minute.");
-  res.set("Cache-Control", "no-cache").type("html").send(html);
-});
+// Pre-built pages (with any SEO settings saved in the admin); unknown addresses get a real 404
+// (the app still shows its "page not found" screen) and are logged for the Redirects tool.
+app.get("*", ah(async (req, res) => {
+  let clean;
+  try { clean = site.normPath(decodeURIComponent(req.path)); } catch { clean = "/"; }
+  if (R.PAGE_BY_PATH[clean]) {
+    const html = await R.cached(`page:${clean}`, () => R.pageHtml(clean));
+    if (html) return sendHtml(res, html);
+  }
+  const shell = R.spaShell();
+  if (!shell) return res.status(503).send("Site is building — please refresh in a minute.");
+  if (clean === "/admin") return sendHtml(res, shell);
+  // Bot probes for other software (WordPress, .env files...) aren't worth logging.
+  if (!/\.(php|env|asp|aspx|jsp|cgi|bak|sql|ini|git|map)$|^\/(wp-|xmlrpc|cgi-bin|\.)/i.test(clean)) site.logNotFound(clean, req.get("referer"));
+  sendHtml(res, shell, 404);
+}));
 
 // ── Errors: same shape as FastAPI ({ detail }) so the frontend's error toasts keep working ──
 app.use((err, _req, res, _next) => {

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, ArrowUpRight, ChevronDown } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "@/lib/motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { brand } from "../mock/mock";
 import { headerMenu } from "../lib/pages";
 
-export const scrollToId = (id) => {
+// Home sections below the first screen are added shortly after load, so wait briefly for them.
+export const scrollToId = (id, tries = 25) => {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  else if (tries > 0) setTimeout(() => scrollToId(id, tries - 1), 120);
 };
 
 const slug = (s) => s.toLowerCase().replace(/\s+/g, "-");

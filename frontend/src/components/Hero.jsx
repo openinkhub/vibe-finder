@@ -1,6 +1,6 @@
 import React from "react";
 import { Play, Check, Star } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/motion";
 import { heroStats, heroVideoPoster } from "../mock/mock";
 import { scrollToId } from "./Navbar";
 import { shortCta } from "../lib/ctaLabel";

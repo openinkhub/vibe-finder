@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "@/lib/motion";
 import { Phone, MessageCircle, CalendarCheck } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { brand } from "../mock/mock";

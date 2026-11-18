@@ -1,0 +1,189 @@
+// Builds the HTML the server sends for each URL. Shared by the page routes and the SEO analyzer,
+// so the checklist scores exactly what visitors and crawlers receive.
+const fs = require("fs");
+const path = require("path");
+const cheerio = require("cheerio");
+const { marked } = require("marked");
+const sanitizeHtml = require("sanitize-html");
+const { getDb } = require("./core");
+const { RETIRED_SLUGS } = require("./blogSeo");
+
+const BUILD_DIR = path.join(__dirname, "..", "..", "frontend", "build");
+const SITE_URL = (process.env.SITE_URL || "https://rekhakrishnamurthy.com").replace(/\/$/, "");
+const PAGES = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "..", "frontend", "src", "content", "pages.json"), "utf8")).filter((p) => p.path !== "/admin");
+const PAGE_BY_PATH = Object.fromEntries(PAGES.map((p) => [p.path, p]));
+
+const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const safeJson = (o) => JSON.stringify(o).replace(/</g, "\\u003c");
+const absUrl = (u) => (!u ? "" : /^https?:\/\//.test(u) ? u : SITE_URL + (u.startsWith("/") ? u : "/" + u));
+
+const readHtml = (p) => {
+  try {
+    return fs.readFileSync(p, "utf8");
+  } catch {
+    return null;
+  }
+};
+
+// ── Per-URL SEO settings saved from the admin panel (collection seo_meta) ──
+let ovCache = null;
+async function getOverrides() {
+  if (ovCache && Date.now() - ovCache.t < 60 * 1000) return ovCache.map;
+  let docs = [];
+  try {
+    docs = await getDb().collection("seo_meta").find({}, { projection: { _id: 0, history: 0 } }).toArray();
+  } catch {
+    return ovCache ? ovCache.map : {};
+  }
+  ovCache = { t: Date.now(), map: Object.fromEntries(docs.map((d) => [d.path, d])) };
+  return ovCache.map;
+}
+
+const htmlCache = new Map();
+function invalidate() {
+  ovCache = null;
+  heroCache = null;
+  htmlCache.clear();
+}
+
+// Apply saved SEO settings to a page's <head>.
+function applyOverrides($, ov, defaults) {
+  const title = (ov && ov.seo_title) || defaults.title;
+  const desc = (ov && ov.meta_description) || defaults.description;
+  const canonical = (ov && ov.canonical) || defaults.canonical;
+  const ogTitle = (ov && ov.og_title) || title;
+  const ogDesc = (ov && ov.og_description) || desc;
+  const ogImage = absUrl((ov && ov.og_image) || defaults.image);
+  if (title) $("title").text(title);
+  if (desc) $('meta[name="description"]').attr("content", desc);
+  if (canonical) $('link[rel="canonical"]').attr("href", canonical);
+  $('meta[property="og:title"]').attr("content", ogTitle);
+  $('meta[property="og:description"]').attr("content", ogDesc);
+  if (canonical) $('meta[property="og:url"]').attr("content", canonical);
+  if (ogImage) $('meta[property="og:image"]').attr("content", ogImage);
+  $('meta[name="twitter:card"]').attr("content", (ov && ov.twitter_card) || "summary_large_image");
+  if (!$('meta[name="twitter:card"]').length) $("head").append(`<meta name="twitter:card" content="${(ov && ov.twitter_card) || "summary_large_image"}">`);
+  $('meta[name="twitter:title"]').attr("content", ogTitle);
+  $('meta[name="twitter:description"]').attr("content", ogDesc);
+  if (ogImage) $('meta[name="twitter:image"]').attr("content", ogImage);
+  if (ov && (ov.noindex || ov.nofollow)) {
+    $('meta[name="robots"]').remove();
+    $("head").append(`<meta name="robots" content="${ov.noindex ? "noindex" : "index"},${ov.nofollow ? "nofollow" : "follow"}">`);
+  }
+  if (ov && ov.custom_schema) {
+    try {
+      const parsed = JSON.parse(ov.custom_schema);
+      $("#ld-json-custom").remove();
+      $("head").append(`<script type="application/ld+json" id="ld-json-custom">${safeJson(parsed)}</script>`);
+    } catch { /* invalid JSON is reported by the checklist, never served */ }
+  }
+}
+
+// Hero image records edited in the admin (alt text can change after the snapshot was taken).
+let heroCache = null;
+async function heroImages() {
+  if (heroCache && Date.now() - heroCache.t < 60 * 1000) return heroCache.map;
+  try {
+    const docs = await getDb().collection("page_images").find({}, { projection: { _id: 0 } }).toArray();
+    heroCache = { t: Date.now(), map: Object.fromEntries(docs.map((d) => [d.path, d])) };
+  } catch { return heroCache ? heroCache.map : {}; }
+  return heroCache.map;
+}
+
+const faqSchema = (pairs) => ({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: pairs.map((x) => ({ "@type": "Question", name: x.q, acceptedAnswer: { "@type": "Answer", text: x.a } })) });
+
+// Pre-built page (build/<path>/index.html, with its pre-rendered content) + saved settings.
+async function pageHtml(urlPath) {
+  const page = PAGE_BY_PATH[urlPath];
+  if (!page) return null;
+  const file = urlPath === "/" ? path.join(BUILD_DIR, "index.html") : path.join(BUILD_DIR, urlPath.slice(1), "index.html");
+  const raw = readHtml(file);
+  if (!raw) return null;
+  const ov = (await getOverrides())[urlPath] || {};
+  const hero = (await heroImages())[urlPath];
+  const $ = cheerio.load(raw);
+  applyOverrides($, ov, { title: page.metaTitle, description: page.metaDescription, canonical: page.canonical, image: "/og-image.webp" });
+  if (!$('meta[name="author"]').length) $("head").append('<meta name="author" content="Rekha Krishnamurthy">');
+  if (hero && hero.alt_text) {
+    const img = hero.image ? $(`#root img[src="${hero.image}"]`).first() : $();
+    (img.length ? img : $("#root main img, #root section img").first()).attr("alt", hero.alt_text);
+  }
+  // FAQ schema generated by auto-configure from the questions shown on the page.
+  if (Array.isArray(ov.faq) && ov.faq.length && !$("#ld-json-faq").length) {
+    $("head").append(`<script type="application/ld+json" id="ld-json-autofaq">${safeJson(faqSchema(ov.faq))}</script>`);
+  }
+  return $.html();
+}
+
+const AUTHOR = { "@type": "Person", name: "Rekha Krishnamurthy", url: `${SITE_URL}/about-us` };
+
+// Blog post page rendered from the database: meta tags, schema and readable article HTML.
+async function blogHtml(slug, { buildSchema } = {}) {
+  const template = readHtml(path.join(BUILD_DIR, "index.html"));
+  if (!template) return null;
+  const post = await getDb().collection("blog_posts").findOne({ slug }, { projection: { _id: 0 } });
+  if (!post) return null;
+  const ov = (await getOverrides())[`/blog/${slug}`] || {};
+  const $ = cheerio.load(template);
+  const canonical = ov.canonical || `${SITE_URL}/blog/${post.slug}`;
+  const img = absUrl(post.featured_image) || `${SITE_URL}/og-image.webp`;
+  const title = ov.seo_title || post.meta_title || post.title;
+  const desc = ov.meta_description || post.meta_description || post.excerpt || "";
+  applyOverrides($, ov, { title, description: desc, canonical, image: img });
+  $('meta[property="og:type"]').attr("content", "article");
+  if (!$('meta[name="author"]').length) $("head").append(`<meta name="author" content="${esc(post.author || "Rekha Krishnamurthy")}">`);
+  $('meta[property="og:image:alt"]').attr("content", post.alt_text || post.title);
+  const article = { "@context": "https://schema.org", "@type": "BlogPosting", mainEntityOfPage: canonical, headline: post.title, description: desc, image: img, author: AUTHOR, publisher: { "@type": "Organization", name: "Rekha Krishnamurthy Makeup & Academy", logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` } }, datePublished: post.publish_date, dateModified: (post.updated_at || post.publish_date || "").slice(0, 10) };
+  if (post.key_takeaway) article.abstract = post.key_takeaway;
+  const crumbs = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: SITE_URL }, { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` }, { "@type": "ListItem", position: 3, name: post.title, item: canonical }] };
+  // The template is the home page's HTML: drop its page-specific schema, then add this post's.
+  // Ids match the ones the browser code uses, so it updates these instead of adding duplicates.
+  $("#ld-json-webpage, #ld-json-breadcrumb, #ld-json-entity, #ld-json-faq").remove();
+  $("head").append(`<script type="application/ld+json" id="ld-json-blogposting">${safeJson(article)}</script>`);
+  $("head").append(`<script type="application/ld+json" id="ld-json-breadcrumb">${safeJson(crumbs)}</script>`);
+  const faq = buildSchema ? buildSchema(post).faq : null;
+  if (faq) $("head").append(`<script type="application/ld+json" id="ld-json-blogfaq">${safeJson(faq)}</script>`);
+  // Readable article for crawlers that don't run JavaScript; React replaces it on load.
+  // The body's own "# Title" line becomes an h2 so the page has a single h1.
+  const bodyHtml = sanitizeHtml(marked.parse(String(post.body || "").replace(/^#\s+/m, "## ")), { allowedTags: sanitizeHtml.defaults.allowedTags.concat(["h2", "img"]), allowedAttributes: { a: ["href", "title", "rel"], img: ["src", "alt", "width", "height", "loading"] } });
+  $("#root").html(`<main class="prerender"><article><p><a href="/blog">Journal</a></p><h1>${esc(post.title)}</h1><p>By <a href="/about-us">Rekha Krishnamurthy</a> · <time datetime="${esc(post.publish_date)}">${esc(post.publish_date)}</time></p><img src="${esc(post.featured_image)}" alt="${esc(post.alt_text || post.title)}" width="1200" height="630"/>${bodyHtml}</article></main>`);
+  return $.html();
+}
+
+// The SPA shell with an empty #root (the built index.html carries the home page's snapshot and schema).
+let shellCache = null;
+function spaShell() {
+  if (shellCache) return shellCache;
+  const html = readHtml(path.join(BUILD_DIR, "index.html"));
+  if (!html) return null;
+  const $ = cheerio.load(html);
+  $("#root").empty();
+  $("#ld-json-webpage, #ld-json-breadcrumb, #ld-json-entity, #ld-json-faq").remove();
+  $("head").append('<meta name="robots" content="noindex">');
+  shellCache = $.html();
+  return shellCache;
+}
+
+// Blog index pages: the post list rendered from the database into the HTML, for crawlers.
+async function blogIndexHtml(urlPath) {
+  const base = await pageHtml(urlPath);
+  if (!base) return null;
+  const posts = await getDb().collection("blog_posts").find({ slug: { $nin: RETIRED_SLUGS } }, { projection: { _id: 0, slug: 1, title: 1, excerpt: 1, publish_date: 1 } }).sort({ publish_date: -1 }).limit(500).toArray();
+  const ov = await getOverrides();
+  const listed = posts.filter((p) => !(ov[`/blog/${p.slug}`] || {}).noindex);
+  const $ = cheerio.load(base);
+  const h1 = urlPath === "/archive" ? "Makeup Advice Archive" : "Makeup & Bridal Beauty Journal";
+  $("#root").html(`<main class="prerender"><h1>${h1}</h1><ul>${listed.map((p) => `<li><a href="/blog/${esc(p.slug)}">${esc(p.title)}</a> <time datetime="${esc(p.publish_date)}">${esc(p.publish_date)}</time><p>${esc(p.excerpt)}</p></li>`).join("")}</ul></main>`);
+  return $.html();
+}
+
+// Cached HTML for a URL (5 minutes, cleared whenever SEO settings or posts change).
+async function cached(key, fn) {
+  const hit = htmlCache.get(key);
+  if (hit && Date.now() - hit.t < 5 * 60 * 1000) return hit.html;
+  const html = await fn();
+  if (html) htmlCache.set(key, { html, t: Date.now() });
+  return html;
+}
+
+module.exports = { BUILD_DIR, SITE_URL, PAGES, PAGE_BY_PATH, readHtml, getOverrides, invalidate, applyOverrides, pageHtml, blogHtml, spaShell, blogIndexHtml, cached, absUrl, esc };

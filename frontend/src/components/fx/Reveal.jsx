@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/motion";
 
 export const Reveal = ({ children, className = "", delay = 0, y = 40, rotate = 10, once = true }) => (
   <motion.div
