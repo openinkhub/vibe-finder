@@ -81,7 +81,7 @@ async function fetchFromFallback(rel) {
   if (inflight.has(rel)) return inflight.get(rel);
   const job = (async () => {
     try {
-      const r = await fetch(`${origin}/api/files/${rel.split("/").map(encodeURIComponent).join("/")}`, { signal: AbortSignal.timeout(30000) });
+      const r = await fetch(`${origin}/api/files/${rel.split("/").map(encodeURIComponent).join("/")}`, { headers: { "X-Rekha-Fallback": "1" }, signal: AbortSignal.timeout(30000) });
       if (!r.ok) return false;
       const buf = Buffer.from(await r.arrayBuffer());
       const full = resolveSafe(rel);

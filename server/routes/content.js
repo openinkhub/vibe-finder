@@ -171,7 +171,9 @@ router.get(/^\/files\/(.+)$/, ah(async (req, res) => {
   try {
     await fs.promises.access(full, fs.constants.R_OK);
   } catch {
-    if (!(await fetchFromFallback(rel))) throw new HttpError(404, "File not found");
+    // Never fall back when this request itself came from a fallback fetch (prevents loops when
+    // FILES_FALLBACK_ORIGIN points at this same site after the domain moves).
+    if (req.get("x-rekha-fallback") || !(await fetchFromFallback(rel))) throw new HttpError(404, "File not found");
   }
   const ext = rel.split(".").pop().toLowerCase();
   res.set("Cache-Control", "public, max-age=31536000, immutable");
