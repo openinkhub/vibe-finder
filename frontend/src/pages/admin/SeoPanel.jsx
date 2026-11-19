@@ -446,35 +446,111 @@ const Speed = () => {
 };
 
 // ── Keyword briefcase ──
-const Keywords = ({ report }) => {
-  const [list, setList] = useState(null);
-  const [f, setF] = useState({ keyword: "", page: "", note: "" });
-  useEffect(() => { api.get("/seo/settings").then(({ data }) => setList(data.keywords || [])).catch((e) => toast.error(errorText(e))); }, []);
-  const persist = async (next) => { try { await api.put("/seo/settings", { keywords: next }); setList(next); } catch (e) { toast.error(errorText(e)); } };
-  const norm = (s) => String(s || "").toLowerCase().trim();
-  const targets = (kw) => (report ? report.items.filter((i) => norm(i.keyphrase) === norm(kw)) : []);
-  if (!list) return <Loader2 className="animate-spin text-[#E62E6B]" />;
+const fmtNum = (n) => (n ? Number(n).toLocaleString("en-IN") : "–");
+const PosBadge = ({ pos }) => (pos ? <span className={`inline-flex items-center justify-center min-w-[34px] h-7 px-2 rounded-full text-xs font-semibold ${pos <= 3 ? "bg-[#E6F4EC] text-[#1c7a45]" : pos <= 10 ? "bg-[#FFF3D6] text-[#8a5a00]" : "bg-[#F4F1EA] text-[#5C4E52]"}`}>{pos}</span> : <span className="inline-flex items-center justify-center min-w-[34px] h-7 px-2 rounded-full text-xs bg-[#F4F1EA] text-[#8B7F82]" title="Not in the top 100">–</span>);
+const Change = ({ c }) => (c === null || c === undefined ? <span className="text-[#B9AEB1] text-xs">–</span> : c === 0 ? <span className="text-xs text-[#8B7F82]">0</span> : <span className={`text-xs font-semibold ${c > 0 ? "text-[#1c7a45]" : "text-[#C81F57]"}`}>{c > 0 ? "▲" : "▼"} {Math.abs(c)}</span>);
+
+const Keywords = () => {
+  const [data, setData] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [open, setOpen] = useState(null);
+  const [f, setF] = useState({ keyword: "", page: "", volume: "", note: "" });
+  const today = new Date().toISOString().slice(0, 10);
+  const [log, setLog] = useState({ date: today, pos: "", url: "", source: "" });
+  const load = useCallback(async (refresh) => {
+    setBusy(true);
+    try { const { data: d } = await api.get("/seo/keywords", { params: refresh ? { refresh: 1 } : {} }); setData(d); }
+    catch (e) { toast.error(errorText(e)); } finally { setBusy(false); }
+  }, []);
+  useEffect(() => { load(false); }, [load]);
+  const persist = async (next) => {
+    try { await api.put("/seo/settings", { keywords: next.map(({ keyword, page, note, volume, country }) => ({ keyword, page, note, volume, country })) }); await load(false); }
+    catch (e) { toast.error(errorText(e)); }
+  };
+  const addRank = async (k) => {
+    try { await api.post("/seo/keywords/rank", { keyword: k.keyword, ...log, pos: log.pos === "" ? null : Number(log.pos), url: log.url || k.page }); setLog({ date: today, pos: "", url: "", source: log.source }); toast.success("Position saved"); await load(false); }
+    catch (e) { toast.error(errorText(e)); }
+  };
+  const delRank = async (id) => { try { await api.delete("/seo/keywords/rank", { params: { id } }); await load(false); } catch (e) { toast.error(errorText(e)); } };
+  if (!data) return <Loader2 className="animate-spin text-[#E62E6B]" />;
+  const list = data.keywords;
+  const ranked = list.filter((k) => k.latest && k.latest.pos);
+  const top10 = ranked.filter((k) => k.latest.pos <= 10).length;
+  const avgOn = list.length ? Math.round(list.reduce((a, k) => a + (k.onpage ? k.onpage.score : 0), 0) / list.length) : null;
   return (
     <div className="space-y-4" data-testid="seo-keywords">
-      <p className="text-sm text-[#5C4E52]">Keep the search terms you want to rank for, and the page meant to rank for each. The report flags a term targeted by more than one page (cannibalization) or by none.</p>
-      <form onSubmit={(e) => { e.preventDefault(); if (f.keyword.trim()) { persist([...list, f]); setF({ keyword: "", page: "", note: "" }); } }} className={`${card} p-5 grid sm:grid-cols-[1fr_1fr_1fr_auto] gap-3 items-end`}>
+      <div className="flex flex-wrap items-start gap-3 justify-between">
+        <p className="text-sm text-[#5C4E52] max-w-2xl">Track the search terms you want to rank for. Each term is checked against its target page (title, heading, description, text and more). Log the Google position from Search Console or your rank report to see progress over time.</p>
+        <button onClick={() => load(true)} className={btnGhost} disabled={busy}>{busy ? <Loader2 size={15} className="animate-spin" /> : <RefreshCw size={15} />} Re-check pages</button>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {[["Tracked terms", list.length], ["Ranking", ranked.length], ["In the top 10", top10], ["Avg. on-page", avgOn === null ? "–" : `${avgOn}%`]].map(([l, v]) => (
+          <div key={l} className={`${card} px-4 py-3`}><div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">{l}</div><div className="font-display text-2xl text-[#4A2530] mt-1">{v}</div></div>
+        ))}
+      </div>
+      <form onSubmit={(e) => { e.preventDefault(); if (f.keyword.trim()) { persist([...list, f]); setF({ keyword: "", page: "", volume: "", note: "" }); } }} className={`${card} p-5 grid sm:grid-cols-[1.4fr_1.4fr_0.7fr_1fr_auto] gap-3 items-end`}>
         <div><label className={labelCls}>Keyword</label><input value={f.keyword} onChange={(e) => setF({ ...f, keyword: e.target.value })} className={inputCls} data-testid="seo-keyword-input" /></div>
-        <div><label className={labelCls}>Target page</label><select value={f.page} onChange={(e) => setF({ ...f, page: e.target.value })} className={inputCls}><option value="">— choose —</option>{(report ? report.items : []).map((i) => <option key={i.path} value={i.path}>{i.path}</option>)}</select></div>
+        <div><label className={labelCls}>Target page</label><select value={f.page} onChange={(e) => setF({ ...f, page: e.target.value })} className={inputCls}><option value="">— choose —</option>{data.pages.map((p) => <option key={p} value={p}>{p}</option>)}</select></div>
+        <div><label className={labelCls}>Searches / mo</label><input type="number" min="0" value={f.volume} onChange={(e) => setF({ ...f, volume: e.target.value })} className={inputCls} /></div>
         <div><label className={labelCls}>Note</label><input value={f.note} onChange={(e) => setF({ ...f, note: e.target.value })} className={inputCls} /></div>
         <button className={btnPrimary}><Plus size={15} /> Add</button>
       </form>
       {list.length > 0 && (
-        <div className={`${card} divide-y divide-[#F6E9EE]`}>
-          {list.map((k, n) => {
-            const t = targets(k.keyword);
-            return (
-              <div key={n} className="px-4 py-3 flex items-center gap-3 text-sm">
-                <div className="flex-1 min-w-0"><div className="font-medium text-[#4A2530]">{k.keyword}</div><div className="text-xs text-[#8B7F82]">{k.page ? `Target: ${k.page}` : "No target page"}{k.note ? ` · ${k.note}` : ""}</div></div>
-                <div className="text-xs w-48">{t.length === 0 ? <span className="text-[#8a5a00]">No page uses it as keyphrase</span> : t.length > 1 ? <span className="text-[#C81F57]">{t.length} pages compete</span> : <span className="text-[#1c7a45]">Focus of {t[0].path}</span>}</div>
-                <button onClick={() => persist(list.filter((_, j) => j !== n))} className="w-8 h-8 rounded-full border border-[#F1DCE3] text-[#8B7F82] hover:text-[#C81F57] flex items-center justify-center" aria-label="Remove keyword"><Trash2 size={13} /></button>
-              </div>
-            );
-          })}
+        <div className={`${card} overflow-x-auto`}>
+          <table className="w-full text-sm" data-testid="seo-keyword-table">
+            <thead className="bg-[#FBFAF7]"><tr>{["Search term", "Searches", "Target page", "On-page", "Position", "Change", "Best", ""].map((h) => <th key={h} className="px-3 py-2 text-left font-mono text-[10px] uppercase text-[#8B7F82]">{h}</th>)}</tr></thead>
+            <tbody className="divide-y divide-[#F6E9EE]">
+              {list.map((k, n) => (
+                <React.Fragment key={k.keyword}>
+                  <tr className="hover:bg-[#FFFBFC] cursor-pointer" onClick={() => setOpen(open === k.keyword ? null : k.keyword)}>
+                    <td className="px-3 py-2.5"><div className="font-medium text-[#4A2530]">{k.keyword}</div>{k.note && <div className="text-xs text-[#8B7F82]">{k.note}</div>}</td>
+                    <td className="px-3 py-2.5 text-[#5C4E52]">{fmtNum(k.volume)}</td>
+                    <td className="px-3 py-2.5 text-xs text-[#5C4E52] max-w-[220px] truncate">{k.page || <span className="text-[#8a5a00]">None chosen</span>}</td>
+                    <td className="px-3 py-2.5"><ScoreBadge score={k.onpage ? k.onpage.score : null} label="On-page targeting" /></td>
+                    <td className="px-3 py-2.5"><PosBadge pos={k.latest && k.latest.pos} />{k.latest && <div className="text-[10px] text-[#8B7F82] mt-0.5">{k.latest.date}</div>}</td>
+                    <td className="px-3 py-2.5"><Change c={k.change} /></td>
+                    <td className="px-3 py-2.5 text-xs text-[#5C4E52]">{k.bestPos || "–"}</td>
+                    <td className="px-3 py-2.5 text-right"><button onClick={(e) => { e.stopPropagation(); if (window.confirm(`Stop tracking "${k.keyword}"?`)) persist(list.filter((_, j) => j !== n)); }} className="w-8 h-8 rounded-full border border-[#F1DCE3] text-[#8B7F82] hover:text-[#C81F57] inline-flex items-center justify-center" aria-label="Remove keyword"><Trash2 size={13} /></button></td>
+                  </tr>
+                  {open === k.keyword && (
+                    <tr><td colSpan={8} className="bg-[#FFFBFC] px-4 py-4">
+                      <div className="grid lg:grid-cols-2 gap-5">
+                        <div>
+                          <div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82] mb-2">On-page check{k.page ? ` · ${k.page}` : ""}</div>
+                          {k.onpage ? (
+                            <ul className="space-y-1.5">{k.onpage.signals.map((s) => <li key={s.id} className="flex items-center gap-2 text-sm text-[#4A2530]"><StatusIcon s={s.ok ? "pass" : "fail"} /> {s.label}{s.detail ? <span className="text-xs text-[#8B7F82]">({s.detail})</span> : null}</li>)}</ul>
+                          ) : <p className="text-sm text-[#8a5a00]">Choose a target page to check it.</p>}
+                          {k.best && k.best.path !== k.page && k.best.score > (k.onpage ? k.onpage.score : 0) && <p className="mt-3 text-xs text-[#5C4E52]">Best match on the site today: <b>{k.best.path}</b> ({k.best.score}%). Point the term there, or strengthen the target page.</p>}
+                          {k.local && <p className="mt-3 text-xs text-[#5C4E52]">"Near me" searches are answered from the searcher's location: the Google Business Profile, reviews and the address on the site matter most. The page check looks for the rest of the phrase.</p>}
+                          <div className="mt-3 flex flex-wrap gap-2 items-center">
+                            <select value={k.page} onChange={(e) => persist(list.map((x) => (x.keyword === k.keyword ? { ...x, page: e.target.value } : x)))} className={fieldCls} aria-label="Target page"><option value="">— target page —</option>{data.pages.map((p) => <option key={p} value={p}>{p}</option>)}</select>
+                            <input type="number" min="0" defaultValue={k.volume || ""} onBlur={(e) => Number(e.target.value) !== k.volume && persist(list.map((x) => (x.keyword === k.keyword ? { ...x, volume: e.target.value } : x)))} className={`${fieldCls} w-32`} placeholder="Searches/mo" aria-label="Searches per month" />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82] mb-2">Log a position</div>
+                          <div className="flex flex-wrap gap-2 items-end">
+                            <input type="date" value={log.date} onChange={(e) => setLog({ ...log, date: e.target.value })} className={fieldCls} aria-label="Date" />
+                            <input type="number" min="1" max="100" value={log.pos} onChange={(e) => setLog({ ...log, pos: e.target.value })} className={`${fieldCls} w-24`} placeholder="Pos." aria-label="Position" />
+                            <input value={log.url} onChange={(e) => setLog({ ...log, url: e.target.value })} className={`${fieldCls} flex-1 min-w-[140px]`} placeholder={k.page || "Ranking URL"} aria-label="Ranking URL" />
+                            <button onClick={() => addRank(k)} className={btnPrimary} data-testid="seo-rank-save"><Save size={14} /> Save</button>
+                          </div>
+                          <p className="text-[11px] text-[#8B7F82] mt-1.5">Leave the position blank if the site is not in the top 100.</p>
+                          {k.history.length > 0 && (
+                            <ul className="mt-3 divide-y divide-[#F6E9EE] border border-[#F6E9EE] rounded-xl bg-white">
+                              {k.history.slice().reverse().map((h) => (
+                                <li key={h.id} className="flex items-center gap-3 px-3 py-2 text-sm"><span className="text-xs text-[#8B7F82] w-24">{h.date}</span><PosBadge pos={h.pos} /><span className="flex-1 text-xs text-[#5C4E52] truncate">{h.url}{h.source ? ` · ${h.source}` : ""}</span><button onClick={() => delRank(h.id)} className="text-[#B9AEB1] hover:text-[#C81F57]" aria-label="Delete entry"><X size={13} /></button></li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      </div>
+                    </td></tr>
+                  )}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
@@ -522,7 +598,7 @@ export const SeoPanel = () => {
       {sub === "redirects" && <Redirects prefill={prefill} clearPrefill={clearPrefill} />}
       {sub === "404" && <NotFoundLog onRedirect={(p) => { setPrefill(p); setSub("redirects"); }} />}
       {sub === "speed" && <Speed />}
-      {sub === "keywords" && <Keywords report={report} />}
+      {sub === "keywords" && <Keywords />}
     </div>
   );
 };

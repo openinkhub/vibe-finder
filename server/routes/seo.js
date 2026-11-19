@@ -10,7 +10,17 @@ const inventory = require("../lib/seo/inventory");
 const rules = require("../lib/seo/rules");
 const { CHECKS, CAT_LABELS } = require("../lib/seo/checks");
 
+const KW = require("../lib/seo/keywords");
+
 const router = express.Router();
+const rankLog = () => getDb().collection("seo_rank_log");
+const cleanKeywords = (list) => list.map((k) => ({
+  keyword: cut(String(k.keyword || k).trim().toLowerCase(), 80),
+  page: k.page ? site.normPath(k.page) : "",
+  note: cut(String(k.note || ""), 200),
+  volume: Math.max(0, Math.round(Number(k.volume) || 0)),
+  country: cut(String(k.country || "IN").toUpperCase().replace(/[^A-Z]/g, ""), 2) || "IN",
+})).filter((k) => k.keyword).filter((k, i, a) => a.findIndex((x) => x.keyword === k.keyword) === i).slice(0, 200);
 const meta = () => getDb().collection("seo_meta");
 
 const refresh = () => {
@@ -18,6 +28,59 @@ const refresh = () => {
   site.clearRedirects();
   inventory.invalidateInventory();
 };
+
+// ── Keyword tracker ──
+// Seeds the starter terms once, then returns each term with its on-page checks against
+// the target page, the best-matching page on the site and its logged positions.
+router.get("/seo/keywords", requireAdmin, ah(async (req, res) => {
+  let s = await getSettings();
+  if (!s.keywords_seeded && !(s.keywords || []).length) {
+    const today = nowIso().slice(0, 10);
+    s = await saveSettings({ keywords: cleanKeywords(KW.STARTER), keywords_seeded: true });
+    const first = KW.STARTER.filter((k) => k.pos).map((k) => ({ id: require("crypto").randomUUID(), keyword: k.keyword, date: today, pos: k.pos, url: k.page, source: "Rank report", created_at: nowIso() }));
+    if (first.length) await rankLog().insertMany(first);
+  }
+  await inventory.buildReport({ force: req.query.refresh === "1" });
+  const items = inventory.rawItems();
+  const byPath = Object.fromEntries(items.map((i) => [i.path, i]));
+  const logs = await rankLog().find({}, { projection: { _id: 0 } }).sort({ date: 1, created_at: 1 }).toArray();
+  const out = (s.keywords || []).map((k) => {
+    const hist = logs.filter((l) => l.keyword === k.keyword);
+    const ranked = hist.filter((l) => l.pos);
+    const last = hist[hist.length - 1] || null;
+    const prev = hist[hist.length - 2] || null;
+    return {
+      ...k,
+      onpage: KW.onPage(byPath[k.page], k.keyword),
+      best: KW.bestPage(items, k.keyword),
+      local: /\bnear me\b/.test(k.keyword),
+      latest: last, previous: prev,
+      change: last && prev && last.pos && prev.pos ? prev.pos - last.pos : null,
+      bestPos: ranked.length ? Math.min(...ranked.map((l) => l.pos)) : null,
+      history: hist,
+    };
+  });
+  res.json({ keywords: out, pages: items.filter((i) => !i.noindex).map((i) => i.path).sort() });
+}));
+
+// Log a position for a term on a date (pos null = not in the top 100).
+router.post("/seo/keywords/rank", requireAdmin, ah(async (req, res) => {
+  const b = req.body || {};
+  const keyword = String(b.keyword || "").trim().toLowerCase();
+  if (!keyword) throw new HttpError(422, "Choose a keyword");
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(b.date || "") ? b.date : nowIso().slice(0, 10);
+  const pos = b.pos === null || b.pos === "" || b.pos === undefined ? null : Math.round(Number(b.pos));
+  if (pos !== null && !(pos >= 1 && pos <= 100)) throw new HttpError(422, "Position must be 1–100, or blank for not ranking");
+  const doc = { id: require("crypto").randomUUID(), keyword, date, pos, url: b.url ? site.normPath(String(b.url).replace(/^https?:\/\/[^/]+/, "")) : "", source: cut(String(b.source || ""), 60), created_at: nowIso() };
+  await rankLog().deleteMany({ keyword, date });
+  await rankLog().insertOne({ ...doc });
+  res.json(doc);
+}));
+
+router.delete("/seo/keywords/rank", requireAdmin, ah(async (req, res) => {
+  await rankLog().deleteOne({ id: String(req.query.id || "") });
+  res.json({ ok: true });
+}));
 
 // ── Report ──
 router.get("/seo/report", requireAdmin, ah(async (req, res) => {
@@ -154,7 +217,7 @@ router.put("/seo/settings", requireAdmin, ah(async (req, res) => {
   if ("cta_pattern" in b) { try { new RegExp(b.cta_pattern); patch.cta_pattern = cut(String(b.cta_pattern), 200); } catch { throw new HttpError(422, "Call-to-action pattern is not a valid pattern"); } }
   if (Array.isArray(b.entities)) patch.entities = b.entities.map((e) => (Array.isArray(e) ? e : String(e).split("/")).map((x) => cut(String(x).trim(), 60)).filter(Boolean)).filter((e) => e.length).slice(0, 15);
   if (Array.isArray(b.focus_pages)) patch.focus_pages = b.focus_pages.map(site.normPath).slice(0, 50);
-  if (Array.isArray(b.keywords)) patch.keywords = b.keywords.map((k) => ({ keyword: cut(String(k.keyword || k).trim(), 80), page: k.page ? site.normPath(k.page) : "", note: cut(String(k.note || ""), 200) })).filter((k) => k.keyword).slice(0, 200);
+  if (Array.isArray(b.keywords)) patch.keywords = cleanKeywords(b.keywords);
   const s = await saveSettings(patch);
   refresh();
   res.json(s);
