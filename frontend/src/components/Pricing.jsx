@@ -20,7 +20,6 @@ const Pricing = () => {
         <Reveal className="text-center max-w-2xl mx-auto">
           <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Transparent pricing</span>
           <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Prices Starting <span className="italic text-[#E62E6B]">@₹8,000/-*</span></h2>
-          <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">Free consultation on every enquiry.</p>
         </Reveal>
 
         <div className="mt-10 md:mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" style={{ perspective: 1200 }}>
