@@ -25,7 +25,7 @@ export const footerColumns = [
 export const legalKeyByPath = { "/privacy": "privacy", "/terms": "terms", "/refund": "refunds", "/disclaimer": "disclaimer", "/delivery": "delivery", "/cookies": "cookies" };
 
 export const BOOKING_PATH = "/premium-bridal-makeup-booking";
-export const COURSE_SERVICES = ["Launchpad", "Bridal Artistry", "Self Grooming Workshop", "Personal Shopping"];
+export const COURSE_SERVICES = ["Launchpad", "Bridal Artistry", "Self Grooming Workshop"];
 export const enquiryServiceFor = (page) => page.enquiryService || page.name;
 export const processPages = ["Makeup Trial", "Skin Consultation", "HD Makeup", "Airbrush Makeup"].map((n) => pages.find((p) => p.group === "Experience" && p.name === n));
 

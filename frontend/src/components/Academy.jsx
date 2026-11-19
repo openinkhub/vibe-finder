@@ -13,8 +13,9 @@ const Academy = () => {
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         <Reveal>
           <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Makeup Academy</span>
-          <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Learn the craft, hands-on</h2>
-          <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-lg">Small-batch training at the Bangalore studio — for artists building a career, and for anyone who wants to master their own face.</p>
+          <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Master the Art of Makeup, Hands-On</h2>
+          <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-lg">Small-batch, practical training at our Bangalore studio, designed for aspiring makeup artists who want to build professional skills and for individuals who want to master makeup for themselves.</p>
+          <p className="mt-3 text-sm sm:text-base font-semibold text-[#4A2530]">Learn. Practise. Create with confidence.</p>
           <div className="mt-8 sm:mt-9 space-y-3" style={{ perspective: 900 }}>
             {tracks.map((t, i) => (
               <Reveal key={t.path} delay={0.1 + i * 0.08} rotate={-14}>
@@ -23,7 +24,7 @@ const Academy = () => {
                     <span className="font-mono text-sm text-[#E62E6B]">{String(i + 1).padStart(2, "0")}</span>
                     <div className="flex-1 min-w-0">
                       <div className="text-[#4A2530] font-medium text-sm sm:text-base">{t.name}</div>
-                      <div className="text-xs text-[#8B7F82] mt-0.5 truncate">{t.heroHeadline}</div>
+                      <div className="text-xs text-[#8B7F82] mt-0.5 truncate">{t.tagline || t.heroHeadline}</div>
                     </div>
                     <ArrowUpRight size={16} className="text-[#E62E6B] shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </TiltCard>

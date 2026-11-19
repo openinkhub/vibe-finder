@@ -8,7 +8,8 @@ import { AuthorBio } from "./PageShell";
 import { scrollToId } from "./Navbar";
 
 const H = ({ children }) => <h3 className="font-display text-2xl sm:text-3xl text-[#4A2530]">{children}</h3>;
-const P = ({ children }) => <p className="text-sm sm:text-base text-[#5C4E52] leading-relaxed">{children}</p>;
+const bold = (t) => (typeof t === "string" && t.includes("**") ? t.split(/\*\*(.+?)\*\*/).map((x, i) => (i % 2 ? <strong key={i} className="font-semibold text-[#4A2530]">{x}</strong> : x)) : t);
+const P = ({ children }) => <p className="text-sm sm:text-base text-[#5C4E52] leading-relaxed">{bold(children)}</p>;
 
 const Cta = ({ c }) => {
   const cls = c.secondary ? "inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#E62E6B] hover:text-white transition-colors" : "inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25";

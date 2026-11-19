@@ -229,8 +229,8 @@
     "ogDescription": "Get groom makeup in Bangalore planned for wedding ceremonies, photography and personal style, with a refined finish suited to the groom and occasion.",
     "canonical": "https://rekhakrishnamurthy.com/pre-wedding-photoshoot-makeup-artist",
     "eyebrow": "GROOM & PRE-WEDDING • BANGALORE",
-    "heroHeadline": "Groom & Pre-Wedding Looks With Natural Definition",
-    "heroSub": "Camera-ready grooming and makeup planning for grooms and pre-wedding shoots, matched to the event and photography style.",
+    "heroHeadline": "Effortless Grooming for Every Frame",
+    "heroSub": "Natural, camera-ready makeup for grooms for Engagement, Wedding and pre-wedding shoots, thoughtfully tailored to your features, style and the visual mood of the occasion.",
     "h1": "Groom Makeup in Bangalore",
     "h1Heading": "Makeup and grooming support for grooms and pre-wedding photography, designed to look natural on camera and in person.",
     "h1Sub": "Grooms and couples preparing for pre-wedding shoots, ceremonies and wedding photography.",
@@ -301,7 +301,7 @@
   },
   {
     "group": "Academy",
-    "name": "Self Grooming Workshop",
+    "name": "Self-Grooming Workshop",
     "url": "https://rekhakrishnamurthy.com/self-grooming-classes",
     "metaTitle": "Self-Grooming Workshop Bangalore | Rekha Krishnamurthy",
     "metaDescription": "Learn practical self-grooming and makeup techniques in Bangalore to understand products, application, everyday looks and personal beauty routines with guidance.",
@@ -319,11 +319,12 @@
     "path": "/self-grooming-classes",
     "image": "https://images.unsplash.com/photo-1551184451-76b762941ad6?auto=format&fit=crop&w=1000&q=70",
     "heroCta": "Enquire About the Next Workshop",
-    "enquiryService": "Self Grooming Workshop"
+    "enquiryService": "Self Grooming Workshop",
+    "tagline": "Understand Your Features. Master Your Look."
   },
   {
     "group": "Academy",
-    "name": "Launchpad",
+    "name": "Professional Makeup Artist Launchpad",
     "url": "https://rekhakrishnamurthy.com/makeup-educator-beauty-mentor-karnataka",
     "metaTitle": "Professional Makeup Course Bangalore | Rekha Krishnamurthy",
     "metaDescription": "Build a professional makeup foundation with the Launchpad course in Bangalore: core techniques, product knowledge and hands-on practical application.",
@@ -341,11 +342,12 @@
     "path": "/makeup-educator-beauty-mentor-karnataka",
     "image": "https://images.unsplash.com/photo-1677691257363-eebd2abeafec?auto=format&fit=crop&w=1000&q=70",
     "heroCta": "Enquire for the Next Batch",
-    "enquiryService": "Launchpad"
+    "enquiryService": "Launchpad",
+    "tagline": "Learn the Craft. Launch Your Career."
   },
   {
     "group": "Academy",
-    "name": "Comprehensive Artistry",
+    "name": "Bridal Makeup Artistry",
     "url": "https://rekhakrishnamurthy.com/self-makeup-classes-karnataka",
     "metaTitle": "Bridal Artistry Program Bangalore | Rekha Krishnamurthy",
     "metaDescription": "Develop professional makeup artistry skills in Bangalore through comprehensive training covering techniques, product knowledge, application and practical work.",
@@ -363,10 +365,11 @@
     "path": "/self-makeup-classes-karnataka",
     "image": "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1000&q=70",
     "heroCta": "Enquire About the Next Batch",
-    "enquiryService": "Bridal Artistry"
+    "enquiryService": "Bridal Artistry",
+    "tagline": "Master the Craft. Create Signature Looks."
   },
   {
-    "group": "Academy",
+    "group": "Services",
     "name": "Personal Shopping",
     "url": "https://rekhakrishnamurthy.com/personal-shopping",
     "metaTitle": "Makeup Shopping Consultation Bangalore | Rekha Krishnamurthy",
