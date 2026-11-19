@@ -27,7 +27,7 @@ function extractFaq($) {
       const q = $(el).text().replace(/\s+/g, " ").trim();
       if (q.length > 200 || seen.has(q)) return;
       const next = $(el).next().length && !/^Q$/.test($(el).next().text().trim()) ? $(el).next() : $(el).parent().next();
-      const a = (next.find("p").length ? next.find("p").first().text() : next.text().replace(/^\s*A(?=\s|[A-Z])/, "")).replace(/\s+/g, " ").trim();
+      const a = (next.find("p").length ? next.find("p").map((_, x) => $(x).text()).get().join(" ") : next.text().replace(/^\s*A(?=\s|[A-Z])/, "")).replace(/\s+/g, " ").trim();
       if (a.length >= 20 && !/\?$/.test(a)) { seen.add(q); out.push({ q, a: a.slice(0, 1000) }); }
     });
   });

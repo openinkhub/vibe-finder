@@ -1,5 +1,5 @@
 import React from "react";
-import { Play, Check, Star } from "lucide-react";
+import { Play, Star } from "lucide-react";
 import { motion } from "@/lib/motion";
 import { heroStats, heroVideoPoster } from "../mock/mock";
 import { scrollToId } from "./Navbar";
@@ -45,12 +45,6 @@ const Hero = ({ page }) => {
               </span>
               <span className="text-sm sm:text-[15px]">Watch the reel</span>
             </button>
-          </div>
-
-          <div className="fade-up delay-4 mt-8 sm:mt-9 flex flex-wrap gap-x-7 gap-y-2.5">
-            {["On-Location Services with No Additional Visit Charges"].map((t) => (
-              <div key={t} className="flex items-center gap-2 text-sm text-[#5C4E52]"><Check size={16} className="text-[#E62E6B] shrink-0" /> {t}</div>
-            ))}
           </div>
 
           <div className="mt-9 sm:mt-10 pt-7 sm:pt-8 border-t border-[#F1DCE3] grid grid-cols-3 max-w-[520px] divide-x divide-[#F1DCE3]">

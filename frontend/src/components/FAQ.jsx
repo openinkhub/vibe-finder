@@ -19,7 +19,9 @@ const FAQ = () => (
               </div>
               <div className="flex items-start gap-4 mt-4">
                 <span className="shrink-0 w-9 h-9 rounded-full bg-[#FBE9F0] text-[#E62E6B] font-mono text-xs flex items-center justify-center">A</span>
-                <p className="text-sm sm:text-base text-[#5C4E52] leading-relaxed pt-1.5" data-testid={`faq-answer-${i}`}>{f.a}</p>
+                <div className="text-sm sm:text-base text-[#5C4E52] leading-relaxed pt-1.5 space-y-2" data-testid={`faq-answer-${i}`}>
+                  {(Array.isArray(f.a) ? f.a : [f.a]).map((para, j) => <p key={j}>{typeof para === "string" ? para : <strong className="text-[#4A2530]">{para.b}</strong>}</p>)}
+                </div>
               </div>
             </div>
           </Reveal>
