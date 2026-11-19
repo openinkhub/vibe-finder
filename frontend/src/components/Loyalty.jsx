@@ -11,7 +11,7 @@ const Loyalty = () => {
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         <Reveal className="order-2 lg:order-1">
           <TiltCard max={7} className="rounded-[24px] overflow-hidden shadow-[0_30px_80px_-30px_rgba(230,46,107,0.45)]">
-            <img src={loyaltyImage} alt="Community · Loyalty Program" className="w-full h-[340px] sm:h-[420px] md:h-[500px] object-cover" />
+            <img width="800" height="1000" loading="lazy" decoding="async" src={loyaltyImage} alt="Community · Loyalty Program" className="w-full h-[340px] sm:h-[420px] md:h-[500px] object-cover" />
             <div className="absolute bottom-4 left-4 font-mono text-[11px] tracking-[0.15em] text-white bg-[#E62E6B]/90 backdrop-blur px-3 py-1.5 rounded">Community · Loyalty Program</div>
           </TiltCard>
         </Reveal>

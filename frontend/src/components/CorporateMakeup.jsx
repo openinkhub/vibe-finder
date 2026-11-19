@@ -112,7 +112,7 @@ const CorporateMakeup = () => (
           </Reveal>
           <Reveal delay={0.1}>
             <div className="relative rounded-[32px] overflow-hidden aspect-[4/5]">
-              <img src={CORP_IMG} alt="Professional corporate makeup Bangalore" className="w-full h-full object-cover" loading="lazy" />
+              <img width="800" height="1000" decoding="async" src={CORP_IMG} alt="Professional corporate makeup Bangalore" className="w-full h-full object-cover" loading="lazy" />
               <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md rounded-2xl px-5 py-4 flex items-center gap-4 shadow-xl">
                 <Sparkles size={22} className="text-[#E62E6B] shrink-0" />
                 <div>

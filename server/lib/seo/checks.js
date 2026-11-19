@@ -146,7 +146,9 @@ const CHECKS = [
     return share <= 0.25 ? pass(`${pct(share)} over 20 words`) : warn(pct(share), "Over 25% of sentences exceed 20 words", "Shorten long sentences");
   }),
   C("flesch", "Readability score (Flesch)", "readability", 4, false, (i) => {
-    const f = T.fleschReadingEase(i.text);
+    // Score the running prose (paragraphs), as Yoast does. Whole-page text joins headings,
+    // buttons and list labels that have no full stops into giant "sentences".
+    const f = T.fleschReadingEase((i.paragraphs || []).join(". "));
     if (f === null) return na("Too little text");
     return f >= 60 ? pass(String(f), "Easy to read") : f >= 50 ? warn(String(f), "Fairly difficult", "Use shorter sentences and simpler words") : fail(String(f), "Difficult to read", "Use shorter sentences and simpler words");
   }),

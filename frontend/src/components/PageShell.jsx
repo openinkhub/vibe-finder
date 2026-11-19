@@ -41,7 +41,7 @@ export const PageHero = ({ eyebrow, title, subtitle, image, imageAlt, cta = "Boo
     {image && (
       <Reveal delay={0.1}>
         <TiltCard max={6} className="rounded-[24px] overflow-hidden shadow-[0_30px_80px_-30px_rgba(230,46,107,0.45)]">
-          <img src={image} alt={imageAlt || title} className="w-full h-[300px] sm:h-[380px] md:h-[460px] object-cover" />
+          <img width="1000" height="920" fetchPriority="high" decoding="async" src={image} alt={imageAlt || title} className="w-full h-[300px] sm:h-[380px] md:h-[460px] object-cover" />
         </TiltCard>
       </Reveal>
     )}
@@ -56,7 +56,7 @@ export const AuthorBio = () => {
   return (
     <Reveal>
       <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#F1DCE3] flex flex-col sm:flex-row gap-5 sm:gap-7 items-start" data-testid="author-bio">
-        <img src={brand.logo} alt="Rekha Krishnamurthy" className="h-12 w-auto shrink-0" />
+        <img width="160" height="48" loading="lazy" decoding="async" src={brand.logo} alt="Rekha Krishnamurthy" className="h-12 w-auto shrink-0" />
         <div>
           <div className="font-display text-xl text-[#4A2530]">{authorBio.title}</div>
           <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">{parseBold(authorBio.text)}</p>

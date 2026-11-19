@@ -130,6 +130,8 @@ app.get("*", ah(async (req, res) => {
   const shell = R.spaShell();
   if (!shell) return res.status(503).send("Site is building — please refresh in a minute.");
   if (clean === "/admin") return sendHtml(res, shell);
+  const near = site.closestPage(clean);
+  if (near && near !== clean) return res.redirect(301, near);
   // Bot probes for other software (WordPress, .env files...) aren't worth logging.
   if (!/\.(php|env|asp|aspx|jsp|cgi|bak|sql|ini|git|map)$|^\/(wp-|xmlrpc|cgi-bin|\.)/i.test(clean)) site.logNotFound(clean, req.get("referer"));
   sendHtml(res, shell, 404);

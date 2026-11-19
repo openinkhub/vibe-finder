@@ -39,7 +39,7 @@ const Services = () => {
                 <div className="font-mono text-sm text-[#F4B7CE] group-hover:text-[#E62E6B] transition-colors">{String(i + 1).padStart(2, "0")}</div>
                 <div className="flex items-center gap-4 sm:gap-6">
                   <TiltCard max={14} lift={false} className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden shrink-0 shadow-lg shadow-[#E62E6B]/15">
-                    <img src={heroImage(s, map)} alt={heroImageAlt(s, map)} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <img width="600" height="750" loading="lazy" decoding="async" src={heroImage(s, map)} alt={heroImageAlt(s, map)} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   </TiltCard>
                   <div>
                     <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-[#4A2530]">{s.name}</h3>

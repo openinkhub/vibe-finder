@@ -88,7 +88,7 @@ const ParallaxItem = ({ p, d, sx, sy, i }) => {
   return (
     <motion.div style={{ x, y, rotateX, rotateY, z: d }} className={`${i % 3 === 1 ? "md:mt-16" : i % 3 === 2 ? "md:-mt-8" : ""}`} data-testid={`parallax-item-${i}`}>
       <TiltCard max={6} className="rounded-2xl overflow-hidden shadow-[0_30px_70px_-30px_rgba(74,37,48,0.45)]">
-        <img src={imgUrl(p.image)} alt={p.alt_text || p.caption} loading="lazy" className="w-full h-[220px] sm:h-[280px] md:h-[340px] object-cover" />
+        <img width="600" height="560" decoding="async" src={imgUrl(p.image)} alt={p.alt_text || p.caption} loading="lazy" className="w-full h-[220px] sm:h-[280px] md:h-[340px] object-cover" />
         <div className="absolute bottom-3 left-3 font-mono text-[10px] text-white bg-[#E62E6B]/90 px-2 py-1 rounded">{p.cat} · {p.caption}</div>
       </TiltCard>
     </motion.div>

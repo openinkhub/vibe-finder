@@ -28,7 +28,7 @@ const Instagram = () => {
           {items.map((p, i) => (
             <Reveal key={p.id || p.caption} delay={i * 0.06} rotate={16}>
               <TiltCard as="a" max={12} href={p.url || brand.instagramUrl} target="_blank" rel="noreferrer" className="block aspect-square overflow-hidden rounded-2xl shadow-[0_20px_50px_-30px_rgba(230,46,107,0.5)]" data-testid={`instagram-item-${i}`}>
-                <img src={imgUrl(p.image)} alt={p.caption} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <img width="400" height="400" loading="lazy" decoding="async" src={imgUrl(p.image)} alt={p.caption} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-[#E62E6B]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 p-4 text-center">
                   <p className="text-white text-xs leading-snug">{p.caption}</p>
                   <div className="flex items-center gap-4 text-white text-sm">

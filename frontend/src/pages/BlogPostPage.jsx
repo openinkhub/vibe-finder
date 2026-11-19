@@ -67,7 +67,7 @@ const BlogPostPage = () => {
         </Section>
         <Section className="pb-0">
           <Reveal delay={0.05}>
-            <img src={imgUrl(post.featured_image)} alt={post.alt_text || post.title} className="w-full h-64 sm:h-96 object-cover rounded-3xl" data-testid="blog-post-image" />
+            <img width="1200" height="630" fetchPriority="high" decoding="async" src={imgUrl(post.featured_image)} alt={post.alt_text || post.title} className="w-full h-64 sm:h-96 object-cover rounded-3xl" data-testid="blog-post-image" />
           </Reveal>
         </Section>
         <Section>

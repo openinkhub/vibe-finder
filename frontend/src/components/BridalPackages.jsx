@@ -135,7 +135,7 @@ const BridalPackages = () => (
           </Reveal>
           <Reveal delay={0.1}>
             <div className="relative rounded-[32px] overflow-hidden aspect-[4/5]">
-              <img src={BRIDAL_IMG} alt="Bridal makeup artist Bangalore" className="w-full h-full object-cover" loading="lazy" />
+              <img width="800" height="1000" decoding="async" src={BRIDAL_IMG} alt="Bridal makeup artist Bangalore" className="w-full h-full object-cover" loading="lazy" />
               <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md rounded-2xl px-4 py-3 shadow-xl flex items-center gap-3">
                 <Star size={18} className="text-[#E62E6B] shrink-0" fill="#E62E6B" />
                 <div>

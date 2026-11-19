@@ -13,7 +13,25 @@ const BUILT_IN = {
   "/legal": "/privacy",
   "/party-and-non-bridal-makeup-karnatka": "/party-and-non-bridal-makeup-karnataka",
   "/hire-celebrirt-makeup-artist-for-wedding": "/hire-celebrity-makeup-artist-for-wedding",
+  // Common addresses people (and old links) guess.
+  "/home": "/", "/index.html": "/", "/index.php": "/",
+  "/about": "/about-us", "/about-rekha": "/about-us",
+  "/services": "/bridal-makeup-bangalore", "/makeup-services": "/bridal-makeup-bangalore",
+  "/bridal-makeup": "/bridal-makeup-artist-bangalore", "/bridal": "/bridal-makeup-artist-bangalore",
+  "/courses": "/makeup-course-training-bangalore", "/academy": "/makeup-course-training-bangalore", "/makeup-courses": "/makeup-course-training-bangalore",
+  "/self-grooming": "/self-grooming-classes", "/self-grooming-workshop": "/self-grooming-classes",
+  "/gallery": "/portfolio", "/reviews": "/testimonials", "/contact-us": "/contact", "/blogs": "/blog",
+  "/privacy-policy": "/privacy", "/terms-and-conditions": "/terms", "/refund-policy": "/refund", "/cookie-policy": "/cookies",
+  "/groom-makeup": "/groom-makeup-artist-bangalore", "/engagement": "/engagement-makeup", "/party-makeup": "/party-makeup-artist-bangalore",
 };
+
+// A wrong-case or slightly different address for a real page (e.g. /About-Us, /Contact/)
+// is sent to the page instead of a 404. Exact addresses always win.
+function closestPage(p) {
+  const low = p.toLowerCase();
+  const hits = PAGES.filter((x) => x.path.toLowerCase() === low);
+  return hits.length === 1 ? hits[0].path : null;
+}
 
 let redirectCache = null;
 async function getRedirects() {
@@ -145,4 +163,4 @@ async function vitalsByPath(days = 28) {
   return out;
 }
 
-module.exports = { BUILT_IN, getRedirects, clearRedirects, normPath, logNotFound, robotsTxt, robotsAllowsFn, indexableUrls, sitemapXml, llmsTxt, recordVitals, vitalsByPath };
+module.exports = { BUILT_IN, closestPage, getRedirects, clearRedirects, normPath, logNotFound, robotsTxt, robotsAllowsFn, indexableUrls, sitemapXml, llmsTxt, recordVitals, vitalsByPath };

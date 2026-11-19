@@ -67,7 +67,7 @@ const ChildCards = ({ items }) => {
         <Reveal key={c.path} delay={i * 0.06}>
           <Link to={c.path} data-testid={`child-card-${c.path.slice(1)}`}>
             <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full hover:border-[#E62E6B] transition-colors">
-              <img src={heroImage(c, map)} alt={heroImageAlt(c, map)} className="w-full h-44 object-cover" />
+              <img width="600" height="300" loading="lazy" decoding="async" src={heroImage(c, map)} alt={heroImageAlt(c, map)} className="w-full h-44 object-cover" />
               <div className="p-6">
                 <div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{c.eyebrow}</div>
                 <h3 className="font-display text-xl text-[#4A2530] mt-2">{c.name}</h3>
@@ -271,7 +271,7 @@ export const BlogPage = () => {
               <Reveal key={p.slug} delay={i * 0.08}>
                 <Link to={`/blog/${p.slug}`} data-testid={`blog-card-${i}`}>
                   <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full">
-                    <img src={imgUrl(p.featured_image)} alt={p.alt_text || p.title} className="w-full h-48 object-cover" />
+                    <img width="600" height="400" loading="lazy" decoding="async" src={imgUrl(p.featured_image)} alt={p.alt_text || p.title} className="w-full h-48 object-cover" />
                     <div className="p-6"><div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{p.category} · {p.publish_date}</div><h3 className="font-display text-xl text-[#4A2530] mt-2">{p.title}</h3><p className="text-sm text-[#5C4E52] mt-2">{p.excerpt}</p><span className="mt-4 inline-flex items-center gap-1 text-sm text-[#E62E6B]">Read more <ArrowUpRight size={14} /></span></div>
                   </TiltCard>
                 </Link>
