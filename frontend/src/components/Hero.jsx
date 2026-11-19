@@ -12,7 +12,7 @@ const Hero = ({ page }) => {
   return (
     <section id="top" className="relative overflow-hidden bg-[#F4F1EA] grain min-h-[100svh] flex flex-col justify-center" data-testid="hero-section">
       <div className="absolute inset-0 z-0">
-        <img src={heroVideoPoster} alt="Rekha Krishnamurthy bridal makeup" className="w-full h-full object-cover" data-testid="hero-mobile-image" />
+        <img src={heroVideoPoster} alt="Rekha Krishnamurthy, best makeup artist in Bangalore, bridal look" className="w-full h-full object-cover" data-testid="hero-mobile-image" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#F4F1EA]/60 via-[#F4F1EA]/15 to-transparent md:hidden" />
         <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-[#F4F1EA] via-[#F4F1EA]/92 to-[#F4F1EA]/5" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_38%,rgba(230,46,107,0.24),transparent_55%)] md:bg-[radial-gradient(circle_at_78%_45%,rgba(230,46,107,0.14),transparent_60%)]" />

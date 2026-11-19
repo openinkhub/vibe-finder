@@ -154,6 +154,7 @@ export const instagramFeed = [
 ];
 
 export const faqs = [
+  { q: "How do I choose the best makeup artist in Bangalore for my wedding?", a: "Look beyond the portfolio. The best makeup artist for you is the one who listens to what you want, understands your skin and features, and plans the look around your outfit, venue lighting and wedding schedule. Ask about the products used, hygiene practices, HD or airbrush options and what is included. Rekha starts every booking with a consultation, so you know exactly what to expect before the big day." },
   { q: "How far in advance should I book?", a: "For wedding-season dates (Oct–Feb), 4–6 months' notice keeps your date and trial slot secure. Off-season bookings can often be confirmed within a few weeks." },
   { q: "HD vs. Airbrush makeup — what's the difference?", a: "HD makeup uses light-reflecting, high-definition products applied by hand for a flawless close-up finish. Airbrush sprays a fine, even mist for an ultra-lightweight, long-wear base — ideal for full-day weddings and hot, humid weather." },
   { q: "Do you travel for destination weddings?", a: "Yes. Rekha travels across India for destination weddings and fashion assignments. Travel and stay are scoped transparently at consultation." },

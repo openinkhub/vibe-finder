@@ -87,6 +87,8 @@ function parse(html) {
   });
   sections.push({ words: curWords });
   content.find("script, style").remove();
+  // Separate adjacent elements so "near you" + "Best Makeup…" doesn't read as "youBest".
+  content.find("*").each((_, el) => { $(el).append(" "); });
   const text = content.text().replace(/\s+/g, " ").trim();
   const faqHeadings = content.find("h3, h4, summary, button, dt").filter((_, el) => /\?\s*$/.test($(el).text().trim())).length;
   return { metaAuthor: meta.author, faqPairs: extractFaq($), meta, jsonld, jsonldErrors, schemaTypes: [...types], faqSchemaQuestions: faqQ, hasAuthorSchema, allLinks: split(all), allInternalHrefs: all.filter((l) => l.href.startsWith("/")).map((l) => l.href), contentLinks: split(contentLinks), images, h1s, subheadings, h2s: subheadings.length, paragraphs, sections, text, faqHeadings, firstParagraph: paragraphs[0] || "", rootTextLen: $("#root").text().trim().length };
@@ -136,8 +138,8 @@ async function buildReport({ force = false } = {}) {
     Object.assign(it, parse(it.html));
     delete it.html;
     const o = it.override;
-    it.keyphrase = (o.keyphrase || (it.kind === "post" ? it.data.focus_keyword : "") || "").trim();
-    it.related = o.related_keywords || [];
+    it.keyphrase = (o.keyphrase || (it.kind === "post" ? it.data.focus_keyword : it.data.keyphrase) || "").trim();
+    it.related = o.related_keywords || (it.kind === "page" && it.data.relatedKeywords) || [];
     it.author = it.metaAuthor || (/Rekha Krishnamurthy|By Rekha/i.test(it.text) || it.kind === "post" ? "Rekha Krishnamurthy" : "");
     it.noindex = /noindex/.test(it.meta.robots) || !!o.noindex;
     it.nofollow = /nofollow/.test(it.meta.robots) || !!o.nofollow;

@@ -32,8 +32,8 @@ const Areas = () => (
     <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 grid lg:grid-cols-[1fr_1.4fr] gap-8 lg:gap-12 items-center">
       <Reveal>
         <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Best service, near you</span>
-        <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Areas we serve across Bangalore</h2>
-        <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52] max-w-md">Bridal makeup Bangalore-wide, with a home base close to South Bangalore's wedding halls and studios — and travel across Karnataka.</p>
+        <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Best Makeup Artist in Bangalore, Wherever You Are</h2>
+        <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52] max-w-md">Looking for a makeup artist near me? Rekha covers all of Bangalore, with a home base close to South Bangalore's wedding halls and studios, and travels across Karnataka.</p>
       </Reveal>
       <div className="space-y-7">
         <Row title="Service Area" items={pagesByGroup("Service area")} testid="areas-service-area" />

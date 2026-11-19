@@ -34,7 +34,9 @@ const match = (text, kw) => {
 };
 const has = (text, kw) => match(text, kw);
 const any = (list, kw) => { const m = list.map((t) => match(t, kw)); return m.includes("exact") ? "exact" : m.find(Boolean) || null; };
-const count = (text, kw) => T.keyphraseStats(toks(text).join(" "), core(kw)).count;
+// Counting ignores "in", as Google does: "makeup artist bangalore" = "makeup artist in bangalore".
+const noIn = (t) => t.split(" ").filter((x) => x && x !== "in").join(" ");
+const count = (text, kw) => T.keyphraseStats(noIn(toks(text).join(" ")), noIn(core(kw))).count;
 
 function onPage(item, kw) {
   if (!item) return null;
@@ -47,7 +49,7 @@ function onPage(item, kw) {
     ["subheading", "A subheading (H2/H3)", any(item.subheadings, kw)],
     ["intro", "First paragraph", has(item.firstParagraph, kw)],
     ["alt", "An image description (alt)", any(item.images.map((im) => im.alt), kw)],
-    ["focus", "Set as the page's focus keyphrase", T.normKp(item.keyphrase) === T.normKp(kw)],
+    ["focus", "Set as the page's focus or related keyphrase", T.normKp(item.keyphrase) === T.normKp(kw) || (item.related || []).some((r) => T.normKp(r) === T.normKp(kw))],
   ].filter(([, label]) => label).map(([id, label, m]) => ({ id, label, ok: !!m, detail: m === "words" ? "words, not the exact phrase" : undefined }));
   const mentions = count(item.text, kw);
   signals.push({ id: "body", label: "Used in the text (3+ times)", ok: mentions >= 3, detail: `${mentions}×` });
