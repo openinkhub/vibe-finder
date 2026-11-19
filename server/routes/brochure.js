@@ -56,6 +56,9 @@ router.post("/brochure/request", ah(async (req, res) => {
   if (!p || p.length > 120) throw new HttpError(422, "path is required");
   const email = String(b.email || "");
   if (email.length < 3 || email.length > 160) throw new HttpError(422, "email is required");
+  const phone = String(b.phone || "").trim().slice(0, 40);
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length < 10 || digits.length > 15) throw new HttpError(422, "Enter a valid mobile number");
   const mode = String(b.mode || "download");
   const slug = p.startsWith("/") ? p : `/${p}`;
   const data = BROCHURE[slug];
@@ -64,7 +67,7 @@ router.post("/brochure/request", ah(async (req, res) => {
   if (!email.includes("@")) throw new HttpError(400, "Enter a valid email address");
 
   const pdf = await buildPdf(data);
-  const lead = { id: uuid(), path: slug, title: data.title, name: b.name ? String(b.name).slice(0, 120) : null, email, mode, created_at: nowIso() };
+  const lead = { id: uuid(), path: slug, title: data.title, name: b.name ? String(b.name).slice(0, 120) : null, phone, email, mode, created_at: nowIso() };
   await getDb().collection("brochure_leads").insertOne({ ...lead });
   sendBrochureAlert(lead);
 

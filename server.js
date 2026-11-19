@@ -172,9 +172,36 @@ async function initDatabase() {
     await blog.seedBlog();
   }
   await blog.getOrCreateApiKey();
+  await migrateMovedPages(db).catch((e) => console.error("Moved-page migration failed:", e.message));
   console.log("Database ready");
   // Copy images from the old site in the background (only when FILES_FALLBACK_ORIGIN is set).
   syncReferencedFiles().catch((e) => console.error("Image sync failed:", e.message));
+}
+
+// Pages that moved to a new URL (pages.json "formerPath") take their SEO settings and hero
+// image with them; the old URL is now a guide, so its page-specific SEO fields are cleared.
+// Runs once per move set.
+async function migrateMovedPages(db) {
+  const moved = R.PAGES.filter((p) => p.formerPath);
+  if (!moved.length) return;
+  const key = "migrated_moves_" + require("crypto").createHash("md5").update(moved.map((p) => p.formerPath + ">" + p.path).join("|")).digest("hex").slice(0, 10);
+  if (await db.collection("settings").findOne({ key })) return;
+  const PAGE_FIELDS = ["seo_title", "meta_description", "keyphrase", "related_keywords", "og_title", "og_description", "og_image", "excerpt", "canonical", "custom_schema"];
+  for (const p of moved) {
+    for (const name of ["seo_meta", "page_images"]) {
+      const c = db.collection(name);
+      const old = await c.findOne({ path: p.formerPath });
+      if (old && !(await c.findOne({ path: p.path }))) {
+        const { _id, ...rest } = old;
+        await c.insertOne({ ...rest, path: p.path });
+      }
+    }
+    const unset = Object.fromEntries(PAGE_FIELDS.map((f) => [f, ""]));
+    await db.collection("seo_meta").updateOne({ path: p.formerPath }, { $unset: unset });
+  }
+  await db.collection("settings").insertOne({ key, value: new Date().toISOString() });
+  R.invalidate();
+  console.log(`Moved-page migration done for ${moved.length} pages`);
 }
 
 async function initWithRetry(attempt = 1) {

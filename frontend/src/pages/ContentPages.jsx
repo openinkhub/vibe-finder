@@ -12,7 +12,7 @@ import { servicePages, locationPages, staticPages, legalLinks } from "../content
 import { getPage, pagesByGroup, headerMenu, legalKeyByPath, BOOKING_PATH, enquiryServiceFor } from "../lib/pages";
 import { BatchBanner } from "../components/BatchBanner";
 import { PortfolioGallery } from "./PortfolioPage";
-import { RichBody } from "../components/RichBody";
+import { RichBody, Block, bold } from "../components/RichBody";
 import { communityFaq } from "../content/bodies/shared";
 import { usePageBody } from "../lib/pageBody";
 import { BrochureCta } from "../components/BrochureCta";
@@ -184,6 +184,78 @@ export const TestimonialsPage = () => {
   );
 };
 
+
+const GuideCards = ({ items, testid = "guide-cards" }) => {
+  const map = usePageImages();
+  return (
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" data-testid={testid}>
+      {items.map((g, i) => (
+        <Reveal key={g.path} delay={i * 0.05}>
+          <Link to={g.path} className="block h-full" data-testid={`guide-card-${g.path.slice(1)}`}>
+            <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full hover:border-[#E62E6B] transition-colors">
+              <img src={heroImage(g, map)} alt={heroImageAlt(g, map)} loading="lazy" width="600" height="300" className="w-full h-40 object-cover" />
+              <div className="p-5"><div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{g.eyebrow}</div><h3 className="font-display text-lg text-[#4A2530] mt-2 leading-snug">{g.h1}</h3></div>
+            </TiltCard>
+          </Link>
+        </Reveal>
+      ))}
+    </div>
+  );
+};
+
+const fmtDate = (d) => { try { return new Date(d).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }); } catch { return d; } };
+
+// Blog-style guide: an article written for the search term in its URL, pointing readers
+// to the bridal makeup service, the home page and the self-grooming classes.
+export const GuidePage = () => {
+  const { page, pathname } = usePage();
+  const body = usePageBody(pathname);
+  const map = usePageImages();
+  if (!page) return <Navigate to="/" replace />;
+  const all = pagesByGroup("Guides");
+  const at = all.findIndex((g) => g.path === pathname);
+  const related = [1, 2, 3].map((k) => all[(at + k) % all.length]).filter((g) => g && g.path !== pathname);
+  const words = body ? JSON.stringify(body).split(/\s+/).length : 0;
+  const link = "inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-colors";
+  return (
+    <PageShell page={page} title={page.name} faq={body?.faq}>
+      <article className="max-w-3xl mx-auto px-5 sm:px-6 pb-14" data-testid="guide-article">
+        <nav className="text-xs text-[#8B7F82] flex flex-wrap gap-1.5" aria-label="Breadcrumb"><Link to="/" className="hover:text-[#E62E6B]">Home</Link><span>›</span><Link to="/blog" className="hover:text-[#E62E6B]">Guides</Link></nav>
+        <span className="block mt-6 font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">{page.eyebrow}</span>
+        <h1 className="font-display text-[#4A2530] text-3xl sm:text-5xl leading-[1.08] mt-3" data-testid="guide-h1">{page.h1}</h1>
+        <p className="mt-5 text-base sm:text-lg text-[#5C4E52] leading-relaxed">{bold(page.heroSub)}</p>
+        <div className="mt-5 text-xs text-[#8B7F82] font-mono uppercase tracking-wider">By <Link to="/about-us" className="text-[#4A2530] hover:text-[#E62E6B]">Rekha Krishnamurthy</Link> · {fmtDate(page.date)}{words ? ` · ${Math.max(3, Math.round(words / 200))} min read` : ""}</div>
+        <img src={heroImage(page, map)} alt={heroImageAlt(page, map)} width="1000" height="560" className="mt-8 w-full h-[240px] sm:h-[380px] object-cover rounded-[24px]" />
+        {body ? (
+          <div className="mt-10 space-y-12" data-testid="guide-body">{body.sections.map((s2, i) => <Block key={s2.h} s={s2} i={i} />)}</div>
+        ) : <div className="min-h-[60vh]" />}
+        {body?.faq && (
+          <section className="mt-12" data-testid="guide-faq">
+            <h2 className="font-display text-2xl sm:text-3xl text-[#4A2530]">Frequently asked questions</h2>
+            <div className="mt-5 space-y-3">{body.faq.map(([q, a]) => <div key={q} className="bg-white rounded-2xl border border-[#F1DCE3] px-5 py-4"><h3 className="font-display text-base sm:text-lg text-[#4A2530]">{q}</h3><p className="text-sm text-[#5C4E52] mt-2 leading-relaxed">{a}</p></div>)}</div>
+          </section>
+        )}
+        <div className="mt-12 bg-[#FBE9F0] rounded-3xl p-6 sm:p-8 border border-[#F1DCE3]" data-testid="guide-cta">
+          <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#E62E6B]">Work with Rekha</div>
+          <p className="mt-2 font-display text-2xl text-[#4A2530]">Bridal makeup and self-grooming classes in Bangalore</p>
+          <p className="mt-2 text-sm text-[#5C4E52]">Plan your wedding look with a personal consultation, or learn to do your own makeup in a small-batch self-grooming class.</p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link to="/" className={`${link} bg-[#E62E6B] text-white hover:bg-[#C81F57]`}>Bridal Makeup in Bangalore <ArrowUpRight size={16} /></Link>
+            <Link to="/self-grooming-classes" className={`${link} border border-[#E62E6B] text-[#E62E6B] hover:bg-[#E62E6B] hover:text-white`}>Self-Grooming Classes <ArrowUpRight size={16} /></Link>
+          </div>
+        </div>
+        <div className="mt-10"><AuthorBio /></div>
+      </article>
+      {related.length > 0 && (
+        <Section>
+          <h2 className="font-display text-2xl sm:text-3xl text-[#4A2530] mb-6">More bridal makeup guides</h2>
+          <GuideCards items={related} testid="guide-related" />
+        </Section>
+      )}
+    </PageShell>
+  );
+};
+
 export const BlogPage = () => {
   const { page } = usePage();
   const [posts, setPosts] = useState([]);
@@ -207,6 +279,12 @@ export const BlogPage = () => {
             ))}
           </div>
         </Section>
+        {pagesByGroup("Guides").length > 0 && (
+          <Section>
+            <h2 className="font-display text-3xl sm:text-4xl text-[#4A2530] mb-6">Bridal makeup &amp; self-grooming guides</h2>
+            <GuideCards items={pagesByGroup("Guides")} />
+          </Section>
+        )}
       </div>
     </PageShell>
   );

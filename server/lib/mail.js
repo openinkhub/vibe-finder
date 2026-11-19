@@ -70,7 +70,7 @@ async function sendBrochureAlert(lead) {
   const html = `
     <table style="font-family:Georgia,serif;border-collapse:collapse;background:#FBE9F0;border-radius:16px;padding:12px">
       <tr><td colspan="2" style="padding:12px;font-size:20px;color:#E62E6B">Brochure request — ${esc(lead.title || "")}</td></tr>
-      ${row("Name", lead.name)}${row("Email", lead.email)}${row("Mode", lead.mode)}
+      ${row("Name", lead.name)}${row("Mobile", lead.phone)}${row("Email", lead.email)}${row("Mode", lead.mode)}
     </table>`;
   try {
     return await send({ from: sender(), to: [process.env.ALERT_TO_EMAIL], subject: `Brochure request: ${lead.title || ""}`, html });

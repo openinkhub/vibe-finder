@@ -27,6 +27,7 @@ const ContactPage = lazyRoute(contentPages, "ContactPage");
 const TestimonialsPage = lazyRoute(contentPages, "TestimonialsPage");
 const BlogPage = lazyRoute(contentPages, "BlogPage");
 const LegalPage = lazyRoute(contentPages, "LegalPage");
+const GuidePage = lazyRoute(contentPages, "GuidePage");
 
 // Called before the first render so the current route's chunk is already in memory.
 export const preloadRoute = (path) => {
@@ -38,7 +39,7 @@ export const preloadRoute = (path) => {
   if (p.startsWith("/blog/")) return BlogPostPage.preload();
   if (p === "/") return Promise.resolve();
   // Every other page (service, academy, legal, contact, blog list) lives in the content-pages chunk.
-  return Promise.all([SheetPage.preload(), ContactPage.preload(), TestimonialsPage.preload(), BlogPage.preload(), LegalPage.preload(), loadPageBody(p)]);
+  return Promise.all([SheetPage.preload(), ContactPage.preload(), TestimonialsPage.preload(), BlogPage.preload(), LegalPage.preload(), GuidePage.preload(), loadPageBody(p)]);
 };
 
 // The home page's sections below the first screen load as their own chunk, once the browser
@@ -103,7 +104,7 @@ function App() {
         <RouteTracker />
         <Suspense fallback={<div className="min-h-screen" />}>
         <Routes>
-          {allPages.map((p) => <Route key={p.path} path={p.path} element={special[p.path] || (legalKeyByPath[p.path] ? <LegalPage /> : <SheetPage />)} />)}
+          {allPages.map((p) => <Route key={p.path} path={p.path} caseSensitive element={special[p.path] || (legalKeyByPath[p.path] ? <LegalPage /> : p.group === "Guides" ? <GuidePage /> : <SheetPage />)} />)}
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/look-lab" element={<Navigate to="/corporate-professional-makeup-services" replace />} />

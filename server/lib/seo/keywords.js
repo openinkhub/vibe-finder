@@ -14,6 +14,7 @@ const STARTER = [
   { keyword: "best makeup artist", page: "/", volume: 1000 },
   { keyword: "bridal makeup artist in bangalore", page: "/bridal-makeup-artist-bangalore", volume: 590 },
   { keyword: "best makeup artist in bangalore", page: "/", volume: 480 },
+  { keyword: "self grooming classes", page: "/self-grooming-classes", volume: 0 },
 ];
 
 // Lower-case word list with Bengaluru folded into Bangalore, so either spelling counts.

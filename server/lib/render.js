@@ -101,7 +101,8 @@ async function pageHtml(urlPath) {
   const raw = readHtml(file);
   if (!raw) return null;
   const ov = (await getOverrides())[urlPath] || {};
-  const hero = (await heroImages())[urlPath];
+  const heroes = await heroImages();
+  const hero = heroes[urlPath] || (PAGE_BY_PATH[urlPath] && PAGE_BY_PATH[urlPath].formerPath ? heroes[PAGE_BY_PATH[urlPath].formerPath] : undefined);
   const $ = cheerio.load(raw);
   applyOverrides($, ov, { title: page.metaTitle, description: page.metaDescription, canonical: page.canonical, image: "/og-image.webp" });
   if (!$('meta[name="author"]').length) $("head").append('<meta name="author" content="Rekha Krishnamurthy">');
@@ -179,7 +180,7 @@ async function blogIndexHtml(urlPath) {
   const listed = posts.filter((p) => !(ov[`/blog/${p.slug}`] || {}).noindex);
   const $ = cheerio.load(base);
   const h1 = urlPath === "/archive" ? "Makeup Advice Archive" : "Makeup & Bridal Beauty Journal";
-  $("#root").html(`<main class="prerender"><h1>${h1}</h1><ul>${listed.map((p) => `<li><a href="/blog/${esc(p.slug)}">${esc(p.title)}</a> <time datetime="${esc(p.publish_date)}">${esc(p.publish_date)}</time><p>${esc(p.excerpt)}</p></li>`).join("")}</ul></main>`);
+  $("#root").html(`<main class="prerender"><h1>${h1}</h1><ul>${listed.map((p) => `<li><a href="/blog/${esc(p.slug)}">${esc(p.title)}</a> <time datetime="${esc(p.publish_date)}">${esc(p.publish_date)}</time><p>${esc(p.excerpt)}</p></li>`).join("")}</ul>${urlPath === "/blog" ? `<h2>Bridal makeup &amp; self-grooming guides</h2><ul>${PAGES.filter((g) => g.group === "Guides").map((g) => `<li><a href="${esc(g.path)}">${esc(g.h1)}</a></li>`).join("")}</ul>` : ""}</main>`);
   return $.html();
 }
 

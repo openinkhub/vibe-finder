@@ -116,6 +116,21 @@ export const useJsonLd = (page, faq) => {
         description: page.metaDescription,
         provider: { "@type": "Organization", name: "Rekha Krishnamurthy Makeup & Academy", sameAs: SITE_URL },
       });
+    } else if (page.group === "Guides") {
+      injectJsonLd("ld-json-entity", {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: page.h1 || page.name,
+        description: page.metaDescription,
+        url: page.canonical,
+        mainEntityOfPage: page.canonical,
+        image: page.image,
+        datePublished: page.date,
+        dateModified: page.date,
+        author: AUTHOR_PERSON,
+        publisher: { "@id": `${SITE_URL}/#organization` },
+        keywords: [page.keyphrase, ...(page.relatedKeywords || [])].filter(Boolean).join(", "),
+      });
     } else if (page.path === "/about-us") {
       injectJsonLd("ld-json-entity", { "@context": "https://schema.org", ...AUTHOR_PERSON });
     } else {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FileText, Download, Mail, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { api, errorText } from "../lib/api";
+import { enquiryMessage, openWhatsApp, PHONE_PATTERN } from "../lib/whatsapp";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "./ui/dialog";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
@@ -11,26 +12,28 @@ export const BrochureCta = ({ page }) => {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [mode, setMode] = useState("download");
   const [busy, setBusy] = useState(false);
   const isCourse = page.group === "Academy";
 
   const submit = async (e) => {
     e.preventDefault();
+    openWhatsApp(enquiryMessage(`I've requested the ${page.name} brochure.`, [["Name", name], ["Mobile", phone], ["Email", email]]));
     setBusy(true);
     try {
       if (mode === "download") {
-        const res = await api.post("/brochure/request", { path: page.path, name: name || null, email, mode }, { responseType: "blob" });
+        const res = await api.post("/brochure/request", { path: page.path, name: name || null, phone, email, mode }, { responseType: "blob" });
         const url = URL.createObjectURL(new Blob([res.data], { type: "application/pdf" }));
         const a = document.createElement("a");
         a.href = url; a.download = `${page.name.replace(/\s+/g, "-")}-Brochure.pdf`; document.body.appendChild(a); a.click(); a.remove();
         URL.revokeObjectURL(url);
         toast.success("Brochure downloaded!");
       } else {
-        await api.post("/brochure/request", { path: page.path, name: name || null, email, mode });
+        await api.post("/brochure/request", { path: page.path, name: name || null, phone, email, mode });
         toast.success("Brochure sent to your email!");
       }
-      setOpen(false); setEmail(""); setName("");
+      setOpen(false); setEmail(""); setName(""); setPhone("");
     } catch (err) { toast.error(errorText(err)); } finally { setBusy(false); }
   };
 
@@ -51,12 +54,16 @@ export const BrochureCta = ({ page }) => {
             <DialogContent data-testid="brochure-dialog">
               <DialogHeader>
                 <DialogTitle>Get the {page.name} brochure</DialogTitle>
-                <DialogDescription>Enter your email — download it now, or have it sent to your inbox.</DialogDescription>
+                <DialogDescription>Enter your mobile number and email — download it now, or have it sent to your inbox.</DialogDescription>
               </DialogHeader>
               <form onSubmit={submit} className="space-y-4">
                 <div>
                   <Label htmlFor="brochure-name">Name (optional)</Label>
                   <input id="brochure-name" value={name} onChange={(e) => setName(e.target.value)} className="mt-1.5 w-full px-4 py-2.5 rounded-xl border border-[#F1DCE3] focus:outline-none focus:border-[#E62E6B]" data-testid="brochure-name-input" />
+                </div>
+                <div>
+                  <Label htmlFor="brochure-phone">Mobile number *</Label>
+                  <input id="brochure-phone" type="tel" inputMode="tel" autoComplete="tel" required pattern={PHONE_PATTERN} title="Enter a 10-digit mobile number" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 98XXX XXXXX" className="mt-1.5 w-full px-4 py-2.5 rounded-xl border border-[#F1DCE3] focus:outline-none focus:border-[#E62E6B]" data-testid="brochure-phone-input" />
                 </div>
                 <div>
                   <Label htmlFor="brochure-email">Email</Label>

@@ -85,7 +85,7 @@ export const servicePages = [
     faq: [["Do you have experience working backstage at fashion shows?", "Yes — backstage and runway assignments across Bangalore fashion weeks and designer showcases."], ["Can fashion makeup be adapted for a personal shoot, not just a show?", "Yes — the same techniques apply to personal fashion shoots and portfolios."]],
   },
   {
-    slug: "south-indian-bridal-makeup-karnataka", menu: "Photo Shoot", eyebrow: "Camera-First Makeup", title: "Photo Shoot & Premium South Indian Bridal Makeup",
+    slug: "photoshoot-makeup-artist-bangalore", menu: "Photo Shoot", eyebrow: "Camera-First Makeup", title: "Photo Shoot & Premium South Indian Bridal Makeup",
     subtitle: "Pre-wedding shoots, portfolio sessions and traditional South Indian bridal looks — built for how the lens sees skin.",
     image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749?auto=format&fit=crop&w=1000&q=70", service: "Bridal",
     body: [
@@ -97,13 +97,13 @@ export const servicePages = [
 ];
 
 export const locationPages = [
-  { slug: "bridal-makeup-Bangalore", area: "HSR Layout", title: "Bridal Makeup Artist in HSR Layout, Bangalore", service: "Bridal", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9?auto=format&fit=crop&w=1000&q=70",
+  { slug: "bridal-makeup-hsr-layout", area: "HSR Layout", title: "Bridal Makeup Artist in HSR Layout, Bangalore", service: "Bridal", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9?auto=format&fit=crop&w=1000&q=70",
     body: ["Serving brides across HSR Layout and Sector 1–7 with on-site bridal, engagement and reception makeup. Early muhurtham slots, HD and airbrush finishes, and one bride per date.", "Popular venues we've worked at nearby include garden banquets in Agara and community halls along 27th Main; we plan travel and setup time around your venue and photographer."] },
-  { slug: "party-and-non-bridal-makeup-karnataka", area: "JP Nagar", title: "Party & Non-Bridal Makeup in JP Nagar", service: "Party", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6?auto=format&fit=crop&w=1000&q=70",
+  { slug: "party-makeup-jp-nagar", area: "JP Nagar", title: "Party & Non-Bridal Makeup in JP Nagar", service: "Party", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6?auto=format&fit=crop&w=1000&q=70",
     body: ["Our studio base is close to JP Nagar — the fastest slot for party, event and bridesmaid bookings across Phases 1–9, Sarakki and Puttenahalli.", "Group bookings for the bridal party, birthday glam and anniversary dinners, with HD/airbrush technique chosen for restaurant and flash lighting."] },
-  { slug: "best-bridal-makup-artist-in-bangalore", area: "Jayanagar", title: "Best Bridal Makeup Artist in Jayanagar, Bangalore", service: "Bridal", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749?auto=format&fit=crop&w=1000&q=70",
+  { slug: "bridal-makeup-artist-jayanagar", area: "Jayanagar", title: "Best Bridal Makeup Artist in Jayanagar, Bangalore", service: "Bridal", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749?auto=format&fit=crop&w=1000&q=70",
     body: ["Rated 5.0 on Google across 146 reviews — Jayanagar brides choose us for traditional South Indian bridal looks that photograph beautifully in temple and kalyana-mantapa lighting.", "From 4th Block to South End Circle, we arrive with a full kit, sanitised tools and a plan built at your free consultation."] },
-  { slug: "pre-wedding-makeup-artist", area: "Banashankari", title: "Pre-Wedding Photoshoot Makeup Artist — Banashankari", service: "Engagement", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51?auto=format&fit=crop&w=1000&q=70",
+  { slug: "pre-wedding-makeup-artist-banashankari", area: "Banashankari", title: "Pre-Wedding Photoshoot Makeup Artist — Banashankari", service: "Engagement", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51?auto=format&fit=crop&w=1000&q=70",
     body: ["Pre-wedding shoots around Banashankari, Turahalli forest and the Big Banyan Tree need makeup that survives sun, wind and outfit changes — that's exactly what we plan for.", "Multiple looks per shoot, photographer coordination and touch-ups on location."] },
 ];
 

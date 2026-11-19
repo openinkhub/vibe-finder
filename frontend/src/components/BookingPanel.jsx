@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { CalendarCheck, GraduationCap, Loader2, Check } from "lucide-react";
 import { toast } from "sonner";
 import { api, errorText } from "../lib/api";
+import { FaWhatsapp } from "react-icons/fa6";
+import { enquiryMessage, openWhatsApp, waLink, PHONE_PATTERN } from "../lib/whatsapp";
 import { enquiryServiceFor } from "../lib/pages";
 import { Reveal } from "./fx/Reveal";
 
@@ -12,15 +14,19 @@ export const BookingPanel = ({ page }) => {
   const [sent, setSent] = useState(false);
   const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
+  const [waText, setWaText] = useState("");
   const submit = async (e) => {
     e.preventDefault();
+    const text = enquiryMessage(isCourse ? `I'd like a seat in ${enquiryServiceFor(page)}.` : `I'd like to check availability for ${enquiryServiceFor(page)}.`, [["Name", form.name], ["Mobile", form.phone], ["Email", form.email], ["Message", form.message]]);
+    setWaText(text);
+    openWhatsApp(text);
     setSending(true);
     try {
       await api.post("/enquiries", { ...form, email: form.email || null, message: form.message || null, service: enquiryServiceFor(page), source: "form" });
       setSent(true);
       setForm({ name: "", phone: "", email: "", message: "" });
       toast.success(isCourse ? "You're on the list — we'll be in touch about your seat!" : "Got it — we'll confirm availability shortly!");
-      setTimeout(() => setSent(false), 6000);
+      setTimeout(() => setSent(false), 30000);
     } catch (err) { toast.error(errorText(err)); } finally { setSending(false); }
   };
 
@@ -39,10 +45,10 @@ export const BookingPanel = ({ page }) => {
             <p className={`text-sm mt-3 ${isCourse ? "text-white/75" : "text-[#5C4E52]"}`}>{isCourse ? "Seats are limited per batch. Leave your details and we'll hold a spot while you decide." : "Share your details and we'll confirm your date across Bangalore."}</p>
           </div>
           <form onSubmit={submit} className="space-y-3" data-testid="booking-panel-form">
-            {sent && <div className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm ${isCourse ? "bg-white/10 text-white" : "bg-[#EAF7EF] text-[#1c7a45]"}`} data-testid="booking-panel-success"><Check size={16} /> Thanks! We'll be in touch shortly.</div>}
+            {sent && <div className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm ${isCourse ? "bg-white/10 text-white" : "bg-[#EAF7EF] text-[#1c7a45]"}`} data-testid="booking-panel-success"><Check size={16} className="shrink-0" /> <span className="flex-1">Thanks! We'll be in touch shortly.</span>{waText && <a href={waLink(waText)} target="_blank" rel="noreferrer" className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#25D366] text-white text-xs font-medium"><FaWhatsapp size={14} /> Send on WhatsApp</a>}</div>}
             <div className="grid sm:grid-cols-2 gap-3">
               <input name="name" required placeholder="Full name" value={form.name} onChange={handle} className={inputCls} data-testid="booking-panel-name-input" />
-              <input name="phone" required placeholder="Phone / WhatsApp" value={form.phone} onChange={handle} className={inputCls} data-testid="booking-panel-phone-input" />
+              <input name="phone" required pattern={PHONE_PATTERN} type="tel" inputMode="tel" autoComplete="tel" title="Enter a 10-digit mobile number" placeholder="Mobile / WhatsApp number *" value={form.phone} onChange={handle} className={inputCls} data-testid="booking-panel-phone-input" />
             </div>
             <input type="email" name="email" placeholder="Email (optional)" value={form.email} onChange={handle} className={inputCls} data-testid="booking-panel-email-input" />
             <textarea name="message" rows={2} placeholder={isCourse ? "Any questions about the batch?" : "Tell us about your event (optional)"} value={form.message} onChange={handle} className={`${inputCls} resize-none`} data-testid="booking-panel-message-input" />

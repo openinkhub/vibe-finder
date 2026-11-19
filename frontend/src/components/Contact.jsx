@@ -6,6 +6,7 @@ import { brand } from "../mock/mock";
 import { BOOKING_PATH, COURSE_SERVICES } from "../lib/pages";
 import { scrollToId } from "./Navbar";
 import { api, errorText, imgUrl } from "../lib/api";
+import { enquiryMessage, openWhatsApp, waLink, PHONE_PATTERN } from "../lib/whatsapp";
 import { VoiceEnquiry } from "./VoiceEnquiry";
 import { BookMeCompact } from "./BookMeCompact";
 import { Availability } from "./Availability";
@@ -30,9 +31,13 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
     return () => { window.removeEventListener("focus", sync); clearInterval(id); };
   }, []);
 
+  const [waText, setWaText] = useState("");
   const submit = async (e) => {
     e.preventDefault();
     setError("");
+    const text = enquiryMessage("I've sent an enquiry on your website.", [["Name", form.name], ["Mobile", form.phone], ["Email", form.email], ["Service", form.service], ["Event date", form.date], ["Look", look], ["Message", form.message]]);
+    setWaText(text);
+    openWhatsApp(text);
     setSending(true);
     try {
       await api.post("/enquiries", { ...form, email: form.email || null, date: form.date || null, message: form.message || null, look: look || null, look_image: lookImage || null, source, terms_accepted: requireTerms ? true : null });
@@ -44,7 +49,7 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
       setLook("");
       setLookImage("");
       setSource("form");
-      setTimeout(() => setSent(false), 8000);
+      setTimeout(() => setSent(false), 30000);
     } catch (err) {
       setError(errorText(err, "Couldn't send your enquiry — please try again or WhatsApp us."));
     } finally {
@@ -97,7 +102,7 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
 
         <Reveal delay={0.15} className="min-w-0">
           <TiltCard max={3} lift={false} glare={false} className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-[#F1DCE3] shadow-[0_30px_80px_-40px_rgba(230,46,107,0.45)]">
-            {sent && <div className="mb-5 flex items-center gap-2 bg-[#EAF7EF] text-[#1c7a45] px-4 py-3 rounded-xl text-sm" data-testid="contact-success"><Check size={16} /> Thank you! Your enquiry has been received. We'll reach out shortly.</div>}
+            {sent && <div className="mb-5 flex items-center gap-2 bg-[#EAF7EF] text-[#1c7a45] px-4 py-3 rounded-xl text-sm" data-testid="contact-success"><Check size={16} className="shrink-0" /> <span className="flex-1">Thank you! Your enquiry has been received. We'll reach out shortly.</span>{waText && <a href={waLink(waText)} target="_blank" rel="noreferrer" className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#25D366] text-white text-xs font-medium" data-testid="contact-whatsapp"><FaWhatsapp size={14} /> Send on WhatsApp</a>}</div>}
             {error && <div className="mb-5 flex items-center gap-2 bg-[#FBE9F0] text-[#C81F57] px-4 py-3 rounded-xl text-sm" data-testid="contact-error"><X size={16} /> {error}</div>}
             {look && (
               <div className="mb-5 flex items-center justify-between gap-2 bg-[#FBE9F0] text-[#4A2530] px-4 py-3 rounded-xl text-sm" data-testid="contact-look-chip">
@@ -114,7 +119,7 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
                 <div><label className="block text-sm text-[#5C4E52] mb-2">Email</label><input type="email" name="email" value={form.email} onChange={handle} placeholder="you@email.com" className={inputCls} data-testid="contact-email-input" /></div>
               </div>
               <div className="grid sm:grid-cols-2 gap-5">
-                <div><label className="block text-sm text-[#5C4E52] mb-2">Phone</label><input name="phone" value={form.phone} onChange={handle} required placeholder="+91" className={inputCls} data-testid="contact-phone-input" /></div>
+                <div><label className="block text-sm text-[#5C4E52] mb-2">Mobile number *</label><input name="phone" value={form.phone} onChange={handle} required pattern={PHONE_PATTERN} type="tel" inputMode="tel" autoComplete="tel" title="Enter a 10-digit mobile number" placeholder="+91 98XXX XXXXX" className={inputCls} data-testid="contact-phone-input" /></div>
                 <div><label className="block text-sm text-[#5C4E52] mb-2">Service</label>
                   <select name="service" value={form.service} onChange={handle} className={inputCls} data-testid="contact-service-select">
                     <optgroup label="Makeup">{["Bridal", "Engagement", "Non-Bridal", "Party", "Groom", "Editorial", "Fashion", "Photo Shoot", "Personal Shopping"].map((s) => <option key={s}>{s}</option>)}</optgroup>

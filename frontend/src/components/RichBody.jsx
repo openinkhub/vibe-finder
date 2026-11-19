@@ -8,7 +8,19 @@ import { AuthorBio } from "./PageShell";
 import { scrollToId } from "./Navbar";
 
 const H = ({ children }) => <h3 className="font-display text-2xl sm:text-3xl text-[#4A2530]">{children}</h3>;
-const bold = (t) => (typeof t === "string" && t.includes("**") ? t.split(/\*\*(.+?)\*\*/).map((x, i) => (i % 2 ? <strong key={i} className="font-semibold text-[#4A2530]">{x}</strong> : x)) : t);
+// Inline formatting in body text: **bold** and [link text](/path).
+const strong = (t, k) => (t.includes("**") ? t.split(/\*\*(.+?)\*\*/).map((x, i) => (i % 2 ? <strong key={`${k}-${i}`} className="font-semibold text-[#4A2530]">{x}</strong> : x)) : t);
+export const bold = (t) => {
+  if (typeof t !== "string" || (!t.includes("**") && !t.includes("]("))) return t;
+  const out = [];
+  t.split(/(\[[^\]]+\]\([^)\s]+\))/).forEach((part, i) => {
+    const m = part.match(/^\[([^\]]+)\]\(([^)\s]+)\)$/);
+    if (!m) { out.push(strong(part, i)); return; }
+    const cls = "text-[#E62E6B] underline decoration-[#E62E6B]/40 underline-offset-2 hover:decoration-[#E62E6B]";
+    out.push(m[2].startsWith("/") ? <Link key={i} to={m[2]} className={cls}>{m[1]}</Link> : <a key={i} href={m[2]} className={cls}>{m[1]}</a>);
+  });
+  return out;
+};
 const P = ({ children }) => <p className="text-sm sm:text-base text-[#5C4E52] leading-relaxed">{bold(children)}</p>;
 
 const Cta = ({ c }) => {
@@ -21,14 +33,14 @@ const Cta = ({ c }) => {
     : <Link to={c.to} className={cls} data-testid={tid}>{c.label} <ArrowUpRight size={16} /></Link>;
 };
 
-const Block = ({ s, i }) => (
+export const Block = ({ s, i }) => (
   <Reveal delay={Math.min(i, 3) * 0.05}>
     <div className="space-y-4 scroll-mt-28" id={s.terms ? "booking-terms" : undefined} data-testid={`body-section-${i}`}>
       <H>{s.h}</H>
       {s.sub && <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#E62E6B]">{s.sub}</p>}
       {s.quote && <p className="font-display italic text-xl sm:text-2xl text-[#E62E6B] border-l-2 border-[#E62E6B] pl-4">{s.quote}</p>}
       {s.p?.map((t, k) => <P key={k}>{t}</P>)}
-      {s.bullets && <ul className="space-y-2.5">{s.bullets.map((b) => <li key={b} className="flex gap-3 text-sm sm:text-base text-[#5C4E52]"><Check size={18} className="text-[#E62E6B] shrink-0 mt-0.5" />{b}</li>)}</ul>}
+      {s.bullets && <ul className="space-y-2.5">{s.bullets.map((b) => <li key={b} className="flex gap-3 text-sm sm:text-base text-[#5C4E52]"><Check size={18} className="text-[#E62E6B] shrink-0 mt-0.5" /><span>{bold(b)}</span></li>)}</ul>}
       {s.donts && <ul className="space-y-2.5">{s.donts.map((b) => <li key={b} className="flex gap-3 text-sm sm:text-base text-[#5C4E52]"><X size={18} className="text-[#8B7F82] shrink-0 mt-0.5" />{b}</li>)}</ul>}
       {s.chips && <div className="flex flex-wrap items-center gap-2">{s.chips.map((c, k) => <React.Fragment key={c}>{k > 0 && <ArrowRight size={14} className="text-[#F4B7CE]" />}<span className="px-4 py-2 rounded-full bg-white border border-[#F1DCE3] text-sm text-[#4A2530]">{c}</span></React.Fragment>)}</div>}
       {s.after?.map((t, k) => <P key={k}>{t}</P>)}

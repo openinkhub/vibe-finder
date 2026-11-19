@@ -8,6 +8,14 @@ const OUT = path.join(__dirname, "..", "src", "content", "bodies");
 const code = fs.readFileSync(SRC, "utf8").replace(/^export const /gm, "const ");
 // eslint-disable-next-line no-new-func
 const { pageBodies, communityFaq } = new Function(`${code}\nreturn { pageBodies, communityFaq };`)();
+// Blog-style guides at the older URLs (src/content/guideBodies.js).
+const gcode = fs.readFileSync(path.join(__dirname, "..", "src", "content", "guideBodies.js"), "utf8").replace(/^export const /gm, "const ");
+// eslint-disable-next-line no-new-func
+const { guideBodies } = new Function(`${gcode}\nreturn { guideBodies };`)();
+for (const [k, v] of Object.entries(guideBodies)) {
+  if (pageBodies[k]) throw new Error(`${k} has both a page body and a guide body`);
+  pageBodies[k] = v;
+}
 
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });

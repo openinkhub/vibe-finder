@@ -23,6 +23,8 @@ router.post("/enquiries", ah(async (req, res) => {
     terms_accepted: typeof b.terms_accepted === "boolean" ? b.terms_accepted : null,
     id: uuid(), status: "new", seen: false, created_at: now, updated_at: now,
   };
+  const digits = doc.phone.replace(/\D/g, "");
+  if (digits.length < 10 || digits.length > 15) throw new HttpError(422, "Enter a valid mobile number (10 digits, with country code if outside India)");
   await col().insertOne({ ...doc });
   sendEnquiryAlert(doc, "new");
   res.status(201).json(doc);

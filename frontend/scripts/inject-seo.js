@@ -44,6 +44,8 @@ const buildJsonLd = (page) => {
     entity = { "@context": "https://schema.org", "@type": "Service", serviceType: page.h1 || page.name, name: page.h1 || page.name, description: page.metaDescription, provider: { "@type": "Person", name: "Rekha Krishnamurthy" }, areaServed: "Bangalore, Karnataka, India" };
   } else if (page.group === "Academy") {
     entity = { "@context": "https://schema.org", "@type": "Course", name: page.h1 || page.name, description: page.metaDescription, provider: { "@type": "Organization", name: "Rekha Krishnamurthy Makeup & Academy", sameAs: SITE_URL } };
+  } else if (page.group === "Guides") {
+    entity = { "@context": "https://schema.org", "@type": "BlogPosting", headline: page.h1 || page.name, description: page.metaDescription, url: page.canonical, mainEntityOfPage: page.canonical, image: page.image, datePublished: page.date, dateModified: page.date, author: { "@type": "Person", name: "Rekha Krishnamurthy", url: `${SITE_URL}/about-us` }, publisher: { "@id": `${SITE_URL}/#organization` }, keywords: [page.keyphrase, ...(page.relatedKeywords || [])].filter(Boolean).join(", ") };
   } else if (page.path === "/about-us") {
     entity = { "@context": "https://schema.org", "@type": "Person", name: "Rekha Krishnamurthy", jobTitle: "Bridal & Celebrity Makeup Artist", url: `${SITE_URL}/about-us`, sameAs: ["https://www.instagram.com/makeupbyrekhakrishnamurthy/", "https://www.facebook.com/makeupbyrekhakrishnamurthy/", "https://x.com/MakeupbyRekha", "https://www.linkedin.com/in/rekha-krishnamurthy-6b998839"] };
   }

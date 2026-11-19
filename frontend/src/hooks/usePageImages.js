@@ -23,7 +23,9 @@ export const usePageImages = () => {
 };
 
 const mapKey = (page) => (page.path === "/" ? "/home" : page.path);
-export const heroImage = (page, map) => (page ? imgUrl(map?.[mapKey(page)]?.image) || page.image : null);
-export const heroImageAlt = (page, map) => (page ? map?.[mapKey(page)]?.alt_text || page.h1 || page.name : "");
+// Pages moved to a new URL keep the hero image uploaded under their former URL until a new one is set.
+const entry = (page, map) => map?.[mapKey(page)] || (page.formerPath ? map?.[page.formerPath] : null);
+export const heroImage = (page, map) => (page ? imgUrl(entry(page, map)?.image) || page.image : null);
+export const heroImageAlt = (page, map) => (page ? entry(page, map)?.alt_text || page.h1 || page.name : "");
 
 export const usePageImage = (page) => heroImage(page, usePageImages());

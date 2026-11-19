@@ -154,7 +154,7 @@ export const pageBodies = {
       { h: "Ready to Book Your Bridal Makeup?", p: ["To begin your booking, share your wedding date, venue, ceremony timing, required services, number of people requiring makeup or hairstyling, preferred look and relevant travel details. Once availability and services are confirmed, the booking can be secured with the agreed advance."], ctas: [{ label: "Check Bridal Makeup Availability", scrollTo: "contact" }] },
     ],
   },
-  "/makeup-educator-beauty-mentor-karnataka": {
+  "/professional-makeup-artist-course-bangalore": {
     intro: ["Professional Makeup Artist Launchpad", "Professional Makeup Launchpad Course in Bangalore"],
     sections: [
       { h: "Is Makeup Your Passion?", p: ["Perhaps you have always been the person your friends ask to do their makeup. Perhaps you have spent hours watching tutorials, buying products and practising different looks. Or perhaps you have already started taking clients but still find yourself asking:"], bullets: ["How do I work on different skin types?", "What products should actually be in my kit?", "How do I make makeup last?", "How do I price myself?", "How do I get my first real clients?", "How do I turn this into a career?"], after: ["The gap between loving makeup and working professionally as a makeup artist is much bigger than knowing which brush to use. You need technique, judgement, practice, confidence and an understanding of the business behind the brush. That is what this programme is designed to teach."] },
@@ -177,7 +177,7 @@ export const pageBodies = {
       { h: "Ready to Make the Leap?", p: ["You've watched the tutorials. You've saved the looks. You've bought the products. You've practised on yourself. Now it's time to learn how to work professionally.", "Professional Makeup Artist Launchpad — 20 Sessions. 120 Hours. One serious step towards your career."], ctas: [{ label: "Enquire Now", to: "/contact?service=Launchpad" }, { label: "WhatsApp Us", href: "whatsapp", secondary: true }, { label: "Call Us", href: "tel", secondary: true }, { label: "Book a Counselling Session", to: "/contact?service=Launchpad", secondary: true }] },
     ],
   },
-  "/self-makeup-classes-karnataka": {
+  "/bridal-makeup-course-bangalore": {
     intro: ["Comprehensive Bridal Artistry Program", "Professional Bridal Makeup Specialisation"],
     sections: [
       { h: "Bridal Makeup, In Depth", p: ["The programme focuses entirely on the skills required to create professional bridal makeup. You learn bridal skin preparation, long-lasting and photography-ready complexion, bridal eye artistry, lashes, lips, face sculpting and complete bridal looks.", "You will also learn to work with different skin tones, skin types, face shapes, eye shapes, ages and bridal aesthetics, while adapting your techniques to each bride."] },
@@ -233,7 +233,7 @@ export const pageBodies = {
       ["Can my engagement and bridal looks be different?", "Yes. They can be planned as separate looks according to your outfits, events and personal preferences."],
     ],
   },
-  "/best-makeup-for-south-indian-brides": {
+  "/non-bridal-makeup-south-indian-events": {
     sections: [
       { h: "Non-Bridal Makeup Portfolio", p: ["Not every special occasion needs a bridal makeup look. This portfolio showcases makeup created for clients who want polished, occasion-ready beauty without traditional bridal styling. Explore makeup designed around personal features, occasion, outfit, comfort and desired finish.", "The work can range from refined and understated makeup to more defined occasion looks, depending on what suits the client and the event. Non-bridal makeup is about adapting the artistry to the person and situation. A daytime event, family celebration, professional occasion, dinner or social event may call for a different balance of complexion, eyes, lips and overall definition."] },
       { h: "Explore the Work", p: ["Browse the portfolio to see different approaches to makeup, finish, styling and visual presentation. If you have a particular look in mind, use the images as references during your consultation rather than expecting an exact reproduction."] },
@@ -272,7 +272,7 @@ export const pageBodies = {
       ["Does editorial makeup depend on photography?", "Photography and lighting are important considerations when planning an editorial look, along with styling and the creative brief."],
     ],
   },
-  "/hire-celebrity-makeup-artist-for-wedding": {
+  "/fashion-wedding-makeup-artist-bangalore": {
     sections: [
       { h: "Fashion Makeup Portfolio", p: ["Fashion makeup is created as part of a larger visual story. The makeup must work with the clothing, styling, hair, lighting, model and creative direction rather than being considered separately. This portfolio showcases fashion-focused makeup designed for visual impact and coordination with the overall styling.", "Depending on the brief, the makeup may be refined and minimal or more defined and expressive. Fashion work often requires flexibility. The makeup may need to complement a collection, campaign, lookbook, runway-inspired concept or editorial direction. The final approach depends on the purpose of the shoot and the visual language being created."] },
       { h: "Explore the Work", p: ["Browse the portfolio to see different approaches to makeup, finish, styling and visual presentation. If you have a particular look in mind, use the images as references during your consultation rather than expecting an exact reproduction."] },
@@ -298,7 +298,7 @@ export const pageBodies = {
       ["What should I share before a photoshoot booking?", "Share the concept, location, outfits, number of looks, schedule, references and photography style so the makeup can be planned appropriately."],
     ],
   },
-  "/bridal-makeup-Bangalore": {
+  "/bridal-makeup-hsr-layout": {
     sections: [
       { h: "Local Setting and the Way Families Celebrate", p: ["Family events in HSR Layout can move between homes, community spaces, banquet venues, hotels and other event locations. A bride may be coordinating relatives arriving from different parts of Bengaluru while also managing her own work, shopping, fittings, photography and wedding schedule. Convenience matters, but so does having enough time to prepare without feeling rushed. Makeup should be planned around the actual ready time and the movement between functions."] },
       { h: "Culture, Festivals and the Meaning Behind the Occasion", p: ["Bengaluru's wider festival calendar includes Ugadi, Deepavali, Ganesh celebrations, Navaratri and other religious and community occasions. Families may combine regional traditions with contemporary styling. For a bride, cultural requirements can affect the choice of saree or lehenga, jewellery, hair, bindi, eye definition and the overall level of makeup. The objective is not to impose a fixed traditional look, but to understand what the occasion means to the family and then build a coordinated appearance."] },
@@ -330,7 +330,7 @@ export const pageBodies = {
       ["Can I discuss my preferred makeup style before booking?", "Yes. Sharing your references, event schedule, outfit, jewellery, skin concerns and the looks you do not want can make the consultation more useful."],
     ],
   },
-  "/party-and-non-bridal-makeup-karnataka": {
+  "/party-makeup-jp-nagar": {
     sections: [
       { h: "Local Setting and the Way Families Celebrate", p: ["A bride may be preparing at home, in an apartment, at a salon or at a wedding venue before moving into the ceremony. The practical details can influence the makeup experience: access to a well-lit preparation space, the ready time, the number of people requiring makeup and the sequence of photographs. A well-planned service should reduce last-minute decisions and leave the bride enough time to get dressed and settle into the event."] },
       { h: "Culture, Festivals and the Meaning Behind the Occasion", p: ["Family celebrations around Ugadi, Deepavali, Ganesh festivities, Navaratri and other occasions can involve traditional attire and jewellery. Wedding traditions may be even more specific to the family's regional background. Makeup should therefore be coordinated with the cultural setting without assuming that every bride wants the same level of traditional detailing."] },
@@ -361,7 +361,7 @@ export const pageBodies = {
       ["What information should I share during the consultation?", "Share the function schedule, venue, outfit and jewellery plans, reference images, skin concerns and the overall appearance you want."],
     ],
   },
-  "/best-bridal-makup-artist-in-bangalore": {
+  "/bridal-makeup-artist-jayanagar": {
     sections: [
       { h: "Local Setting and the Way Families Celebrate", p: ["Wedding preparation can involve several generations. Parents may have expectations around traditional styling, while the bride may prefer a softer base, modern eye makeup or a different reception look. The makeup plan needs to accommodate both the event and the person wearing it. Timing is equally important because wedding mornings can involve rituals, dressing, photography and travel."] },
       { h: "Culture, Festivals and the Meaning Behind the Occasion", p: ["Bengaluru's cultural occasions bring families together in traditional clothing and jewellery. In a wedding context, cultural requirements may extend to the ceremony, saree drape, jewellery, hairstyle and makeup intensity. Rekha's role is to understand the visual language of the occasion and then adapt the makeup to the bride rather than treating tradition as a fixed template."] },
@@ -393,7 +393,7 @@ export const pageBodies = {
       ["Is a makeup trial useful for a bride who is unsure about her look?", "A trial can provide a practical setting to discuss references, finish, comfort and expectations before the wedding day."],
     ],
   },
-  "/pre-wedding-makeup-artist": {
+  "/pre-wedding-makeup-artist-banashankari": {
     sections: [
       { h: "Local Setting and the Way Families Celebrate", p: ["The bride's preparation may happen close to home or at a venue, with parents, siblings, relatives and photographers involved in the same morning schedule. This makes timing, preparation space and the sequence of makeup, hair, dressing and photography important. The makeup service should fit into the wedding schedule instead of becoming a source of pressure."] },
       { h: "Culture, Festivals and the Meaning Behind the Occasion", p: ["Religious and family occasions can make traditional attire, jewellery and respectful presentation important. Bengaluru's wider festival culture includes Ugadi, Deepavali, Ganesh celebrations, Navaratri and other community occasions. For wedding makeup, these cultural influences can guide the overall styling without requiring the bride to surrender her personal preferences."] },
@@ -425,7 +425,7 @@ export const pageBodies = {
       ["Can I schedule a bridal makeup trial before the wedding?", "A Makeup Trial can be used to discuss references, preferences, finish and expectations before the wedding day."],
     ],
   },
-  "/wedding-makeup-artist": {
+  "/wedding-makeup-artist-indiranagar": {
     sections: [
       { h: "Local Setting and the Way Families Celebrate", p: ["Indiranagar has a highly urban and cosmopolitan character, with professionals, young couples, established residents, restaurants, lifestyle venues and social events. Brides connected to the area may combine cultural wedding ceremonies with contemporary fashion, modern event styling and strong personal beauty preferences."] },
       { h: "Culture, Festivals and the Meaning Behind the Occasion", p: ["Modern city life does not remove cultural expectations. Families may still follow Ugadi, Deepavali, Ganesh, Navaratri and other traditions, and wedding ceremonies can retain regional customs. A bride may want traditional jewellery and attire for one function and a contemporary outfit for another. Makeup should adapt accordingly."] },
@@ -458,7 +458,7 @@ export const pageBodies = {
       ["Is Airbrush makeup necessary for every Indiranagar wedding?", "No. The technique should be selected based on the bride's skin, finish preference, event conditions and photography needs."],
     ],
   },
-  "/bridal-makeup-artist-in-bangalore": {
+  "/bridal-makeup-artist-koramangala": {
     sections: [
       { h: "Local Setting and the Way Families Celebrate", p: ["Koramangala is a diverse urban community with professionals, entrepreneurs, families, students and residents from many parts of India. Weddings connected to this area can therefore bring together different cultural traditions, modern event formats and highly individual bridal preferences."] },
       { h: "Culture, Festivals and the Meaning Behind the Occasion", p: ["Different family traditions may shape attire, jewellery, ceremony and beauty expectations. A bride may combine regional customs with a contemporary outfit or modern reception styling. Makeup should respect the ceremony while still responding to her personal aesthetic."] },
@@ -524,7 +524,7 @@ export const pageBodies = {
       ["Can groom and family makeup be arranged?", "Groom Makeup and Non-Bridal Makeup can be considered for people who need polished, camera-ready grooming."],
     ],
   },
-  "/bridal-makeup-artist-karnataka": {
+  "/bridal-makeup-artist-hosur": {
     sections: [
       { h: "Local Setting and the Way Families Celebrate", p: ["Hosur has its own Tamil cultural identity while maintaining a close practical relationship with Bengaluru. Its industrial and residential growth brings together established families, professionals and newer communities. Weddings can therefore combine traditional Tamil ceremonies with modern receptions, photography and contemporary beauty preferences."] },
       { h: "Culture, Festivals and the Meaning Behind the Occasion", p: ["Temple and community celebrations remain important in Hosur, including the well-known Chandira Choodeswarar Temple car festival. Tamil wedding customs can also influence saree styling, jewellery, hair and the desired makeup balance. The makeup plan should understand the ceremony rather than simply apply a generic bridal formula."] },
@@ -556,7 +556,7 @@ export const pageBodies = {
       ["How should I plan the makeup timing for a Hosur muhurtham?", "Share the venue, ceremony time, travel requirements and the time you must be fully ready so the schedule can be planned around the actual event."],
     ],
   },
-  "/book-premium-bridal-makeup-artist": {
+  "/premium-bridal-makeup-tumakuru": {
     sections: [
       { h: "Local Setting and the Way Families Celebrate", p: ["Wedding planning may involve relatives from the city, nearby towns and villages. Family events can take place in homes, halls, temples or larger venues. A bride may have a long ceremony followed by photographs and a reception, so comfort and longevity are important practical considerations."] },
       { h: "Culture, Festivals and the Meaning Behind the Occasion", p: ["Tumakuru's spiritual and temple traditions, including the wider Siddaganga cultural landscape and local fairs and celebrations, contribute to a strong regional identity. Traditional attire and jewellery can therefore be central to important occasions. Makeup should complement rather than compete with those visual elements."] },
@@ -588,7 +588,7 @@ export const pageBodies = {
       ["What should I discuss before booking?", "Discuss the complete function schedule, venue, ready time, outfits, jewellery, preferred makeup direction, skin concerns and photography requirements."],
     ],
   },
-  "/luxury-makeup-services-karnataka": {
+  "/luxury-makeup-hoskote": {
     sections: [
       { h: "Local Setting and the Way Families Celebrate", p: ["Preparation may happen at home or at a wedding venue, with several relatives involved. Some events may be local while other functions connect to Bengaluru. Travel time, venue access and ceremony timing can affect the makeup schedule. A clear event plan helps the bride reach the ceremony ready rather than rushing through the final stages."] },
       { h: "Culture, Festivals and the Meaning Behind the Occasion", p: ["Temple visits, seasonal fairs and family celebrations are part of the broader Bengaluru Rural cultural setting. Wedding traditions may be strongly connected to the family's regional background. Makeup should work with traditional attire and jewellery while allowing the bride to choose how modern or understated she wants the final finish to be."] },
@@ -620,7 +620,7 @@ export const pageBodies = {
       ["Why should I discuss venue and ready time early?", "Venue access, travel, ceremony timing and the required ready time can affect the makeup schedule."],
     ],
   },
-  "/best-makeup-artist-for-brides": {
+  "/bridal-makeup-artist-chikkaballapur": {
     sections: [
       { h: "Local Setting and the Way Families Celebrate", p: ["Family celebrations may bring relatives together from Chikkaballapur, Bengaluru and surrounding areas. A wedding may involve a traditional ceremony, reception, family photographs and an outdoor pre-wedding shoot. If different venues are involved, the makeup schedule should allow sufficient time for preparation and movement."] },
       { h: "Culture, Festivals and the Meaning Behind the Occasion", p: ["Temple heritage and regional traditions influence the character of important occasions. Traditional silk sarees, jewellery and ceremony styling can be important to the bride and family. At the same time, younger brides may want modern complexion, eye or lip styling. The two can work together when the makeup is planned as part of the complete appearance."] },
@@ -748,7 +748,7 @@ export const pageBodies = {
       ["Should daytime and evening party makeup be different?", "They can be. Lighting, outfit, venue and photography can influence the appropriate level of definition."],
     ],
   },
-  "/pre-wedding-photoshoot-makeup-artist": {
+  "/groom-makeup-artist-bangalore": {
     sections: [
       { h: "Designed Around Your Occasion and Your Desired Look", p: ["Groom makeup should never feel like an unfamiliar transformation. The focus is on subtle correction, balance and presentation. You may be photographed continuously during the ceremony, family portraits, reception and couple photographs, so complexion and shine control can matter."] },
       { h: "Why This Service Matters", p: ["Groom Makeup is offered as HD per session and includes makeup only."] },
@@ -811,7 +811,7 @@ export const pageBodies = {
       ["What should I send before a fashion shoot?", "A mood board, outfit details, reference images, shoot concept and expected number of looks can help the makeup direction align with the project."],
     ],
   },
-  "/south-indian-bridal-makeup-karnataka": {
+  "/photoshoot-makeup-artist-bangalore": {
     sections: [
       { h: "Designed Around Your Occasion and Your Desired Look", p: ["Rekha should understand the purpose of the shoot before choosing the makeup direction. A couple's pre-wedding shoot may need natural movement and several outfits; a fashion portfolio may require stronger definition; a personal branding session may require controlled, professional grooming. The makeup should follow the camera and concept, not the other way around."] },
       { h: "Why This Service Matters", p: ["Photoshoot Makeup is positioned around the broader need for camera-conscious makeup, with the exact approach selected according to the shoot brief. The scope should be confirmed for the specific project."] },
