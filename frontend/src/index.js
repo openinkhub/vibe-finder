@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "@/index.css";
 import App, { preloadRoute } from "@/App";
 import { startVitals, loadSeoOverrides } from "@/lib/seoClient";
+import { registerWebMcpTools } from "@/lib/webmcp";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,6 +38,7 @@ const render = () => {
 
 // Load the current route's code first, so React replaces the pre-rendered HTML in one step.
 startVitals();
+registerWebMcpTools();
 loadSeoOverrides();
 // When the page arrived pre-rendered, let the browser paint it before the app takes over.
 const afterFirstPaint = (fn) => (hadSnapshot ? requestAnimationFrame(() => setTimeout(fn, 0)) : fn());

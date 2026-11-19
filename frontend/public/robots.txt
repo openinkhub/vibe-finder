@@ -1,5 +1,8 @@
+# Content signals (contentsignals.org): search = search indexes and results,
+# ai-input = AI answers that quote or link this site, ai-train = training AI models.
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 Disallow: /admin
 
-Sitemap: https://rekhakrishnamurthy.com/api/sitemap.xml
+Sitemap: https://rekhakrishnamurthy.com/sitemap.xml

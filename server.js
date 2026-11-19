@@ -13,6 +13,7 @@ const blog = require("./server/routes/blog");
 const seo = require("./server/routes/seo");
 const R = require("./server/lib/render");
 const site = require("./server/lib/seo/site");
+const agent = require("./server/lib/agent");
 
 const app = express();
 const BUILD_DIR = R.BUILD_DIR;
@@ -65,6 +66,22 @@ app.get("/sitemap.xml", textRoute("application/xml", site.sitemapXml));
 app.get("/robots.txt", textRoute("text/plain", site.robotsTxt));
 app.get("/llms.txt", textRoute("text/plain", site.llmsTxt));
 
+// For AI agents: a read-only MCP server + its discovery card, and Markdown versions of pages.
+agent.mcpRoutes(app, express, ah);
+const renderPath = async (p) => {
+  if (p.startsWith("/blog/")) return R.cached(`blog:${p.slice(6)}`, () => R.blogHtml(p.slice(6), { buildSchema: blog.buildSchema }));
+  if (/^\/(blog|archive)$/.test(p)) return R.cached(`list:${p}`, () => R.blogIndexHtml(p));
+  if (R.PAGE_BY_PATH[p]) return R.cached(`page:${p}`, () => R.pageHtml(p));
+  return null;
+};
+const sendMarkdown = (res, html, p) => res.status(200).set({ "Cache-Control": "public, max-age=300", Vary: "Accept", Link: agent.linkHeader(p) }).type("text/markdown; charset=utf-8").send(agent.htmlToMarkdown(html, R.SITE_URL + (p === "/" ? "" : p)));
+app.get(/\.md$/, ah(async (req, res, next) => {
+  const p = site.normPath(agent.fromMdPath(req.path));
+  const html = await renderPath(p);
+  if (!html) return next();
+  sendMarkdown(res, html, p);
+}));
+
 // Redirects (built-in + added in the admin) run before anything is served.
 app.use(ah(async (req, res, next) => {
   if (req.method !== "GET" && req.method !== "HEAD") return next();
@@ -81,17 +98,24 @@ app.use(express.static(BUILD_DIR, { index: false, redirect: false, maxAge: "1h",
 } }));
 
 const sendHtml = (res, html, status = 200) => res.status(status).set("Cache-Control", "no-cache").type("html").send(html);
+// A page: Markdown when the client asks for it (Accept: text/markdown), else HTML with a Link
+// header pointing at the Markdown version and llms.txt.
+const sendPage = (req, res, html, p) => {
+  if (agent.wantsMarkdown(req)) return sendMarkdown(res, html, p);
+  res.set({ Vary: "Accept", Link: agent.linkHeader(p) });
+  return sendHtml(res, html);
+};
 
 app.get("/blog/:slug", ah(async (req, res, next) => {
-  const html = await R.cached(`blog:${req.params.slug}`, () => R.blogHtml(req.params.slug, { buildSchema: blog.buildSchema }));
+  const html = await renderPath(`/blog/${req.params.slug}`);
   if (!html) return next();
-  sendHtml(res, html);
+  sendPage(req, res, html, `/blog/${req.params.slug}`);
 }));
 
 app.get(["/blog", "/archive"], ah(async (req, res, next) => {
-  const html = await R.cached(`list:${req.path}`, () => R.blogIndexHtml(req.path));
+  const html = await renderPath(req.path);
   if (!html) return next();
-  sendHtml(res, html);
+  sendPage(req, res, html, req.path);
 }));
 
 // Pre-built pages (with any SEO settings saved in the admin); unknown addresses get a real 404
@@ -100,8 +124,8 @@ app.get("*", ah(async (req, res) => {
   let clean;
   try { clean = site.normPath(decodeURIComponent(req.path)); } catch { clean = "/"; }
   if (R.PAGE_BY_PATH[clean]) {
-    const html = await R.cached(`page:${clean}`, () => R.pageHtml(clean));
-    if (html) return sendHtml(res, html);
+    const html = await renderPath(clean);
+    if (html) return sendPage(req, res, html, clean);
   }
   const shell = R.spaShell();
   if (!shell) return res.status(503).send("Site is building — please refresh in a minute.");

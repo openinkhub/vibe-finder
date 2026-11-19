@@ -10,7 +10,7 @@ const readPublic = (f) => {
 
 const DEFAULTS = {
   brand: "Rekha Krishnamurthy",
-  business: { name: "Rekha Krishnamurthy Makeup & Academy", phone: "+91 98454 80507", email: "contact@rekhakrishnamurthy.com", city: "Bengaluru" },
+  business: { name: "Rekha Krishnamurthy Makeup & Academy", phone: "+91 98454 80507", email: "contact@rekhakrishnamurthy.com", city: "Bengaluru", address: "1st Floor, 1314, 32nd Cross Rd, 1st Stage, Kumaraswamy Layout, Bengaluru, Karnataka 560078, India", whatsapp: "https://wa.me/919845480507" },
   // Auto-configure rules (Squirrly "Automation" style). Tokens: {h1} {title} {brand} {keyphrase}
   rules: {
     title_page: "{h1} | {brand}",
@@ -57,7 +57,7 @@ async function saveSettings(patch) {
   return next;
 }
 
-const defaultRobots = () => readPublic("robots.txt") || "User-agent: *\nAllow: /\nDisallow: /admin\n\nSitemap: https://rekhakrishnamurthy.com/sitemap.xml\n";
+const defaultRobots = () => readPublic("robots.txt") || "User-agent: *\nContent-Signal: search=yes, ai-input=yes, ai-train=no\nAllow: /\nDisallow: /admin\n\nSitemap: https://rekhakrishnamurthy.com/sitemap.xml\n";
 const baseLlms = () => readPublic("llms.txt");
 
 module.exports = { DEFAULTS, getSettings, saveSettings, defaultRobots, baseLlms };
