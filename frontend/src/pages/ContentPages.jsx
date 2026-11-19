@@ -142,7 +142,7 @@ export const SheetPage = () => {
         <Hero page={page} />
         {page.group === "Academy" && <BatchBanner page={page} />}
         <SeoIntro page={page} ctaTo={`/contact?service=${encodeURIComponent(enquiryServiceFor(page))}`} />
-        {hub ? <ChildCards items={hub.children} /> : body ? <RichBody body={body} /> : body === undefined ? <div className="min-h-[60vh]" /> : page.comingSoon ? <ComingSoon faq={pathname === "/community" ? communityFaq : undefined} /> : <Body page={content} />}
+        {hub ? <><ChildCards items={hub.children} /><div className="mt-12 max-w-3xl"><AuthorBio /></div></> : body ? <RichBody body={body} /> : body === undefined ? <div className="min-h-[60vh]" /> : page.comingSoon ? <ComingSoon faq={pathname === "/community" ? communityFaq : undefined} /> : <Body page={content} />}
         {page.group === "Portfolio" && <PortfolioGallery />}
         {!hub && (page.group === "Services" || page.group === "Academy") && (<><BrochureCta page={page} /><BookingPanel page={page} /></>)}
         {!hub && <Siblings page={page} />}

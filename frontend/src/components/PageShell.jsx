@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { srcSetFor } from "../lib/img";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ArrowUpRight, Phone, Instagram } from "lucide-react";
 import { FaWhatsapp, FaFacebookF, FaXTwitter, FaLinkedinIn } from "react-icons/fa6";
 import Navbar from "./Navbar";
@@ -10,7 +10,7 @@ import { MobileBookBar } from "./MobileBookBar";
 import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 import { brand } from "../mock/mock";
-import { authorBio } from "../content/site";
+import { authorBio, authorBioShort } from "../content/site";
 import { useSeo, useJsonLd } from "./Seo";
 import { shortCta } from "../lib/ctaLabel";
 
@@ -50,17 +50,25 @@ export const PageHero = ({ eyebrow, title, subtitle, image, imageAlt, cta = "Boo
 );
 
 export const AuthorBio = () => {
+  const { pathname } = useLocation();
+  const linkCls = "text-[#E62E6B] underline decoration-[#E62E6B]/40 underline-offset-2";
+  // **bold** and [text](https://…) links.
   const parseBold = (text) =>
-    text.split(/\*\*(.+?)\*\*/).map((p, i) =>
-      i % 2 === 1 ? <strong key={i} className="font-semibold text-[#4A2530]">{p}</strong> : p
-    );
+    text.split(/(\*\*.+?\*\*|\[[^\]]+\]\([^)\s]+\))/).map((p, i) => {
+      const b = p.match(/^\*\*(.+)\*\*$/);
+      if (b) return <strong key={i} className="font-semibold text-[#4A2530]">{b[1]}</strong>;
+      const l = p.match(/^\[([^\]]+)\]\(([^)\s]+)\)$/);
+      if (l) return <a key={i} href={l[2]} target="_blank" rel="noopener" className={linkCls}>{l[1]}</a>;
+      return p;
+    });
+  const bioText = pathname === "/about-us" ? authorBio.text : authorBioShort;
   return (
     <Reveal>
       <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#F1DCE3] flex flex-col sm:flex-row gap-5 sm:gap-7 items-start" data-testid="author-bio">
         <img width="140" height="60" loading="lazy" decoding="async" src={brand.logo} alt="Rekha Krishnamurthy" className="h-12 w-auto shrink-0" />
         <div>
           <div className="font-display text-xl text-[#4A2530]">{authorBio.title}</div>
-          <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">{parseBold(authorBio.text)}</p>
+          <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">{parseBold(bioText)}</p>
           <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
             <span className="text-[#5C4E52]">📍 Based in Bangalore</span>
             <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-1.5 text-[#E62E6B]"><Phone size={14} /> {brand.phone}</a>

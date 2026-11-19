@@ -47,6 +47,10 @@ const About = () => {
               Based in Bengaluru and available for <span className="font-semibold text-[#4A2530]">destination weddings, celebrations and fashion assignments across India</span>, Rekha offers something equally important: her complete attention. <span className="font-semibold text-[#4A2530]">No double bookings. No rushing between brides. Your date is exclusively yours.</span>
             </p>
 
+            <p className="mt-4 text-[#5C4E52] leading-relaxed text-sm sm:text-base">
+              Her kit includes trusted brands such as <a href="https://www.maccosmetics.in/" target="_blank" rel="noopener" className="text-[#E62E6B] underline decoration-[#E62E6B]/40 underline-offset-2">MAC Cosmetics</a> and <a href="https://www.bobbibrown.in/" target="_blank" rel="noopener" className="text-[#E62E6B] underline decoration-[#E62E6B]/40 underline-offset-2">Bobbi Brown</a>. Also, she follows strict hygiene at every booking.
+            </p>
+
             <div className="mt-8 sm:mt-10 grid grid-cols-3 gap-3 sm:gap-6 border-t border-[#F1DCE3] pt-7 sm:pt-8">
               {aboutStats.map((s, i) => (
                 <Reveal key={s.label} delay={0.2 + i * 0.08}>
