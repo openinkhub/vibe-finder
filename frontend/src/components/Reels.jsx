@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { srcSetFor } from "../lib/img";
 import { Play } from "lucide-react";
 import { reels as mockReels } from "../mock/mock";
 import { Reveal } from "./fx/Reveal";
@@ -25,7 +26,7 @@ const Reels = () => {
           {items.map((r, i) => (
             <Reveal key={r.id || r.title} delay={i * 0.07} rotate={18}>
               <TiltCard as="a" href={r.url || "#"} target={r.url ? "_blank" : "_self"} rel="noreferrer" max={12} className="w-full rounded-2xl overflow-hidden aspect-[9/14] bg-[#FBE9F0] text-left shadow-[0_24px_60px_-30px_rgba(230,46,107,0.55)]" data-testid={`reel-card-${i}`}>
-                <img width="400" height="700" loading="lazy" decoding="async" src={r.image} alt={r.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img width="400" height="700" loading="lazy" decoding="async" src={r.image} srcSet={srcSetFor(r.image)} sizes="(min-width: 768px) 45vw, 100vw" alt={r.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#E62E6B]/90 via-[#E62E6B]/10 to-transparent" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="w-12 h-12 rounded-full bg-white/90 backdrop-blur flex items-center justify-center text-[#E62E6B] group-hover:scale-110 group-hover:bg-[#D6245F] group-hover:text-white transition-all duration-300 shadow-lg" style={{ transform: "translateZ(40px)" }}><Play size={18} className="ml-0.5 fill-current" /></span>

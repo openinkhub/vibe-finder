@@ -1,4 +1,5 @@
 import React from "react";
+import { srcSetFor } from "../lib/img";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { academyImage } from "../mock/mock";
@@ -36,7 +37,7 @@ const Academy = () => {
         </Reveal>
         <Reveal delay={0.15}>
           <TiltCard max={7} className="rounded-[24px] overflow-hidden shadow-[0_30px_80px_-30px_rgba(230,46,107,0.45)]">
-            <img width="800" height="1000" loading="lazy" decoding="async" src={academyImage} alt="Academy · Studio Session" className="w-full h-[340px] sm:h-[420px] md:h-[520px] object-cover" />
+            <img width="800" height="1000" loading="lazy" decoding="async" src={academyImage} srcSet={srcSetFor(academyImage)} sizes="(min-width: 768px) 45vw, 100vw" alt="Academy · Studio Session" className="w-full h-[340px] sm:h-[420px] md:h-[520px] object-cover" />
             <div className="absolute bottom-4 left-4 font-mono text-[11px] tracking-[0.15em] text-white bg-[#E62E6B]/90 backdrop-blur px-3 py-1.5 rounded">Academy · Studio Session</div>
           </TiltCard>
         </Reveal>

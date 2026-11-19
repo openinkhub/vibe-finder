@@ -5,6 +5,7 @@ import { Reveal } from "./fx/Reveal";
 import { TiltCard } from "./fx/TiltCard";
 import { usePageImages, heroImage, heroImageAlt } from "../hooks/usePageImages";
 import { getPage } from "../lib/pages";
+import { srcSetFor } from "../lib/img";
 
 const FALLBACK_IMG = "https://images.unsplash.com/photo-1600685890506-593fdf55949b?auto=format&fit=crop&w=1000&q=70";
 
@@ -24,7 +25,7 @@ const About = () => {
           <Reveal>
             <div className="relative">
               <TiltCard max={7} className="rounded-[24px] overflow-hidden shadow-[0_30px_80px_-30px_rgba(230,46,107,0.45)]">
-                <motion.img style={{ y: imgY }} src={artistImg} alt={artistAlt} className="w-full h-[360px] sm:h-[420px] md:h-[560px] object-cover scale-110" />
+                <motion.img style={{ y: imgY }} width="800" height="1000" loading="lazy" decoding="async" src={artistImg} srcSet={srcSetFor(artistImg)} sizes="(min-width: 768px) 40vw, 100vw" alt={artistAlt} className="w-full h-[360px] sm:h-[420px] md:h-[560px] object-cover scale-110" />
                 <div className="absolute bottom-4 left-4 font-mono text-[11px] tracking-[0.15em] text-white bg-[#E62E6B]/90 backdrop-blur px-3 py-1.5 rounded">Studio · Bengaluru</div>
               </TiltCard>
               <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-20 h-20 sm:w-24 sm:h-24 border-t-2 border-l-2 border-[#E62E6B] rounded-tl-[24px] pointer-events-none" />

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { srcSetFor } from "../lib/img";
 import { Link } from "react-router-dom";
 import { Check, ChevronDown, CalendarCheck, ArrowUpRight, Sparkles, Clock, MapPin, Star } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
@@ -135,7 +136,7 @@ const BridalPackages = () => (
           </Reveal>
           <Reveal delay={0.1}>
             <div className="relative rounded-[32px] overflow-hidden aspect-[4/5]">
-              <img width="800" height="1000" decoding="async" src={BRIDAL_IMG} alt="Bridal makeup artist Bangalore" className="w-full h-full object-cover" loading="lazy" />
+              <img width="800" height="1000" decoding="async" src={BRIDAL_IMG} srcSet={srcSetFor(BRIDAL_IMG)} sizes="(min-width: 768px) 45vw, 100vw" alt="Bridal makeup artist Bangalore" className="w-full h-full object-cover" loading="lazy" />
               <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md rounded-2xl px-4 py-3 shadow-xl flex items-center gap-3">
                 <Star size={18} className="text-[#E62E6B] shrink-0" fill="#E62E6B" />
                 <div>
