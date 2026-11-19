@@ -64,12 +64,12 @@ export const VoiceEnquiry = ({ onResult }) => {
     <div className="rounded-2xl border border-[#F1DCE3] bg-[#FBE9F0] p-4 sm:p-5" data-testid="voice-enquiry">
       <div className="flex items-center gap-4">
         {state === "recording" ? (
-          <button type="button" onClick={stop} className="relative w-14 h-14 shrink-0 rounded-full bg-[#E62E6B] text-white flex items-center justify-center shadow-lg shadow-[#E62E6B]/40" aria-label="Stop recording" data-testid="voice-stop-btn">
+          <button type="button" onClick={stop} className="relative w-14 h-14 shrink-0 rounded-full bg-[#D6245F] text-white flex items-center justify-center shadow-lg shadow-[#E62E6B]/40" aria-label="Stop recording" data-testid="voice-stop-btn">
             <span className="absolute inset-0 rounded-full bg-[#E62E6B] animate-ping opacity-40" />
             <Square size={20} className="relative fill-current" />
           </button>
         ) : (
-          <button type="button" onClick={start} disabled={state === "processing"} className="w-14 h-14 shrink-0 rounded-full bg-[#E62E6B] text-white flex items-center justify-center shadow-lg shadow-[#E62E6B]/40 hover:scale-105 transition-transform disabled:opacity-60" aria-label="Start recording" data-testid="voice-start-btn">
+          <button type="button" onClick={start} disabled={state === "processing"} className="w-14 h-14 shrink-0 rounded-full bg-[#D6245F] text-white flex items-center justify-center shadow-lg shadow-[#E62E6B]/40 hover:scale-105 transition-transform disabled:opacity-60" aria-label="Start recording" data-testid="voice-start-btn">
             {state === "processing" ? <Loader2 size={22} className="animate-spin" /> : <Mic size={22} />}
           </button>
         )}

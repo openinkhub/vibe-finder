@@ -131,14 +131,14 @@ const LookLab = () => {
 
         <div className="mt-8 md:mt-10 flex flex-wrap items-center gap-2" data-testid="looklab-buttons">
           {LAB_LOOKS.map((l) => (
-            <button key={l.key} onClick={() => setActive(l)} className={`flex items-center gap-2 pl-2 pr-5 py-2 rounded-full text-sm font-medium border transition-all duration-300 ${active.key === l.key ? "bg-[#E62E6B] border-[#E62E6B] text-white shadow-lg shadow-[#E62E6B]/25" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`looklab-${l.key}`}>
+            <button key={l.key} onClick={() => setActive(l)} className={`flex items-center gap-2 pl-2 pr-5 py-2 rounded-full text-sm font-medium border transition-all duration-300 ${active.key === l.key ? "bg-[#D6245F] border-[#E62E6B] text-white shadow-lg shadow-[#E62E6B]/25" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`looklab-${l.key}`}>
               <span className="flex -space-x-1.5">{[l.lips, l.blush, l.eyes].map((c) => <span key={c} className="w-4 h-4 rounded-full border border-white" style={{ background: c }} />)}</span>
               {l.name}
             </button>
           ))}
           <div className="flex-1" />
-          {mode !== "camera" && <button onClick={startCamera} disabled={mode === "processing"} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#4A2530] text-white text-sm font-medium hover:bg-[#E62E6B] transition-colors disabled:opacity-60" data-testid="looklab-scan-btn"><ScanFace size={16} /> Scan my face</button>}
-          {scan && !scan.isSample && mode === "idle" && <button onClick={resetToModel} className="w-10 h-10 rounded-full border border-[#F1DCE3] bg-white text-[#8B7F82] hover:text-[#E62E6B] flex items-center justify-center" aria-label="Back to model" data-testid="looklab-reset-btn"><RotateCcw size={15} /></button>}
+          {mode !== "camera" && <button onClick={startCamera} disabled={mode === "processing"} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#4A2530] text-white text-sm font-medium hover:bg-[#D6245F] transition-colors disabled:opacity-60" data-testid="looklab-scan-btn"><ScanFace size={16} /> Scan my face</button>}
+          {scan && !scan.isSample && mode === "idle" && <button onClick={resetToModel} className="w-10 h-10 rounded-full border border-[#F1DCE3] bg-white text-[#6E6266] hover:text-[#E62E6B] flex items-center justify-center" aria-label="Back to model" data-testid="looklab-reset-btn"><RotateCcw size={15} /></button>}
         </div>
 
         <div className="mt-6 md:mt-8 grid lg:grid-cols-2 gap-5 lg:gap-8 items-stretch">
@@ -150,7 +150,7 @@ const LookLab = () => {
                   <div className="self-center mt-8 w-52 h-64 sm:w-60 sm:h-72 rounded-[45%] border-2 border-dashed border-white/80 shadow-[0_0_0_9999px_rgba(74,37,48,0.35)]" />
                   <div className="flex items-center justify-center gap-3">
                     <button onClick={cancelCamera} className="w-12 h-12 rounded-full bg-white/90 text-[#4A2530] flex items-center justify-center" aria-label="Cancel" data-testid="looklab-cancel-btn"><X size={18} /></button>
-                    <button onClick={capture} className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#E62E6B] text-white font-medium shadow-lg shadow-[#E62E6B]/40" data-testid="looklab-capture-btn"><Camera size={18} /> Capture</button>
+                    <button onClick={capture} className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#D6245F] text-white font-medium shadow-lg shadow-[#E62E6B]/40" data-testid="looklab-capture-btn"><Camera size={18} /> Capture</button>
                   </div>
                 </div>
               )}
@@ -161,11 +161,11 @@ const LookLab = () => {
                   <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-center px-6">{mode === "processing" ? "Building your 3D face model…" : progress || (status === "error" ? "Face engine unavailable" : "Loading face engine…")}</span>
                 </div>
               )}
-              {mode !== "camera" && <div className="absolute top-4 left-4 font-mono text-[10px] tracking-[0.2em] uppercase text-[#8B7F82]">3D face mesh · drag to rotate</div>}
+              {mode !== "camera" && <div className="absolute top-4 left-4 font-mono text-[10px] tracking-[0.2em] uppercase text-[#6E6266]">3D face mesh · drag to rotate</div>}
               {mode !== "camera" && scan && (
                 <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 pointer-events-none">
-                  <div><div className="font-display text-2xl text-[#4A2530]">{active.name}</div><div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">{scan.isSample ? "Our model" : "Your scan"} · 468 points</div></div>
-                  <Link to="/book-bridal-makeup-package-karnataka" className="pointer-events-auto shrink-0 px-4 py-2 rounded-full bg-[#E62E6B] text-white text-xs font-medium hover:bg-[#C81F57]" data-testid="looklab-tryon-btn">Live try-on</Link>
+                  <div><div className="font-display text-2xl text-[#4A2530]">{active.name}</div><div className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">{scan.isSample ? "Our model" : "Your scan"} · 468 points</div></div>
+                  <Link to="/book-bridal-makeup-package-karnataka" className="pointer-events-auto shrink-0 px-4 py-2 rounded-full bg-[#D6245F] text-white text-xs font-medium hover:bg-[#C81F57]" data-testid="looklab-tryon-btn">Live try-on</Link>
                 </div>
               )}
             </div>
@@ -174,11 +174,11 @@ const LookLab = () => {
             {scan && afterUrl ? (
               <CompareCard key={scan.beforeUrl + active.key} before={scan.beforeUrl} after={afterUrl} label={active.name} className={`${boxCls} shadow-[0_30px_80px_-30px_rgba(230,46,107,0.45)]`} testid="looklab-compare" />
             ) : (
-              <div className={`${boxCls} bg-white border border-[#F1DCE3] flex items-center justify-center text-[#8B7F82] font-mono text-[11px] uppercase tracking-widest`} data-testid="looklab-compare-loading">Preparing portrait…</div>
+              <div className={`${boxCls} bg-white border border-[#F1DCE3] flex items-center justify-center text-[#6E6266] font-mono text-[11px] uppercase tracking-widest`} data-testid="looklab-compare-loading">Preparing portrait…</div>
             )}
           </Reveal>
         </div>
-        <p className="mt-3 font-mono text-[10px] tracking-[0.12em] uppercase text-[#8B7F82] min-h-[14px]" data-testid="looklab-status">{msg}</p>
+        <p className="mt-3 font-mono text-[10px] tracking-[0.12em] uppercase text-[#6E6266] min-h-[14px]" data-testid="looklab-status">{msg}</p>
 
         <div className="mt-4 flex justify-end">
           <Link to="/portfolio" className="inline-flex items-center gap-1.5 text-sm font-medium text-[#E62E6B] hover:gap-2.5 transition-all" data-testid="looklab-portfolio-link">See the scroll transformation & parallax gallery <ArrowUpRight size={15} /></Link>

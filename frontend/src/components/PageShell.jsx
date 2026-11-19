@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { srcSetFor } from "../lib/img";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Phone, Instagram } from "lucide-react";
 import { FaWhatsapp, FaFacebookF, FaXTwitter, FaLinkedinIn } from "react-icons/fa6";
@@ -35,13 +36,13 @@ export const PageHero = ({ eyebrow, title, subtitle, image, imageAlt, cta = "Boo
       <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mt-4" data-testid="page-title">{title}</h2>
       {subtitle && <p className="mt-5 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-xl" data-testid="page-subtitle">{subtitle.split(/\*\*(.+?)\*\*/).map((p, i) => i % 2 === 1 ? <strong key={i} className="font-semibold text-[#4A2530]">{p}</strong> : p)}</p>}
       {onCta
-        ? <button type="button" onClick={onCta} className="mt-8 inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#E62E6B] text-white text-sm sm:text-base font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25" data-testid="page-cta"><span className="sm:hidden">{shortCta(cta)}</span><span className="hidden sm:inline">{cta}</span> <ArrowUpRight size={16} /></button>
-        : <Link to={ctaTo} className="mt-8 inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#E62E6B] text-white text-sm sm:text-base font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25" data-testid="page-cta"><span className="sm:hidden">{shortCta(cta)}</span><span className="hidden sm:inline">{cta}</span> <ArrowUpRight size={16} /></Link>}
+        ? <button type="button" onClick={onCta} className="mt-8 inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#D6245F] text-white text-sm sm:text-base font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25" data-testid="page-cta"><span className="sm:hidden">{shortCta(cta)}</span><span className="hidden sm:inline">{cta}</span> <ArrowUpRight size={16} /></button>
+        : <Link to={ctaTo} className="mt-8 inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#D6245F] text-white text-sm sm:text-base font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25" data-testid="page-cta"><span className="sm:hidden">{shortCta(cta)}</span><span className="hidden sm:inline">{cta}</span> <ArrowUpRight size={16} /></Link>}
     </Reveal>
     {image && (
       <Reveal delay={0.1}>
         <TiltCard max={6} className="rounded-[24px] overflow-hidden shadow-[0_30px_80px_-30px_rgba(230,46,107,0.45)]">
-          <img width="1000" height="920" fetchPriority="high" decoding="async" src={image} alt={imageAlt || title} className="w-full h-[300px] sm:h-[380px] md:h-[460px] object-cover" />
+          <img width="1000" height="920" fetchPriority="high" decoding="async" src={image} srcSet={srcSetFor(image)} sizes="(min-width: 768px) 50vw, 100vw" alt={imageAlt || title} className="w-full h-[300px] sm:h-[380px] md:h-[460px] object-cover" />
         </TiltCard>
       </Reveal>
     )}
@@ -56,7 +57,7 @@ export const AuthorBio = () => {
   return (
     <Reveal>
       <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#F1DCE3] flex flex-col sm:flex-row gap-5 sm:gap-7 items-start" data-testid="author-bio">
-        <img width="160" height="48" loading="lazy" decoding="async" src={brand.logo} alt="Rekha Krishnamurthy" className="h-12 w-auto shrink-0" />
+        <img width="140" height="60" loading="lazy" decoding="async" src={brand.logo} alt="Rekha Krishnamurthy" className="h-12 w-auto shrink-0" />
         <div>
           <div className="font-display text-xl text-[#4A2530]">{authorBio.title}</div>
           <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">{parseBold(authorBio.text)}</p>

@@ -29,7 +29,7 @@ const Loyalty = () => {
               </Reveal>
             ))}
           </div>
-          <Link to="/community" className="mt-8 sm:mt-9 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="loyalty-join-btn">
+          <Link to="/community" className="mt-8 sm:mt-9 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="loyalty-join-btn">
             <Gift size={18} /> Join the Community
           </Link>
         </Reveal>

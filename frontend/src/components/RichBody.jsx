@@ -41,20 +41,20 @@ export const Block = ({ s, i }) => (
       {s.quote && <p className="font-display italic text-xl sm:text-2xl text-[#E62E6B] border-l-2 border-[#E62E6B] pl-4">{s.quote}</p>}
       {s.p?.map((t, k) => <P key={k}>{t}</P>)}
       {s.bullets && <ul className="space-y-2.5">{s.bullets.map((b) => <li key={b} className="flex gap-3 text-sm sm:text-base text-[#5C4E52]"><Check size={18} className="text-[#E62E6B] shrink-0 mt-0.5" /><span>{bold(b)}</span></li>)}</ul>}
-      {s.donts && <ul className="space-y-2.5">{s.donts.map((b) => <li key={b} className="flex gap-3 text-sm sm:text-base text-[#5C4E52]"><X size={18} className="text-[#8B7F82] shrink-0 mt-0.5" />{b}</li>)}</ul>}
+      {s.donts && <ul className="space-y-2.5">{s.donts.map((b) => <li key={b} className="flex gap-3 text-sm sm:text-base text-[#5C4E52]"><X size={18} className="text-[#6E6266] shrink-0 mt-0.5" />{b}</li>)}</ul>}
       {s.chips && <div className="flex flex-wrap items-center gap-2">{s.chips.map((c, k) => <React.Fragment key={c}>{k > 0 && <ArrowRight size={14} className="text-[#F4B7CE]" />}<span className="px-4 py-2 rounded-full bg-white border border-[#F1DCE3] text-sm text-[#4A2530]">{c}</span></React.Fragment>)}</div>}
       {s.after?.map((t, k) => <P key={k}>{t}</P>)}
       {s.items && <ul className="grid sm:grid-cols-2 gap-3">{s.items.map(([t, d]) => <li key={t} className="bg-white rounded-2xl p-4 border border-[#F1DCE3]"><div className="font-display text-lg text-[#4A2530]">{t}</div><div className="text-sm text-[#5C4E52] mt-1">{d}</div></li>)}</ul>}
       {s.steps && <ol className="space-y-3">{s.steps.map(([t, d], k) => <li key={t} className="flex gap-4 bg-white rounded-2xl p-4 border border-[#F1DCE3]"><span className="shrink-0 w-9 h-9 rounded-full bg-[#FBE9F0] text-[#E62E6B] font-mono text-xs flex items-center justify-center">{String(k + 1).padStart(2, "0")}</span><div><div className="font-display text-lg text-[#4A2530]">{t}</div><div className="text-sm text-[#5C4E52] mt-1">{d}</div></div></li>)}</ol>}
       {s.terms && <ol className="bg-white rounded-3xl border border-[#F1DCE3] divide-y divide-[#FBE9F0]" data-testid="body-terms">{s.terms.map(([t, d], k) => <li key={t} className="p-5 sm:p-6"><h4 className="font-display text-lg text-[#4A2530]"><span className="font-mono text-xs text-[#E62E6B] mr-2">{k + 1}.</span>{t}</h4><p className="text-sm text-[#5C4E52] mt-2 leading-relaxed">{d}</p></li>)}</ol>}
-      {s.qa && <div className="space-y-3" data-testid="body-qa">{s.qa.map(([q, a]) => <div key={q} className="bg-white rounded-2xl border border-[#F1DCE3] px-5 py-4"><div className="flex items-start gap-3"><span className="shrink-0 w-7 h-7 rounded-full bg-[#E62E6B] text-white font-mono text-[10px] flex items-center justify-center mt-0.5">Q</span><div className="font-display text-base sm:text-lg text-[#4A2530]">{q}</div></div><div className="flex items-start gap-3 mt-2"><span className="shrink-0 w-7 h-7 rounded-full bg-[#FBE9F0] text-[#E62E6B] font-mono text-[10px] flex items-center justify-center mt-0.5">A</span><p className="text-sm text-[#5C4E52] leading-relaxed">{a}</p></div></div>)}</div>}
-      {s.details && <dl className="bg-white rounded-3xl border border-[#F1DCE3] divide-y divide-[#FBE9F0]" data-testid="body-details">{s.details.map(([k, v]) => <div key={k} className="grid sm:grid-cols-[180px_1fr] gap-1 sm:gap-4 px-5 py-3.5"><dt className="font-mono text-[11px] uppercase tracking-wider text-[#8B7F82] pt-0.5">{k}</dt><dd className={`text-sm sm:text-base ${k === "Course Fee" ? "font-display text-xl text-[#E62E6B]" : "text-[#4A2530]"}`}>{v}</dd></div>)}</dl>}
+      {s.qa && <div className="space-y-3" data-testid="body-qa">{s.qa.map(([q, a]) => <div key={q} className="bg-white rounded-2xl border border-[#F1DCE3] px-5 py-4"><div className="flex items-start gap-3"><span className="shrink-0 w-7 h-7 rounded-full bg-[#D6245F] text-white font-mono text-[10px] flex items-center justify-center mt-0.5">Q</span><div className="font-display text-base sm:text-lg text-[#4A2530]">{q}</div></div><div className="flex items-start gap-3 mt-2"><span className="shrink-0 w-7 h-7 rounded-full bg-[#FBE9F0] text-[#E62E6B] font-mono text-[10px] flex items-center justify-center mt-0.5">A</span><p className="text-sm text-[#5C4E52] leading-relaxed">{a}</p></div></div>)}</div>}
+      {s.details && <dl className="bg-white rounded-3xl border border-[#F1DCE3] divide-y divide-[#FBE9F0]" data-testid="body-details">{s.details.map(([k, v]) => <div key={k} className="grid sm:grid-cols-[180px_1fr] gap-1 sm:gap-4 px-5 py-3.5"><dt className="font-mono text-[11px] uppercase tracking-wider text-[#6E6266] pt-0.5">{k}</dt><dd className={`text-sm sm:text-base ${k === "Course Fee" ? "font-display text-xl text-[#E62E6B]" : "text-[#4A2530]"}`}>{v}</dd></div>)}</dl>}
       {s.cardTable && (
         <div className="grid sm:grid-cols-2 gap-4" data-testid="body-card-table">
           {s.cardTable.map(([occ, svc, desc], k) => (
             <div key={`${occ}-${k}`} className="bg-white rounded-2xl p-5 border border-[#F1DCE3] hover:border-[#E62E6B] transition-colors" data-testid={`card-table-item-${k}`}>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">{occ}</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">{occ}</span>
                 <ArrowRight size={12} className="text-[#F4B7CE]" />
                 <span className="px-2.5 py-1 rounded-full bg-[#FBE9F0] text-[#E62E6B] text-xs font-semibold">{svc}</span>
               </div>
@@ -70,7 +70,7 @@ export const Block = ({ s, i }) => (
 
 export const RichBody = ({ body }) => (
   <section className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 pb-14 md:pb-20" data-testid="rich-body">
-    {body.intro && <Reveal><div className="mb-10 font-mono text-[11px] tracking-[0.2em] uppercase text-[#8B7F82] space-y-1">{body.intro.map((t) => <div key={t}>{t}</div>)}</div></Reveal>}
+    {body.intro && <Reveal><div className="mb-10 font-mono text-[11px] tracking-[0.2em] uppercase text-[#6E6266] space-y-1">{body.intro.map((t) => <div key={t}>{t}</div>)}</div></Reveal>}
     <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-10 lg:gap-14 items-start">
       <div className="space-y-12">{body.sections.map((s, i) => <Block key={s.h} s={s} i={i} />)}</div>
       <div className="space-y-6 lg:sticky lg:top-28">

@@ -29,7 +29,7 @@ const NotFoundPage = () => {
           The page you're looking for doesn't exist or may have moved. Head back home or get in touch to book a makeup consultation.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <Link to="/" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors" data-testid="not-found-home-link">Back to Home <ArrowUpRight size={16} /></Link>
+          <Link to="/" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors" data-testid="not-found-home-link">Back to Home <ArrowUpRight size={16} /></Link>
           <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#FBE9F0] transition-colors" data-testid="not-found-contact-link">Contact Us</Link>
         </div>
       </main>

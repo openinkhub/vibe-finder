@@ -45,7 +45,7 @@ export const BatchBanner = ({ page }) => {
               </span>
             </div>
           </div>
-          <Link to={`/contact?service=${service}`} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shrink-0" data-testid="batch-cta">Reserve your seat <ArrowUpRight size={16} /></Link>
+          <Link to={`/contact?service=${service}`} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shrink-0" data-testid="batch-cta">Reserve your seat <ArrowUpRight size={16} /></Link>
         </div>
       </Reveal>
     </section>

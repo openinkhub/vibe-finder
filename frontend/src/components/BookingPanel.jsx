@@ -52,7 +52,7 @@ export const BookingPanel = ({ page }) => {
             </div>
             <input type="email" name="email" placeholder="Email (optional)" value={form.email} onChange={handle} className={inputCls} data-testid="booking-panel-email-input" />
             <textarea name="message" rows={2} placeholder={isCourse ? "Any questions about the batch?" : "Tell us about your event (optional)"} value={form.message} onChange={handle} className={`${inputCls} resize-none`} data-testid="booking-panel-message-input" />
-            <button type="submit" disabled={sending} className="w-full py-3.5 rounded-full font-medium transition-colors inline-flex items-center justify-center gap-2 bg-[#E62E6B] text-white hover:bg-[#C81F57]" data-testid="booking-panel-submit-btn">
+            <button type="submit" disabled={sending} className="w-full py-3.5 rounded-full font-medium transition-colors inline-flex items-center justify-center gap-2 bg-[#D6245F] text-white hover:bg-[#C81F57]" data-testid="booking-panel-submit-btn">
               {sending && <Loader2 size={16} className="animate-spin" />} {sending ? "Sending…" : isCourse ? "Reserve My Seat" : "Check My Availability"}
             </button>
           </form>

@@ -5,7 +5,7 @@ import { studioLooks, studioShades } from "../../mock/mock";
 const Swatches = ({ label, colors, value, onPick, testid }) => (
   <div>
     <div className="flex items-center justify-between mb-2.5">
-      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8B7F82]">{label}</span>
+      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#6E6266]">{label}</span>
       <button onClick={() => onPick(null)} className={`font-mono text-[10px] tracking-wider uppercase transition-colors ${value ? "text-[#E62E6B]" : "text-[#C9B7BD]"}`} data-testid={`${testid}-clear`}>
         {value ? "Remove" : "Off"}
       </button>
@@ -32,14 +32,14 @@ export const StudioControls = ({ look, setLook }) => {
   return (
     <div className="space-y-7">
       <div>
-        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8B7F82]">Signature looks</span>
+        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#6E6266]">Signature looks</span>
         <div className="mt-3 flex flex-wrap gap-2">
           {studioLooks.map((l) => (
             <button
               key={l.name}
               onClick={() => set({ ...l })}
               data-testid={`look-${l.name.toLowerCase().replace(/\s+/g, "-")}`}
-              className={`flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full text-sm font-medium border transition-all duration-300 ${look.name === l.name ? "bg-[#E62E6B] border-[#E62E6B] text-white shadow-lg shadow-[#E62E6B]/25" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`}
+              className={`flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full text-sm font-medium border transition-all duration-300 ${look.name === l.name ? "bg-[#D6245F] border-[#E62E6B] text-white shadow-lg shadow-[#E62E6B]/25" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`}
             >
               <span className="flex -space-x-1.5">
                 {[l.lips, l.blush, l.eyes].map((c) => <span key={c} className="w-4 h-4 rounded-full border border-white" style={{ background: c }} />)}
@@ -56,7 +56,7 @@ export const StudioControls = ({ look, setLook }) => {
 
       <div>
         <div className="flex items-center justify-between mb-2">
-          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8B7F82]">Intensity</span>
+          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#6E6266]">Intensity</span>
           <span className="font-mono text-xs text-[#E62E6B]">{Math.round(look.intensity * 100)}%</span>
         </div>
         <input
@@ -69,7 +69,7 @@ export const StudioControls = ({ look, setLook }) => {
 
       <div className="flex flex-wrap gap-2">
         {[["liner", "Eyeliner"], ["gloss", "Lip gloss"]].map(([k, label]) => (
-          <button key={k} onClick={() => set({ [k]: !look[k] })} data-testid={`toggle-${k}`} className={`px-4 py-2 rounded-full text-sm border transition-colors ${look[k] ? "bg-[#E62E6B] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#5C4E52]"}`}>
+          <button key={k} onClick={() => set({ [k]: !look[k] })} data-testid={`toggle-${k}`} className={`px-4 py-2 rounded-full text-sm border transition-colors ${look[k] ? "bg-[#D6245F] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#5C4E52]"}`}>
             {label} {look[k] ? "on" : "off"}
           </button>
         ))}

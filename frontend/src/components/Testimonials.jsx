@@ -21,7 +21,7 @@ const Testimonials = ({ showLink = true }) => {
         </Reveal>
         {showLink && (
           <div className="mt-10 text-center">
-            <Link to="/testimonials" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="testimonials-all-link">Read all testimonials <ArrowUpRight size={16} /></Link>
+            <Link to="/testimonials" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="testimonials-all-link">Read all testimonials <ArrowUpRight size={16} /></Link>
           </div>
         )}
       </div>

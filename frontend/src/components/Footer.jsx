@@ -16,7 +16,7 @@ const socialLinks = [
 
 const Col = ({ title, children, delay = 0, className = "" }) => (
   <Reveal delay={delay} className={className}>
-    <h4 className="font-mono text-[10px] tracking-[0.24em] uppercase text-[#8B7F82] mb-5">{title}</h4>
+    <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-[#6E6266] mb-5">{title}</p>
     <ul className="space-y-3">{children}</ul>
   </Reveal>
 );
@@ -32,7 +32,7 @@ const Footer = () => {
         <div className="grid grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-10 lg:gap-8">
           <Reveal className="col-span-2 lg:col-span-4">
             <Link to="/" className="inline-block" data-testid="footer-logo-link" aria-label="Rekha Krishnamurthy Makeup & Academy">
-              <motion.img src={brand.logo} alt="Rekha Krishnamurthy Makeup & Academy" className="h-12 sm:h-14 w-auto" whileHover={{ rotateY: 12, scale: 1.04 }} transition={{ type: "spring", stiffness: 240, damping: 18 }} style={{ transformPerspective: 600 }} />
+              <motion.img width="311" height="133" src={brand.logo} alt="Rekha Krishnamurthy Makeup & Academy" className="h-12 sm:h-14 w-auto" whileHover={{ rotateY: 12, scale: 1.04 }} transition={{ type: "spring", stiffness: 240, damping: 18 }} style={{ transformPerspective: 600 }} />
             </Link>
             <p className="mt-6 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-sm">Bridal, party & editorial makeup that reads flawless on camera and feels effortless in person. Serving brides across Bangalore.</p>
             <a href={brand.siteUrl} className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#E62E6B] hover:gap-2.5 transition-all" data-testid="footer-site-link">rekhakrishnamurthy.com <ArrowUpRight size={15} /></a>
@@ -52,7 +52,7 @@ const Footer = () => {
                   rel="noreferrer"
                   aria-label={label}
                   data-testid={`footer-social-${key}`}
-                  className="w-9 h-9 flex items-center justify-center rounded-full bg-white border border-[#F1DCE3] text-[#4A2530] hover:bg-[#E62E6B] hover:text-white hover:-translate-y-0.5 transition-all"
+                  className="w-9 h-9 flex items-center justify-center rounded-full bg-white border border-[#F1DCE3] text-[#4A2530] hover:bg-[#D6245F] hover:text-white hover:-translate-y-0.5 transition-all"
                 >
                   <Icon size={15} />
                 </a>
@@ -67,8 +67,8 @@ const Footer = () => {
         </div>
 
         <div className="mt-8 pt-6 border-t border-[#E62E6B]/20 flex flex-col md:flex-row items-center justify-between gap-3 text-center">
-          <p className="font-mono text-xs text-[#8B7F82]">© {new Date().getFullYear()} Rekha Krishnamurthy. All rights reserved.</p>
-          <div className="flex items-center gap-4 font-mono text-xs text-[#8B7F82]">
+          <p className="font-mono text-xs text-[#6E6266]">© {new Date().getFullYear()} Rekha Krishnamurthy. All rights reserved.</p>
+          <div className="flex items-center gap-4 font-mono text-xs text-[#6E6266]">
             <span>Bridal · HD · Airbrush · Self-Grooming</span>
           </div>
         </div>

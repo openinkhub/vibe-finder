@@ -72,26 +72,26 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
           <div className="mt-8 sm:mt-9 space-y-5">
             <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className={contactRow} data-testid="contact-phone-link">
               <span className={iconBox}><Phone size={20} /></span>
-              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">Phone</div><div className="text-[#4A2530] group-hover:text-[#E62E6B] transition-colors">{brand.phone}</div></div>
+              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">Phone</div><div className="text-[#4A2530] group-hover:text-[#E62E6B] transition-colors">{brand.phone}</div></div>
             </a>
             <div className={contactRow}>
               <span className={iconBox}><MapPin size={20} /></span>
-              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">Studio</div><div className="text-[#4A2530]">{brand.location}</div></div>
+              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">Studio</div><div className="text-[#4A2530]">{brand.location}</div></div>
             </div>
             <a href={brand.instagramUrl} target="_blank" rel="noreferrer" className={contactRow} data-testid="contact-instagram-link">
               <span className={iconBox}><Instagram size={20} /></span>
-              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">Instagram</div><div className="text-[#4A2530] group-hover:text-[#E62E6B] transition-colors break-all">{brand.instagram}</div></div>
+              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">Instagram</div><div className="text-[#4A2530] group-hover:text-[#E62E6B] transition-colors break-all">{brand.instagram}</div></div>
             </a>
             <a href={`mailto:${brand.email}`} className={contactRow} data-testid="contact-email-link">
               <span className={iconBox}><Mail size={20} /></span>
-              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">Email</div><div className="text-[#4A2530] group-hover:text-[#E62E6B] transition-colors break-all">{brand.email}</div></div>
+              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">Email</div><div className="text-[#4A2530] group-hover:text-[#E62E6B] transition-colors break-all">{brand.email}</div></div>
             </a>
           </div>
 
           <div className="mt-8 sm:mt-9 flex flex-col sm:flex-row sm:flex-wrap gap-3">
-            {showBooking && <Link to={BOOKING_PATH} className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="contact-book-slot-btn"><CalendarCheck size={18} /> Book Your Slot</Link>}
+            {showBooking && <Link to={BOOKING_PATH} className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="contact-book-slot-btn"><CalendarCheck size={18} /> Book Your Slot</Link>}
             <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#25D366] text-white font-medium hover:bg-[#1eb959] hover:-translate-y-0.5 transition-all w-full sm:w-auto" data-testid="contact-whatsapp-btn"><FaWhatsapp size={18} /> Chat on WhatsApp</a>
-            <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#E62E6B] hover:text-white transition-colors w-full sm:w-auto" data-testid="contact-call-btn"><Phone size={18} /> Call now</a>
+            <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#D6245F] hover:text-white transition-colors w-full sm:w-auto" data-testid="contact-call-btn"><Phone size={18} /> Call now</a>
           </div>
 
           <div className="mt-8 sm:mt-9 space-y-5">
@@ -107,7 +107,7 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
             {look && (
               <div className="mb-5 flex items-center justify-between gap-2 bg-[#FBE9F0] text-[#4A2530] px-4 py-3 rounded-xl text-sm" data-testid="contact-look-chip">
                 <span className="flex items-center gap-2">{lookImage ? <img src={imgUrl(lookImage)} alt={look} className="w-10 h-10 rounded-lg object-cover border border-white" data-testid="contact-look-thumb" /> : <Sparkles size={15} className="text-[#E62E6B]" />} Booking look: <span className="font-semibold">{look}</span></span>
-                <button type="button" onClick={() => { sessionStorage.removeItem("rk_selected_look"); sessionStorage.removeItem("rk_selected_look_image"); setLook(""); setLookImage(""); }} className="text-[#8B7F82] hover:text-[#E62E6B]" aria-label="Remove look" data-testid="contact-look-remove"><X size={15} /></button>
+                <button type="button" onClick={() => { sessionStorage.removeItem("rk_selected_look"); sessionStorage.removeItem("rk_selected_look_image"); setLook(""); setLookImage(""); }} className="text-[#6E6266] hover:text-[#E62E6B]" aria-label="Remove look" data-testid="contact-look-remove"><X size={15} /></button>
               </div>
             )}
             <div className="mb-6">
@@ -115,27 +115,27 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
             </div>
             <form onSubmit={submit} className="space-y-5" data-testid="contact-form">
               <div className="grid sm:grid-cols-2 gap-5">
-                <div><label className="block text-sm text-[#5C4E52] mb-2">Name</label><input name="name" value={form.name} onChange={handle} required placeholder="Full name" className={inputCls} data-testid="contact-name-input" /></div>
-                <div><label className="block text-sm text-[#5C4E52] mb-2">Email</label><input type="email" name="email" value={form.email} onChange={handle} placeholder="you@email.com" className={inputCls} data-testid="contact-email-input" /></div>
+                <div><label htmlFor="contact-name" className="block text-sm text-[#5C4E52] mb-2">Name</label><input id="contact-name" name="name" value={form.name} onChange={handle} required placeholder="Full name" className={inputCls} data-testid="contact-name-input" /></div>
+                <div><label htmlFor="contact-email" className="block text-sm text-[#5C4E52] mb-2">Email</label><input type="email" id="contact-email" name="email" value={form.email} onChange={handle} placeholder="you@email.com" className={inputCls} data-testid="contact-email-input" /></div>
               </div>
               <div className="grid sm:grid-cols-2 gap-5">
-                <div><label className="block text-sm text-[#5C4E52] mb-2">Mobile number *</label><input name="phone" value={form.phone} onChange={handle} required pattern={PHONE_PATTERN} type="tel" inputMode="tel" autoComplete="tel" title="Enter a 10-digit mobile number" placeholder="+91 98XXX XXXXX" className={inputCls} data-testid="contact-phone-input" /></div>
-                <div><label className="block text-sm text-[#5C4E52] mb-2">Service</label>
-                  <select name="service" value={form.service} onChange={handle} className={inputCls} data-testid="contact-service-select">
+                <div><label htmlFor="contact-phone" className="block text-sm text-[#5C4E52] mb-2">Mobile number *</label><input id="contact-phone" name="phone" value={form.phone} onChange={handle} required pattern={PHONE_PATTERN} type="tel" inputMode="tel" autoComplete="tel" title="Enter a 10-digit mobile number" placeholder="+91 98XXX XXXXX" className={inputCls} data-testid="contact-phone-input" /></div>
+                <div><label htmlFor="contact-service" className="block text-sm text-[#5C4E52] mb-2">Service</label>
+                  <select id="contact-service" name="service" value={form.service} onChange={handle} className={inputCls} data-testid="contact-service-select">
                     <optgroup label="Makeup">{["Bridal", "Engagement", "Non-Bridal", "Party", "Groom", "Editorial", "Fashion", "Photo Shoot", "Personal Shopping"].map((s) => <option key={s}>{s}</option>)}</optgroup>
                     <optgroup label="Courses & workshops">{COURSE_SERVICES.map((s) => <option key={s}>{s}</option>)}</optgroup>
                   </select>
                 </div>
               </div>
-              <div><label className="block text-sm text-[#5C4E52] mb-2">Event date</label><input type="date" name="date" value={form.date} onChange={handle} className={inputCls} data-testid="contact-date-input" /></div>
-              <div><label className="block text-sm text-[#5C4E52] mb-2">Message</label><textarea name="message" value={form.message} onChange={handle} rows={4} placeholder="Tell us about your event & vision..." className={`${inputCls} resize-none`} data-testid="contact-message-input" /></div>
+              <div><label htmlFor="contact-date" className="block text-sm text-[#5C4E52] mb-2">Event date</label><input type="date" id="contact-date" name="date" value={form.date} onChange={handle} className={inputCls} data-testid="contact-date-input" /></div>
+              <div><label htmlFor="contact-message" className="block text-sm text-[#5C4E52] mb-2">Message</label><textarea id="contact-message" name="message" value={form.message} onChange={handle} rows={4} placeholder="Tell us about your event & vision..." className={`${inputCls} resize-none`} data-testid="contact-message-input" /></div>
               {requireTerms && (
                 <label className="flex items-start gap-3 text-sm text-[#5C4E52] cursor-pointer" data-testid="contact-terms-label">
                   <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} required className="mt-1 w-4 h-4 accent-[#E62E6B]" data-testid="contact-terms-checkbox" />
                   <span>I agree to the <a href="#booking-terms" onClick={(e) => { e.preventDefault(); scrollToId("booking-terms"); }} className="text-[#E62E6B] underline underline-offset-2 hover:text-[#C81F57]" data-testid="contact-terms-link">booking terms & conditions</a>.</span>
                 </label>
               )}
-              <button type="submit" disabled={sending || (requireTerms && !agreed)} className="w-full py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-xl shadow-[#E62E6B]/30 disabled:opacity-60 inline-flex items-center justify-center gap-2" data-testid="contact-submit-btn">{sending && <Loader2 size={16} className="animate-spin" />} {sending ? "Sending…" : "Send Enquiry"}</button>
+              <button type="submit" disabled={sending || (requireTerms && !agreed)} className="w-full py-4 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-xl shadow-[#E62E6B]/30 disabled:opacity-60 inline-flex items-center justify-center gap-2" data-testid="contact-submit-btn">{sending && <Loader2 size={16} className="animate-spin" />} {sending ? "Sending…" : "Send Enquiry"}</button>
             </form>
           </TiltCard>
         </Reveal>

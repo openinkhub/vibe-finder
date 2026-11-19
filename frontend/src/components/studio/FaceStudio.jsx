@@ -282,11 +282,11 @@ const FaceStudio = () => {
 
               {source && !busy && (
                 <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-2">
-                  <button onClick={generateAI} disabled={generating} className={`${btn} px-5 py-2.5 bg-[#E62E6B] text-white hover:bg-[#C81F57] shadow-lg shadow-[#E62E6B]/30`} data-testid="studio-generate-ai-btn"><Wand2 size={15} /> {aiImage ? "Regenerate AI look" : "Generate AI look"}</button>
+                  <button onClick={generateAI} disabled={generating} className={`${btn} px-5 py-2.5 bg-[#D6245F] text-white hover:bg-[#C81F57] shadow-lg shadow-[#E62E6B]/30`} data-testid="studio-generate-ai-btn"><Wand2 size={15} /> {aiImage ? "Regenerate AI look" : "Generate AI look"}</button>
                   {aiImage && (
                     <div className="inline-flex rounded-full border border-[#F1DCE3] p-1 bg-[#FBFAF7]" data-testid="studio-view-toggle">
                       <button onClick={() => setView("overlay")} className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1 ${view === "overlay" ? "bg-[#4A2530] text-white" : "text-[#5C4E52]"}`} data-testid="studio-view-overlay"><Layers size={13} /> Instant</button>
-                      <button onClick={() => setView("ai")} className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1 ${view === "ai" ? "bg-[#E62E6B] text-white" : "text-[#5C4E52]"}`} data-testid="studio-view-ai"><Wand2 size={13} /> AI look</button>
+                      <button onClick={() => setView("ai")} className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1 ${view === "ai" ? "bg-[#D6245F] text-white" : "text-[#5C4E52]"}`} data-testid="studio-view-ai"><Wand2 size={13} /> AI look</button>
                     </div>
                   )}
                   {canCompare && (
@@ -296,19 +296,19 @@ const FaceStudio = () => {
               )}
 
               <div className="mt-3 flex flex-wrap items-center gap-2">
-                <button onClick={startCamera} disabled={busy} className={`${btn} px-4 py-2.5 ${source ? "bg-[#FBE9F0] text-[#4A2530] hover:bg-[#F4B7CE]" : "bg-[#E62E6B] text-white hover:bg-[#C81F57]"}`} data-testid="studio-camera-btn-2"><Camera size={15} /> Camera</button>
+                <button onClick={startCamera} disabled={busy} className={`${btn} px-4 py-2.5 ${source ? "bg-[#FBE9F0] text-[#4A2530] hover:bg-[#F4B7CE]" : "bg-[#D6245F] text-white hover:bg-[#C81F57]"}`} data-testid="studio-camera-btn-2"><Camera size={15} /> Camera</button>
                 <button onClick={() => fileRef.current.click()} disabled={busy} className={`${btn} px-4 py-2.5 bg-[#FBE9F0] text-[#4A2530] hover:bg-[#F4B7CE]`} data-testid="studio-upload-btn-2"><Upload size={15} /> Upload</button>
                 <button onClick={() => loadImage(sampleFace)} disabled={busy} className={`${btn} px-4 py-2.5 bg-[#FBE9F0] text-[#4A2530] hover:bg-[#F4B7CE]`} data-testid="studio-sample-btn-2"><Sparkles size={15} /> Model</button>
                 <div className="flex-1" />
                 {source && <button onClick={share} className={`${btn} px-4 py-2.5 bg-[#25D366] text-white hover:bg-[#1eb959]`} data-testid="studio-share-btn"><Share2 size={15} /> Share</button>}
                 {source && <button onClick={download} className={`${btn} px-4 py-2.5 border border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]`} data-testid="studio-download-btn"><Download size={15} /> Save</button>}
-                {source && <button onClick={reset} className={`${btn} w-10 h-10 border border-[#F1DCE3] text-[#8B7F82] hover:text-[#E62E6B]`} aria-label="Reset" data-testid="studio-reset-btn"><RotateCcw size={15} /></button>}
+                {source && <button onClick={reset} className={`${btn} w-10 h-10 border border-[#F1DCE3] text-[#6E6266] hover:text-[#E62E6B]`} aria-label="Reset" data-testid="studio-reset-btn"><RotateCcw size={15} /></button>}
                 <input ref={fileRef} type="file" accept="image/*" onChange={onFile} className="hidden" data-testid="studio-file-input" />
               </div>
               {gallery.length > 0 && (
                 <div className="mt-4 pt-4 border-t border-[#F1DCE3]" data-testid="look-gallery">
                   <div className="flex items-center justify-between mb-2.5">
-                    <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8B7F82]">Your AI looks · {gallery.length}</span>
+                    <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#6E6266]">Your AI looks · {gallery.length}</span>
                     <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[#E62E6B]">Tap one to view & book</span>
                   </div>
                   <div className="flex gap-2.5 overflow-x-auto no-scrollbar pb-1">
@@ -316,13 +316,13 @@ const FaceStudio = () => {
                       <button key={g.id} onClick={() => openGalleryItem(g)} className={`relative shrink-0 w-20 h-24 sm:w-24 sm:h-28 rounded-xl overflow-hidden border-2 transition-all ${aiImage === g.image && view === "ai" ? "border-[#E62E6B] shadow-lg shadow-[#E62E6B]/30" : "border-transparent hover:border-[#F4B7CE]"}`} data-testid={`gallery-item-${g.id}`} aria-label={`View ${g.look}`}>
                         <img src={g.image} alt={g.look} className="w-full h-full object-cover" />
                         <span className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#4A2530]/80 to-transparent text-white text-[9px] font-mono px-1.5 pb-1 pt-4 truncate text-left">{g.look}</span>
-                        {aiImage === g.image && view === "ai" && <span className="absolute top-1 right-1 w-5 h-5 rounded-full bg-[#E62E6B] text-white flex items-center justify-center"><Check size={11} /></span>}
+                        {aiImage === g.image && view === "ai" && <span className="absolute top-1 right-1 w-5 h-5 rounded-full bg-[#D6245F] text-white flex items-center justify-center"><Check size={11} /></span>}
                       </button>
                     ))}
                   </div>
                 </div>
               )}
-              <p className="mt-3 font-mono text-[10px] tracking-[0.12em] uppercase text-[#8B7F82] min-h-[14px]" data-testid="studio-status">{!busy && (msg || (status === "ready" ? "Engine ready · runs on-device, nothing is uploaded" : status === "loading" ? `${progress || "Preparing face engine…"}` : status === "error" ? "Face engine unavailable in this browser" : "Runs on-device · nothing is uploaded"))}</p>
+              <p className="mt-3 font-mono text-[10px] tracking-[0.12em] uppercase text-[#6E6266] min-h-[14px]" data-testid="studio-status">{!busy && (msg || (status === "ready" ? "Engine ready · runs on-device, nothing is uploaded" : status === "loading" ? `${progress || "Preparing face engine…"}` : status === "error" ? "Face engine unavailable in this browser" : "Runs on-device · nothing is uploaded"))}</p>
             </div>
           </Reveal>
 
@@ -335,7 +335,7 @@ const FaceStudio = () => {
             <Reveal delay={0.2}>
               <TiltCard max={6} className="bg-white rounded-[28px] border border-[#F1DCE3] overflow-hidden">
                 <div className="flex items-center justify-between px-6 pt-5">
-                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#8B7F82]">3D shade viewer</span>
+                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#6E6266]">3D shade viewer</span>
                   <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[#E62E6B]">Drag · Pinch · Zoom</span>
                 </div>
                 <div className="h-56 sm:h-64 cursor-grab active:cursor-grabbing overflow-hidden relative" data-testid="lipstick-viewer-wrap">
@@ -344,9 +344,9 @@ const FaceStudio = () => {
                 <div className="px-6 pb-5 flex items-center justify-between gap-3">
                   <div>
                     <div className="font-display text-lg text-[#4A2530]">{look.name}</div>
-                    <div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">Lip bullet · {look.lips || "off"}</div>
+                    <div className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">Lip bullet · {look.lips || "off"}</div>
                   </div>
-                  <button onClick={bookLook} disabled={booking} className="px-5 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] transition-colors inline-flex items-center gap-2 disabled:opacity-60" data-testid="studio-book-btn">{booking && <Loader2 size={14} className="animate-spin" />} Book this look</button>
+                  <button onClick={bookLook} disabled={booking} className="px-5 py-2.5 rounded-full bg-[#D6245F] text-white text-sm font-medium hover:bg-[#C81F57] transition-colors inline-flex items-center gap-2 disabled:opacity-60" data-testid="studio-book-btn">{booking && <Loader2 size={14} className="animate-spin" />} Book this look</button>
                 </div>
               </TiltCard>
             </Reveal>

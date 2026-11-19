@@ -38,7 +38,7 @@ export const MobileBookBar = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={handleBook}
-              className="flex-1 py-3.5 rounded-full bg-[#E62E6B] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#E62E6B]/35 active:scale-95 transition-transform"
+              className="flex-1 py-3.5 rounded-full bg-[#D6245F] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#E62E6B]/35 active:scale-95 transition-transform"
               data-testid="mobile-book-bar-btn"
             >
               <CalendarCheck size={17} />

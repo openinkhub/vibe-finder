@@ -20,7 +20,7 @@ const Instagram = () => {
             <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Follow along</span>
             <h2 className="font-display text-[#4A2530] text-2xl sm:text-3xl md:text-4xl leading-tight mt-4 sm:mt-5 break-all sm:break-normal">{brand.instagram}</h2>
           </div>
-          <a href={brand.instagramUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all w-fit shadow-lg shadow-[#E62E6B]/25" data-testid="instagram-follow-btn">
+          <a href={brand.instagramUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all w-fit shadow-lg shadow-[#E62E6B]/25" data-testid="instagram-follow-btn">
             <IgIcon size={18} /> Follow on Instagram
           </a>
         </Reveal>

@@ -5,7 +5,7 @@ import { heroStats, heroVideoPoster } from "../mock/mock";
 import { scrollToId } from "./Navbar";
 import { shortCta } from "../lib/ctaLabel";
 
-const Headline = ({ text }) => text.split(/["“”]/).map((part, i) => part ? <span key={i} className={`fade-up delay-${Math.min(3, Math.floor(i / 2) + 1)} ${i % 2 ? "italic font-bold text-[#E62E6B]" : ""}`}>{part}</span> : null);
+const Headline = ({ text }) => text.split(/["“”]/).map((part, i) => part ? <span key={i} className={i % 2 ? "italic font-bold text-[#E62E6B]" : undefined}>{part}</span> : null);
 
 const Hero = ({ page }) => {
 
@@ -23,10 +23,10 @@ const Hero = ({ page }) => {
         <div className="max-w-[660px]">
           <div className="flex items-center gap-2.5 fade-up">
             <span className="w-2 h-2 rounded-full bg-[#E62E6B] animate-pulse" />
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] text-[#8B7F82] uppercase" data-testid="hero-eyebrow">{page.eyebrow}</span>
+            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] text-[#6E6266] uppercase" data-testid="hero-eyebrow">{page.eyebrow}</span>
           </div>
 
-          <h2 className="font-display text-[#4A2530] mt-5 sm:mt-6 text-[40px] leading-[1.04] sm:text-[56px] md:text-[66px] lg:text-[72px] font-medium [text-shadow:0_2px_20px_rgba(244,241,234,0.8)] md:[text-shadow:none]" data-testid="hero-title">
+          <h2 className="fade-up delay-1 font-display text-[#4A2530] mt-5 sm:mt-6 text-[40px] leading-[1.04] sm:text-[56px] md:text-[66px] lg:text-[72px] font-medium [text-shadow:0_2px_20px_rgba(244,241,234,0.8)] md:[text-shadow:none]" data-testid="hero-title">
             <Headline text={page.heroHeadline} />
           </h2>
 
@@ -35,12 +35,12 @@ const Hero = ({ page }) => {
           </p>
 
           <div className="fade-up delay-4 mt-8 sm:mt-9 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-5">
-            <motion.button whileHover={{ y: -3, scale: 1.02 }} whileTap={{ scale: 0.97 }} onClick={() => scrollToId("contact")} className="self-start px-5 sm:px-8 py-2 sm:py-4 rounded-full bg-[#E62E6B] text-white text-xs sm:text-[15px] font-medium hover:bg-[#C81F57] transition-colors duration-300 shadow-xl shadow-[#E62E6B]/30" data-testid="hero-book-btn">
+            <motion.button whileHover={{ y: -3, scale: 1.02 }} whileTap={{ scale: 0.97 }} onClick={() => scrollToId("contact")} className="self-start px-5 sm:px-8 py-2 sm:py-4 rounded-full bg-[#D6245F] text-white text-xs sm:text-[15px] font-medium hover:bg-[#C81F57] transition-colors duration-300 shadow-xl shadow-[#E62E6B]/30" data-testid="hero-book-btn">
               <span className="sm:hidden">{shortCta("Book Your Free Consultation")}</span>
               <span className="hidden sm:inline">Book Your Free Consultation</span>
             </motion.button>
             <button onClick={() => scrollToId("reels")} className="group flex items-center gap-3 text-[#4A2530]" data-testid="hero-reel-btn">
-              <span className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-[#F4B7CE] bg-white/70 backdrop-blur flex items-center justify-center text-[#E62E6B] group-hover:bg-[#E62E6B] group-hover:border-[#E62E6B] group-hover:text-white transition-all duration-300">
+              <span className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-[#F4B7CE] bg-white/70 backdrop-blur flex items-center justify-center text-[#E62E6B] group-hover:bg-[#D6245F] group-hover:border-[#E62E6B] group-hover:text-white transition-all duration-300">
                 <Play size={16} className="ml-0.5 fill-current" />
               </span>
               <span className="text-sm sm:text-[15px]">Watch the reel</span>
@@ -54,7 +54,7 @@ const Hero = ({ page }) => {
                   {s.value}
                   {s.label === "Google rating" && <Star size={16} className="fill-[#E62E6B] text-[#E62E6B]" />}
                 </div>
-                <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.14em] uppercase text-[#8B7F82] mt-1.5">{s.label}</div>
+                <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.14em] uppercase text-[#6E6266] mt-1.5">{s.label}</div>
               </div>
             ))}
           </div>

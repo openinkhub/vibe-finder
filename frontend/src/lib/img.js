@@ -10,3 +10,15 @@ export const sizeImagesDeep = (v) => {
   if (v && typeof v === "object") { const o = {}; for (const k of Object.keys(v)) o[k] = sizeImagesDeep(v[k]); return o; }
   return v;
 };
+
+// Responsive versions for <img srcSet>: Unsplash photos and our own uploads (/api/files/...,
+// resized on the server) at 480/800/1200px, so phones don't download desktop-size images.
+const WIDTHS = [480, 800, 1200];
+const OWN = /^(https?:\/\/[^/]+)?\/api\/files\/[^?]+\.(jpe?g|png|webp)$/i;
+const UNSPLASH_SIZED = /^https:\/\/images\.unsplash\.com\/photo-[A-Za-z0-9-]+\?/;
+export const srcSetFor = (u) => {
+  if (typeof u !== "string") return undefined;
+  if (OWN.test(u)) return WIDTHS.map((w) => `${u}?w=${w} ${w}w`).join(", ");
+  if (UNSPLASH_SIZED.test(u) && /[?&]w=\d+/.test(u)) return WIDTHS.map((w) => `${u.replace(/([?&]w=)\d+/, `$1${w}`)} ${w}w`).join(", ");
+  return undefined;
+};

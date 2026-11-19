@@ -24,7 +24,7 @@ const Academy = () => {
                     <span className="font-mono text-sm text-[#E62E6B]">{String(i + 1).padStart(2, "0")}</span>
                     <div className="flex-1 min-w-0">
                       <div className="text-[#4A2530] font-medium text-sm sm:text-base">{t.name}</div>
-                      <div className="text-xs text-[#8B7F82] mt-0.5 truncate">{t.tagline || t.heroHeadline}</div>
+                      <div className="text-xs text-[#6E6266] mt-0.5 truncate">{t.tagline || t.heroHeadline}</div>
                     </div>
                     <ArrowUpRight size={16} className="text-[#E62E6B] shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </TiltCard>
@@ -32,7 +32,7 @@ const Academy = () => {
               </Reveal>
             ))}
           </div>
-          <Link to="/makeup-course-training-bangalore" className="mt-8 sm:mt-9 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="academy-cta-btn">View Course Details <ArrowUpRight size={16} /></Link>
+          <Link to="/makeup-course-training-bangalore" className="mt-8 sm:mt-9 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="academy-cta-btn">View Course Details <ArrowUpRight size={16} /></Link>
         </Reveal>
         <Reveal delay={0.15}>
           <TiltCard max={7} className="rounded-[24px] overflow-hidden shadow-[0_30px_80px_-30px_rgba(230,46,107,0.45)]">

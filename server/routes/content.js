@@ -177,6 +177,21 @@ router.get(/^\/files\/(.+)$/, ah(async (req, res) => {
   }
   const ext = rel.split(".").pop().toLowerCase();
   res.set("Cache-Control", "public, max-age=31536000, immutable");
+  // ?w=480|800|1200 serves a resized WebP copy (made once, kept next to the original).
+  const w = Number(req.query.w);
+  if ([480, 800, 1200].includes(w) && ["jpg", "jpeg", "png", "webp"].includes(ext)) {
+    const sized = `${full}.w${w}.webp`;
+    try {
+      await fs.promises.access(sized, fs.constants.R_OK);
+    } catch {
+      const sharp = require("sharp");
+      const buf = await sharp(full, { failOn: "none" }).rotate().resize({ width: w, withoutEnlargement: true }).webp({ quality: 72 }).toBuffer();
+      await fs.promises.writeFile(sized + ".part", buf);
+      await fs.promises.rename(sized + ".part", sized);
+    }
+    res.type("image/webp");
+    return res.sendFile(sized);
+  }
   if (MIME[ext]) res.type(MIME[ext]);
   res.sendFile(full);
 }));

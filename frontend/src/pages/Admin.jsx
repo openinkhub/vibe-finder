@@ -40,7 +40,7 @@ const Login = ({ onLogin }) => {
   return (
     <div className="min-h-screen bg-[#F4F1EA] flex items-center justify-center px-5 py-16">
       <form onSubmit={submit} className="w-full max-w-sm bg-white rounded-[28px] p-8 border border-[#F1DCE3] shadow-[0_30px_80px_-40px_rgba(230,46,107,0.45)]" data-testid="admin-login-form">
-        <img src={brand.logo} alt="Rekha Krishnamurthy" className="h-12 w-auto" />
+        <img width="311" height="133" src={brand.logo} alt="Rekha Krishnamurthy" className="h-12 w-auto" />
         <div className="mt-6 flex items-center gap-2 text-[#E62E6B]"><Lock size={16} /><span className="font-mono text-[11px] tracking-[0.24em] uppercase">Studio admin</span></div>
         <h1 className="font-display text-3xl text-[#4A2530] mt-2">Sign in</h1>
         {error && <div className="mt-4 bg-[#FBE9F0] text-[#C81F57] px-4 py-3 rounded-xl text-sm" data-testid="admin-login-error">{error}</div>}
@@ -208,7 +208,7 @@ export default function Admin() {
     <div className="min-h-screen bg-[#F4F1EA]" data-testid="admin-dashboard">
       <header className="bg-white/90 backdrop-blur border-b border-[#F1DCE3]">
         <div className="max-w-[1100px] mx-auto px-5 sm:px-8 py-4 flex items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-3" data-testid="admin-logo-link"><img src={brand.logo} alt="Rekha Krishnamurthy" className="h-9 sm:h-10 w-auto" /></Link>
+          <Link to="/" className="flex items-center gap-3" data-testid="admin-logo-link"><img width="311" height="133" src={brand.logo} alt="Rekha Krishnamurthy" className="h-9 sm:h-10 w-auto" /></Link>
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="hidden sm:block font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">{user.email}</span>
             <button onClick={enableNotify} className={`relative w-10 h-10 rounded-full border flex items-center justify-center ${notify ? "border-[#E62E6B] text-[#E62E6B]" : "border-[#F1DCE3] text-[#4A2530]"}`} aria-label="Enable browser alerts" title={notify ? "Browser alerts on" : "Enable browser alerts"} data-testid="admin-notify-btn">

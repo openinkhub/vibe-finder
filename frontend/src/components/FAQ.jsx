@@ -14,7 +14,7 @@ const FAQ = () => (
           <Reveal key={f.q} delay={i * 0.05} rotate={-10}>
             <div className="rounded-2xl border border-[#F1DCE3] bg-white px-5 sm:px-7 py-5 sm:py-6" data-testid={`faq-item-${i}`}>
               <div className="flex items-start gap-4">
-                <span className="shrink-0 w-9 h-9 rounded-full bg-[#E62E6B] text-white font-mono text-xs flex items-center justify-center">Q</span>
+                <span className="shrink-0 w-9 h-9 rounded-full bg-[#D6245F] text-white font-mono text-xs flex items-center justify-center">Q</span>
                 <h3 className="font-display text-base sm:text-lg md:text-xl font-semibold text-[#4A2530] pt-1.5" data-testid={`faq-question-${i}`}>{f.q}</h3>
               </div>
               <div className="flex items-start gap-4 mt-4">

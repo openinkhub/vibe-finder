@@ -11,7 +11,7 @@ const FloatingButtons = () => {
         whileHover={{ scale: 1.12, rotateY: 18 }}
         whileTap={{ scale: 0.94 }}
         href={`tel:${brand.phone.replace(/\s/g, "")}`}
-        className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-full bg-[#E62E6B] text-white shadow-lg shadow-[#E62E6B]/40"
+        className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-full bg-[#D6245F] text-white shadow-lg shadow-[#E62E6B]/40"
         aria-label="Call"
         data-testid="floating-call-btn"
       >

@@ -58,7 +58,7 @@ const Navbar = ({ solid = false }) => {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${filled ? "bg-[#F4F1EA]/92 backdrop-blur-xl border-b border-[#F1DCE3] py-2.5" : "bg-transparent py-4 sm:py-5"}`} data-testid="navbar">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center shrink-0" data-testid="header-logo-link" aria-label="Rekha Krishnamurthy Makeup & Academy">
-          <motion.img src={brand.logo} alt="Rekha Krishnamurthy Makeup & Academy" className="h-9 sm:h-10 md:h-12 w-auto" whileHover={{ rotateY: 12, scale: 1.04 }} transition={{ type: "spring", stiffness: 240, damping: 18 }} style={{ transformPerspective: 600 }} />
+          <motion.img width="311" height="133" src={brand.logo} alt="Rekha Krishnamurthy Makeup & Academy" className="h-9 sm:h-10 md:h-12 w-auto" whileHover={{ rotateY: 12, scale: 1.04 }} transition={{ type: "spring", stiffness: 240, damping: 18 }} style={{ transformPerspective: 600 }} />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-5 xl:gap-7" data-testid="desktop-nav">
@@ -71,7 +71,7 @@ const Navbar = ({ solid = false }) => {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <button onClick={goContact} className="hidden md:inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-lg shadow-[#E62E6B]/25" data-testid="nav-book-btn">Book now <ArrowUpRight size={15} /></button>
+          <button onClick={goContact} className="hidden md:inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-[#D6245F] text-white text-sm font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-lg shadow-[#E62E6B]/25" data-testid="nav-book-btn">Book now <ArrowUpRight size={15} /></button>
           <button onClick={() => setOpen((v) => !v)} className="lg:hidden w-11 h-11 flex items-center justify-center rounded-full border border-[#F1DCE3] bg-white/70 text-[#E62E6B]" aria-label="Menu" data-testid="mobile-menu-btn">{open ? <X size={20} /> : <Menu size={20} />}</button>
         </div>
       </div>
@@ -91,7 +91,7 @@ const Navbar = ({ solid = false }) => {
             ) : (
               <Link key={m.to} to={m.to} className="block w-full text-left px-6 py-4 text-[#4A2530] border-b border-[#FBE9F0] hover:bg-[#FBE9F0] hover:text-[#E62E6B] transition-colors" data-testid={`mobile-nav-${slug(m.label)}`}>{m.label}</Link>
             ))}
-            <button onClick={goContact} className="m-4 w-[calc(100%-2rem)] py-3.5 rounded-full bg-[#E62E6B] text-white font-medium" data-testid="mobile-book-btn">Book now</button>
+            <button onClick={goContact} className="m-4 w-[calc(100%-2rem)] py-3.5 rounded-full bg-[#D6245F] text-white font-medium" data-testid="mobile-book-btn">Book now</button>
           </motion.div>
         )}
       </AnimatePresence>

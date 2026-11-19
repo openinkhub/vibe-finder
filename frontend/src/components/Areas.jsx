@@ -7,7 +7,7 @@ import { Reveal } from "./fx/Reveal";
 
 const Row = ({ title, items, testid }) => (
   <div data-testid={testid}>
-    <div className="font-mono text-[10px] tracking-[0.24em] uppercase text-[#8B7F82] mb-3">{title}</div>
+    <div className="font-mono text-[10px] tracking-[0.24em] uppercase text-[#6E6266] mb-3">{title}</div>
     <div className="flex flex-wrap gap-2.5 sm:gap-3" style={{ perspective: 800 }}>
       {items.map((a, i) => (
         <motion.div

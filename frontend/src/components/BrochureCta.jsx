@@ -41,7 +41,7 @@ export const BrochureCta = ({ page }) => {
     <section className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 pb-10 md:pb-14" data-testid="brochure-cta-section">
       <Reveal>
         <div className={`flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 rounded-[24px] px-6 sm:px-8 py-6 sm:py-7 border ${isCourse ? "bg-[#4A2530] text-white border-transparent" : "bg-white border-[#F1DCE3]"}`}>
-          <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${isCourse ? "bg-[#E62E6B] text-white" : "bg-[#FBE9F0] text-[#E62E6B]"}`}><FileText size={20} /></div>
+          <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${isCourse ? "bg-[#D6245F] text-white" : "bg-[#FBE9F0] text-[#E62E6B]"}`}><FileText size={20} /></div>
           <div className="flex-1 min-w-0">
             <div className={`font-mono text-[10px] tracking-[0.24em] uppercase ${isCourse ? "text-[#F4B7CE]" : "text-[#E62E6B]"}`}>{isCourse ? "Course brochure" : "Service brochure"}</div>
             <div className={`font-display text-xl sm:text-2xl mt-1 ${isCourse ? "text-white" : "text-[#4A2530]"}`}>Get the full {page.name} brochure</div>
@@ -49,7 +49,7 @@ export const BrochureCta = ({ page }) => {
           </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <button className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shrink-0" data-testid="brochure-open-btn"><Download size={16} /> Get brochure</button>
+              <button className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shrink-0" data-testid="brochure-open-btn"><Download size={16} /> Get brochure</button>
             </DialogTrigger>
             <DialogContent data-testid="brochure-dialog">
               <DialogHeader>
@@ -77,7 +77,7 @@ export const BrochureCta = ({ page }) => {
                     <RadioGroupItem value="email" id="mode-email" data-testid="brochure-mode-email" /> <Mail size={15} className="text-[#E62E6B]" /> Email it to me instead
                   </label>
                 </RadioGroup>
-                <button type="submit" disabled={busy} className="w-full py-3 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] disabled:opacity-60 inline-flex items-center justify-center gap-2" data-testid="brochure-submit-btn">
+                <button type="submit" disabled={busy} className="w-full py-3 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] disabled:opacity-60 inline-flex items-center justify-center gap-2" data-testid="brochure-submit-btn">
                   {busy && <Loader2 size={16} className="animate-spin" />} {busy ? "Please wait…" : "Get Brochure"}
                 </button>
               </form>

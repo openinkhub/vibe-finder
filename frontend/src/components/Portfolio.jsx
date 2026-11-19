@@ -1,4 +1,5 @@
 import React from "react";
+import { srcSetFor } from "../lib/img";
 import { motion } from "@/lib/motion";
 import { Link } from "react-router-dom";
 import { pagesByGroup } from "../lib/pages";
@@ -31,7 +32,7 @@ const Portfolio = () => {
             >
               <Link to={p.path} className="block" data-testid={`portfolio-item-${p.path.slice(1)}`}>
                 <TiltCard max={9} className="w-full overflow-hidden rounded-2xl bg-[#FBE9F0] text-left shadow-[0_20px_50px_-30px_rgba(230,46,107,0.5)]">
-                  <img width="600" height="500" decoding="async" src={heroImage(p, map)} alt={heroImageAlt(p, map)} loading="lazy" className="w-full h-[200px] sm:h-[240px] md:h-[300px] object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <img width="600" height="500" decoding="async" src={heroImage(p, map)} srcSet={srcSetFor(heroImage(p, map))} sizes="(min-width: 768px) 33vw, 100vw" alt={heroImageAlt(p, map)} loading="lazy" className="w-full h-[200px] sm:h-[240px] md:h-[300px] object-cover group-hover:scale-105 transition-transform duration-700" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#E62E6B]/85 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute top-3 left-3 flex items-center gap-2">
                     <span className="font-mono text-[10px] bg-white/95 text-[#4A2530] px-2 py-1 rounded">{p.name}</span>

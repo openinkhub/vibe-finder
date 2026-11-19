@@ -95,6 +95,8 @@ app.use(ah(async (req, res, next) => {
 // ── Frontend ──
 app.use(express.static(BUILD_DIR, { index: false, redirect: false, maxAge: "1h", setHeaders: (res, p) => {
   if (/[\\/]static[\\/]/.test(p)) res.set("Cache-Control", "public, max-age=31536000, immutable");
+  // Images and icons in the site root (logo, hero poster, favicons) change rarely.
+  else if (/\.(png|jpe?g|webp|avif|svg|ico|woff2?)$/i.test(p)) res.set("Cache-Control", "public, max-age=2592000");
 } }));
 
 const sendHtml = (res, html, status = 200) => res.status(status).set("Cache-Control", "no-cache").type("html").send(html);

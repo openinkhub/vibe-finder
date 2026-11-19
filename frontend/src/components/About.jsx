@@ -50,7 +50,7 @@ const About = () => {
               {aboutStats.map((s, i) => (
                 <Reveal key={s.label} delay={0.2 + i * 0.08}>
                   <div className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-[#4A2530]">{s.value}</div>
-                  <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.14em] uppercase text-[#8B7F82] mt-2">{s.label}</div>
+                  <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.14em] uppercase text-[#6E6266] mt-2">{s.label}</div>
                 </Reveal>
               ))}
             </div>

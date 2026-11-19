@@ -26,7 +26,7 @@ const Pricing = () => {
           {pricing.map((p, i) => (
             <Reveal key={p.id || p.title} delay={i * 0.07}>
               <Link to={pricingPath(p.title)} className="block h-full" data-testid={`pricing-card-${i}`}>
-                <TiltCard className={`h-full flex flex-col rounded-3xl p-6 sm:p-8 border transition-shadow duration-300 ${p.featured ? "bg-[#E62E6B] border-[#E62E6B] text-white shadow-2xl shadow-[#E62E6B]/40" : "bg-white border-[#F1DCE3] hover:shadow-xl hover:shadow-[#E62E6B]/15"}`}>
+                <TiltCard className={`h-full flex flex-col rounded-3xl p-6 sm:p-8 border transition-shadow duration-300 ${p.featured ? "bg-[#D6245F] border-[#E62E6B] text-white shadow-2xl shadow-[#E62E6B]/40" : "bg-white border-[#F1DCE3] hover:shadow-xl hover:shadow-[#E62E6B]/15"}`}>
                   {p.featured && <span className="absolute top-5 right-5 sm:top-6 sm:right-6 inline-flex items-center gap-1 bg-white text-[#E62E6B] text-xs font-medium px-3 py-1.5 rounded-full"><Star size={12} className="fill-[#E62E6B]" /> Most booked</span>}
                   <div className={`font-display text-3xl sm:text-4xl font-bold ${p.featured ? "text-white" : "text-[#E62E6B]"}`} style={{ transform: "translateZ(30px)" }}>{p.price}</div>
                   <h3 className={`font-display text-xl font-semibold mt-4 ${p.featured ? "text-white" : "text-[#4A2530]"}`}>{p.title}</h3>
@@ -38,9 +38,9 @@ const Pricing = () => {
           ))}
         </div>
 
-        <p className="mt-8 sm:mt-10 text-center text-sm text-[#8B7F82] max-w-2xl mx-auto">Every Bridal look is unique. Your Quote is personalized based on your look, location and event requirements. Outstation Charges Extra*</p>
+        <p className="mt-8 sm:mt-10 text-center text-sm text-[#6E6266] max-w-2xl mx-auto">Every Bridal look is unique. Your Quote is personalized based on your look, location and event requirements. Outstation Charges Extra*</p>
         <div className="mt-6 sm:mt-8 text-center">
-          <button onClick={() => scrollToId("contact")} className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-[#E62E6B] text-white text-sm sm:text-base font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="pricing-book-btn">
+          <button onClick={() => scrollToId("contact")} className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-[#D6245F] text-white text-sm sm:text-base font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="pricing-book-btn">
             <span className="sm:hidden">{shortCta("Consult on Pricing")}</span>
             <span className="hidden sm:inline">Consult on Pricing</span>
           </button>

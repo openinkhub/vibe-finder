@@ -28,7 +28,7 @@ const Reels = () => {
                 <img width="400" height="700" loading="lazy" decoding="async" src={r.image} alt={r.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#E62E6B]/90 via-[#E62E6B]/10 to-transparent" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="w-12 h-12 rounded-full bg-white/90 backdrop-blur flex items-center justify-center text-[#E62E6B] group-hover:scale-110 group-hover:bg-[#E62E6B] group-hover:text-white transition-all duration-300 shadow-lg" style={{ transform: "translateZ(40px)" }}><Play size={18} className="ml-0.5 fill-current" /></span>
+                  <span className="w-12 h-12 rounded-full bg-white/90 backdrop-blur flex items-center justify-center text-[#E62E6B] group-hover:scale-110 group-hover:bg-[#D6245F] group-hover:text-white transition-all duration-300 shadow-lg" style={{ transform: "translateZ(40px)" }}><Play size={18} className="ml-0.5 fill-current" /></span>
                 </div>
                 <span className="absolute top-3 right-3 font-mono text-[10px] text-white bg-[#E62E6B]/90 px-2 py-1 rounded">{r.time}</span>
                 <div className="absolute bottom-0 left-0 p-3 sm:p-4"><div className="font-display text-sm font-semibold text-white leading-snug">{r.title}</div></div>

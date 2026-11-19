@@ -125,7 +125,7 @@ const BridalPackages = () => (
               Rekha works with you from consultation through trial to the final event, with every detail discussed and confirmed in advance.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="bridal-pkg-book-btn">
+              <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="bridal-pkg-book-btn">
                 <CalendarCheck size={17} /> Book Free Consultation
               </Link>
               <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#FBE9F0] transition-colors w-full sm:w-auto" data-testid="bridal-pkg-whatsapp-btn">
@@ -162,7 +162,7 @@ const BridalPackages = () => (
             <Reveal key={pkg.tier} delay={i * 0.08}>
               <TiltCard className={`h-full rounded-3xl p-7 border flex flex-col ${pkg.best ? "bg-[#4A2530] border-[#4A2530] shadow-2xl shadow-[#4A2530]/30" : "bg-white border-[#F1DCE3]"}`} max={5}>
                 {pkg.best && (
-                  <div className="mb-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E62E6B] text-white text-xs font-mono uppercase tracking-wider w-fit">
+                  <div className="mb-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D6245F] text-white text-xs font-mono uppercase tracking-wider w-fit">
                     <Sparkles size={11} /> Most chosen
                   </div>
                 )}
@@ -177,7 +177,7 @@ const BridalPackages = () => (
                     </li>
                   ))}
                 </ul>
-                <Link to="/contact" className={`mt-7 w-full py-3 rounded-full text-sm font-medium text-center block transition-colors ${pkg.best ? "bg-[#E62E6B] text-white hover:bg-[#C81F57]" : "border border-[#E62E6B] text-[#E62E6B] hover:bg-[#FBE9F0]"}`} data-testid={`bridal-pkg-${pkg.tier.toLowerCase().replace(/\s+/g, "-")}-btn`}>
+                <Link to="/contact" className={`mt-7 w-full py-3 rounded-full text-sm font-medium text-center block transition-colors ${pkg.best ? "bg-[#D6245F] text-white hover:bg-[#C81F57]" : "border border-[#E62E6B] text-[#E62E6B] hover:bg-[#FBE9F0]"}`} data-testid={`bridal-pkg-${pkg.tier.toLowerCase().replace(/\s+/g, "-")}-btn`}>
                   Discuss this package
                 </Link>
               </TiltCard>

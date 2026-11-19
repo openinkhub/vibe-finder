@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { srcSetFor } from "../lib/img";
 import { Navigate, Link, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { Check, ArrowUpRight, MapPin } from "lucide-react";
@@ -67,7 +68,7 @@ const ChildCards = ({ items }) => {
         <Reveal key={c.path} delay={i * 0.06}>
           <Link to={c.path} data-testid={`child-card-${c.path.slice(1)}`}>
             <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full hover:border-[#E62E6B] transition-colors">
-              <img width="600" height="300" loading="lazy" decoding="async" src={heroImage(c, map)} alt={heroImageAlt(c, map)} className="w-full h-44 object-cover" />
+              <img width="600" height="300" loading="lazy" decoding="async" src={heroImage(c, map)} srcSet={srcSetFor(heroImage(c, map))} sizes="(min-width: 1024px) 33vw, 100vw" alt={heroImageAlt(c, map)} className="w-full h-44 object-cover" />
               <div className="p-6">
                 <div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{c.eyebrow}</div>
                 <h3 className="font-display text-xl text-[#4A2530] mt-2">{c.name}</h3>
@@ -220,11 +221,11 @@ export const GuidePage = () => {
   return (
     <PageShell page={page} title={page.name} faq={body?.faq}>
       <article className="max-w-3xl mx-auto px-5 sm:px-6 pb-14" data-testid="guide-article">
-        <nav className="text-xs text-[#8B7F82] flex flex-wrap gap-1.5" aria-label="Breadcrumb"><Link to="/" className="hover:text-[#E62E6B]">Home</Link><span>›</span><Link to="/blog" className="hover:text-[#E62E6B]">Guides</Link></nav>
+        <nav className="text-xs text-[#6E6266] flex flex-wrap gap-1.5" aria-label="Breadcrumb"><Link to="/" className="hover:text-[#E62E6B]">Home</Link><span>›</span><Link to="/blog" className="hover:text-[#E62E6B]">Guides</Link></nav>
         <span className="block mt-6 font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">{page.eyebrow}</span>
         <h1 className="font-display text-[#4A2530] text-3xl sm:text-5xl leading-[1.08] mt-3" data-testid="guide-h1">{page.h1}</h1>
         <p className="mt-5 text-base sm:text-lg text-[#5C4E52] leading-relaxed">{bold(page.heroSub)}</p>
-        <div className="mt-5 text-xs text-[#8B7F82] font-mono uppercase tracking-wider">By <Link to="/about-us" className="text-[#4A2530] hover:text-[#E62E6B]">Rekha Krishnamurthy</Link> · {fmtDate(page.date)}{words ? ` · ${Math.max(3, Math.round(words / 200))} min read` : ""}</div>
+        <div className="mt-5 text-xs text-[#6E6266] font-mono uppercase tracking-wider">By <Link to="/about-us" className="text-[#4A2530] hover:text-[#E62E6B]">Rekha Krishnamurthy</Link> · {fmtDate(page.date)}{words ? ` · ${Math.max(3, Math.round(words / 200))} min read` : ""}</div>
         <img src={heroImage(page, map)} alt={heroImageAlt(page, map)} width="1000" height="560" className="mt-8 w-full h-[240px] sm:h-[380px] object-cover rounded-[24px]" />
         {body ? (
           <div className="mt-10 space-y-12" data-testid="guide-body">{body.sections.map((s2, i) => <Block key={s2.h} s={s2} i={i} />)}</div>
@@ -240,8 +241,8 @@ export const GuidePage = () => {
           <p className="mt-2 font-display text-2xl text-[#4A2530]">Bridal makeup and self-grooming classes in Bangalore</p>
           <p className="mt-2 text-sm text-[#5C4E52]">Plan your wedding look with a personal consultation, or learn to do your own makeup in a small-batch self-grooming class.</p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <Link to="/" className={`${link} bg-[#E62E6B] text-white hover:bg-[#C81F57]`}>Bridal Makeup in Bangalore <ArrowUpRight size={16} /></Link>
-            <Link to="/self-grooming-classes" className={`${link} border border-[#E62E6B] text-[#E62E6B] hover:bg-[#E62E6B] hover:text-white`}>Self-Grooming Classes <ArrowUpRight size={16} /></Link>
+            <Link to="/" className={`${link} bg-[#D6245F] text-white hover:bg-[#C81F57]`}>Bridal Makeup in Bangalore <ArrowUpRight size={16} /></Link>
+            <Link to="/self-grooming-classes" className={`${link} border border-[#E62E6B] text-[#E62E6B] hover:bg-[#D6245F] hover:text-white`}>Self-Grooming Classes <ArrowUpRight size={16} /></Link>
           </div>
         </div>
         <div className="mt-10"><AuthorBio /></div>
@@ -303,7 +304,7 @@ export const LegalPage = () => {
         <SeoIntro page={page} />
         <Section>
           <div className="flex flex-wrap gap-2 mb-8" data-testid="legal-tabs">
-            {legalLinks.map((l) => <Link key={l.to} to={l.to} className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${l.to === pathname ? "bg-[#E62E6B] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`legal-tab-${l.to.slice(1)}`}>{l.label}</Link>)}
+            {legalLinks.map((l) => <Link key={l.to} to={l.to} className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${l.to === pathname ? "bg-[#D6245F] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`legal-tab-${l.to.slice(1)}`}>{l.label}</Link>)}
           </div>
           <article className="bg-white rounded-3xl p-6 sm:p-10 border border-[#F1DCE3]" data-testid={`legal-section-${key}`}>
             {doc

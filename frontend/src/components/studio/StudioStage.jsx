@@ -22,7 +22,7 @@ export const StudioStage = ({ canvasRef, videoRef, source, busy, generating, pro
             <span className="absolute top-3 left-3 font-mono text-[10px] tracking-[0.15em] uppercase text-[#4A2530] bg-white/90 px-2.5 py-1 rounded-full">Before</span>
           </div>
           <div className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_0_1px_rgba(230,46,107,0.5)] pointer-events-none" style={{ left: `${pct}%` }}>
-            <span className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-[#E62E6B] text-white text-xs flex items-center justify-center shadow-lg">◂▸</span>
+            <span className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-[#D6245F] text-white text-xs flex items-center justify-center shadow-lg">◂▸</span>
           </div>
           <input
             type="range" min="0" max="1" step="0.005" value={compare}
@@ -46,9 +46,9 @@ export const StudioStage = ({ canvasRef, videoRef, source, busy, generating, pro
           <h3 className="font-display text-xl sm:text-2xl text-[#4A2530] mt-5">Start your face scan</h3>
           <p className="text-sm text-[#5C4E52] mt-2 max-w-xs mx-auto">Use your camera, upload a selfie, or try it on our model first.</p>
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-            <button onClick={onCamera} disabled={busy} className={`${btn} px-6 py-3 bg-[#E62E6B] text-white hover:bg-[#C81F57] shadow-lg shadow-[#E62E6B]/30`} data-testid="studio-camera-btn"><Camera size={17} /> Use camera</button>
+            <button onClick={onCamera} disabled={busy} className={`${btn} px-6 py-3 bg-[#D6245F] text-white hover:bg-[#C81F57] shadow-lg shadow-[#E62E6B]/30`} data-testid="studio-camera-btn"><Camera size={17} /> Use camera</button>
             <button onClick={onUpload} disabled={busy} className={`${btn} px-6 py-3 bg-white text-[#4A2530] border border-[#F1DCE3] hover:border-[#E62E6B]`} data-testid="studio-upload-btn"><Upload size={17} /> Upload selfie</button>
-            <button onClick={onSample} disabled={busy} className={`${btn} px-6 py-3 bg-[#F4B7CE] text-[#4A2530] hover:bg-[#E62E6B] hover:text-white`} data-testid="studio-sample-btn"><Sparkles size={17} /> Try on model</button>
+            <button onClick={onSample} disabled={busy} className={`${btn} px-6 py-3 bg-[#F4B7CE] text-[#4A2530] hover:bg-[#D6245F] hover:text-white`} data-testid="studio-sample-btn"><Sparkles size={17} /> Try on model</button>
           </div>
         </div>
       )}
@@ -57,7 +57,7 @@ export const StudioStage = ({ canvasRef, videoRef, source, busy, generating, pro
         <div className="absolute inset-0 bg-white/70 backdrop-blur-sm flex flex-col items-center justify-center gap-3 text-[#E62E6B]" data-testid={generating ? "studio-generating" : "studio-loading"}>
           {generating ? <Wand2 size={34} className="animate-pulse" /> : <Loader2 size={34} className="animate-spin" />}
           <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-center px-6">{generating ? "Painting your photoreal look with AI…" : progress || msg || "Preparing…"}</span>
-          <span className="font-mono text-[10px] text-[#8B7F82]">{generating ? "Usually 10–25 seconds" : "First load downloads a 15 MB on-device engine"}</span>
+          <span className="font-mono text-[10px] text-[#6E6266]">{generating ? "Usually 10–25 seconds" : "First load downloads a 15 MB on-device engine"}</span>
         </div>
       )}
     </div>
