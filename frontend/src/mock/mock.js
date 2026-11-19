@@ -74,13 +74,13 @@ export const whoWeServe = [
 ];
 
 export const services = [
-  { no: "01", title: "Bridal", desc: "HD & airbrush bridal makeup with a trial session, draping, and touch-up kit for the full wedding day.", cta: "Explore Bridal", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9" },
-  { no: "02", title: "Engagement", desc: "Soft-glam looks built for close-up photography and champagne-lit rooms.", cta: "Explore Engagement", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51" },
-  { no: "03", title: "Non-Bridal", desc: "Polished, camera-ready looks for the wedding party, family, and guests.", cta: "Explore Non-Bridal", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749" },
-  { no: "04", title: "Party", desc: "Bold or bare, tuned to your event and lighting — always long-wear.", cta: "Explore Party", image: "https://images.unsplash.com/photo-1708735808460-2b131ddefb27" },
-  { no: "05", title: "Editorial", desc: "Concept-led makeup for magazine covers, campaigns, and creative sets.", cta: "Explore Editorial", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2" },
-  { no: "06", title: "Fashion", desc: "Runway-ready faces built to hold up under stage light and quick changes.", cta: "Explore Fashion", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39" },
-  { no: "07", title: "Self Makeup Classes", desc: "Hands-on self-grooming classes so you can do your own everyday, event and touch-up makeup with confidence — starting at ₹999.", cta: "Explore Self Grooming Classes", image: "https://images.unsplash.com/photo-1551184451-76b762941ad6" },
+  { no: "01", title: "Bridal", desc: "HD & airbrush bridal makeup with a trial session, draping, and touch-up kit for the full wedding day.", cta: "Explore Bridal", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9?auto=format&fit=crop&w=1000&q=70" },
+  { no: "02", title: "Engagement", desc: "Soft-glam looks built for close-up photography and champagne-lit rooms.", cta: "Explore Engagement", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51?auto=format&fit=crop&w=1000&q=70" },
+  { no: "03", title: "Non-Bridal", desc: "Polished, camera-ready looks for the wedding party, family, and guests.", cta: "Explore Non-Bridal", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749?auto=format&fit=crop&w=1000&q=70" },
+  { no: "04", title: "Party", desc: "Bold or bare, tuned to your event and lighting — always long-wear.", cta: "Explore Party", image: "https://images.unsplash.com/photo-1708735808460-2b131ddefb27?auto=format&fit=crop&w=1000&q=70" },
+  { no: "05", title: "Editorial", desc: "Concept-led makeup for magazine covers, campaigns, and creative sets.", cta: "Explore Editorial", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1000&q=70" },
+  { no: "06", title: "Fashion", desc: "Runway-ready faces built to hold up under stage light and quick changes.", cta: "Explore Fashion", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39?auto=format&fit=crop&w=1000&q=70" },
+  { no: "07", title: "Self Makeup Classes", desc: "Hands-on self-grooming classes so you can do your own everyday, event and touch-up makeup with confidence — starting at ₹999.", cta: "Explore Self Grooming Classes", image: "https://images.unsplash.com/photo-1551184451-76b762941ad6?auto=format&fit=crop&w=1000&q=70" },
 ];
 
 export const pricing = [
@@ -95,26 +95,26 @@ export const pricing = [
 export const areas = ["HSR Layout", "JP Nagar", "Jayanagar", "Banashankari", "+ Bangalore-wide on request"];
 
 export const portfolio = [
-  { id: "001", cat: "Bridal", caption: "Bridal · f/2.8 · Golden Hour", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9" },
-  { id: "002", cat: "Reels", caption: "Reel · Look Trial", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51" },
-  { id: "003", cat: "Editorial", caption: "Editorial · Studio Flash", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2" },
-  { id: "004", cat: "Fashion", caption: "Fashion · Backstage", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39" },
-  { id: "005", cat: "Bridal", caption: "Bridal · Airbrush Base", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6" },
-  { id: "006", cat: "Reels", caption: "Reel · GRWM", image: "https://images.unsplash.com/photo-1551184451-76b762941ad6" },
-  { id: "007", cat: "Editorial", caption: "Editorial · Cover Story", image: "https://images.unsplash.com/photo-1677691257363-eebd2abeafec" },
-  { id: "008", cat: "Bridal", caption: "Bridal · Reception", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749" },
-  { id: "009", cat: "Fashion", caption: "Fashion · Runway", image: "https://images.unsplash.com/photo-1708735808460-2b131ddefb27" },
+  { id: "001", cat: "Bridal", caption: "Bridal · f/2.8 · Golden Hour", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9?auto=format&fit=crop&w=1000&q=70" },
+  { id: "002", cat: "Reels", caption: "Reel · Look Trial", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51?auto=format&fit=crop&w=1000&q=70" },
+  { id: "003", cat: "Editorial", caption: "Editorial · Studio Flash", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1000&q=70" },
+  { id: "004", cat: "Fashion", caption: "Fashion · Backstage", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39?auto=format&fit=crop&w=1000&q=70" },
+  { id: "005", cat: "Bridal", caption: "Bridal · Airbrush Base", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6?auto=format&fit=crop&w=1000&q=70" },
+  { id: "006", cat: "Reels", caption: "Reel · GRWM", image: "https://images.unsplash.com/photo-1551184451-76b762941ad6?auto=format&fit=crop&w=1000&q=70" },
+  { id: "007", cat: "Editorial", caption: "Editorial · Cover Story", image: "https://images.unsplash.com/photo-1677691257363-eebd2abeafec?auto=format&fit=crop&w=1000&q=70" },
+  { id: "008", cat: "Bridal", caption: "Bridal · Reception", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749?auto=format&fit=crop&w=1000&q=70" },
+  { id: "009", cat: "Fashion", caption: "Fashion · Runway", image: "https://images.unsplash.com/photo-1708735808460-2b131ddefb27?auto=format&fit=crop&w=1000&q=70" },
 ];
 
 export const portfolioFilters = ["All Frames", "Bridal", "Editorial", "Fashion", "Reels"];
 
 export const reels = [
-  { title: "Airbrush base, start to finish", time: "0:34", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51", url: "https://www.instagram.com/reel/CvKfxEaPCIj/" },
-  { title: "Bridal trial walkthrough", time: "0:51", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9", url: "https://www.instagram.com/reel/CvchPNhP05O/" },
-  { title: "Editorial smoky eye", time: "0:22", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2", url: "https://www.instagram.com/reel/CuhS8YrvNMK/" },
-  { title: "Draping tips for sarees", time: "1:04", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749", url: "https://www.instagram.com/reel/CZq3UYZjyLZ/" },
-  { title: "Runway quick-change", time: "0:40", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39", url: "https://www.instagram.com/reel/Cj476jXDFIE/" },
-  { title: "Bridal transformation", time: "0:58", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6", url: "https://www.instagram.com/reel/Cvhq45Av5tT/" },
+  { title: "Airbrush base, start to finish", time: "0:34", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51?auto=format&fit=crop&w=1000&q=70", url: "https://www.instagram.com/reel/CvKfxEaPCIj/" },
+  { title: "Bridal trial walkthrough", time: "0:51", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9?auto=format&fit=crop&w=1000&q=70", url: "https://www.instagram.com/reel/CvchPNhP05O/" },
+  { title: "Editorial smoky eye", time: "0:22", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1000&q=70", url: "https://www.instagram.com/reel/CuhS8YrvNMK/" },
+  { title: "Draping tips for sarees", time: "1:04", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749?auto=format&fit=crop&w=1000&q=70", url: "https://www.instagram.com/reel/CZq3UYZjyLZ/" },
+  { title: "Runway quick-change", time: "0:40", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39?auto=format&fit=crop&w=1000&q=70", url: "https://www.instagram.com/reel/Cj476jXDFIE/" },
+  { title: "Bridal transformation", time: "0:58", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6?auto=format&fit=crop&w=1000&q=70", url: "https://www.instagram.com/reel/Cvhq45Av5tT/" },
 ];
 
 export const process = [
@@ -129,14 +129,14 @@ export const academyTracks = [
   "Airbrush machine masterclass",
   "Self-grooming & everyday makeup classes",
 ];
-export const academyImage = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2";
+export const academyImage = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1000&q=70";
 
 export const loyaltyPoints = [
   "Free reward on joining the community",
   "Loyalty points on every booking, redeemable on future services",
   "Early access to seasonal offers & class dates",
 ];
-export const loyaltyImage = "https://images.unsplash.com/photo-1594647210801-5124307f3d51";
+export const loyaltyImage = "https://images.unsplash.com/photo-1594647210801-5124307f3d51?auto=format&fit=crop&w=1000&q=70";
 
 export const testimonials = [
   { text: "Rekha did a great job dressing me up for my engagement — very polite and great at her work. I'd definitely recommend her.", name: "Harshita Naik" },
@@ -145,12 +145,12 @@ export const testimonials = [
 ];
 
 export const instagramFeed = [
-  { caption: "Golden-hour bridal glow ✨", likes: "1,204", comments: "38", image: "https://images.unsplash.com/photo-1600685890506-593fdf55949b" },
-  { caption: "Red & gold, always a classic 💃", likes: "982", comments: "21", image: "https://images.unsplash.com/photo-1677691257363-eebd2abeafec" },
-  { caption: "Trial day magic — base built to last 12 hrs", likes: "1,540", comments: "54", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6" },
-  { caption: "Temple jewellery + soft eye 👑", likes: "2,110", comments: "76", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749" },
-  { caption: "Reception look, all airbrush 🤍", likes: "876", comments: "19", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9" },
-  { caption: "Behind the brush at the studio 🎨", likes: "1,332", comments: "44", image: "https://images.unsplash.com/photo-1551184451-76b762941ad6" },
+  { caption: "Golden-hour bridal glow ✨", likes: "1,204", comments: "38", image: "https://images.unsplash.com/photo-1600685890506-593fdf55949b?auto=format&fit=crop&w=1000&q=70" },
+  { caption: "Red & gold, always a classic 💃", likes: "982", comments: "21", image: "https://images.unsplash.com/photo-1677691257363-eebd2abeafec?auto=format&fit=crop&w=1000&q=70" },
+  { caption: "Trial day magic — base built to last 12 hrs", likes: "1,540", comments: "54", image: "https://images.unsplash.com/photo-1684868268327-7e5590bcfbd6?auto=format&fit=crop&w=1000&q=70" },
+  { caption: "Temple jewellery + soft eye 👑", likes: "2,110", comments: "76", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749?auto=format&fit=crop&w=1000&q=70" },
+  { caption: "Reception look, all airbrush 🤍", likes: "876", comments: "19", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9?auto=format&fit=crop&w=1000&q=70" },
+  { caption: "Behind the brush at the studio 🎨", likes: "1,332", comments: "44", image: "https://images.unsplash.com/photo-1551184451-76b762941ad6?auto=format&fit=crop&w=1000&q=70" },
 ];
 
 export const faqs = [

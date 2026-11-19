@@ -6,7 +6,7 @@ import { TiltCard } from "./fx/TiltCard";
 import { usePageImages, heroImage, heroImageAlt } from "../hooks/usePageImages";
 import { getPage } from "../lib/pages";
 
-const FALLBACK_IMG = "https://images.unsplash.com/photo-1600685890506-593fdf55949b";
+const FALLBACK_IMG = "https://images.unsplash.com/photo-1600685890506-593fdf55949b?auto=format&fit=crop&w=1000&q=70";
 
 const About = () => {
   const ref = useRef(null);

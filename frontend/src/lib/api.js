@@ -1,3 +1,5 @@
+import { sizeImagesDeep } from "./img";
+
 // Empty REACT_APP_BACKEND_URL = same origin (API served by the same Express app).
 export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "";
 export const API = `${BACKEND_URL}/api`;
@@ -35,7 +37,7 @@ const request = async (method, url, data, config = {}) => {
   let out = null;
   if (res.status !== 204) {
     if (config.responseType === "blob" && res.ok) out = await res.blob();
-    else if (type.includes("json")) out = await res.json().catch(() => null);
+    else if (type.includes("json")) out = sizeImagesDeep(await res.json().catch(() => null));
     else out = await res.text().catch(() => "");
   }
   const response = { data: out, status: res.status, headers: res.headers };
