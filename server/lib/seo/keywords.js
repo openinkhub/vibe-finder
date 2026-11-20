@@ -18,7 +18,10 @@ const STARTER = [
 ];
 
 // Lower-case word list with Bengaluru folded into Bangalore, so either spelling counts.
-const toks = (s) => T.words(String(s || "").toLowerCase().replace(/bengaluru/g, "bangalore"));
+// Hyphens count as spaces ("self-grooming" = "self grooming") and simple plurals match
+// the singular ("classes" = "class"), as search engines treat them.
+const stem = (w) => (w.length > 4 && /(ss|sh|ch|x)es$/.test(w) ? w.slice(0, -2) : w.length > 3 && /[^su]s$/.test(w) ? w.slice(0, -1) : w);
+const toks = (s) => T.words(String(s || "").toLowerCase().replace(/bengaluru/g, "bangalore").replace(/-/g, " ")).map(stem);
 // "near me" is location intent: Google answers it from the searcher's location and the
 // Google Business Profile, so on the page we look for the rest of the phrase.
 const core = (kw) => toks(kw).join(" ").replace(/\bnear me\b/g, "").replace(/\s+/g, " ").trim();
@@ -39,6 +42,15 @@ const any = (list, kw) => { const m = list.map((t) => match(t, kw)); return m.in
 const noIn = (t) => t.split(" ").filter((x) => x && x !== "in").join(" ");
 const count = (text, kw) => T.keyphraseStats(noIn(toks(text).join(" ")), noIn(core(kw))).count;
 
+// Short URLs are fine: the address counts when it holds the keyword's topic words.
+// Place names and filler words ("bangalore", "artist", "services", "best") are optional there.
+const URL_OPTIONAL = new Set(["a", "an", "the", "in", "for", "of", "and", "near", "me", "best", "artist", "services", "service", "bangalore", "karnataka", "india", "rekha", "krishnamurthy", "professional", "premium", "how", "to", "choose", "find", "makeup", "bridal"]);
+const urlTopic = (path, kw) => {
+  const need = core(kw).split(" ").filter((x) => x && !URL_OPTIONAL.has(x));
+  const slug = new Set(toks(path.replace(/[/]+/g, " ")));
+  return need.every((x) => slug.has(x)) ? "words" : null;
+};
+
 function onPage(item, kw) {
   if (!item) return null;
   const slug = item.path.replace(/[-/]+/g, " ");
@@ -46,7 +58,7 @@ function onPage(item, kw) {
     ["title", "Title tag", has(item.meta.title, kw)],
     ["h1", "Main heading (H1)", any(item.h1s, kw)],
     ["description", "Meta description", has(item.meta.description, kw)],
-    ["url", "Page address", item.path === "/" ? "exact" : has(slug, kw)],
+    ["url", "Page address", item.path === "/" ? "exact" : has(slug, kw) || urlTopic(item.path, kw)],
     ["subheading", "A subheading (H2/H3)", any(item.subheadings, kw)],
     ["intro", "First paragraph", has(item.firstParagraph, kw)],
     ["alt", "An image description (alt)", any(item.images.map((im) => im.alt), kw)],

@@ -191,7 +191,8 @@ const CHECKS = [
 
   // ── Technical ──
   C("redirects", "Redirects", "seo", 2, false, (i) => (i.redirectsIn.length ? pass(`${i.redirectsIn.length} old URL(s) redirect here`) : pass("No redirect chain"))),
-  C("not_found", "Not found (404)", "seo", 2, false, (i) => (i.ctx.notFoundTotal ? warn(`${i.ctx.notFoundTotal} site-wide`, `${i.ctx.notFoundTotal} 404 URL(s) logged across the site`, "Redirect them in SEO → Redirects") : pass("No 404s logged"))),
+  // Site-wide check: shown on the home page only, so it doesn't repeat on every page and post.
+  C("not_found", "Not found (404)", "seo", 2, false, (i) => (i.path !== "/" ? pass("Site-wide check — see the home page") : i.ctx.notFoundTotal ? warn(`${i.ctx.notFoundTotal} site-wide`, `${i.ctx.notFoundTotal} 404 URL(s) logged across the site`, "Redirect them in SEO → Redirects") : pass("No 404s logged"))),
   C("broken_links", "Broken link", "seo", 4, false, (i) => (i.brokenLinks.length ? fail(i.brokenLinks.slice(0, 3).join(", "), `${i.brokenLinks.length} internal link(s) lead nowhere`, "Fix or redirect these links") : pass("None"))),
   C("robots_txt", "Robots.txt", "seo", 2, false, (i) => (i.ctx.robots ? (i.ctx.robotsAllows(i.path) ? pass("Allows this page") : fail("Blocked", "robots.txt blocks this page")) : fail("Missing", "No robots.txt"))),
   C("llms_txt", "Llms.txt", "seo", 1, false, (i) => (i.ctx.llms ? pass("Present") : fail("Missing", "No llms.txt"))),
@@ -216,7 +217,9 @@ const CHECKS = [
     if (!i.keyphrase) return na("No keyphrase");
     const s = T.keyphraseStats(i.text, i.keyphrase);
     if (s.density === 0) return fail("0%", "Keyphrase never appears in the content", "Use the keyphrase naturally 2–5 times");
-    if (s.density > 2.5) return warn(`${s.density}%`, "Keyphrase may be overused", "Use synonyms in some places");
+    // Three mentions (title area, intro, body) are the minimum the keyword tracker asks for,
+    // so a long keyphrase used 3 times on a short page is not counted as overuse.
+    if (s.density > 2.5 && s.count > 3) return warn(`${s.density}%`, "Keyphrase may be overused", "Use synonyms in some places");
     if (s.density < 0.5) return warn(`${s.density}% (${s.count}×)`, "Keyphrase appears rarely", "Use the exact keyphrase a couple more times");
     return pass(`${s.density}% (${s.count}×)`);
   }),

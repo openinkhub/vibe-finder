@@ -110,7 +110,12 @@ async function buildReport({ force = false } = {}) {
   const robotsAllows = site.robotsAllowsFn(robots);
   const llms = await site.llmsTxt();
   const indexable = new Set((await site.indexableUrls()).map((u) => u.path));
-  const notFoundTotal = await db.collection("not_found").countDocuments({}).catch(() => 0);
+  // 404s that still matter: not redirected now, not a real page, and not a bot probe
+  // (WordPress/PHP/backup scans, old build files) that no visitor would follow.
+  const BOT = /^\/(wp|wordpress|wp-[\w-]+|backup|bk|bc|old|new|main|admin\w*|\.env|\.git|cgi-bin|xmlrpc|phpmyadmin)(\/|$)|\.(php|asp|aspx|env|sql|zip|bak|gz)(\?|$)|^\/static\/(js|css)\/|^\/(ai|llm)\.txt$/i;
+  const livePaths = new Set([...indexable].map((p) => p.toLowerCase()));
+  const notFoundTotal = (await db.collection("not_found").find({}, { projection: { _id: 0, path: 1 } }).toArray().catch(() => []))
+    .filter(({ path: p }) => p && !BOT.test(p) && !redirects[site.normPath(p)] && !livePaths.has(site.normPath(p).toLowerCase()) && !site.closestPage(p)).length;
   const vitals = await site.vitalsByPath().catch(() => ({}));
   const lab = await require("./psi").labByPath().catch(() => ({}));
   const jsErr = await db.collection("js_errors").find({}).toArray().catch(() => []);

@@ -8,7 +8,7 @@ const BOOK = { h: "Plan Your Look With Rekha", ctas: [{ label: "Explore Bridal M
 export const guideBodies = {
   "/bridal-makeup-artist-in-bangalore": {
     sections: [
-      { h: "Why the Right Bridal Makeup Artist Matters", p: [
+      { h: "How to Choose a Bridal Makeup Artist in Bangalore", p: [
         "Your bridal makeup artist is with you for some of the most photographed hours of your life. In Bangalore, weddings often run from an early muhurtham to a late reception. So the right artist plans a look that survives heat, tears and flash, and still feels like you.",
         "This guide covers what to look for in a bridal makeup artist in Bangalore. It also covers what to ask and how to budget. If you already know what you want, you can go straight to [bridal makeup in Bangalore](/) with Rekha.",
       ] },
@@ -40,7 +40,7 @@ export const guideBodies = {
 
   "/best-bridal-makup-artist-in-bangalore": {
     sections: [
-      { h: "What \"Best\" Really Means for a Bride", p: [
+      { h: "How to Find the Best Bridal Makeup Artist", p: [
         "Searching for the best bridal makeup artist in Bangalore brings up hundreds of portfolios. However, the best artist for you is not simply the one with the most followers. Instead, it is the one whose work suits your skin, your customs and how you want to feel.",
         "So here is a simple way to choose. It comes from a makeup artist with 14+ years of bridal work in Bangalore. To see Rekha's approach, visit [bridal makeup in Bangalore](/).",
       ] },
@@ -75,7 +75,7 @@ export const guideBodies = {
 
   "/best-makeup-artist-for-brides": {
     sections: [
-      { h: "Choosing a Makeup Artist for Brides", p: [
+      { h: "Choosing the Best Makeup Artist for Brides", p: [
         "A true bridal specialist knows that a wedding look is not a party look. It has to last through long rituals and look natural up close. It also has to photograph well in every light and feel at ease after ten hours.",
         "This guide explains what separates a bridal specialist from a general makeup artist, and what to expect when you book. Rekha has specialised in [bridal makeup in Bangalore](/) for 14+ years.",
       ] },
@@ -165,8 +165,8 @@ export const guideBodies = {
 
   "/pre-wedding-makeup-artist": {
     sections: [
-      { h: "Makeup for Each Pre-Wedding Function", p: [
-        "Before the wedding come the engagement, haldi, mehendi, sangeet and photo shoots. Each one also has its own mood, outfit and lighting. So a pre-wedding makeup artist plans fresh looks that don't outshine the wedding day.",
+      { h: "What a Pre-Wedding Makeup Artist Does for Each Function", p: [
+        "Before the wedding come the engagement, haldi, mehendi, sangeet and photo shoots. Each one also has its own mood, outfit and lighting. So a pre-wedding artist plans fresh looks that don't outshine the wedding day.",
         "So here is how to approach each function. Rekha offers [bridal makeup in Bangalore](/) for the wedding and each event before it.",
       ] },
       { h: "Looks by Function", items: [
@@ -194,8 +194,8 @@ export const guideBodies = {
 
   "/party-and-non-bridal-makeup-karnataka": {
     sections: [
-      { h: "Makeup for Guests, Family and Events", p: [
-        "Of course, not every celebration needs a bridal look. Instead, party and non-bridal makeup is for the mother of the bride, sisters, friends and guests. It also suits receptions, festivals, anniversaries and parties across the state.",
+      { h: "Party and Non-Bridal Makeup for Guests, Family and Events", p: [
+        "Of course, not every celebration needs a bridal look. Instead, party or non-bridal makeup is for the mother of the bride, sisters, friends and guests. It also suits receptions, festivals, anniversaries and parties across the state.",
         "In this guide, you'll see how non-bridal makeup differs from bridal, and how to choose the right finish. Rekha's work for brides is on the [bridal makeup in Bangalore](/) page.",
       ] },
       { h: "Party vs Non-Bridal Makeup", p: [
@@ -223,7 +223,7 @@ export const guideBodies = {
 
   "/bridal-makeup-artist-karnataka": {
     sections: [
-      { h: "Bridal Makeup Beyond Bangalore", p: [
+      { h: "A Bridal Makeup Artist in Karnataka, Beyond Bangalore", p: [
         "Many weddings in Karnataka take place in family hometowns, temple towns and resort venues outside Bangalore. Booking a bridal makeup artist for these weddings needs a little more planning around travel, timings and setup.",
         "This guide covers what to plan when your wedding is outside the city. Rekha lives in the city and travels across the state. Start with [bridal makeup in Bangalore](/).",
       ] },
@@ -252,8 +252,8 @@ export const guideBodies = {
 
   "/book-premium-bridal-makeup-artist": {
     sections: [
-      { h: "What You Get With a Premium Bridal Artist", p: [
-        "A premium bridal makeup artist offers more than a glam result. You get an experienced artist's full attention and high-end products. Plus, you get careful skin prep and a look planned around you.",
+      { h: "What You Get With a Premium Bridal Makeup Artist", p: [
+        "A premium bridal artist offers more than a glam result. You get an experienced artist's full attention and high-end products. Plus, you get careful skin prep and a look planned around you.",
         "This guide explains the booking process and what it should feel like. Rekha's service starts at [bridal makeup in Bangalore](/).",
       ] },
       { h: "How Booking Works", items: [
@@ -281,7 +281,7 @@ export const guideBodies = {
 
   "/luxury-makeup-services-karnataka": {
     sections: [
-      { h: "What Makes Makeup a High-end Service", p: [
+      { h: "What Makes Luxury Makeup Services Different", p: [
         "In fact, high-end makeup is about the experience as much as the finish. You get an unhurried pace, an artist who knows your taste and premium products. Plus, Rekha handles hair and draping at your venue.",
         "So this guide explains what to expect, and when it is worth it. For weddings, start with [bridal makeup in Bangalore](/).",
       ] },
@@ -310,9 +310,9 @@ export const guideBodies = {
 
   "/pre-wedding-photoshoot-makeup-artist": {
     sections: [
-      { h: "Makeup That Works on Camera", p: [
+      { h: "How a Pre-Wedding Photoshoot Makeup Artist Plans for Camera", p: [
         "A pre-wedding shoot is often outdoors, in changing light, with a few outfits and a lot of movement. The makeup must look natural in person and polished in photos. It also has to last from the first frame to the last.",
-        "Here is how a pre-wedding photoshoot makeup artist approaches the day, and how you can prepare. For your wedding itself, see [bridal makeup in Bangalore](/).",
+        "Here is how a pre-wedding shoot makeup artist approaches the day, and how you can prepare. For your wedding itself, see [bridal makeup in Bangalore](/).",
       ] },
       { h: "Planning the Shoot Looks", bullets: [
         "Share the venues, timings and outfits with your artist and photographer.",
@@ -339,8 +339,8 @@ export const guideBodies = {
 
   "/south-indian-bridal-makeup-karnataka": {
     sections: [
-      { h: "The South Indian Bridal Look in Karnataka", p: [
-        "Silk sarees, temple jewellery, jasmine and morning muhurthams shape South Indian bridal makeup in Karnataka. In particular, the look celebrates the bride's natural features with defined eyes, warm skin and a classic lip.",
+      { h: "South Indian Bridal Makeup: The Look in Karnataka", p: [
+        "Silk sarees, temple jewellery, jasmine and morning muhurthams shape South Indian bridal look in Karnataka. In particular, the look celebrates the bride's natural features with defined eyes, warm skin and a classic lip.",
         "So this guide covers the elements of the look and how to adapt it to you. For Rekha's bridal service, visit [bridal makeup in Bangalore](/).",
       ] },
       { h: "Key Elements", items: [
@@ -428,7 +428,7 @@ export const guideBodies = {
 
   "/best-makeup-for-south-indian-brides": {
     sections: [
-      { h: "Makeup That Suits South Indian Brides", p: [
+      { h: "The Best Makeup for South Indian Brides", p: [
         "The right makeup for a South Indian bride suits warm and deep skin tones, bright silk and gold jewels. It also lasts through long morning functions in warm weather.",
         "So this guide covers base, eyes, lips and long-wear tips. For Rekha's bridal service, visit [bridal makeup in Bangalore](/).",
       ] },

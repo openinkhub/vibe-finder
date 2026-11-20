@@ -65,7 +65,7 @@ export const pageBodies = {
     ],
   },
   "/hd-makeup": {
-    faq: [["What is HD makeup?", "HD makeup uses light, fine products applied by hand. As a result, it looks natural up close and on high-definition cameras."], ["Is HD makeup good for brides?", "Yes. It suits most skin types and gives a soft, skin-like finish in photos."], ["How much does HD bridal makeup cost?", "Rekha's HD bridal makeup starts at ₹30,000 per session, including hair styling, lashes and draping."]],
+    faq: [["What is HD makeup?", "HD makeup uses light, fine products applied by hand. As a result, it looks natural up close and on high-definition cameras."], ["Is HD makeup good for brides?", "Yes. It suits most skin types and gives a soft, skin-like finish in photos."], ["How much does HD bridal makeup cost?", "Rekha's HD makeup starts at ₹30,000 per session, including hair styling, lashes and draping."]],
     sections: [
       { h: "Makeup Designed for Detail and Photography", p: ["In particular, HD Makeup suits events where your makeup must look polished up close and in photos. So it suits events where both the experience and the camera matter."] },
       { h: "Why Choose HD Makeup?", p: ["After all, wedding photos capture details you may not notice in person. That is why HD Makeup aims for a balanced finish that suits your features, styling, lighting and photos."] },
@@ -73,13 +73,13 @@ export const pageBodies = {
       { h: "How HD Makeup Fits the Occasion", bullets: ["Skin prep", "Desired coverage", "Face structure", "Eye makeup", "Lip makeup", "Hair styling", "Outfit and draping", "Photography needs", "Event length"] },
       { h: "Use Cases Across Services", items: [["Bridal Makeup", "Weddings and major bridal functions."], ["Engagement Makeup", "Engagement functions and events."], ["Non-Bridal Makeup", "Family members and guests."], ["Party Makeup", "Events and social events."], ["Groom Makeup", "Polished groom look."], ["Fashion Makeup", "Portfolio and fashion shoots."], ["Editorial Makeup", "Professional creative work."], ["Photoshoot Makeup", "Camera-focused photos."]] },
       { h: "Benefits", bullets: ["Right for photography-focused events", "Professional, polished look", "Planned around the event and styling", "Works with different makeup looks", "Supports complete makeup, hair and styling coordination"] },
-      { h: "HD Bridal Makeup Rate", cardTable: [["HD Bridal Makeup", "₹30,000 per session", "Full-face makeup, premium eyelashes, hair styling, hair extensions as required, and outfit styling including saree or lehenga draping at the venue. However, extra outfit or saree changes and waiting time cost extra."]] },
+      { h: "HD Bridal Makeup Rate", cardTable: [["HD makeup", "₹30,000 per session", "Full-face makeup, premium eyelashes, hair styling, hair extensions as required, and outfit styling including saree or lehenga draping at the venue. However, extra outfit or saree changes and waiting time cost extra."]] },
       CONNECTING_EXPERIENCE,
       { h: "Ready to Book HD Makeup?", p: ["Tell Rekha about your event and photos plans, and she'll help you plan a flash-proof HD look."], ctas: [{ label: "Book a Consultation", to: "/contact?service=Bridal" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
     ],
   },
   "/airbrush-makeup": {
-    faq: [["What is airbrush makeup?", "Airbrush makeup sprays a fine, even layer of foundation onto the skin. So the finish is smooth and long-lasting."], ["Does airbrush makeup last longer than HD?", "Often, yes. It holds up well on long, warm days. However, the right choice still depends on your skin."], ["How much does airbrush bridal makeup cost?", "Rekha's airbrush bridal makeup starts at ₹40,000 per session, including hair styling, lashes and draping."]],
+    faq: [["What is airbrush makeup?", "Airbrush makeup sprays a fine, even layer of foundation onto the skin. So the finish is smooth and long-lasting."], ["Does airbrush makeup last longer than HD?", "Often, yes. It holds up well on long, warm days. However, the right choice still depends on your skin."], ["How much does airbrush bridal makeup cost?", "Rekha's airbrush makeup starts at ₹40,000 per session, including hair styling, lashes and draping."]],
     sections: [
       { h: "Lightweight Makeup for Key Occasions", p: ["In short, Airbrush Makeup suits clients who want a light, refined finish for a key event. However, the right choice depends on your skin, the finish you want, the event, the photos and your taste."] },
       { h: "Why Choose Airbrush Makeup?", p: ["Choose airbrush makeup if you want a light feel and a polished finish for a big event. So base the choice on your own needs, not on a trend."] },
@@ -87,7 +87,7 @@ export const pageBodies = {
       { h: "How Airbrush Makeup Is Planned", bullets: ["Skin prep", "Desired finish", "Coverage needs", "Facial features", "Eye and lip makeup", "Hair styling", "Outfit and draping", "Photography", "Event length"] },
       { h: "Use Cases Across Services", items: [["Bridal Makeup", "Wedding and bridal events."], ["Engagement Makeup", "Key engagement functions."], ["Party Makeup", "Special events."], ["Non-Bridal Makeup", "Selected event needs."], ["Groom Makeup", "When you want a light finish."], ["Photoshoot Makeup", "When the project requires a specific flash-proof finish."], ["Fashion Makeup", "Depending on the creative brief."], ["Editorial Makeup", "Depending on the concept and production needs."]] },
       { h: "Benefits", bullets: ["Lightweight-feeling makeup option", "Refined look", "Right for key events", "Planned around your photos", "Matched to your hair and outfit styling"] },
-      { h: "Airbrush Bridal Makeup Rate", cardTable: [["Airbrush Bridal Makeup", "₹40,000 per session", "Full-face makeup, premium eyelashes, hair styling, hair extensions as required, and outfit styling including saree or lehenga draping at the venue. However, extra outfit or saree changes and waiting time cost extra."]] },
+      { h: "Airbrush Bridal Makeup Rate", cardTable: [["airbrush makeup", "₹40,000 per session", "Full-face makeup, premium eyelashes, hair styling, hair extensions as required, and outfit styling including saree or lehenga draping at the venue. However, extra outfit or saree changes and waiting time cost extra."]] },
       CONNECTING_EXPERIENCE,
       { h: "Ready to Book Airbrush Makeup?", p: ["Tell Rekha about your event and preferred finish, and she'll help you decide if Airbrush is right for you."], ctas: [{ label: "Book a Consultation", to: "/contact?service=Bridal" }, { label: "Talk to Rekha", href: "whatsapp", secondary: true }] },
     ],
