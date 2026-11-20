@@ -197,12 +197,12 @@ const CHECKS = [
   C("llms_txt", "Llms.txt", "seo", 1, false, (i) => (i.ctx.llms ? pass("Present") : fail("Missing", "No llms.txt"))),
 
   // ── Performance (real visitors, last 28 days) ──
-  C("page_speed", "Page speed", "performance", 4, false, (i) => vital(i.vitals, "score", (v) => v >= 90, (v) => v >= 50, (v) => `${v}/100`)),
-  C("lcp", "Largest Contentful Paint", "performance", 3, false, (i) => vital(i.vitals, "lcp", (v) => v <= 2500, (v) => v <= 4000, (v) => `${(v / 1000).toFixed(1)} s`)),
-  C("inp", "Interaction to Next Paint", "performance", 3, false, (i) => vital(i.vitals, "inp", (v) => v <= 200, (v) => v <= 500, (v) => `${Math.round(v)} ms`)),
-  C("cls", "Cumulative Layout Shift", "performance", 3, false, (i) => vital(i.vitals, "cls", (v) => v <= 0.1, (v) => v <= 0.25, (v) => v.toFixed(2))),
-  C("ttfb", "Time to First Byte", "performance", 2, false, (i) => vital(i.vitals, "ttfb", (v) => v <= 800, (v) => v <= 1800, (v) => `${Math.round(v)} ms`)),
-  C("fcp", "First Contentful Paint", "performance", 2, false, (i) => vital(i.vitals, "fcp", (v) => v <= 1800, (v) => v <= 3000, (v) => `${(v / 1000).toFixed(1)} s`)),
+  C("page_speed", "Page speed", "performance", 4, false, (i) => vital(i.vitals, "score", (v) => v >= 90, (v) => v >= 50, (v) => `${v}/100`, { item: i, key: "score" })),
+  C("lcp", "Largest Contentful Paint", "performance", 3, false, (i) => vital(i.vitals, "lcp", (v) => v <= 2500, (v) => v <= 4000, (v) => `${(v / 1000).toFixed(1)} s`, { item: i, key: "lcp" })),
+  C("inp", "Interaction to Next Paint", "performance", 3, false, (i) => vital(i.vitals, "inp", (v) => v <= 200, (v) => v <= 500, (v) => `${Math.round(v)} ms`, { item: i, key: "tbt", good: (x) => x <= 200, ok: (x) => x <= 600, fmt: (x) => `${Math.round(x)} ms TBT` })),
+  C("cls", "Cumulative Layout Shift", "performance", 3, false, (i) => vital(i.vitals, "cls", (v) => v <= 0.1, (v) => v <= 0.25, (v) => v.toFixed(2), { item: i, key: "cls" })),
+  C("ttfb", "Time to First Byte", "performance", 2, false, (i) => vital(i.vitals, "ttfb", (v) => v <= 800, (v) => v <= 1800, (v) => `${Math.round(v)} ms`, { item: i, key: "ttfb" })),
+  C("fcp", "First Contentful Paint", "performance", 2, false, (i) => vital(i.vitals, "fcp", (v) => v <= 1800, (v) => v <= 3000, (v) => `${(v / 1000).toFixed(1)} s`, { item: i, key: "fcp" })),
   C("js_errors", "Frontend JavaScript issues", "performance", 2, false, (i) => (i.jsErrors ? warn(String(i.jsErrors), `${i.jsErrors} JavaScript error(s) reported by visitors`, "See SEO → Speed for details") : pass("None reported"))),
   C("css_errors", "CSS errors", "performance", 1, false, (i) => (i.ctx.cssOk ? pass("Stylesheet loads") : fail("Missing", "Main stylesheet missing from the build"))),
   C("crawl_depth", "Crawl depth", "seo", 3, false, (i) => {
@@ -289,10 +289,23 @@ const CHECKS = [
   }),
 ];
 
-function vital(v, key, good, ok, fmt) {
-  if (!v || v.samples < 5 || v[key] === undefined || v[key] === null) return { status: "na", msg: v && v.samples ? `Only ${v.samples} visit(s) measured so far` : "Waiting for visitor data" };
-  const x = v[key];
-  return good(x) ? pass(fmt(x), `75th percentile of ${v.samples} visits`) : ok(x) ? warn(fmt(x), "Needs improvement", "See SEO → Speed") : fail(fmt(x), "Poor", "See SEO → Speed");
+// Real-visitor data (75th percentile) when at least 5 visits were measured; otherwise the latest
+// PageSpeed lab test (mobile). INP has no lab equivalent, so Total Blocking Time stands in.
+function vital(v, key, good, ok, fmt, lab) {
+  const real = v && v.samples >= 5 && v[key] !== undefined && v[key] !== null;
+  if (real) {
+    const x = v[key];
+    return good(x) ? pass(fmt(x), `75th percentile of ${v.samples} visits`) : ok(x) ? warn(fmt(x), "Needs improvement", "See SEO → Speed") : fail(fmt(x), "Poor", "See SEO → Speed");
+  }
+  const L = lab && lab.item && lab.item.lab;
+  const lk = lab && lab.key;
+  if (L && L[lk] !== undefined && L[lk] !== null) {
+    const x = L[lk];
+    const when = new Date(L.at).toLocaleDateString("en-IN");
+    const g = lab.good || good, o = lab.ok || ok, f = lab.fmt || fmt;
+    return g(x) ? pass(f(x), `PageSpeed lab test (mobile), ${when}`) : o(x) ? warn(f(x), `Needs improvement · PageSpeed lab test, ${when}`, "See SEO → Speed") : fail(f(x), `Poor · PageSpeed lab test, ${when}`, "See SEO → Speed");
+  }
+  return { status: "na", msg: v && v.samples ? `Only ${v.samples} visit(s) measured — run a speed test in SEO → Speed` : "No data yet — run a speed test in SEO → Speed" };
 }
 
 const CAT_LABELS = { seo: "SEO", content: "Content", readability: "Readability", performance: "Speed" };

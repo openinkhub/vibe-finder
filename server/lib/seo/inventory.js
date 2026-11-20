@@ -112,6 +112,7 @@ async function buildReport({ force = false } = {}) {
   const indexable = new Set((await site.indexableUrls()).map((u) => u.path));
   const notFoundTotal = await db.collection("not_found").countDocuments({}).catch(() => 0);
   const vitals = await site.vitalsByPath().catch(() => ({}));
+  const lab = await require("./psi").labByPath().catch(() => ({}));
   const jsErr = await db.collection("js_errors").find({}).toArray().catch(() => []);
   const jsByPath = {};
   for (const e of jsErr) jsByPath[e.path] = (jsByPath[e.path] || 0) + (e.hits || 1);
@@ -153,6 +154,7 @@ async function buildReport({ force = false } = {}) {
     it.redirectsIn = Object.values(redirects).filter((r) => r.to === it.path).map((r) => r.from);
     it.brokenLinks = [...new Set(it.contentLinks.internal.map((l) => site.normPath(l.href.split(/[?#]/)[0])).filter((h) => h && !known.has(h) && !STATIC_OK.test(h)))];
     it.vitals = vitals[it.path];
+    it.lab = lab[it.path];
     it.jsErrors = jsByPath[it.path] || 0;
   }
 

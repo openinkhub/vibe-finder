@@ -11,6 +11,7 @@ const rules = require("../lib/seo/rules");
 const { CHECKS, CAT_LABELS } = require("../lib/seo/checks");
 
 const KW = require("../lib/seo/keywords");
+const PSI = require("../lib/seo/psi");
 
 const router = express.Router();
 const rankLog = () => getDb().collection("seo_rank_log");
@@ -42,6 +43,14 @@ router.get("/seo/keywords", requireAdmin, ah(async (req, res) => {
   }
   await inventory.buildReport({ force: req.query.refresh === "1" });
   const items = inventory.rawItems();
+  // Every page's focus keyphrase is tracked against that page (added once; edits are kept).
+  // (Each keyphrase is added only once, so removing one from the tracker sticks.)
+  const tracked = new Set([...(s.keywords || []).map((k) => k.keyword), ...(s.keywords_auto || [])]);
+  const add = items
+    .filter((i) => i.kind === "page" && !i.noindex && i.keyphrase && !/legal/i.test((i.data && i.data.group) || ""))
+    .filter((i) => !tracked.has(String(i.keyphrase).toLowerCase().trim()))
+    .map((i) => ({ keyword: i.keyphrase, page: i.path, note: "Page focus keyphrase", volume: 0, country: "IN" }));
+  if (add.length) s = await saveSettings({ keywords: cleanKeywords([...(s.keywords || []), ...add]), keywords_auto: [...(s.keywords_auto || []), ...add.map((k) => String(k.keyword).toLowerCase().trim())] });
   const byPath = Object.fromEntries(items.map((i) => [i.path, i]));
   const logs = await rankLog().find({}, { projection: { _id: 0 } }).sort({ date: 1, created_at: 1 }).toArray();
   const out = (s.keywords || []).map((k) => {
@@ -261,7 +270,22 @@ router.get("/seo/vitals", requireAdmin, ah(async (req, res) => {
   const days = Math.max(1, Math.min(90, Number(req.query.days) || 28));
   const byPath = await site.vitalsByPath(days);
   const errors = clean(await getDb().collection("js_errors").find({}).sort({ hits: -1 }).limit(100).toArray());
-  res.json({ days, site: byPath.__site || null, pages: Object.entries(byPath).filter(([k]) => k !== "__site").map(([path, v]) => ({ path, ...v })).sort((a, b) => b.samples - a.samples), errors });
+  const lab = await PSI.labByPath();
+  res.json({ days, site: byPath.__site || null, pages: Object.entries(byPath).filter(([k]) => k !== "__site").map(([path, v]) => ({ path, ...v })).sort((a, b) => b.samples - a.samples), errors, lab: Object.values(lab).sort((a, b) => a.path.localeCompare(b.path)), test: PSI.status() });
+}));
+
+// PageSpeed lab tests (mobile) for every indexable page, or the paths given.
+router.post("/seo/speed/run", requireAdmin, ah(async (req, res) => {
+  await inventory.buildReport();
+  const all = inventory.rawItems().filter((i) => !i.noindex).map((i) => i.path);
+  const want = Array.isArray(req.body && req.body.paths) ? req.body.paths.filter((p) => all.includes(p)) : all;
+  PSI.run(want);
+  res.json(PSI.status());
+}));
+router.get("/seo/speed/status", requireAdmin, ah(async (_req, res) => {
+  const st = PSI.status();
+  if (!st.running && st.finished_at) inventory.invalidateInventory();
+  res.json(st);
 }));
 router.delete("/seo/js-errors", requireAdmin, ah(async (_req, res) => {
   await getDb().collection("js_errors").deleteMany({});

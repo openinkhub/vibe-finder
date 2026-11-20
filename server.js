@@ -177,6 +177,7 @@ async function initDatabase() {
   }
   await blog.getOrCreateApiKey();
   await migrateMovedPages(db).catch((e) => console.error("Moved-page migration failed:", e.message));
+  scheduleSpeedTests(db);
   console.log("Database ready");
   // Copy images from the old site in the background (only when FILES_FALLBACK_ORIGIN is set).
   syncReferencedFiles().catch((e) => console.error("Image sync failed:", e.message));
@@ -206,6 +207,21 @@ async function migrateMovedPages(db) {
   await db.collection("settings").insertOne({ key, value: new Date().toISOString() });
   R.invalidate();
   console.log(`Moved-page migration done for ${moved.length} pages`);
+}
+
+// Weekly PageSpeed lab tests for every page (fills the Speed column). Live database only.
+function scheduleSpeedTests(db) {
+  if (/127\.0\.0\.1|localhost/.test(process.env.MONGO_URL || "")) return;
+  const PSI = require("./server/lib/seo/psi");
+  const tick = async () => {
+    try {
+      const last = await db.collection("seo_psi").find({}).sort({ at: -1 }).limit(1).toArray();
+      if (last.length && Date.now() - new Date(last[0].at).getTime() < 7 * 86400000) return;
+      PSI.run(R.PAGES.filter((p) => !p.noindex && p.path !== "/admin").map((p) => p.path));
+    } catch (e) { console.error("Speed test schedule:", e.message); }
+  };
+  setTimeout(tick, 5 * 60 * 1000);
+  setInterval(tick, 6 * 60 * 60 * 1000);
 }
 
 async function initWithRetry(attempt = 1) {
