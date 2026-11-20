@@ -26,6 +26,8 @@ const BUILT_IN = {
   // Old-site addresses still requested (from the 404 log).
   "/updates.php/95881/bridal-makeup-course-in-banglore-": "/bridal-makeup-course-bangalore",
   "/updates.php/95421/Bridal-makeup-package-in-Banglore-": "/book-bridal-makeup-package-karnataka",
+  "/updates.php/98080/makeover-artist-": "/", "/updates.php/97627/makeover-artist-": "/",
+  "/course": "/makeup-course-training-bangalore", "/courses": "/makeup-course-training-bangalore", "/null": "/",
   "/terms-of-service": "/terms", "/terms-of-service.html": "/terms",
   "/en": "/", "/en/home": "/", "/en/index.html": "/", "/english": "/", "/main": "/", "/new": "/", "/old": "/",
   ...Object.fromEntries(Array.from({ length: 40 }, (_, n) => [`/blog${n + 1}`, "/blog"])),
