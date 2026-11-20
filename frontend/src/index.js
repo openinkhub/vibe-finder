@@ -6,6 +6,20 @@ import App, { preloadRoute } from "@/App";
 import { startVitals, loadSeoOverrides } from "@/lib/seoClient";
 import { registerWebMcpTools } from "@/lib/webmcp";
 
+// After a deploy, a visitor who still has the old page open may ask for script files
+// that no longer exist ("ChunkLoadError"). Reload once to pick up the new build.
+const reloadOnStaleChunk = (msg) => {
+  if (!/ChunkLoadError|Loading chunk \d+ failed|Loading CSS chunk/i.test(String(msg || ""))) return;
+  try {
+    const last = Number(sessionStorage.getItem("rk_chunk_reload") || 0);
+    if (Date.now() - last < 30000) return;
+    sessionStorage.setItem("rk_chunk_reload", String(Date.now()));
+  } catch { /* storage blocked: still reload once */ }
+  window.location.reload();
+};
+window.addEventListener("error", (e) => reloadOnStaleChunk((e.error && e.error.name) + " " + e.message));
+window.addEventListener("unhandledrejection", (e) => reloadOnStaleChunk(e.reason && ((e.reason.name || "") + " " + (e.reason.message || ""))));
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
