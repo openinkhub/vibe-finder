@@ -69,7 +69,7 @@ const CHECKLIST = [
 const FAQS = [
   { q: "How far in advance should I book?", a: "For weddings in peak season (Oct–Feb) in Bangalore, it is best to book 3–6 months ahead. Off-season and weekday bookings often have more flexibility." },
   { q: "Is a makeup trial mandatory?", a: "Rekha strongly suggests a trial for brides. It is the only way to test how a look photographs on your skin, in your lighting, with your outfits — before the actual day." },
-  { q: "Does the price include hair styling?", a: "Hair styling is a separate service. Mention it at your consult, and Rekha can add it to a combined package if dates allow." },
+  { q: "Does the price include hair styling?", a: "Yes. Hair styling is included, along with saree or lehenga draping at your venue." },
   { q: "Do you travel outside Bangalore?", a: "Yes. Rekha is available for destination weddings across Karnataka and beyond. Destination packages include travel and stay." },
   { q: "What products do you use?", a: "Only professional-grade, skin-safe products from trusted international and Indian brands. Rekha notes ingredient preferences, allergies and sensitivities at your consult." },
 ];
@@ -141,7 +141,7 @@ const BridalPackages = () => (
                 <Star size={18} className="text-[#E62E6B] shrink-0" fill="#E62E6B" />
                 <div>
                   <div className="font-display text-sm font-bold text-[#4A2530]">Trusted by 500+ brides</div>
-                  <div className="text-xs text-[#5C4E52]">Across Karnataka since 2010</div>
+                  <div className="text-xs text-[#5C4E52]">Across Karnataka for 14+ years</div>
                 </div>
               </div>
             </div>

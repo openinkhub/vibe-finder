@@ -1,11 +1,11 @@
 const BRANDS = "MAC Cosmetics, Bobbi Brown, Estée Lauder, HUDA Beauty, Lancôme, Urban Decay and Anastasia Beverly Hills";
 
 // Shorter, plainer bio for the author box on service and guide pages; the full bio stays on About.
-export const authorBioShort = `Rekha is a makeup artist and teacher based in Bangalore. In fact, she has **14 years** in the trade and hundreds of bridal, fashion and editorial looks across India. She works in **HD and airbrush makeup**, so she plans each look around your face, skin, style and event. Her kit includes trusted brands such as [MAC](https://www.maccosmetics.in/) and [Bobbi Brown](https://www.bobbibrown.in/). She also keeps **strict hygiene** at each booking.`;
+export const authorBioShort = `Rekha is a makeup artist and teacher based in Bangalore. In fact, she has **14+ years** in the trade and has styled **500+ brides**, plus fashion and editorial looks across India. She works in **HD and airbrush makeup**, so she plans each look around your face, skin, style and event. Her kit includes trusted brands such as [MAC](https://www.maccosmetics.in/) and [Bobbi Brown](https://www.bobbibrown.in/). She also keeps **strict hygiene** at each booking.`;
 
 export const authorBio = {
   title: "About Rekha Krishnamurthy",
-  text: `Rekha Krishnamurthy is a Bangalore-based professional makeup artist and educator with **14 years of hands-on experience** and **Hundreds of bridal, editorial and fashion assignments** across India. Specialising in **HD and Airbrush makeup**, Rekha takes a personalised approach to every look, tailoring the makeup to each client's features, skin, style and occasion. Her professional kit includes products from leading international beauty brands such as [MAC Cosmetics](https://www.maccosmetics.in/), [Bobbi Brown](https://www.bobbibrown.in/), [Estée Lauder](https://www.esteelauder.com/), HUDA Beauty, Lancôme, Urban Decay and Anastasia Beverly Hills. Every assignment follows **strict hygiene and professional makeup practices**, with careful attention to product selection, skin preparation and application.`,
+  text: `Rekha Krishnamurthy is a Bangalore-based professional makeup artist and educator with **14+ years of hands-on experience**, **500+ brides** styled and many editorial and fashion assignments across India. Specialising in **HD and Airbrush makeup**, Rekha takes a personalised approach to every look, tailoring the makeup to each client's features, skin, style and occasion. Her professional kit includes products from leading international beauty brands such as [MAC Cosmetics](https://www.maccosmetics.in/), [Bobbi Brown](https://www.bobbibrown.in/), [Estée Lauder](https://www.esteelauder.com/), HUDA Beauty, Lancôme, Urban Decay and Anastasia Beverly Hills. Every assignment follows **strict hygiene and professional makeup practices**, with careful attention to product selection, skin preparation and application.`,
 };
 
 export const legalLinks = [
@@ -19,11 +19,11 @@ export const legalLinks = [
 
 export const servicePages = [
   {
-    slug: "bridal-makeup-artist-bangalore", menu: "Bridal", eyebrow: "Trusted by Brides Across Bangalore", title: "Bridal Makeup, Perfected Over 14 Years",
+    slug: "bridal-makeup-artist-bangalore", menu: "Bridal", eyebrow: "Trusted by Brides Across Bangalore", title: "Bridal Makeup, Perfected Over 14+ Years",
     subtitle: "From the first consultation to your last wedding function, every look is planned around your skin, your outfit, and your story — not a template.",
     image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9?auto=format&fit=crop&w=1000&q=70", service: "Bridal",
     body: [
-      "After fourteen years and hundreds of weddings, I've learned that no two brides — or their skin, lighting, or outfits — are ever the same. That's why every bridal booking with me starts with a real consultation, not a fixed package: we talk through your outfit colour and fabric, your venue's lighting, your jewellery, and any skin concerns well before I open my kit.",
+      "After 14+ years and 500+ brides, I've learned that no two brides — or their skin, lighting, or outfits — are ever the same. That's why every bridal booking with me starts with a real consultation, not a fixed package: we talk through your outfit colour and fabric, your venue's lighting, your jewellery, and any skin concerns well before I open my kit.",
       "A promise I keep: I do not double-book wedding dates. Once you're confirmed, my team and I are there exclusively for you.",
     ],
     bullets: [

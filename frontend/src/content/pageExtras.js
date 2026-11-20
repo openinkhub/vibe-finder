@@ -12,7 +12,7 @@ export const pageExtras = {
   "/": {
     sections: [
       { h: "Why Brides Choose Rekha", p: [
-        "Rekha has done bridal makeup for **14 years**. In that time, she has worked with hundreds of brides from many regions and styles. So she knows how makeup behaves in heat, in long rituals and under strong flash.",
+        "Rekha has done bridal makeup for **14+ years**. In that time, she has worked with **500+ brides** from many regions and styles. So she knows how makeup behaves in heat, in long rituals and under strong flash.",
         "She also plans each look with you. First, she asks about your skin, outfit, jewellery and the events. Then she suggests HD or airbrush makeup and a finish that suits you. As a result, you look like yourself, only polished and flash-proof.",
       ] },
       { h: "Services for the Whole Wedding", p: [
@@ -57,7 +57,7 @@ export const pageExtras = {
       ] },
       { h: "What Every Service Includes", p: [
         "Each booking starts with a short chat about your skin, outfit, jewellery and event. Then Rekha preps the skin, builds the base and finishes the eyes, lips and lashes. She uses trusted brands and cleans every tool before use.",
-        "Hair styling, saree draping and extra touch-ups can be added at extra cost. So tell Rekha what you need when you send your request.",
+        "Hair styling and saree or lehenga draping are included. Extra touch-ups and family makeup can be added, so tell Rekha what you need when you send your request.",
         "Also, if you need makeup for more than one person, list them all in one request. Then Rekha can plan the order and the time each look needs, so no one is rushed on the day. In short, one clear list saves time for everyone.",
         "Finally, if you are not sure which service fits, just tell Rekha about the day. She will point you to the right page and the right look. Then you can book with a clear plan.",
       ] },
@@ -160,7 +160,7 @@ export const pageExtras = {
       ] },
     ],
     faq: [
-      ["Who writes these posts?", "The posts share Rekha Krishnamurthy's advice from 14 years of bridal makeup and teaching."],
+      ["Who writes these posts?", "The posts share Rekha Krishnamurthy's advice from 14+ years of bridal makeup and teaching."],
       ["How often are new posts added?", "New posts are added through the year, with more before the wedding season."],
       ["Can I ask a makeup question?", "Yes. Send your question through the contact page, and it may become a future post."],
     ],

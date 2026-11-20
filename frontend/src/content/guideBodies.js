@@ -42,7 +42,7 @@ export const guideBodies = {
     sections: [
       { h: "What \"Best\" Really Means for a Bride", p: [
         "Searching for the best bridal makeup artist in Bangalore brings up hundreds of portfolios. However, the best artist for you is not simply the one with the most followers. Instead, it is the one whose work suits your skin, your customs and how you want to feel.",
-        "So here is a simple way to choose. It comes from a makeup artist with 14 years of bridal work in Bangalore. To see Rekha's approach, visit [bridal makeup in Bangalore](/).",
+        "So here is a simple way to choose. It comes from a makeup artist with 14+ years of bridal work in Bangalore. To see Rekha's approach, visit [bridal makeup in Bangalore](/).",
       ] },
       { h: "A Simple Shortlisting Method", bullets: [
         "Shortlist three artists whose portfolios show brides with your skin tone and function style.",
@@ -77,7 +77,7 @@ export const guideBodies = {
     sections: [
       { h: "Choosing a Makeup Artist for Brides", p: [
         "A true bridal specialist knows that a wedding look is not a party look. It has to last through long rituals and look natural up close. It also has to photograph well in every light and feel at ease after ten hours.",
-        "This guide explains what separates a bridal specialist from a general makeup artist, and what to expect when you book. Rekha has specialised in [bridal makeup in Bangalore](/) for 14 years.",
+        "This guide explains what separates a bridal specialist from a general makeup artist, and what to expect when you book. Rekha has specialised in [bridal makeup in Bangalore](/) for 14+ years.",
       ] },
       { h: "What a Bridal Specialist Does Differently", bullets: [
         "Plans the look around your outfit colour, jewels and hairstyle.",
@@ -370,7 +370,7 @@ export const guideBodies = {
     sections: [
       { h: "Why the Educator Matters", p: [
         "Whether you want a makeup career or simply better makeup for yourself, who teaches you matters. Ideally, a good makeup educator and beauty mentor in Karnataka combines real client work with patient, hands-on teaching.",
-        "For example, Rekha has worked as a bridal makeup artist for 14 years and also teaches at her Bangalore studio. You can also see her bridal work at [bridal makeup in Bangalore](/).",
+        "For example, Rekha has worked as a bridal makeup artist for 14+ years and also teaches at her Bangalore studio. You can also see her bridal work at [bridal makeup in Bangalore](/).",
       ] },
       { h: "What to Look For in a Makeup Educator", bullets: [
         "Active expert work, not only teaching.",
