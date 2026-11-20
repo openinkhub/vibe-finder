@@ -67,11 +67,11 @@ const CHECKLIST = [
 ];
 
 const FAQS = [
-  { q: "How far in advance should I book?", a: "For weddings in peak season (Oct–Feb) in Bangalore, booking 3–6 months in advance is recommended. Off-season and weekday bookings often have more flexibility." },
-  { q: "Is a makeup trial mandatory?", a: "A trial is strongly recommended for brides. It is the only way to test how a look photographs on your skin, in your lighting, with your outfits — before the actual day." },
-  { q: "Does the price include hair styling?", a: "Hair styling is a separate service. Mention it during your consultation and it can be included in a combined package where availability allows." },
-  { q: "Do you travel outside Bangalore?", a: "Yes. Rekha is available for destination weddings across Karnataka and beyond. Travel and accommodation are factored into destination packages." },
-  { q: "What products do you use?", a: "Only professional-grade, skin-safe products from trusted international and Indian brands. Ingredient preferences, allergies and sensitivities are noted at consultation." },
+  { q: "How far in advance should I book?", a: "For weddings in peak season (Oct–Feb) in Bangalore, it is best to book 3–6 months ahead. Off-season and weekday bookings often have more flexibility." },
+  { q: "Is a makeup trial mandatory?", a: "Rekha strongly suggests a trial for brides. It is the only way to test how a look photographs on your skin, in your lighting, with your outfits — before the actual day." },
+  { q: "Does the price include hair styling?", a: "Hair styling is a separate service. Mention it at your consult, and Rekha can add it to a combined package if dates allow." },
+  { q: "Do you travel outside Bangalore?", a: "Yes. Rekha is available for destination weddings across Karnataka and beyond. Destination packages include travel and stay." },
+  { q: "What products do you use?", a: "Only professional-grade, skin-safe products from trusted international and Indian brands. Rekha notes ingredient preferences, allergies and sensitivities at your consult." },
 ];
 
 const BRIDAL_IMG = "https://images.unsplash.com/photo-1582576192532-06353147fcbf?crop=entropy&cs=srgb&fm=jpg&q=85&w=900";
@@ -117,17 +117,17 @@ const BridalPackages = () => (
           <Reveal>
             <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Bridal packages</span>
             <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl lg:text-5xl leading-[1.1] mt-3">
-              Every look is planned, not <span className="italic text-[#E62E6B]">pieced together</span>
+              Each look is planned, not <span className="italic text-[#E62E6B]">pieced together</span>
             </h2>
             <p className="mt-5 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
               A bridal package isn't just a list of services — it's a plan that considers your events, timing, outfits, skin, and the way you want to look in photographs that will last a lifetime.
             </p>
             <p className="mt-4 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
-              So Rekha works with you from consultation through trial to the final event, and confirms every detail in advance.
+              So Rekha works with you from consult through trial to the final event, and confirms each detail in advance.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="bridal-pkg-book-btn">
-                <CalendarCheck size={17} /> Book Free Consultation
+                <CalendarCheck size={17} /> Book Free Consult
               </Link>
               <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#FBE9F0] transition-colors w-full sm:w-auto" data-testid="bridal-pkg-whatsapp-btn">
                 <FaWhatsapp size={17} /> WhatsApp Rekha
@@ -156,7 +156,7 @@ const BridalPackages = () => (
         <Reveal className="text-center max-w-xl mx-auto">
           <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Package options</span>
           <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl leading-[1.1] mt-3">Choose the coverage that <span className="italic text-[#E62E6B]">fits your wedding</span></h2>
-          <p className="mt-4 text-sm text-[#5C4E52]">All packages are discussed in detail during your free consultation. Prices vary based on travel, number of events and additional services.</p>
+          <p className="mt-4 text-sm text-[#5C4E52]">Rekha talks through each package in detail at your free consult. However, prices vary with travel, the number of events and any extra services.</p>
         </Reveal>
         <div className="mt-10 md:mt-14 grid sm:grid-cols-3 gap-5 md:gap-6">
           {PACKAGES.map((pkg, i) => (
@@ -198,7 +198,7 @@ const BridalPackages = () => (
               What to have ready before your <span className="italic text-[#E62E6B]">consultation</span>
             </h2>
             <p className="mt-4 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
-              A well-prepared consultation means less back-and-forth and a clearer picture of your day — which lets us focus on the creative part.
+              A well-prepared consult means less back-and-forth and a clearer picture of your day — which lets us focus on the creative part.
             </p>
             <ul className="mt-7 space-y-4">
               {CHECKLIST.map((c) => (
@@ -240,7 +240,7 @@ const BridalPackages = () => (
               <div className="bg-white rounded-3xl p-7 border border-[#F1DCE3] flex items-start gap-4">
                 <MapPin size={20} className="text-[#E62E6B] mt-0.5 shrink-0" />
                 <div>
-                  <div className="font-display text-base font-bold text-[#4A2530]">On-Location. Everywhere in Karnataka.</div>
+                  <div className="font-display text-base font-bold text-[#4A2530]">On-Site. Everywhere in Karnataka.</div>
                   <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">Also, Rekha travels to your home, hotel or venue, so you don't need to visit a studio. Outstation charges extra.</p>
                   <Link to="/contact" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#E62E6B] hover:gap-2.5 transition-all" data-testid="bridal-pkg-location-link">
                     Check availability <ArrowUpRight size={14} />
@@ -262,7 +262,7 @@ const BridalPackages = () => (
             <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl leading-[1.1] mt-3">
               Answers before you <span className="italic text-[#E62E6B]">reach out</span>
             </h2>
-            <p className="mt-4 text-sm text-[#5C4E52] leading-relaxed">Still have questions? Send a message on WhatsApp or fill the enquiry form — usually answered within a few hours.</p>
+            <p className="mt-4 text-sm text-[#5C4E52] leading-relaxed">Still have questions? Send a message on WhatsApp or fill the request form — Rekha usually replies within a few hours.</p>
             <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#25D366] text-white font-medium text-sm hover:bg-[#1eb959] transition-colors" data-testid="bridal-pkg-faq-whatsapp">
               <FaWhatsapp size={17} /> Ask on WhatsApp
             </a>

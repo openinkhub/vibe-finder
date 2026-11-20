@@ -15,8 +15,11 @@ import Instagram from "./Instagram";
 import FAQ from "./FAQ";
 import Contact from "./Contact";
 import Footer from "./Footer";
+import { PageExtras } from "./PageExtras";
 
-const SECTIONS = [Marquee, About, WhoWeServe, Services, Pricing, Areas, Portfolio, Reels, Process, Academy, Loyalty, Testimonials, Instagram, FAQ, Contact, Footer];
+const HomeExtras = () => <div className="bg-[#F4F1EA] pt-14 md:pt-20"><PageExtras path="/" /></div>;
+
+const SECTIONS = [Marquee, About, WhoWeServe, Services, Pricing, Areas, Portfolio, Reels, Process, Academy, Loyalty, Testimonials, Instagram, HomeExtras, FAQ, Contact, Footer];
 const idle = (fn) => (window.requestIdleCallback ? window.requestIdleCallback(fn, { timeout: 400 }) : setTimeout(fn, 16));
 const cancelIdle = (id) => (window.cancelIdleCallback ? window.cancelIdleCallback(id) : clearTimeout(id));
 

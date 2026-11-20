@@ -41,14 +41,14 @@ const About = () => {
               For Rekha, great bridal makeup starts long before the brushes come out. First, it starts with understanding <span className="font-semibold text-[#4A2530]">you</span>: your features, your skin, your style and how you want to feel on your wedding day.
             </p>
             <p className="mt-4 text-[#5C4E52] leading-relaxed text-sm sm:text-base">
-              In short, her approach is simple: enhance, don't mask. Whether you choose <span className="font-semibold text-[#4A2530]">HD or Airbrush makeup</span>, every look photographs beautifully and feels comfortable. Plus, it lasts through the hugs, happy tears and long hours of your day.
+              In short, her approach is simple: enhance, don't mask. Whether you choose <span className="font-semibold text-[#4A2530]">HD or Airbrush makeup</span>, each look photographs beautifully and feels light. Plus, it lasts through the hugs, happy tears and long hours of your day.
             </p>
             <p className="mt-4 text-[#5C4E52] leading-relaxed text-sm sm:text-base">
               Based in Bengaluru and available for <span className="font-semibold text-[#4A2530]">destination weddings, celebrations and fashion assignments across India</span>, Rekha also offers something just as important: her complete attention. <span className="font-semibold text-[#4A2530]">No double bookings. No rushing between brides. Your date is exclusively yours.</span>
             </p>
 
             <p className="mt-4 text-[#5C4E52] leading-relaxed text-sm sm:text-base">
-              Her kit includes trusted brands such as <a href="https://www.maccosmetics.in/" target="_blank" rel="noopener" className="text-[#E62E6B] underline decoration-[#E62E6B]/40 underline-offset-2">MAC Cosmetics</a> and <a href="https://www.bobbibrown.in/" target="_blank" rel="noopener" className="text-[#E62E6B] underline decoration-[#E62E6B]/40 underline-offset-2">Bobbi Brown</a>. Also, she follows strict hygiene at every booking.
+              Her kit includes trusted brands such as <a href="https://www.maccosmetics.in/" target="_blank" rel="noopener" className="text-[#E62E6B] underline decoration-[#E62E6B]/40 underline-offset-2">MAC Cosmetics</a> and <a href="https://www.bobbibrown.in/" target="_blank" rel="noopener" className="text-[#E62E6B] underline decoration-[#E62E6B]/40 underline-offset-2">Bobbi Brown</a>. Also, she follows strict hygiene at each booking.
             </p>
 
             <div className="mt-8 sm:mt-10 grid grid-cols-3 gap-3 sm:gap-6 border-t border-[#F1DCE3] pt-7 sm:pt-8">

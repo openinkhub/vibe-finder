@@ -42,7 +42,7 @@ export const MobileBookBar = () => {
               data-testid="mobile-book-bar-btn"
             >
               <CalendarCheck size={17} />
-              Book Free Consultation
+              Book Free Consult
             </button>
             <a
               href={brand.whatsappUrl}

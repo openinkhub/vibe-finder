@@ -19,7 +19,7 @@ const Services = () => {
             <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Bridal Makeup Bangalore</span>
             <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5 max-w-xl">A look for every occasion</h2>
           </div>
-          <p className="text-sm sm:text-base text-[#5C4E52] max-w-sm">From the wedding morning to the runway call time, open a portfolio to see the finish for each occasion.</p>
+          <p className="text-sm sm:text-base text-[#5C4E52] max-w-sm">From the wedding morning to the runway call time, open a portfolio to see the finish for each event.</p>
         </Reveal>
 
         <div className="border-t border-[#F1DCE3]" style={{ perspective: 1400 }}>

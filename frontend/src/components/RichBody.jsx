@@ -78,7 +78,7 @@ export const RichBody = ({ body }) => (
         {body.faq && (
           <Reveal delay={0.1}>
             <div className="bg-[#FBE9F0] rounded-3xl p-6 border border-[#F1DCE3]" data-testid="body-faq">
-              <h2 className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#E62E6B] mb-4">Frequently asked questions</h2>
+              <h2 className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#E62E6B] mb-4">Common questions</h2>
               {body.faq.map(([q, a]) => <div key={q} className="mb-4 last:mb-0"><h3 className="font-display text-base text-[#4A2530]">{q}</h3><p className="text-sm text-[#5C4E52] mt-1">{a}</p></div>)}
             </div>
           </Reveal>

@@ -38,7 +38,7 @@ const Pricing = () => {
           ))}
         </div>
 
-        <p className="mt-8 sm:mt-10 text-center text-sm text-[#6E6266] max-w-2xl mx-auto">Every Bridal look is unique. Your Quote is personalized based on your look, location and event requirements. Outstation Charges Extra*</p>
+        <p className="mt-8 sm:mt-10 text-center text-sm text-[#6E6266] max-w-2xl mx-auto">Each Bridal look is unique. Your Quote is personalized based on your look, venue and event requirements. Outstation Charges Extra*</p>
         <div className="mt-6 sm:mt-8 text-center">
           <button onClick={() => scrollToId("contact")} className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-[#D6245F] text-white text-sm sm:text-base font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-xl shadow-[#E62E6B]/30" data-testid="pricing-book-btn">
             <span className="sm:hidden">{shortCta("Consult on Pricing")}</span>

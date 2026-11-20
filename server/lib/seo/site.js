@@ -23,6 +23,12 @@ const BUILT_IN = {
   "/gallery": "/portfolio", "/reviews": "/testimonials", "/contact-us": "/contact", "/blogs": "/blog",
   "/privacy-policy": "/privacy", "/terms-and-conditions": "/terms", "/refund-policy": "/refund", "/cookie-policy": "/cookies",
   "/groom-makeup": "/groom-makeup-artist-bangalore", "/engagement": "/engagement-makeup", "/party-makeup": "/party-makeup-artist-bangalore",
+  // Old-site addresses still requested (from the 404 log).
+  "/updates.php/95881/bridal-makeup-course-in-banglore-": "/bridal-makeup-course-bangalore",
+  "/updates.php/95421/Bridal-makeup-package-in-Banglore-": "/book-bridal-makeup-package-karnataka",
+  "/terms-of-service": "/terms", "/terms-of-service.html": "/terms",
+  "/en": "/", "/en/home": "/", "/en/index.html": "/", "/english": "/", "/main": "/", "/new": "/", "/old": "/",
+  ...Object.fromEntries(Array.from({ length: 40 }, (_, n) => [`/blog${n + 1}`, "/blog"])),
 };
 
 // A wrong-case or slightly different address for a real page (e.g. /About-Us, /Contact/)

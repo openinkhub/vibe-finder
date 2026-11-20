@@ -36,8 +36,8 @@ const Hero = ({ page }) => {
 
           <div className="fade-up delay-4 mt-8 sm:mt-9 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-5">
             <motion.button whileHover={{ y: -3, scale: 1.02 }} whileTap={{ scale: 0.97 }} onClick={() => scrollToId("contact")} className="self-start px-5 sm:px-8 py-2 sm:py-4 rounded-full bg-[#D6245F] text-white text-xs sm:text-[15px] font-medium hover:bg-[#C81F57] transition-colors duration-300 shadow-xl shadow-[#E62E6B]/30" data-testid="hero-book-btn">
-              <span className="sm:hidden">{shortCta("Book Your Free Consultation")}</span>
-              <span className="hidden sm:inline">Book Your Free Consultation</span>
+              <span className="sm:hidden">{shortCta("Book Your Free Consult")}</span>
+              <span className="hidden sm:inline">Book Your Free Consult</span>
             </motion.button>
             <button onClick={() => scrollToId("reels")} className="group flex items-center gap-3 text-[#4A2530]" data-testid="hero-reel-btn">
               <span className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-[#F4B7CE] bg-white/70 backdrop-blur flex items-center justify-center text-[#E62E6B] group-hover:bg-[#D6245F] group-hover:border-[#E62E6B] group-hover:text-white transition-all duration-300">

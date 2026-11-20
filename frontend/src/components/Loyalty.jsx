@@ -19,7 +19,7 @@ const Loyalty = () => {
         <Reveal delay={0.1} className="order-1 lg:order-2">
           <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Join the community</span>
           <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Join our loyalty program, get a <span className="italic text-[#E62E6B]">free reward</span></h2>
-          <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-lg">Become part of the Rekha Krishnamurthy community — every booking earns loyalty points, and every new member gets a welcome reward on joining.</p>
+          <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-lg">Become part of the Rekha Krishnamurthy community — each booking earns loyalty points, and each new member gets a welcome reward on joining.</p>
           <div className="mt-8 sm:mt-9 space-y-3">
             {loyaltyPoints.map((t, i) => (
               <Reveal key={t} delay={0.2 + i * 0.08} rotate={-12}>

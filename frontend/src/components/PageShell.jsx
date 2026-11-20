@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
+import { PageExtras, extrasFaq } from "./PageExtras";
 import { srcSetFor } from "../lib/img";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowUpRight, Phone, Instagram } from "lucide-react";
@@ -16,12 +17,13 @@ import { shortCta } from "../lib/ctaLabel";
 
 export const PageShell = ({ children, title, page, faq }) => {
   useSeo(page);
-  useJsonLd(page, faq);
+  const allFaq = useMemo(() => { const extra = extrasFaq(page?.path); return extra.length ? [...(faq || []), ...extra] : faq; }, [faq, page]);
+  useJsonLd(page, allFaq);
   useEffect(() => { window.scrollTo(0, 0); if (title && !page) document.title = `${title} · Rekha Krishnamurthy`; }, [title, page]);
   return (
     <div className="bg-[#F4F1EA] min-h-screen">
       <Navbar solid />
-      <main className="pt-24 sm:pt-28">{children}</main>
+      <main className="pt-24 sm:pt-28">{children}{page?.path && <PageExtras path={page.path} />}</main>
       <Footer />
       <FloatingButtons />
       <MobileBookBar />
@@ -29,7 +31,7 @@ export const PageShell = ({ children, title, page, faq }) => {
   );
 };
 
-export const PageHero = ({ eyebrow, title, subtitle, image, imageAlt, cta = "Book Your Free Consultation", ctaTo = "/contact", onCta }) => (
+export const PageHero = ({ eyebrow, title, subtitle, image, imageAlt, cta = "Book Your Free Consult", ctaTo = "/contact", onCta }) => (
   <section className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-14 items-center pb-12 md:pb-20" data-testid="page-hero">
     <Reveal>
       {eyebrow && <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]" data-testid="page-eyebrow">{eyebrow}</span>}
@@ -72,11 +74,11 @@ export const AuthorBio = () => {
           <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
             <span className="text-[#5C4E52]">📍 Based in Bangalore</span>
             <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-1.5 text-[#E62E6B]"><Phone size={14} /> {brand.phone}</a>
-            <a href={brand.instagramUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><Instagram size={14} /> Instagram</a>
-            <a href={brand.facebookUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaFacebookF size={13} /> Facebook</a>
-            <a href={brand.twitterUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaXTwitter size={13} /> X</a>
-            <a href={brand.linkedinUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaLinkedinIn size={13} /> LinkedIn</a>
-            <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#25D366]"><FaWhatsapp size={14} /> WhatsApp</a>
+            <a href={brand.instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><Instagram size={14} /></a>
+            <a href={brand.facebookUrl} target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaFacebookF size={13} /></a>
+            <a href={brand.twitterUrl} target="_blank" rel="noreferrer" aria-label="X" title="X" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaXTwitter size={13} /></a>
+            <a href={brand.linkedinUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaLinkedinIn size={13} /></a>
+            <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" aria-label="WhatsApp" title="WhatsApp" className="inline-flex items-center gap-1.5 text-[#25D366]"><FaWhatsapp size={14} /></a>
           </div>
         </div>
       </div>

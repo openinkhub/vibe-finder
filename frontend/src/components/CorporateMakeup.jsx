@@ -8,24 +8,24 @@ import { brand } from "../mock/mock";
 
 const WHO = [
   { icon: Briefcase, label: "Corporate Executives", desc: "For example, board meetings, annual reports and LinkedIn headshots need makeup that looks confident, not overdone." },
-  { icon: Monitor, label: "TV & Media Presenters", desc: "Studio lighting, 4K cameras and green screens demand HD-ready, long-wear coverage that holds across a full broadcast day." },
+  { icon: Monitor, label: "TV & Media Presenters", desc: "Studio lights, 4K cameras and green screens need HD, long-wear makeup that holds through a full day on air." },
   { icon: Camera, label: "Photography Shoots", desc: "Similarly, product launches and brand shoots need makeup that stays the same for hours, with touch-ups." },
   { icon: Users, label: "Events & Conferences", desc: "Likewise, keynotes, panels and award nights call for structured looks for the stage." },
 ];
 
 const INCLUDES = [
-  "30-minute pre-shoot consultation to match the brief",
+  "30-minute pre-shoot chat to match the brief",
   "Skin-prep and HD-grade base in your tone",
-  "On-camera colour calibration — colours read true on screen",
-  "Long-wear, transfer-proof formulas for all-day performance",
+  "Colour checks for the camera, so colours look true on screen",
+  "Long-wear, transfer-proof products that last all day",
   "Blotting, touch-up guidance between sessions",
   "On-location service across Bangalore",
 ];
 
 const STEPS = [
-  { n: "01", title: "Tell us your brief", body: "First, share the event type, camera setup, expected duration and any references. A 15-minute call is enough." },
-  { n: "02", title: "Trial (optional)", body: "For multi-day shoots or broadcast work, a trial confirms the look on your specific camera and lighting before the shoot day." },
-  { n: "03", title: "On-site session", body: "Rekha arrives ready. Full setup, 60–90 minutes depending on complexity, with touch-up kit left on set." },
+  { n: "01", title: "Tell us your brief", body: "First, share the event type, the camera setup, how long it runs and any sample photos. A 15-minute call is enough." },
+  { n: "02", title: "Trial (optional)", body: "For long shoots or TV work, a trial checks the look on your camera and lights before the shoot day." },
+  { n: "03", title: "On-site session", body: "Rekha arrives ready. A full session takes 60–90 minutes, based on the look, and she leaves a touch-up kit on set." },
 ];
 
 const CORP_IMG = "https://images.unsplash.com/photo-1585240975858-7264fd020798?crop=entropy&cs=srgb&fm=jpg&q=85&w=900";
@@ -60,7 +60,7 @@ const CorporateMakeup = () => (
             Professional makeup for <span className="italic text-[#E62E6B]">every camera</span>
           </h2>
           <p className="mt-4 max-w-2xl text-sm sm:text-base text-[#5C4E52] leading-relaxed">
-            Whether you're facing a broadcast studio camera, a DSLR for a brand campaign or a conference stage — professional makeup is the difference between looking present and looking polished.
+            Whether you face a TV camera, a brand shoot or a stage, good makeup is the difference between looking present and looking polished.
           </p>
         </Reveal>
 
@@ -87,10 +87,10 @@ const CorporateMakeup = () => (
           <Reveal>
             <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">What's included</span>
             <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl leading-[1.1] mt-3">
-              Every session is built to <span className="italic text-[#E62E6B]">perform on camera</span>
+              Each session is built to <span className="italic text-[#E62E6B]">perform in photos</span>
             </h2>
             <p className="mt-4 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
-              Professional makeup for shoots and broadcasts isn't just about looking good — it's about looking correct on the particular camera, lights and format you're working with.
+              Makeup for shoots and TV isn't just about looking good. It must also look right on your lens, under your lights and in your format.
             </p>
             <ul className="mt-7 space-y-3.5">
               {INCLUDES.map((item) => (
@@ -118,7 +118,7 @@ const CorporateMakeup = () => (
                 <Sparkles size={22} className="text-[#E62E6B] shrink-0" />
                 <div>
                   <div className="font-display text-sm font-bold text-[#4A2530]">On-Location Service.</div>
-                  <div className="text-xs text-[#5C4E52] mt-0.5">Rekha comes to your studio, office or event venue across Bangalore.</div>
+                  <div className="text-xs text-[#5C4E52] mt-0.5">Rekha comes to your studio, office or event venue across the city.</div>
                 </div>
               </div>
             </div>
@@ -148,7 +148,7 @@ const CorporateMakeup = () => (
         <Reveal className="mt-10 md:mt-14 text-center">
           <div className="inline-flex items-center gap-3 text-sm text-[#5C4E52]">
             <MapPin size={16} className="text-[#E62E6B]" />
-            Available for shoots and events across Bangalore, Mysore and select Karnataka locations.
+            Rekha takes shoots and events across Bangalore, Mysore and parts of Karnataka.
           </div>
           <div className="mt-6">
             <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#4A2530] text-white font-medium hover:bg-[#D6245F] transition-colors text-sm" data-testid="corp-cta-bottom">
@@ -166,10 +166,10 @@ const CorporateMakeup = () => (
           <Reveal>
             <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Why it matters</span>
             <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl leading-[1.1] mt-3">
-              Cameras see what <span className="italic text-[#E62E6B]">eyes miss</span>
+              Lenses see what <span className="italic text-[#E62E6B]">eyes miss</span>
             </h2>
             <p className="mt-5 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
-              After all, a camera picks up shine, uneven colour and colour casts that the eye smooths over. Professional makeup corrects for the specific lighting temperature, sensor profile and compression of your shoot before you're ever in front of the lens.
+              After all, a lens picks up shine, uneven colour and colour casts that the eye smooths over. So Rekha adjusts the makeup for the light and the lens before you step in front of it.
             </p>
             <p className="mt-4 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
               The result is images where your skin looks like you — not washed out, not shiny, not orange under warm tungsten. Just polished.
@@ -177,9 +177,9 @@ const CorporateMakeup = () => (
           </Reveal>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { icon: Clock, title: "Long-wear formulas", body: "Products selected for 8–12 hour performance without touch-up — critical for all-day shoots." },
-              { icon: Monitor, title: "HDTV-calibrated", body: "Colours and contours tuned to broadcast-spec lighting so faces read naturally on screen." },
-              { icon: Camera, title: "Flash & strobe-safe", body: "Foundations and powders that don't bounce light into white in controlled studio environments." },
+              { icon: Clock, title: "Long-wear formulas", body: "Products chosen to last 8–12 hours without touch-ups, which matters on all-day shoots." },
+              { icon: Monitor, title: "HDTV-calibrated", body: "Colours and contours tuned to TV lights, so faces look natural on screen." },
+              { icon: Camera, title: "Flash & strobe-safe", body: "Bases and powders that don't flash white under studio lights." },
               { icon: Sparkles, title: "Skin-first philosophy", body: "Prep, hydration and base work means skin looks like skin, not like makeup — even at 4K." },
             ].map((f, i) => (
               <Reveal key={f.title} delay={i * 0.07}>

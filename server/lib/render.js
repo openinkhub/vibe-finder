@@ -175,6 +175,25 @@ function spaShell() {
   return shellCache;
 }
 
+// Extra text/FAQ/links for a page (frontend/src/content/pageExtras.js), as HTML for server-rendered pages.
+let extrasCache;
+function extrasHtml(urlPath) {
+  if (extrasCache === undefined) {
+    try {
+      const code = fs.readFileSync(path.join(__dirname, "..", "..", "frontend", "src", "content", "pageExtras.js"), "utf8").replace(/^export const /gm, "const ");
+      // eslint-disable-next-line no-new-func
+      extrasCache = new Function(`${code}\nreturn pageExtras;`)();
+    } catch { extrasCache = {}; }
+  }
+  const x = extrasCache[urlPath];
+  if (!x) return "";
+  const inline = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, l, h) => `<a href="${h}">${l}</a>`);
+  let out = (x.sections || []).map((s) => `<h2>${esc(s.h)}</h2>${(s.p || []).map((p) => `<p>${inline(p)}</p>`).join("")}`).join("");
+  if (x.faq && x.faq.length) out += `<h2>Common questions</h2>${x.faq.map(([q, a]) => `<div><h3>${esc(q)}</h3><p>${esc(a)}</p></div>`).join("")}`;
+  if (x.links && x.links.length) out += `<h2>Helpful resources</h2><ul>${x.links.map(([l, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(l)}</a></li>`).join("")}</ul>`;
+  return out;
+}
+
 // Blog index pages: the post list rendered from the database into the HTML, for crawlers.
 async function blogIndexHtml(urlPath) {
   const base = await pageHtml(urlPath);
@@ -184,7 +203,13 @@ async function blogIndexHtml(urlPath) {
   const listed = posts.filter((p) => !(ov[`/blog/${p.slug}`] || {}).noindex);
   const $ = cheerio.load(base);
   const h1 = (PAGE_BY_PATH[urlPath] && PAGE_BY_PATH[urlPath].h1) || (urlPath === "/archive" ? "Makeup Advice Archive" : "Makeup & Bridal Beauty Blog");
-  $("#root").html(`<main class="prerender"><h1>${h1}</h1><ul>${listed.map((p) => `<li><a href="/blog/${esc(p.slug)}">${esc(p.title)}</a> <time datetime="${esc(p.publish_date)}">${esc(p.publish_date)}</time><p>${esc(p.excerpt)}</p></li>`).join("")}</ul>${urlPath === "/blog" ? `<h2>Bridal makeup &amp; self-grooming guides</h2><ul>${PAGES.filter((g) => g.group === "Guides").map((g) => `<li><a href="${esc(g.path)}">${esc(g.h1)}</a></li>`).join("")}</ul>` : ""}</main>`);
+  const pg = PAGE_BY_PATH[urlPath];
+  const hero = pg && pg.image ? `<img src="${esc(pg.image)}" alt="${esc(pg.h1 || pg.name)}" width="1000" height="920"/>` : "";
+  $("#root").html(`<main class="prerender"><h1>${h1}</h1>${hero}${pg && pg.heroSub ? `<p>${esc(pg.heroSub)}</p>` : ""}<ul>${listed.map((p) => `<li><a href="/blog/${esc(p.slug)}">${esc(p.title)}</a> <time datetime="${esc(p.publish_date)}">${esc(p.publish_date)}</time><p>${esc(p.excerpt)}</p></li>`).join("")}</ul>${urlPath === "/blog" ? `<h2>Bridal makeup &amp; self-grooming guides</h2><ul>${PAGES.filter((g) => g.group === "Guides").map((g) => `<li><a href="${esc(g.path)}">${esc(g.h1)}</a></li>`).join("")}</ul>` : ""}${extrasHtml(urlPath)}</main>`);
+  const faq = (extrasCache && extrasCache[urlPath] && extrasCache[urlPath].faq) || [];
+  if (faq.length && !$('script[type="application/ld+json"]').filter((_, el) => /FAQPage/.test($(el).html())).length) {
+    $("head").append(`<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) }).replace(/</g, "\\u003c")}</script>`);
+  }
   return $.html();
 }
 

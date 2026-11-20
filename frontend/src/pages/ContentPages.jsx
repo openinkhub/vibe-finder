@@ -20,6 +20,7 @@ import { BrochureCta } from "../components/BrochureCta";
 import { BookingPanel } from "../components/BookingPanel";
 import { usePageImages, heroImage, heroImageAlt } from "../hooks/usePageImages";
 import legal from "../content/legal.json";
+import { extrasFor } from "../content/pageExtras";
 import { api, imgUrl } from "../lib/api";
 
 const Section = ({ children, className = "" }) => <section className={`max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 pb-14 md:pb-20 ${className}`}>{children}</section>;
@@ -96,11 +97,11 @@ const ComingSoon = ({ faq }) => (
     {faq && (
       <Reveal delay={0.1}>
         <div className="mt-8" data-testid="community-faq">
-          <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#E62E6B] mb-4">Good to know</div>
+          <h2 className="font-display text-2xl sm:text-3xl text-[#4A2530] mb-4">Common questions</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {faq.map(([q, a]) => (
               <div key={q} className="bg-white rounded-2xl border border-[#F1DCE3] p-5">
-                <div className="font-display text-base text-[#4A2530]">{q}</div>
+                <h3 className="font-display text-base text-[#4A2530]">{q}</h3>
                 <p className="text-sm text-[#5C4E52] mt-1">{a}</p>
               </div>
             ))}
@@ -143,7 +144,7 @@ export const SheetPage = () => {
         {page.group === "Academy" && <BatchBanner page={page} />}
         <SeoIntro page={page} ctaTo={`/contact?service=${encodeURIComponent(enquiryServiceFor(page))}`} />
         {hub ? <><ChildCards items={hub.children} /><div className="mt-12 max-w-3xl"><AuthorBio /></div></> : body ? <RichBody body={body} /> : body === undefined ? <div className="min-h-[60vh]" /> : page.comingSoon ? <ComingSoon faq={pathname === "/community" ? communityFaq : undefined} /> : <Body page={content} />}
-        {page.group === "Portfolio" && <PortfolioGallery />}
+        {page.group === "Portfolio" && <><PortfolioGallery limit={6} /><Section className="pt-8"><Link to="/portfolio" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#E62E6B] hover:text-white transition-colors" data-testid="full-portfolio-link">See the full portfolio <ArrowUpRight size={16} /></Link></Section></>}
         {!hub && (page.group === "Services" || page.group === "Academy") && (<><BrochureCta page={page} /><BookingPanel page={page} /></>)}
         {!hub && <Siblings page={page} />}
       </div>
@@ -232,7 +233,7 @@ export const GuidePage = () => {
         ) : <div className="min-h-[60vh]" />}
         {body?.faq && (
           <section className="mt-12" data-testid="guide-faq">
-            <h2 className="font-display text-2xl sm:text-3xl text-[#4A2530]">Frequently asked questions</h2>
+            <h2 className="font-display text-2xl sm:text-3xl text-[#4A2530]">Common questions</h2>
             <div className="mt-5 space-y-3">{body.faq.map(([q, a]) => <div key={q} className="bg-white rounded-2xl border border-[#F1DCE3] px-5 py-4"><h3 className="font-display text-base sm:text-lg text-[#4A2530]">{q}</h3><p className="text-sm text-[#5C4E52] mt-2 leading-relaxed">{a}</p></div>)}</div>
           </section>
         )}
@@ -264,7 +265,7 @@ export const BlogPage = () => {
   return (
     <PageShell page={page} title="Blog">
       <div data-testid="blog-page">
-        <Hero page={page} image={null} />
+        <Hero page={page} />
         <SeoIntro page={page} />
         <Section>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -300,17 +301,17 @@ export const LegalPage = () => {
   return (
     <PageShell page={page} title={page.name}>
       <div data-testid={`legal-page-${key}`}>
-        <Hero page={page} image={null} />
+        <Hero page={page} />
         <SeoIntro page={page} />
         <Section>
           <div className="flex flex-wrap gap-2 mb-8" data-testid="legal-tabs">
             {legalLinks.map((l) => <Link key={l.to} to={l.to} className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${l.to === pathname ? "bg-[#D6245F] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`legal-tab-${l.to.slice(1)}`}>{l.label}</Link>)}
           </div>
-          <article className="bg-white rounded-3xl p-6 sm:p-10 border border-[#F1DCE3]" data-testid={`legal-section-${key}`}>
+          {(doc || !extrasFor(pathname)?.sections) && <article className="bg-white rounded-3xl p-6 sm:p-10 border border-[#F1DCE3]" data-testid={`legal-section-${key}`}>
             {doc
               ? <div className="legal-md text-sm sm:text-base text-[#5C4E52] leading-relaxed"><ReactMarkdown>{doc.md}</ReactMarkdown></div>
               : <p className="text-sm sm:text-base text-[#5C4E52]" data-testid="legal-placeholder">The full {page.name} text is being finalised and will be published here shortly. For any questions in the meantime, please contact us.</p>}
-          </article>
+          </article>}
         </Section>
       </div>
     </PageShell>

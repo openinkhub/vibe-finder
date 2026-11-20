@@ -1,5 +1,5 @@
 const EXACT = {
-  "Book Your Free Consultation": "Book",
+  "Book Your Free Consult": "Book",
   "Enquire About the Next Batch": "Enquiry",
   "Enquire for the Next Batch": "Enquiry",
   "Enquire About the Next Workshop": "Enquiry",

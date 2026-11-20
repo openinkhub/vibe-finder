@@ -95,10 +95,10 @@ const ParallaxItem = ({ p, d, sx, sy, i }) => {
   );
 };
 
-export const PortfolioGallery = () => {
+export const PortfolioGallery = ({ limit }) => {
   const [items, setItems] = useState(fallback);
   useEffect(() => { api.get("/content/portfolio").then((r) => { if (r.data?.length) setItems(r.data); }).catch(() => {}); }, []);
-  return <ParallaxGallery items={items} />;
+  return <ParallaxGallery items={limit ? items.slice(0, limit) : items} />;
 };
 
 export default function PortfolioPage() {

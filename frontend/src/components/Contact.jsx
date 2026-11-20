@@ -35,7 +35,7 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
   const submit = async (e) => {
     e.preventDefault();
     setError("");
-    const text = enquiryMessage("I've sent an enquiry on your website.", [["Name", form.name], ["Mobile", form.phone], ["Email", form.email], ["Service", form.service], ["Event date", form.date], ["Look", look], ["Message", form.message]]);
+    const text = enquiryMessage("I've sent a request on your website.", [["Name", form.name], ["Mobile", form.phone], ["Email", form.email], ["Service", form.service], ["Event date", form.date], ["Look", look], ["Message", form.message]]);
     setWaText(text);
     openWhatsApp(text);
     setSending(true);
@@ -51,7 +51,7 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
       setSource("form");
       setTimeout(() => setSent(false), 30000);
     } catch (err) {
-      setError(errorText(err, "Couldn't send your enquiry — please try again or WhatsApp us."));
+      setError(errorText(err, "Couldn't send your request — please try again or WhatsApp us."));
     } finally {
       setSending(false);
     }
@@ -102,7 +102,7 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
 
         <Reveal delay={0.15} className="min-w-0">
           <TiltCard max={3} lift={false} glare={false} className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-[#F1DCE3] shadow-[0_30px_80px_-40px_rgba(230,46,107,0.45)]">
-            {sent && <div className="mb-5 flex items-center gap-2 bg-[#EAF7EF] text-[#1c7a45] px-4 py-3 rounded-xl text-sm" data-testid="contact-success"><Check size={16} className="shrink-0" /> <span className="flex-1">Thank you! Your enquiry has been received. We'll reach out shortly.</span>{waText && <a href={waLink(waText)} target="_blank" rel="noreferrer" className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#25D366] text-white text-xs font-medium" data-testid="contact-whatsapp"><FaWhatsapp size={14} /> Send on WhatsApp</a>}</div>}
+            {sent && <div className="mb-5 flex items-center gap-2 bg-[#EAF7EF] text-[#1c7a45] px-4 py-3 rounded-xl text-sm" data-testid="contact-success"><Check size={16} className="shrink-0" /> <span className="flex-1">Thank you! Your request has been received. We'll reach out shortly.</span>{waText && <a href={waLink(waText)} target="_blank" rel="noreferrer" className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#25D366] text-white text-xs font-medium" data-testid="contact-whatsapp"><FaWhatsapp size={14} /> Send on WhatsApp</a>}</div>}
             {error && <div className="mb-5 flex items-center gap-2 bg-[#FBE9F0] text-[#C81F57] px-4 py-3 rounded-xl text-sm" data-testid="contact-error"><X size={16} /> {error}</div>}
             {look && (
               <div className="mb-5 flex items-center justify-between gap-2 bg-[#FBE9F0] text-[#4A2530] px-4 py-3 rounded-xl text-sm" data-testid="contact-look-chip">

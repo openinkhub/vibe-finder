@@ -66,8 +66,8 @@ export const aboutStats = [
 ];
 
 export const whoWeServe = [
-  { key: "A", title: "Brides-to-be", desc: "From the first trial to the last mandap look — a bridal makeup artist in Bangalore who plans every event with you." },
-  { key: "B", title: "Engagement & Pre-Wedding", desc: "Soft, camera-ready glam for rings, shoots and sangeet nights." },
+  { key: "A", title: "Brides-to-be", desc: "From the first trial to the last mandap look — a bridal makeup artist in Bangalore who plans each event with you." },
+  { key: "B", title: "Engagement & Pre-Wedding", desc: "Soft, flash-proof glam for rings, shoots and sangeet nights." },
   { key: "C", title: "Premium / Luxury Brides", desc: "Full-day exclusivity, top-shelf products, and a dedicated team for high-touch weddings." },
   { key: "D", title: "Corporate & Professional Events", desc: "Polished, understated makeup for launches, conferences and on-camera work." },
   { key: "E", title: "South Indian Brides", desc: "Traditional draping, temple jewellery styling and looks true to South Indian bridal ritual — a specialty, not an add-on." },
@@ -76,7 +76,7 @@ export const whoWeServe = [
 export const services = [
   { no: "01", title: "Bridal", desc: "HD & airbrush bridal makeup with a trial session, draping, and touch-up kit for the full wedding day.", cta: "Explore Bridal", image: "https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9?auto=format&fit=crop&w=1000&q=70" },
   { no: "02", title: "Engagement", desc: "Soft-glam looks built for close-up photography and champagne-lit rooms.", cta: "Explore Engagement", image: "https://images.unsplash.com/photo-1594647210801-5124307f3d51?auto=format&fit=crop&w=1000&q=70" },
-  { no: "03", title: "Non-Bridal", desc: "Polished, camera-ready looks for the wedding party, family, and guests.", cta: "Explore Non-Bridal", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749?auto=format&fit=crop&w=1000&q=70" },
+  { no: "03", title: "Non-Bridal", desc: "Polished, flash-proof looks for the wedding party, family, and guests.", cta: "Explore Non-Bridal", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749?auto=format&fit=crop&w=1000&q=70" },
   { no: "04", title: "Party", desc: "Bold or bare, tuned to your event and lighting — always long-wear.", cta: "Explore Party", image: "https://images.unsplash.com/photo-1708735808460-2b131ddefb27?auto=format&fit=crop&w=1000&q=70" },
   { no: "05", title: "Editorial", desc: "Concept-led makeup for magazine covers, campaigns, and creative sets.", cta: "Explore Editorial", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1000&q=70" },
   { no: "06", title: "Fashion", desc: "Runway-ready faces built to hold up under stage light and quick changes.", cta: "Explore Fashion", image: "https://images.unsplash.com/photo-1747847471528-7b95ea7a4c39?auto=format&fit=crop&w=1000&q=70" },
@@ -154,11 +154,11 @@ export const instagramFeed = [
 ];
 
 export const faqs = [
-  { q: "How do I choose the best makeup artist in Bangalore for my wedding?", a: "Look beyond the portfolio. The best makeup artist for you is the one who listens to what you want, understands your skin and features, and plans the look around your outfit, venue lighting and wedding schedule. Also ask about products, hygiene, HD or airbrush options and what the price includes. Rekha starts every booking with a consultation, so you know exactly what to expect before the big day." },
+  { q: "How do I choose the best makeup artist in Bangalore for my wedding?", a: "Look beyond the portfolio. The best makeup artist for you is the one who listens to what you want, understands your skin and features, and plans the look around your outfit, venue lighting and wedding schedule. Also ask about products, hygiene, HD or airbrush options and what the price includes. Rekha starts each booking with a consult, so you know exactly what to expect before the big day." },
   { q: "How far in advance should I book?", a: "For wedding-season dates (Oct–Feb), 4–6 months' notice keeps your date and trial slot secure. However, off-season dates can often be booked a few weeks ahead." },
   { q: "HD vs. Airbrush makeup — what's the difference?", a: "HD makeup uses light-reflecting, high-definition products applied by hand for a flawless close-up finish. Airbrush sprays a fine, even mist for an ultra-lightweight, long-wear base — ideal for full-day weddings and hot, humid weather." },
-  { q: "Do you travel for destination weddings?", a: "Yes. Rekha travels across India for destination weddings and fashion assignments. Rekha shares travel and stay costs clearly at the consultation." },
-  { q: "Do you offer a Trial?", a: ["Your trial is a detailed consultation followed by a full-face makeup session using the same products and techniques planned for your wedding day. If you need it, Rekha can also style your hair.", "This allows us to understand your preferences, refine the look and make sure everything feels right before your big day.", { b: "Bridal trials are available on request as a paid service." }] },
+  { q: "Do you travel for destination weddings?", a: "Yes. Rekha travels across India for destination weddings and fashion assignments. Rekha shares travel and stay costs clearly at the consult." },
+  { q: "Do you offer a Trial?", a: ["Your trial is a detailed consult followed by a full-face makeup session using the same products and techniques planned for your wedding day. If you need it, Rekha can also style your hair.", "This allows us to understand your preferences, refine the look and make sure everything feels right before your big day.", { b: "Bridal trials are available on request as a paid service." }] },
   { q: "What courses do you offer?", a: "Professional HD & bridal certification, an airbrush machine masterclass, and self-grooming & everyday makeup classes — all small-batch and hands-on at the Bangalore studio." },
-  { q: "What are the inclusions?", a: "Most often a session of Makeup is inclusive of HD Makeup / Air Brush Makeup, Hair Styling, Outfit Styling (Saree/Lehenga Draping) at your venue/location. Any other specific requirements can be discussed at the time of consultation." },
+  { q: "What are the inclusions?", a: "Most often a session of Makeup is inclusive of HD Makeup / Air Brush Makeup, Hair Styling, Outfit Styling (Saree/Lehenga Draping) at your venue. Any other specific requirements can be discussed at the time of consult." },
 ];
