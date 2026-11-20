@@ -99,7 +99,7 @@ const BridalPackages = () => (
             { v: "500+", l: "Weddings & shoots" },
             { v: "14+ yrs", l: "Professional experience" },
             { v: "On-Location", l: "Across Karnataka" },
-            { v: "Trial included", l: "In all bridal packages" },
+            { v: "Hair styling included", l: "In all bridal packages" },
           ].map(({ v, l }) => (
             <div key={l} className="pt-6 sm:pt-0 sm:px-8 first:pt-0 first:sm:pl-0">
               <div className="font-display text-2xl sm:text-3xl font-bold text-white">{v}</div>

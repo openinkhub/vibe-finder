@@ -22,7 +22,7 @@ const RETIRED_SLUGS = Object.keys(BLOG_REDIRECTS);
 //   Answer paragraph(s)…          Answer paragraph(s)…
 function extractFaqs(body) {
   const text = String(body || "").replace(/\r\n/g, "\n");
-  const m = /^#{2,3}\s*(?:FAQs?|Frequently Asked Questions)[^\n]*\n/im.exec(text);
+  const m = /^#{2,3}\s*(?:FAQs?|Frequently Asked Questions|Common Questions)[^\n]*\n/im.exec(text);
   if (!m) return [];
   let section = text.slice(m.index + m[0].length);
   const end = section.search(/^##\s(?!#)/m); // next level-2 heading ends the FAQ section

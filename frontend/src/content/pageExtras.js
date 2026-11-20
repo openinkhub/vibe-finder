@@ -6,7 +6,7 @@ const BRAND_LINKS = [
   ["Bobbi Brown", "https://www.bobbibrown.in/"],
   ["Estée Lauder", "https://www.esteelauder.com/"],
 ];
-const SKIN_LINK = ["American Academy of Dermatology: skin care basics", "https://www.aad.org/public/everyday-care/skin-care-basics"];
+const SKIN_LINK = ["American Academy of Dermatology: everyday skin care", "https://www.aad.org/public/everyday-care"];
 
 export const pageExtras = {
   "/": {
