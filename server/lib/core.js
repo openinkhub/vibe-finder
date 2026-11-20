@@ -4,6 +4,13 @@ const crypto = require("crypto");
 
 let client;
 let db;
+// Requests that arrive while the database is still connecting wait for it (see waitForDb).
+let waiters = [];
+const waitForDb = (ms) => (db ? Promise.resolve(true) : new Promise((resolve) => {
+  const t = setTimeout(() => { waiters = waiters.filter((w) => w !== done); resolve(false); }, ms);
+  const done = () => { clearTimeout(t); resolve(true); };
+  waiters.push(done);
+}));
 
 async function connect() {
   const url = process.env.MONGODB_URI || process.env.MONGO_URL;
@@ -12,6 +19,7 @@ async function connect() {
   await c.connect();
   client = c;
   db = c.db(process.env.DB_NAME || "rekha");
+  waiters.splice(0).forEach((w) => w());
   return db;
 }
 
@@ -58,4 +66,4 @@ function str(body, key, { min = 0, max = 10000, required = false, def } = {}) {
   return v;
 }
 
-module.exports = { connect, getDb, HttpError, ah, uuid, nowIso, cut, clean, str };
+module.exports = { connect, getDb, waitForDb, HttpError, ah, uuid, nowIso, cut, clean, str };

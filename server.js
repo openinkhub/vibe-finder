@@ -5,7 +5,7 @@ const express = require("express");
 const compression = require("compression");
 const cookieParser = require("cookie-parser");
 
-const { connect, getDb, HttpError, ah } = require("./server/lib/core");
+const { connect, getDb, waitForDb, HttpError, ah } = require("./server/lib/core");
 const { seedAdmin } = require("./server/lib/auth");
 const { syncReferencedFiles } = require("./server/lib/storage");
 const content = require("./server/routes/content");
@@ -41,6 +41,9 @@ if (origins.length) {
 // ── API ──
 const api = express.Router();
 api.get("/", (_q, res) => res.json({ message: "Rekha Krishnamurthy API", ok: true }));
+// Just after a restart (e.g. a deploy) the database may still be connecting: wait up to
+// 25 s for it instead of failing straight away with "Database not connected".
+api.use((_req, _res, next) => { waitForDb(25000).then(() => next(), () => next()); });
 // Any successful change (posts, page images, settings) refreshes the server-rendered pages and SEO report.
 api.use((req, res, next) => {
   if (req.method !== "GET") res.on("finish", () => { if (res.statusCode < 400 && !req.path.startsWith("/seo/vitals")) seo.refresh(); });

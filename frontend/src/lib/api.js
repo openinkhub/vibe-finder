@@ -11,7 +11,23 @@ export const TOKEN_KEY = "rk_admin_token";
 class ApiError extends Error {
   constructor(message, response) { super(message); this.response = response; }
 }
+// The server answers 503 "Database not connected" for a few seconds after a restart (deploy).
+// Retry quietly a few times before showing an error.
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const request = async (method, url, data, config = {}) => {
+  for (let attempt = 0; ; attempt += 1) {
+    try { return await requestOnce(method, url, data, config); }
+    catch (e) {
+      const st = e && e.response && e.response.status;
+      // 503 means the server didn't handle the request, so any method is safe to repeat.
+      // Gateway/network errors are only retried for reads, so a form is never sent twice.
+      const busy = st === 503 || (method === "GET" && (st === 502 || st === 504 || (!e.response && /Network error/.test(e.message))));
+      if (!busy || attempt >= 3) throw e;
+      await sleep(2000 * (attempt + 1));
+    }
+  }
+};
+const requestOnce = async (method, url, data, config = {}) => {
   const params = config.params ? Object.entries(config.params).filter(([, v]) => v !== undefined && v !== null) : [];
   const qs = params.length ? `?${new URLSearchParams(params).toString()}` : "";
   const headers = { ...(config.headers || {}) };
