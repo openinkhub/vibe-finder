@@ -38,7 +38,7 @@ const ScrollTransformation = ({ showcase }) => {
           <div className="order-2 lg:order-1">
             <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Scroll to transform · {String(idx + 1).padStart(2, "0")} / {String(frames.length).padStart(2, "0")}</span>
             <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-7xl leading-[1.02] mt-4" data-testid="morph-title">{cur.name}</h2>
-            <p className="mt-4 text-sm sm:text-base text-[#5C4E52] max-w-md">{idx === 0 ? "Every transformation starts with skin prep — hydrated, primed, ready to hold a twelve-hour look." : `${cur.name} — lips ${lab?.lips || ""}, cheeks ${lab?.blush || ""}, eyes ${lab?.eyes || ""}. Keep scrolling to move through the looks.`}</p>
+            <p className="mt-4 text-sm sm:text-base text-[#5C4E52] max-w-md">{idx === 0 ? "First, every transformation starts with skin prep: hydrated, primed and ready to hold a twelve-hour look." : `${cur.name} — lips ${lab?.lips || ""}, cheeks ${lab?.blush || ""}, eyes ${lab?.eyes || ""}. Keep scrolling to move through the looks.`}</p>
             <div className="mt-6 flex gap-1.5" aria-hidden>{frames.map((f, i) => <span key={f.key} className={`h-1 rounded-full transition-all duration-500 ${i === idx ? "w-10 bg-[#E62E6B]" : "w-4 bg-[#F4B7CE]"}`} />)}</div>
           </div>
           <div className="order-1 lg:order-2 relative h-[52vh] sm:h-[60vh] lg:h-[78vh] rounded-[28px] overflow-hidden bg-[#FBE9F0] shadow-[0_40px_100px_-40px_rgba(230,46,107,0.5)]">

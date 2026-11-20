@@ -123,7 +123,7 @@ const BridalPackages = () => (
               A bridal package isn't just a list of services — it's a plan that considers your events, timing, outfits, skin, and the way you want to look in photographs that will last a lifetime.
             </p>
             <p className="mt-4 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
-              Rekha works with you from consultation through trial to the final event, with every detail discussed and confirmed in advance.
+              So Rekha works with you from consultation through trial to the final event, and confirms every detail in advance.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="bridal-pkg-book-btn">
@@ -241,7 +241,7 @@ const BridalPackages = () => (
                 <MapPin size={20} className="text-[#E62E6B] mt-0.5 shrink-0" />
                 <div>
                   <div className="font-display text-base font-bold text-[#4A2530]">On-Location. Everywhere in Karnataka.</div>
-                  <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">Rekha travels to your home, hotel or venue — no studio visit required. Outstation charges extra.</p>
+                  <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">Also, Rekha travels to your home, hotel or venue, so you don't need to visit a studio. Outstation charges extra.</p>
                   <Link to="/contact" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#E62E6B] hover:gap-2.5 transition-all" data-testid="bridal-pkg-location-link">
                     Check availability <ArrowUpRight size={14} />
                   </Link>

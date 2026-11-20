@@ -13,7 +13,7 @@ const WhoWeServe = () => {
         <Reveal className="max-w-2xl">
           <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Made for you</span>
           <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Who we serve best</h2>
-          <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">As a wedding makeup artist working across Bangalore, we tailor the approach to who's in the chair — pick your occasion to see how.</p>
+          <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">As a wedding makeup artist across Bangalore, Rekha also tailors the approach to who's in the chair. So pick your occasion to see how.</p>
         </Reveal>
 
         <div className="mt-10 md:mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" style={{ perspective: 1200 }}>

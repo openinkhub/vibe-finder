@@ -38,13 +38,13 @@ const About = () => {
               14 Years of Bridal Artistry <span className="italic text-[#E62E6B]">&amp; Expertise</span>
             </h2>
             <p className="mt-5 sm:mt-6 text-[#5C4E52] leading-relaxed text-sm sm:text-base">
-              For Rekha, great bridal makeup starts long before the brushes come out. It starts with understanding <span className="font-semibold text-[#4A2530]">you</span>: your features, your skin, your style and how you want to feel on your wedding day.
+              For Rekha, great bridal makeup starts long before the brushes come out. First, it starts with understanding <span className="font-semibold text-[#4A2530]">you</span>: your features, your skin, your style and how you want to feel on your wedding day.
             </p>
             <p className="mt-4 text-[#5C4E52] leading-relaxed text-sm sm:text-base">
-              Her approach is simple: enhance, don't mask. Whether you choose <span className="font-semibold text-[#4A2530]">HD or Airbrush makeup</span>, every look is tailored to photograph beautifully, feel comfortable and last through the hugs, happy tears, celebrations and long hours that make your day unforgettable.
+              In short, her approach is simple: enhance, don't mask. Whether you choose <span className="font-semibold text-[#4A2530]">HD or Airbrush makeup</span>, every look photographs beautifully and feels comfortable. Plus, it lasts through the hugs, happy tears and long hours of your day.
             </p>
             <p className="mt-4 text-[#5C4E52] leading-relaxed text-sm sm:text-base">
-              Based in Bengaluru and available for <span className="font-semibold text-[#4A2530]">destination weddings, celebrations and fashion assignments across India</span>, Rekha offers something equally important: her complete attention. <span className="font-semibold text-[#4A2530]">No double bookings. No rushing between brides. Your date is exclusively yours.</span>
+              Based in Bengaluru and available for <span className="font-semibold text-[#4A2530]">destination weddings, celebrations and fashion assignments across India</span>, Rekha also offers something just as important: her complete attention. <span className="font-semibold text-[#4A2530]">No double bookings. No rushing between brides. Your date is exclusively yours.</span>
             </p>
 
             <p className="mt-4 text-[#5C4E52] leading-relaxed text-sm sm:text-base">

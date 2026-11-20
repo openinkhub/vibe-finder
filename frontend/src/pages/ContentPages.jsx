@@ -89,8 +89,8 @@ const ComingSoon = ({ faq }) => (
     <Reveal>
       <div className="bg-[#FBE9F0] rounded-3xl p-8 sm:p-12 border border-[#F1DCE3] text-center" data-testid="coming-soon">
         <div className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Coming soon</div>
-        <p className="mt-3 font-display text-2xl sm:text-3xl text-[#4A2530]">We're putting the finishing touches on this page.</p>
-        <p className="mt-3 text-sm sm:text-base text-[#5C4E52] max-w-xl mx-auto">Community perks, member stories and workshop invites will appear here shortly. In the meantime, say hello on WhatsApp or start an enquiry.</p>
+        <p className="mt-3 font-display text-2xl sm:text-3xl text-[#4A2530]">Right now, we're putting the finishing touches on this page.</p>
+        <p className="mt-3 text-sm sm:text-base text-[#5C4E52] max-w-xl mx-auto">Soon, community perks, member stories and workshop invites will appear here. In the meantime, say hello on WhatsApp or start an enquiry.</p>
       </div>
     </Reveal>
     {faq && (
@@ -241,7 +241,7 @@ export const GuidePage = () => {
           <p className="mt-2 font-display text-2xl text-[#4A2530]">Bridal makeup and self-grooming classes in Bangalore</p>
           <p className="mt-2 text-sm text-[#5C4E52]">Plan your wedding look with a personal consultation, or learn to do your own makeup in a small-batch self-grooming class.</p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <Link to="/" className={`${link} bg-[#D6245F] text-white hover:bg-[#C81F57]`}>Bridal Makeup in Bangalore <ArrowUpRight size={16} /></Link>
+            <Link to="/" className={`${link} bg-[#D6245F] text-white hover:bg-[#C81F57]`}>Explore Bridal Makeup <ArrowUpRight size={16} /></Link>
             <Link to="/self-grooming-classes" className={`${link} border border-[#E62E6B] text-[#E62E6B] hover:bg-[#D6245F] hover:text-white`}>Self-Grooming Classes <ArrowUpRight size={16} /></Link>
           </div>
         </div>

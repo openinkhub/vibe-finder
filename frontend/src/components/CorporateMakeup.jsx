@@ -7,10 +7,10 @@ import { TiltCard } from "./fx/TiltCard";
 import { brand } from "../mock/mock";
 
 const WHO = [
-  { icon: Briefcase, label: "Corporate Executives", desc: "Board meetings, annual reports, LinkedIn headshots — makeup that reads authority without looking overdone." },
+  { icon: Briefcase, label: "Corporate Executives", desc: "For example, board meetings, annual reports and LinkedIn headshots need makeup that looks confident, not overdone." },
   { icon: Monitor, label: "TV & Media Presenters", desc: "Studio lighting, 4K cameras and green screens demand HD-ready, long-wear coverage that holds across a full broadcast day." },
-  { icon: Camera, label: "Photography Shoots", desc: "Product launches, editorial features, brand look books — consistent makeup across multi-hour shoots with touch-up support." },
-  { icon: Users, label: "Events & Conferences", desc: "Keynote speakers, panel discussions, award nights — structured looks for high-visibility public occasions." },
+  { icon: Camera, label: "Photography Shoots", desc: "Similarly, product launches and brand shoots need makeup that stays the same for hours, with touch-ups." },
+  { icon: Users, label: "Events & Conferences", desc: "Likewise, keynotes, panels and award nights call for structured looks for the stage." },
 ];
 
 const INCLUDES = [
@@ -23,7 +23,7 @@ const INCLUDES = [
 ];
 
 const STEPS = [
-  { n: "01", title: "Tell us your brief", body: "Share the event type, camera setup, expected duration and any references. A 15-minute call is enough." },
+  { n: "01", title: "Tell us your brief", body: "First, share the event type, camera setup, expected duration and any references. A 15-minute call is enough." },
   { n: "02", title: "Trial (optional)", body: "For multi-day shoots or broadcast work, a trial confirms the look on your specific camera and lighting before the shoot day." },
   { n: "03", title: "On-site session", body: "Rekha arrives ready. Full setup, 60–90 minutes depending on complexity, with touch-up kit left on set." },
 ];
@@ -169,7 +169,7 @@ const CorporateMakeup = () => (
               Cameras see what <span className="italic text-[#E62E6B]">eyes miss</span>
             </h2>
             <p className="mt-5 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
-              A camera sensor picks up shine, uneven pigmentation and colour casts that the human eye naturally smooths over. Professional makeup corrects for the specific lighting temperature, sensor profile and compression of your shoot before you're ever in front of the lens.
+              After all, a camera picks up shine, uneven colour and colour casts that the eye smooths over. Professional makeup corrects for the specific lighting temperature, sensor profile and compression of your shoot before you're ever in front of the lens.
             </p>
             <p className="mt-4 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
               The result is images where your skin looks like you — not washed out, not shiny, not orange under warm tungsten. Just polished.
