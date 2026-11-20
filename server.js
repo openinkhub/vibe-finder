@@ -210,14 +210,17 @@ async function migrateMovedPages(db) {
 }
 
 // Weekly PageSpeed lab tests for every page (fills the Speed column). Live database only.
+// Keeps lab speed results fresh: every 6 hours, test any page or post with no result in the
+// last 7 days. Picks up after restarts. Needs a PageSpeed API key (Admin → SEO).
 function scheduleSpeedTests(db) {
   if (/127\.0\.0\.1|localhost/.test(process.env.MONGO_URL || "")) return;
   const PSI = require("./server/lib/seo/psi");
+  const inventory = require("./server/lib/seo/inventory");
   const tick = async () => {
     try {
-      const last = await db.collection("seo_psi").find({}).sort({ at: -1 }).limit(1).toArray();
-      if (last.length && Date.now() - new Date(last[0].at).getTime() < 7 * 86400000) return;
-      PSI.run(R.PAGES.filter((p) => !p.noindex && p.path !== "/admin").map((p) => p.path));
+      if (!(await PSI.getKey())) return;
+      await inventory.buildReport();
+      await PSI.run(inventory.rawItems().filter((i) => !i.noindex).map((i) => i.path));
     } catch (e) { console.error("Speed test schedule:", e.message); }
   };
   setTimeout(tick, 5 * 60 * 1000);

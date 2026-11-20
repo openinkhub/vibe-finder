@@ -213,6 +213,10 @@ const PageReport = ({ report, reload, loading, kindFilter = "all" }) => {
           <div key={k} className={`${card} p-4 flex items-center gap-3`}><ScoreBadge score={report.totals[k]} big /><div><div className="text-sm font-medium text-[#4A2530]">{label}</div><div className="text-xs text-[#8B7F82]">site average</div></div></div>
         ))}
       </div>
+      <div className="grid lg:grid-cols-2 gap-3 mb-5">
+        <SpeedLabCard onDone={() => reload(true)} />
+        <VitalsCard />
+      </div>
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <div className="relative flex-1 min-w-[200px]"><Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8B7F82]" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search pages, URLs, keyphrases" className={`${inputCls} pl-9`} data-testid="seo-report-search" /></div>
         <select value={kind} onChange={(e) => setKind(e.target.value)} className={fieldCls}><option value="all">Pages & posts ({report.items.length})</option><option value="page">Pages ({report.totals.pages})</option><option value="post">Blog posts ({report.totals.posts})</option></select>
@@ -239,7 +243,7 @@ const PageReport = ({ report, reload, loading, kindFilter = "all" }) => {
           </tbody>
         </table>
       </div>
-      <p className="text-xs text-[#8B7F82] mt-3">Checked {new Date(report.generated_at).toLocaleString()}. Speed scores come from real visitors (last 28 days) once a page has 5+ visits, otherwise from the weekly PageSpeed lab test (SEO → Speed).</p>
+      <p className="text-xs text-[#8B7F82] mt-3">Checked {new Date(report.generated_at).toLocaleString()}. Speed scores come from real visitors (last 28 days) once a page has 5+ visits, otherwise from the weekly PageSpeed lab test (card above).</p>
       {open && <SeoItemPanel path={open} onClose={() => setOpen(null)} onChanged={() => reload(true)} />}
     </div>
   );
@@ -412,77 +416,78 @@ const NotFoundLog = ({ onRedirect }) => {
 
 // ── Speed (real visitors) ──
 const fmt = { lcp: (v) => `${(v / 1000).toFixed(1)} s`, fcp: (v) => `${(v / 1000).toFixed(1)} s`, ttfb: (v) => `${Math.round(v)} ms`, inp: (v) => `${Math.round(v)} ms`, cls: (v) => v.toFixed(2) };
-// Starts PageSpeed lab tests (mobile) for every page and shows progress.
-const SpeedTestButton = ({ onDone }) => {
+// Lab speed test card: API key, run button and progress across all pages and posts.
+const SpeedLabCard = ({ onDone }) => {
   const [st, setSt] = useState(null);
+  const [key, setKey] = useState("");
+  const [showKey, setShowKey] = useState(false);
   const poll = useCallback(async () => {
     try { const { data } = await api.get("/seo/speed/status"); setSt(data); return data; } catch { return null; }
   }, []);
   useEffect(() => { poll(); }, [poll]);
   useEffect(() => {
     if (!st || !st.running) return undefined;
-    const t = setInterval(async () => { const d = await poll(); if (d && !d.running) { clearInterval(t); onDone && onDone(); toast.success("Speed tests finished"); } }, 5000);
+    const t = setInterval(async () => { const d = await poll(); if (d && !d.running) { clearInterval(t); onDone && onDone(); if (d.stopped) toast.error(d.stopped); else toast.success("Speed tests finished"); } }, 5000);
     return () => clearInterval(t);
   }, [st && st.running, poll, onDone]); // eslint-disable-line react-hooks/exhaustive-deps
-  const start = async () => {
-    try { const { data } = await api.post("/seo/speed/run", {}); setSt(data); toast.success("Speed tests started — this takes a few minutes"); }
+  const start = async (force) => {
+    try { const { data } = await api.post("/seo/speed/run", { force }); setSt(data); if (data.running) toast.success(`Testing ${data.total} page(s) — this runs in the background`); else toast.success("Every page already has a recent result"); }
     catch (e) { toast.error(errorText(e)); }
   };
-  if (st && st.running) return <span className="inline-flex items-center gap-2 text-sm text-[#5C4E52]" data-testid="seo-speed-progress"><Loader2 size={15} className="animate-spin text-[#E62E6B]" /> Testing {st.done}/{st.total}{st.current ? ` · ${st.current}` : ""}</span>;
+  const saveKey = async () => {
+    try { const { data } = await api.put("/seo/speed/key", { key }); setSt(data); setKey(""); setShowKey(false); toast.success(data.has_key ? "API key saved" : "API key removed"); }
+    catch (e) { toast.error(errorText(e)); }
+  };
+  const tested = st ? `${st.pages_tested} of ${st.pages_total} pages tested in the last 7 days` : "";
   return (
-    <span className="inline-flex items-center gap-3">
-      <button onClick={start} className={btnPrimary} data-testid="seo-speed-run"><Gauge size={15} /> Run speed test (all pages)</button>
-      {st && st.finished_at && <span className="text-xs text-[#6E6266]">Last run {new Date(st.finished_at).toLocaleString()}{st.failed ? ` · ${st.failed} failed` : ""}</span>}
-    </span>
+    <div className={`${card} p-5`} data-testid="seo-speed-lab">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="max-w-2xl">
+          <h3 className="font-display text-xl text-[#4A2530]">PageSpeed lab test (mobile)</h3>
+          <p className="text-sm text-[#5C4E52] mt-1">Google PageSpeed Insights, run on every page and blog post. Fills the Speed column until enough real visits are measured. Re-tests automatically once a week and carries on after restarts.</p>
+          {st && <p className="text-xs text-[#6E6266] mt-2" data-testid="seo-speed-coverage">{tested}{st.finished_at && !st.running ? ` · last run ${new Date(st.finished_at).toLocaleString()}` : ""}{st.failed ? ` · ${st.failed} failed` : ""}</p>}
+        </div>
+        {st && st.running
+          ? <span className="inline-flex items-center gap-2 text-sm text-[#5C4E52]" data-testid="seo-speed-progress"><Loader2 size={15} className="animate-spin text-[#E62E6B]" /> Testing {st.done}/{st.total}{st.current ? ` · ${st.current}` : ""}</span>
+          : <span className="inline-flex flex-wrap items-center gap-2">
+              <button onClick={() => start(false)} disabled={st && !st.has_key} className={`${btnPrimary} disabled:opacity-50`} data-testid="seo-speed-run"><Gauge size={15} /> Run speed test (all pages)</button>
+              {st && st.pages_tested > 0 && <button onClick={() => start(true)} disabled={!st.has_key} className={`${btnGhost} disabled:opacity-50`} data-testid="seo-speed-rerun">Re-test everything</button>}
+            </span>}
+      </div>
+      {st && st.stopped && !st.running && <p className="mt-3 text-sm text-[#C81F57]" data-testid="seo-speed-stopped">{st.stopped}</p>}
+      {st && !st.key_from_env && (
+        <div className="mt-4 border-t border-[#F6E9EE] pt-4">
+          {!st.has_key && <p className="text-sm text-[#5C4E52] mb-2">Google needs a free PageSpeed API key: in Google Cloud Console, enable <b>PageSpeed Insights API</b>, then create an API key under <b>Credentials</b> and paste it here.</p>}
+          {st.has_key && !showKey
+            ? <p className="text-xs text-[#1c7a45]">API key saved. <button onClick={() => setShowKey(true)} className="underline text-[#4A2530]">Change</button></p>
+            : <div className="flex flex-wrap items-center gap-2">
+                <input type="password" value={key} onChange={(e) => setKey(e.target.value)} placeholder="PageSpeed API key" autoComplete="off" className="w-full sm:w-80 px-3 py-2 rounded-xl border border-[#F1DCE3] text-sm" data-testid="seo-speed-key" />
+                <button onClick={saveKey} disabled={!key && !st.has_key} className={`${btnGhost} disabled:opacity-50`} data-testid="seo-speed-key-save">{key || !st.has_key ? "Save key" : "Remove key"}</button>
+              </div>}
+        </div>
+      )}
+    </div>
   );
 };
 
-const Speed = () => {
+// Real-visitor measurements (site-wide), plus any JavaScript errors visitors hit.
+const VitalsCard = () => {
   const [d, setD] = useState(null);
-  const load = () => api.get("/seo/vitals").then(({ data }) => setD(data)).catch((e) => toast.error(errorText(e)));
+  const load = () => api.get("/seo/vitals").then(({ data }) => setD(data)).catch(() => setD({ site: null, errors: [], days: 28 }));
   useEffect(() => { load(); }, []);
-  if (!d) return <Loader2 className="animate-spin text-[#E62E6B]" />;
-  const sc = (v) => (v >= 90 ? "text-[#1c7a45]" : v >= 50 ? "text-[#8a5a00]" : "text-[#C81F57]");
-  const Cell = ({ v, k }) => <td className="px-3 py-2 text-xs">{v === null || v === undefined ? "–" : fmt[k](v)}</td>;
+  if (!d) return null;
   return (
-    <div className="space-y-5" data-testid="seo-speed">
-      <div className={`${card} p-5`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h3 className="font-display text-xl text-[#4A2530]">PageSpeed lab test (mobile)</h3>
-            <p className="text-sm text-[#5C4E52] mt-1">Google PageSpeed Insights, run on every page. Fills the Speed column until enough real visits are measured. Runs automatically once a week.</p>
-          </div>
-          <SpeedTestButton onDone={load} />
-        </div>
-        {d.lab && d.lab.length > 0 && (
-          <div className="overflow-x-auto mt-4">
-            <table className="w-full text-sm"><thead className="bg-[#FBFAF7]"><tr>{["Page", "Score", "LCP", "FCP", "TBT", "CLS", "Tested"].map((h) => <th key={h} className="px-3 py-2 text-left font-mono text-[10px] uppercase text-[#6E6266]">{h}</th>)}</tr></thead>
-              <tbody className="divide-y divide-[#F6E9EE]">{d.lab.map((p) => <tr key={p.path}><td className="px-3 py-2 text-xs font-mono">{p.path}</td><td className={`px-3 py-2 text-xs font-semibold ${sc(p.score)}`}>{p.score}</td><td className="px-3 py-2 text-xs">{p.lcp ? `${(p.lcp / 1000).toFixed(1)} s` : "–"}</td><td className="px-3 py-2 text-xs">{p.fcp ? `${(p.fcp / 1000).toFixed(1)} s` : "–"}</td><td className="px-3 py-2 text-xs">{p.tbt !== null && p.tbt !== undefined ? `${Math.round(p.tbt)} ms` : "–"}</td><td className="px-3 py-2 text-xs">{p.cls !== null && p.cls !== undefined ? p.cls.toFixed(2) : "–"}</td><td className="px-3 py-2 text-xs text-[#6E6266]">{new Date(p.at).toLocaleDateString()}</td></tr>)}</tbody>
-            </table>
-          </div>
-        )}
-      </div>
-      <div className={`${card} p-5 text-sm text-[#5C4E52]`}>
-        Measured on real visitors' devices by the site itself (no Google account needed), last {d.days} days, 75th percentile — the same way Google's Core Web Vitals are judged. Targets: LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1.
-        {d.site && <div className="flex flex-wrap gap-4 mt-4">{["lcp", "inp", "cls", "fcp", "ttfb"].map((k) => <div key={k} className="text-center"><div className="text-lg font-semibold text-[#4A2530]">{d.site[k] === null ? "–" : fmt[k](d.site[k])}</div><div className="text-[11px] uppercase font-mono text-[#8B7F82]">{k}</div></div>)}<div className="text-center"><ScoreBadge score={d.site.score} big /></div></div>}
-        {!d.site && <p className="mt-3">No visits measured yet — data appears as people use the site.</p>}
-      </div>
-      {d.pages.length > 0 && (
-        <div className={`${card} overflow-x-auto`}>
-          <table className="w-full text-sm"><thead className="bg-[#FBFAF7]"><tr>{["Page", "Visits", "LCP", "INP", "CLS", "FCP", "TTFB", "Score"].map((h) => <th key={h} className="px-3 py-2 text-left font-mono text-[10px] uppercase text-[#8B7F82]">{h}</th>)}</tr></thead>
-            <tbody className="divide-y divide-[#F6E9EE]">{d.pages.map((p) => <tr key={p.path}><td className="px-3 py-2 text-xs font-mono">{p.path}</td><td className="px-3 py-2 text-xs">{p.samples}</td><Cell v={p.lcp} k="lcp" /><Cell v={p.inp} k="inp" /><Cell v={p.cls} k="cls" /><Cell v={p.fcp} k="fcp" /><Cell v={p.ttfb} k="ttfb" /><td className="px-3 py-2"><ScoreBadge score={p.score} /></td></tr>)}</tbody>
-          </table>
+    <div className={`${card} p-5 text-sm text-[#5C4E52]`} data-testid="seo-vitals">
+      Measured on real visitors' devices by the site itself (no Google account needed), last {d.days} days, 75th percentile — the same way Google's Core Web Vitals are judged. Targets: LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1.
+      {d.site && <div className="flex flex-wrap gap-4 mt-4">{["lcp", "inp", "cls", "fcp", "ttfb"].map((k) => <div key={k} className="text-center"><div className="text-lg font-semibold text-[#4A2530]">{d.site[k] === null ? "–" : fmt[k](d.site[k])}</div><div className="text-[11px] uppercase font-mono text-[#8B7F82]">{k}</div></div>)}<div className="text-center"><ScoreBadge score={d.site.score} big /></div></div>}
+      {!d.site && <p className="mt-3">No visits measured yet — data appears as people use the site.</p>}
+      {d.errors && d.errors.length > 0 && (
+        <div className="mt-4 border-t border-[#F6E9EE] pt-3">
+          <div className="text-xs font-medium text-[#C81F57] mb-1">JavaScript errors reported by visitors</div>
+          <ul className="space-y-1 text-xs">{d.errors.slice(0, 5).map((e, i) => <li key={i}><span className="font-mono break-all">{e.message}</span> <span className="text-[#8B7F82]">· {e.path} · {e.hits}×</span></li>)}</ul>
+          <button onClick={async () => { await api.delete("/seo/js-errors"); load(); }} className={`${btnGhost} mt-2`}><Trash2 size={14} /> Clear</button>
         </div>
       )}
-      <div className={`${card} p-5`}>
-        <h3 className="font-display text-xl text-[#4A2530] mb-3">JavaScript errors reported by visitors</h3>
-        {d.errors.length === 0 ? <p className="text-sm text-[#1c7a45]">None reported.</p> : (
-          <>
-            <ul className="space-y-2 text-xs">{d.errors.map((e, i) => <li key={i} className="border-b border-[#F6E9EE] pb-2"><span className="font-mono text-[#C81F57] break-all">{e.message}</span><div className="text-[#8B7F82]">{e.path} · {e.hits} time(s) · last {String(e.last_seen).slice(0, 10)}</div></li>)}</ul>
-            <button onClick={async () => { await api.delete("/seo/js-errors"); load(); }} className={`${btnGhost} mt-3`}><Trash2 size={14} /> Clear</button>
-          </>
-        )}
-      </div>
     </div>
   );
 };
@@ -618,7 +623,6 @@ const SUBTABS = [
   ["settings", "Rules & settings", Settings2],
   ["redirects", "Redirects", ArrowRightLeft],
   ["404", "404 log", FileWarning],
-  ["speed", "Speed", Gauge],
   ["keywords", "Keywords", KeyRound],
 ];
 
@@ -639,7 +643,6 @@ export const SeoPanel = () => {
       {sub === "settings" && <SettingsTab />}
       {sub === "redirects" && <Redirects prefill={prefill} clearPrefill={clearPrefill} />}
       {sub === "404" && <NotFoundLog onRedirect={(p) => { setPrefill(p); setSub("redirects"); }} />}
-      {sub === "speed" && <Speed />}
       {sub === "keywords" && <Keywords />}
     </div>
   );

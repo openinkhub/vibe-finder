@@ -275,17 +275,29 @@ router.get("/seo/vitals", requireAdmin, ah(async (req, res) => {
 }));
 
 // PageSpeed lab tests (mobile) for every indexable page, or the paths given.
+// All pages and blog posts that search engines may index.
+const speedPaths = async () => { await inventory.buildReport(); return inventory.rawItems().filter((i) => !i.noindex).map((i) => i.path); };
 router.post("/seo/speed/run", requireAdmin, ah(async (req, res) => {
-  await inventory.buildReport();
-  const all = inventory.rawItems().filter((i) => !i.noindex).map((i) => i.path);
+  const all = await speedPaths();
   const want = Array.isArray(req.body && req.body.paths) ? req.body.paths.filter((p) => all.includes(p)) : all;
-  PSI.run(want);
-  res.json(PSI.status());
+  await PSI.run(want, { force: !!(req.body && req.body.force) });
+  res.json(await speedStatus());
 }));
+const speedStatus = async () => {
+  const st = PSI.status();
+  const all = await speedPaths();
+  const left = await PSI.pending(all, false);
+  return { ...st, has_key: !!(await PSI.getKey()), key_from_env: !!process.env.PSI_API_KEY, pages_total: all.length, pages_tested: all.length - left.length };
+};
 router.get("/seo/speed/status", requireAdmin, ah(async (_req, res) => {
   const st = PSI.status();
   if (!st.running && st.finished_at) inventory.invalidateInventory();
-  res.json(st);
+  res.json(await speedStatus());
+}));
+// Save (or clear, with an empty value) the PageSpeed API key. The key is never sent back.
+router.put("/seo/speed/key", requireAdmin, ah(async (req, res) => {
+  await PSI.setKey(req.body && req.body.key);
+  res.json(await speedStatus());
 }));
 router.delete("/seo/js-errors", requireAdmin, ah(async (_req, res) => {
   await getDb().collection("js_errors").deleteMany({});

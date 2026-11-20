@@ -204,7 +204,7 @@ const CHECKS = [
   C("cls", "Cumulative Layout Shift", "performance", 3, false, (i) => vital(i.vitals, "cls", (v) => v <= 0.1, (v) => v <= 0.25, (v) => v.toFixed(2), { item: i, key: "cls" })),
   C("ttfb", "Time to First Byte", "performance", 2, false, (i) => vital(i.vitals, "ttfb", (v) => v <= 800, (v) => v <= 1800, (v) => `${Math.round(v)} ms`, { item: i, key: "ttfb" })),
   C("fcp", "First Contentful Paint", "performance", 2, false, (i) => vital(i.vitals, "fcp", (v) => v <= 1800, (v) => v <= 3000, (v) => `${(v / 1000).toFixed(1)} s`, { item: i, key: "fcp" })),
-  C("js_errors", "Frontend JavaScript issues", "performance", 2, false, (i) => (i.jsErrors ? warn(String(i.jsErrors), `${i.jsErrors} JavaScript error(s) reported by visitors`, "See SEO → Speed for details") : pass("None reported"))),
+  C("js_errors", "Frontend JavaScript issues", "performance", 2, false, (i) => (i.jsErrors ? warn(String(i.jsErrors), `${i.jsErrors} JavaScript error(s) reported by visitors`, "See the speed cards in SEO → Page report") : pass("None reported"))),
   C("css_errors", "CSS errors", "performance", 1, false, (i) => (i.ctx.cssOk ? pass("Stylesheet loads") : fail("Missing", "Main stylesheet missing from the build"))),
   C("crawl_depth", "Crawl depth", "seo", 3, false, (i) => {
     const d = i.ctx.depth[i.path];
@@ -298,7 +298,7 @@ function vital(v, key, good, ok, fmt, lab) {
   const real = v && v.samples >= 5 && v[key] !== undefined && v[key] !== null;
   if (real) {
     const x = v[key];
-    return good(x) ? pass(fmt(x), `75th percentile of ${v.samples} visits`) : ok(x) ? warn(fmt(x), "Needs improvement", "See SEO → Speed") : fail(fmt(x), "Poor", "See SEO → Speed");
+    return good(x) ? pass(fmt(x), `75th percentile of ${v.samples} visits`) : ok(x) ? warn(fmt(x), "Needs improvement", "See the speed cards in SEO → Page report") : fail(fmt(x), "Poor", "See the speed cards in SEO → Page report");
   }
   const L = lab && lab.item && lab.item.lab;
   const lk = lab && lab.key;
@@ -306,9 +306,15 @@ function vital(v, key, good, ok, fmt, lab) {
     const x = L[lk];
     const when = new Date(L.at).toLocaleDateString("en-IN");
     const g = lab.good || good, o = lab.ok || ok, f = lab.fmt || fmt;
-    return g(x) ? pass(f(x), `PageSpeed lab test (mobile), ${when}`) : o(x) ? warn(f(x), `Needs improvement · PageSpeed lab test, ${when}`, "See SEO → Speed") : fail(f(x), `Poor · PageSpeed lab test, ${when}`, "See SEO → Speed");
+    return g(x) ? pass(f(x), `PageSpeed lab test (mobile), ${when}`) : o(x) ? warn(f(x), `Needs improvement · PageSpeed lab test, ${when}`, "See the speed cards in SEO → Page report") : fail(f(x), `Poor · PageSpeed lab test, ${when}`, "See the speed cards in SEO → Page report");
   }
-  return { status: "na", msg: v && v.samples ? `Only ${v.samples} visit(s) measured — run a speed test in SEO → Speed` : "No data yet — run a speed test in SEO → Speed" };
+  // No lab result yet: use the few real visits there are, marked as early data.
+  if (v && v.samples > 0 && v[key] !== undefined && v[key] !== null) {
+    const x = v[key];
+    const note = `Early data: ${v.samples} visit(s) so far`;
+    return good(x) ? pass(fmt(x), note) : ok(x) ? warn(fmt(x), `${note} · needs improvement`, "Run the PageSpeed lab test in SEO → Page report") : fail(fmt(x), `${note} · poor`, "Run the PageSpeed lab test in SEO → Page report");
+  }
+  return { status: "na", msg: "No data yet — run the PageSpeed lab test in SEO → Page report" };
 }
 
 const CAT_LABELS = { seo: "SEO", content: "Content", readability: "Readability", performance: "Speed" };
