@@ -195,7 +195,7 @@ const GuideCards = ({ items, testid = "guide-cards" }) => {
         <Reveal key={g.path} delay={i * 0.05}>
           <Link to={g.path} className="block h-full" data-testid={`guide-card-${g.path.slice(1)}`}>
             <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full hover:border-[#E62E6B] transition-colors">
-              <img src={heroImage(g, map)} alt={heroImageAlt(g, map)} loading="lazy" width="600" height="300" className="w-full h-40 object-cover" />
+              <img src={heroImage(g, map)} srcSet={srcSetFor(heroImage(g, map))} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" alt={heroImageAlt(g, map)} loading="lazy" decoding="async" width="600" height="300" className="w-full h-40 object-cover" />
               <div className="p-5"><div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{g.eyebrow}</div><h3 className="font-display text-lg text-[#4A2530] mt-2 leading-snug">{g.h1}</h3></div>
             </TiltCard>
           </Link>
@@ -273,7 +273,7 @@ export const BlogPage = () => {
               <Reveal key={p.slug} delay={i * 0.08}>
                 <Link to={`/blog/${p.slug}`} data-testid={`blog-card-${i}`}>
                   <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full">
-                    <img width="600" height="400" loading="lazy" decoding="async" src={imgUrl(p.featured_image)} alt={p.alt_text || p.title} className="w-full h-48 object-cover" />
+                    <img width="600" height="400" loading="lazy" decoding="async" src={imgUrl(p.featured_image)} srcSet={srcSetFor(p.featured_image)} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" alt={p.alt_text || p.title} className="w-full h-48 object-cover" />
                     <div className="p-6"><div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{p.category} · {p.publish_date}</div><h3 className="font-display text-xl text-[#4A2530] mt-2">{p.title}</h3><p className="text-sm text-[#5C4E52] mt-2">{p.excerpt}</p><span className="mt-4 inline-flex items-center gap-1 text-sm text-[#E62E6B]">Read more <ArrowUpRight size={14} /></span></div>
                   </TiltCard>
                 </Link>
