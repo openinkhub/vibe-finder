@@ -49,4 +49,15 @@ const localize = (u) => String(u).replace(UNSPLASH, (m, id) => {
   return WIDTHS.has(w) ? `/img/u/${id}/${w}.webp` : m;
 });
 
-module.exports = { handler, localize };
+// Same output as frontend/src/lib/img.js srcSetFor, so server HTML and the app ask for the same files.
+const OWN = /^(https?:\/\/[^/]+)?\/api\/files\/[^?]+\.(jpe?g|png|webp)$/i;
+const UNSPLASH_SIZED = /^https:\/\/images\.unsplash\.com\/photo-[A-Za-z0-9-]+\?/;
+const SET = [480, 800, 1200];
+const srcSetFor = (u) => {
+  if (typeof u !== "string") return undefined;
+  if (OWN.test(u)) return SET.map((w) => `${u}?w=${w} ${w}w`).join(", ");
+  if (UNSPLASH_SIZED.test(u) && /[?&]w=\d+/.test(u)) { const id = u.match(/photo-[A-Za-z0-9-]+/)[0]; return SET.map((w) => `/img/u/${id}/${w}.webp ${w}w`).join(", "); }
+  return undefined;
+};
+
+module.exports = { handler, localize, srcSetFor };

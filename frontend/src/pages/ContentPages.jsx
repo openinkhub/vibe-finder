@@ -227,7 +227,7 @@ export const GuidePage = () => {
         <h1 className="font-display text-[#4A2530] text-3xl sm:text-5xl leading-[1.08] mt-3" data-testid="guide-h1">{page.h1}</h1>
         <p className="mt-5 text-base sm:text-lg text-[#5C4E52] leading-relaxed">{bold(page.heroSub)}</p>
         <div className="mt-5 text-xs text-[#6E6266] font-mono uppercase tracking-wider">By <Link to="/about-us" className="text-[#4A2530] hover:text-[#E62E6B]">Rekha Krishnamurthy</Link> · {fmtDate(page.date)}{words ? ` · ${Math.max(3, Math.round(words / 200))} min read` : ""}</div>
-        <img src={heroImage(page, map)} alt={heroImageAlt(page, map)} width="1000" height="560" className="mt-8 w-full h-[240px] sm:h-[380px] object-cover rounded-[24px]" />
+        <img src={heroImage(page, map)} srcSet={srcSetFor(heroImage(page, map))} sizes={srcSetFor(heroImage(page, map)) ? "(max-width: 800px) 100vw, 760px" : undefined} fetchPriority="high" decoding="async" alt={heroImageAlt(page, map)} width="1000" height="560" className="mt-8 w-full h-[240px] sm:h-[380px] object-cover rounded-[24px]" />
         {body ? (
           <div className="mt-10 space-y-12" data-testid="guide-body">{body.sections.map((s2, i) => <Block key={s2.h} s={s2} i={i} />)}</div>
         ) : <div className="min-h-[60vh]" />}

@@ -6,6 +6,7 @@ import { PageShell, AuthorBio } from "../components/PageShell";
 import { Reveal } from "../components/fx/Reveal";
 import { injectJsonLd } from "../components/Seo";
 import { api, imgUrl } from "../lib/api";
+import { srcSetFor } from "../lib/img";
 
 const Section = ({ children, className = "" }) => <section className={`max-w-[880px] mx-auto px-5 sm:px-6 md:px-10 pb-14 md:pb-20 ${className}`}>{children}</section>;
 
@@ -75,7 +76,7 @@ const BlogPostPage = () => {
         </Section>
         <Section className="pb-0">
           <Reveal delay={0.05}>
-            <img width="1200" height="630" fetchPriority="high" decoding="async" src={imgUrl(post.featured_image)} alt={post.alt_text || post.title} className="w-full h-64 sm:h-96 object-cover rounded-3xl" data-testid="blog-post-image" />
+            <img width="1200" height="630" fetchPriority="high" decoding="async" src={imgUrl(post.featured_image)} srcSet={srcSetFor(post.featured_image)} sizes={srcSetFor(post.featured_image) ? "(max-width: 1024px) 100vw, 1000px" : undefined} alt={post.alt_text || post.title} className="w-full h-64 sm:h-96 object-cover rounded-3xl" data-testid="blog-post-image" />
           </Reveal>
         </Section>
         <Section>
