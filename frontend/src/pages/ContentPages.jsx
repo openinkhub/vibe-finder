@@ -268,7 +268,7 @@ export const BlogPage = () => {
         <Hero page={page} />
         <SeoIntro page={page} />
         <Section>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div id="blog-posts" className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {posts.map((p, i) => (
               <Reveal key={p.slug} delay={i * 0.08}>
                 <Link to={`/blog/${p.slug}`} data-testid={`blog-card-${i}`}>

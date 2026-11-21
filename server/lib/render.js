@@ -229,19 +229,29 @@ function extrasHtml(urlPath) {
 async function blogIndexHtml(urlPath) {
   const base = await pageHtml(urlPath);
   if (!base) return null;
-  const posts = await getDb().collection("blog_posts").find({ slug: { $nin: RETIRED_SLUGS } }, { projection: { _id: 0, slug: 1, title: 1, excerpt: 1, publish_date: 1 } }).sort({ publish_date: -1 }).limit(500).toArray();
+  const posts = await getDb().collection("blog_posts").find({ slug: { $nin: RETIRED_SLUGS } }, { projection: { _id: 0, slug: 1, title: 1, excerpt: 1, publish_date: 1, category: 1, featured_image: 1, alt_text: 1 } }).sort({ publish_date: -1 }).limit(500).toArray();
   const ov = await getOverrides();
   const listed = posts.filter((p) => !(ov[`/blog/${p.slug}`] || {}).noindex);
   const $ = cheerio.load(base);
+  // A styled snapshot of the page (same layout the app shows): fill its post grid from the database.
+  if ($("#blog-posts").length) {
+    $("#blog-posts").html(listed.map((p) => `<a href="/blog/${esc(p.slug)}"><div class="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full">${p.featured_image ? `<img width="600" height="400" loading="lazy" decoding="async" src="${esc(p.featured_image)}" alt="${esc(p.alt_text || p.title)}" class="w-full h-48 object-cover"/>` : ""}<div class="p-6"><div class="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">${esc(p.category || "")} · ${esc(p.publish_date || "")}</div><h3 class="font-display text-xl text-[#4A2530] mt-2">${esc(p.title)}</h3><p class="text-sm text-[#5C4E52] mt-2">${esc(p.excerpt || "")}</p><span class="mt-4 inline-flex items-center gap-1 text-sm text-[#E62E6B]">Read more</span></div></div></a>`).join(""));
+    addFaqSchema($, urlPath);
+    return $.html();
+  }
   const h1 = (PAGE_BY_PATH[urlPath] && PAGE_BY_PATH[urlPath].h1) || (urlPath === "/archive" ? "Makeup Advice Archive" : "Makeup & Bridal Beauty Blog");
   const pg = PAGE_BY_PATH[urlPath];
   const hero = pg && pg.image ? `<img src="${esc(pg.image)}" alt="${esc(pg.h1 || pg.name)}" width="1000" height="920"/>` : "";
   $("#root").html(`<main class="prerender"><h1>${h1}</h1>${hero}${pg && pg.heroSub ? `<p>${esc(pg.heroSub.replace(/\*\*/g, ""))}</p>` : ""}${pg && pg.h1Heading ? `<h2>${esc(pg.h1Heading)}</h2>` : ""}<ul>${listed.map((p) => `<li><a href="/blog/${esc(p.slug)}">${esc(p.title)}</a> <time datetime="${esc(p.publish_date)}">${esc(p.publish_date)}</time><p>${esc(p.excerpt)}</p></li>`).join("")}</ul>${urlPath === "/blog" ? `<h2>Bridal makeup &amp; self-grooming guides</h2><ul>${PAGES.filter((g) => g.group === "Guides").map((g) => `<li><a href="${esc(g.path)}">${esc(g.h1)}</a></li>`).join("")}</ul>` : ""}${extrasHtml(urlPath)}</main>`);
+  addFaqSchema($, urlPath);
+  return $.html();
+}
+
+function addFaqSchema($, urlPath) {
   const faq = (extrasCache && extrasCache[urlPath] && extrasCache[urlPath].faq) || [];
   if (faq.length && !$('script[type="application/ld+json"]').filter((_, el) => /FAQPage/.test($(el).html())).length) {
     $("head").append(`<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) }).replace(/</g, "\\u003c")}</script>`);
   }
-  return $.html();
 }
 
 // Cached HTML for a URL (5 minutes, cleared whenever SEO settings or posts change).

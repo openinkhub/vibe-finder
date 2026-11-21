@@ -10,7 +10,7 @@
 //      (needs Google Chrome installed; set CHROME_PATH if it isn't at /usr/bin/google-chrome)
 //   3. Commit frontend/prerender/ and push.
 //
-// /blog and /archive are not snapshotted: the server renders their post list from the database.
+// /archive is not snapshotted. /blog is, and the server fills its post grid (#blog-posts) from the database.
 const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright-core");
@@ -19,7 +19,7 @@ const base = (process.argv[2] || "http://localhost:3000").replace(/\/$/, "");
 const root = path.join(__dirname, "..");
 const outDir = path.join(root, "frontend", "prerender");
 const pages = JSON.parse(fs.readFileSync(path.join(root, "frontend", "src", "content", "pages.json"), "utf8"));
-const SKIP = new Set(["/admin", "/blog", "/archive"]);
+const SKIP = new Set(["/admin", "/archive"]);
 
 const fileFor = (p) => (p === "/" ? "index" : p.replace(/^\//, "").replace(/\//g, "__")) + ".html";
 

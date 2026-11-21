@@ -16,7 +16,7 @@ async function build(id, w, file) {
   const r = await fetch(`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`, { signal: AbortSignal.timeout(15000) });
   if (!r.ok) throw Object.assign(new Error(`upstream ${r.status}`), { status: r.status === 404 ? 404 : 502 });
   const buf = Buffer.from(await r.arrayBuffer());
-  const out = await sharp(buf, { failOn: "none" }).rotate().resize({ width: w, withoutEnlargement: true }).webp({ quality: 68 }).toBuffer();
+  const out = await sharp(buf, { failOn: "none" }).rotate().resize({ width: w, withoutEnlargement: true }).webp({ quality: 58, effort: 5 }).toBuffer();
   fs.mkdirSync(DIR, { recursive: true });
   const tmp = `${file}.${process.pid}.tmp`;
   fs.writeFileSync(tmp, out);
@@ -28,7 +28,7 @@ function handler(req, res) {
   const { id } = req.params;
   const w = Number(req.params.w);
   if (!ID.test(id) || !WIDTHS.has(w)) return res.status(404).end();
-  const file = path.join(DIR, `${id}-${w}.webp`);
+  const file = path.join(DIR, `${id}-${w}-q58.webp`);
   const send = (buf) => res.set({ "Content-Type": "image/webp", "Cache-Control": "public, max-age=31536000, immutable" }).send(buf);
   fs.readFile(file, (err, buf) => {
     if (!err) return send(buf);
