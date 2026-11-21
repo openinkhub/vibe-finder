@@ -67,6 +67,9 @@ async function testOne(path, key) {
       lcp_phases: phases,
       render_blocking: rb && rb.details && rb.details.items ? rb.details.items.map((x) => String(x.url || "").replace(SITE, "").slice(0, 120)) : [],
       cls_items: Array.isArray(ls) ? ls.slice(0, 4).map((x) => ({ score: Math.round((x.score || 0) * 1000) / 1000, el: String((x.node && (x.node.selector || x.node.snippet)) || "").slice(0, 140), causes: ((x.subItems && x.subItems.items) || []).map((c) => c.cause).filter(Boolean).slice(0, 3) })) : [],
+      images: (((a["network-requests"] || {}).details || {}).items || []).filter((x) => x.resourceType === "Image" || /\.(webp|jpe?g|png|avif)(\?|$)/i.test(x.url || "")).slice(0, 6)
+        .map((x) => ({ u: String(x.url || "").replace(SITE, "").replace(/\?.*/, "").slice(-70), s: Math.round(x.networkRequestTime || x.startTime || 0), e: Math.round(x.networkEndTime || x.endTime || 0), st: x.statusCode, kb: Math.round((x.transferSize || 0) / 1024), p: x.priority })),
+      lcp_ms_observed: (a["metrics"] && a["metrics"].details && a["metrics"].details.items && a["metrics"].details.items[0] && Math.round(a["metrics"].details.items[0].observedLargestContentfulPaint)) || null,
       opportunities: Object.values(a).filter((x) => x.details && x.details.type === "opportunity" && x.numericValue > 100).map((x) => `${x.id}:${Math.round(x.numericValue)}`).slice(0, 6),
     };
     return {
