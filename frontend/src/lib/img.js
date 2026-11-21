@@ -19,6 +19,7 @@ const UNSPLASH_SIZED = /^https:\/\/images\.unsplash\.com\/photo-[A-Za-z0-9-]+\?/
 export const srcSetFor = (u) => {
   if (typeof u !== "string") return undefined;
   if (OWN.test(u)) return WIDTHS.map((w) => `${u}?w=${w} ${w}w`).join(", ");
-  if (UNSPLASH_SIZED.test(u) && /[?&]w=\d+/.test(u)) return WIDTHS.map((w) => `${u.replace(/([?&]w=)\d+/, `$1${w}`)} ${w}w`).join(", ");
+  // Stock photos at each width come from this site (/img/u/…), the same address the server-rendered HTML uses.
+  if (UNSPLASH_SIZED.test(u) && /[?&]w=\d+/.test(u)) { const id = u.match(/photo-[A-Za-z0-9-]+/)[0]; return WIDTHS.map((w) => `/img/u/${id}/${w}.webp ${w}w`).join(", "); }
   return undefined;
 };

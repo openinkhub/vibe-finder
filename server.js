@@ -60,6 +60,8 @@ api.use(seo.router);
 api.use((_q, _r, next) => next(new HttpError(404, "Not Found")));
 app.use("/api", api);
 
+app.get("/img/u/:id/:w.webp", require("./server/routes/img").handler);
+
 app.get("/health", ah(async (_q, res) => {
   await getDb().command({ ping: 1 });
   res.json({ status: "ok" });

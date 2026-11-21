@@ -20,7 +20,13 @@ const absUrl = (u) => (!u ? "" : /^https?:\/\//.test(u) ? u : SITE_URL + (u.star
 // Pre-rendered pages are complete HTML, so the app script can wait until the page has loaded
 // (or the visitor interacts first). Loading it at once made mobile tests count its download in LCP.
 const LOADER = (src) => `<script>(function(){var d=0;function go(){if(d)return;d=1;var s=document.createElement("script");s.src=${JSON.stringify(src)};document.head.appendChild(s)}function later(){setTimeout(go,50)}if(document.readyState==="complete")later();else addEventListener("load",later);["pointerdown","keydown","touchstart","scroll"].forEach(function(e){addEventListener(e,go,{once:true,passive:true})});setTimeout(go,3500)})()</script>`;
+const { localize } = require("../routes/img");
 const lateMain = ($) => {
+  // Stock hero photos come from this site (see routes/img.js), not a second host.
+  $("#root img[srcset], #root img[src*='images.unsplash.com']").each((_, el) => {
+    const $el = $(el);
+    for (const a of ["src", "srcset"]) if ($el.attr(a)) $el.attr(a, localize($el.attr(a)));
+  });
   const el = $('script[defer][src*="/static/js/main."]').first();
   if (el.length) el.replaceWith(LOADER(el.attr("src")));
 };
