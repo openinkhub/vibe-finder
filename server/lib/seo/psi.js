@@ -54,13 +54,19 @@ async function testOne(path, key) {
     // Why LCP is slow: which element it is and how its time splits into phases.
     const lcpEl = a["largest-contentful-paint-element"];
     const parts = (lcpEl && lcpEl.details && lcpEl.details.items) || [];
-    const node = parts[0] && parts[0].items && parts[0].items[0] && parts[0].items[0].node;
-    const phases = parts[1] && parts[1].items ? Object.fromEntries(parts[1].items.map((x) => [x.phase, Math.round(x.timing)])) : null;
+    // Newer Lighthouse versions report these in the "lcp-breakdown-insight" audit instead.
+    const brk = (a["lcp-breakdown-insight"] && a["lcp-breakdown-insight"].details && a["lcp-breakdown-insight"].details.items) || [];
+    const node = (parts[0] && parts[0].items && parts[0].items[0] && parts[0].items[0].node) || brk.find((x) => x && x.type === "node") || null;
+    const brkTable = brk.find((x) => x && x.type === "table");
+    const phases = parts[1] && parts[1].items ? Object.fromEntries(parts[1].items.map((x) => [x.phase, Math.round(x.timing)]))
+      : brkTable ? Object.fromEntries(brkTable.items.map((x) => [x.subpart || x.label, Math.round(x.duration)])) : null;
+    const ls = a["layout-shifts"] && a["layout-shifts"].details && a["layout-shifts"].details.items;
     const rb = a["render-blocking-resources"];
     const diag = {
       lcp_element: node ? { selector: String(node.selector || "").slice(0, 160), snippet: String(node.snippet || "").slice(0, 240) } : null,
       lcp_phases: phases,
       render_blocking: rb && rb.details && rb.details.items ? rb.details.items.map((x) => String(x.url || "").replace(SITE, "").slice(0, 120)) : [],
+      cls_items: Array.isArray(ls) ? ls.slice(0, 4).map((x) => ({ score: Math.round((x.score || 0) * 1000) / 1000, el: String((x.node && (x.node.selector || x.node.snippet)) || "").slice(0, 140), causes: ((x.subItems && x.subItems.items) || []).map((c) => c.cause).filter(Boolean).slice(0, 3) })) : [],
       opportunities: Object.values(a).filter((x) => x.details && x.details.type === "opportunity" && x.numericValue > 100).map((x) => `${x.id}:${Math.round(x.numericValue)}`).slice(0, 6),
     };
     return {
