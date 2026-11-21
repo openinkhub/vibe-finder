@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { api, imgUrl } from "../lib/api";
 
-let cache = null;
+const toMap = (list) => Object.fromEntries(list.map((x) => [x.path, { image: x.image, alt_text: x.alt_text }]));
+// Start from the hero map the server embedded in the page, so the first render keeps the hero the HTML already shows.
+const boot = () => { try { const el = document.getElementById("rk-page-images"); return el ? toMap(JSON.parse(el.textContent)) : null; } catch { return null; } };
+let cache = typeof document !== "undefined" ? boot() : null;
 let pending = null;
 const listeners = new Set();
 
 const fetchMap = () => {
-  if (!pending) pending = api.get("/content/page-images").then((r) => { cache = Object.fromEntries(r.data.map((x) => [x.path, { image: x.image, alt_text: x.alt_text }])); listeners.forEach((fn) => fn(cache)); return cache; }).catch(() => (cache = cache || {})).finally(() => { pending = null; });
+  if (!pending) pending = api.get("/content/page-images").then((r) => { cache = toMap(r.data); listeners.forEach((fn) => fn(cache)); return cache; }).catch(() => (cache = cache || {})).finally(() => { pending = null; });
   return pending;
 };
 

@@ -91,6 +91,10 @@ async function heroImages() {
   return heroCache.map;
 }
 
+// The hero map embedded in each page, so the app starts with the same hero image the HTML shows
+// (no swap to a default image and back after the API call, which delayed the page's main paint).
+const heroBoot = (heroes) => `<script type="application/json" id="rk-page-images">${safeJson(Object.values(heroes || {}).map((d) => ({ path: d.path, image: d.image || "", alt_text: d.alt_text || "" })))}</script>`;
+
 const faqSchema = (pairs) => ({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: pairs.map((x) => ({ "@type": "Question", name: x.q, acceptedAnswer: { "@type": "Answer", text: x.a } })) });
 
 // Pre-built page (build/<path>/index.html, with its pre-rendered content) + saved settings.
@@ -106,6 +110,8 @@ async function pageHtml(urlPath) {
   const $ = cheerio.load(raw);
   applyOverrides($, ov, { title: page.metaTitle, description: page.metaDescription, canonical: page.canonical, image: "/og-image.webp" });
   if (!$('meta[name="author"]').length) $("head").append('<meta name="author" content="Rekha Krishnamurthy">');
+  $("#rk-page-images").remove();
+  $("body").append(heroBoot(heroes));
   if (hero && hero.alt_text) {
     const img = hero.image ? $(`#root img[src="${hero.image}"]`).first() : $();
     (img.length ? img : $("#root main img, #root section img").first()).attr("alt", hero.alt_text);
@@ -166,6 +172,7 @@ async function blogHtml(slug, { buildSchema } = {}) {
   const boot = Object.fromEntries(pick.map((k) => [k, post[k]]));
   if (buildSchema) boot.schema = buildSchema(post);
   $("body").append(`<script type="application/json" id="rk-post">${safeJson(boot)}</script>`);
+  if (!$("#rk-page-images").length) $("body").append(heroBoot(await heroImages()));
   return $.html();
 }
 

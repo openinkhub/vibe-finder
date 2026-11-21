@@ -111,12 +111,14 @@ router.delete("/content/batches/:slug", requireAdmin, ah(async (req, res) => {
 }));
 
 // ── Page hero images ──
+const heroChanged = () => { try { require("../lib/render").invalidate(); } catch { /* cache clears itself in 5 minutes */ } };
 router.get("/content/page-images", ah(async (_q, res) => res.json(clean(await c("page_images").find({}).limit(200).toArray()))));
 
 router.put("/content/page-images/:slug", requireAdmin, upload.single("file"), ah(async (req, res) => {
   const url = await storeProcessedImage(requireFile(req), "heroes", 1920, 220 * 1024);
   const doc = { path: `/${req.params.slug}`, image: url, alt_text: cut(req.body.alt_text, 150), updated_at: nowIso() };
   await c("page_images").updateOne({ path: doc.path }, { $set: doc }, { upsert: true });
+  heroChanged();
   res.json(clean(doc));
 }));
 
@@ -127,11 +129,13 @@ router.patch("/content/page-images/:slug", requireAdmin, ah(async (req, res) => 
   const existing = (await c("page_images").findOne({ path })) || {};
   const doc = { path, image: existing.image || "", alt_text: alt, updated_at: nowIso() };
   await c("page_images").updateOne({ path }, { $set: doc }, { upsert: true });
+  heroChanged();
   res.json(clean(doc));
 }));
 
 router.delete("/content/page-images/:slug", requireAdmin, ah(async (req, res) => {
   await c("page_images").deleteOne({ path: `/${req.params.slug}` });
+  heroChanged();
   res.status(204).end();
 }));
 
