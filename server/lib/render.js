@@ -17,6 +17,14 @@ const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<
 const safeJson = (o) => JSON.stringify(o).replace(/</g, "\\u003c");
 const absUrl = (u) => (!u ? "" : /^https?:\/\//.test(u) ? u : SITE_URL + (u.startsWith("/") ? u : "/" + u));
 
+// Pre-rendered pages are complete HTML, so the app script can wait until the page has loaded
+// (or the visitor interacts first). Loading it at once made mobile tests count its download in LCP.
+const LOADER = (src) => `<script>(function(){var d=0;function go(){if(d)return;d=1;var s=document.createElement("script");s.src=${JSON.stringify(src)};document.head.appendChild(s)}function later(){setTimeout(go,50)}if(document.readyState==="complete")later();else addEventListener("load",later);["pointerdown","keydown","touchstart","scroll"].forEach(function(e){addEventListener(e,go,{once:true,passive:true})});setTimeout(go,3500)})()</script>`;
+const lateMain = ($) => {
+  const el = $('script[defer][src*="/static/js/main."]').first();
+  if (el.length) el.replaceWith(LOADER(el.attr("src")));
+};
+
 const readHtml = (p) => {
   try {
     return fs.readFileSync(p, "utf8");
@@ -110,6 +118,7 @@ async function pageHtml(urlPath) {
   const $ = cheerio.load(raw);
   applyOverrides($, ov, { title: page.metaTitle, description: page.metaDescription, canonical: page.canonical, image: "/og-image.webp" });
   if (!$('meta[name="author"]').length) $("head").append('<meta name="author" content="Rekha Krishnamurthy">');
+  lateMain($);
   $("#rk-page-images").remove();
   $("body").append(heroBoot(heroes));
   if (hero && hero.alt_text) {
@@ -173,6 +182,7 @@ async function blogHtml(slug, { buildSchema } = {}) {
   if (buildSchema) boot.schema = buildSchema(post);
   $("body").append(`<script type="application/json" id="rk-post">${safeJson(boot)}</script>`);
   if (!$("#rk-page-images").length) $("body").append(heroBoot(await heroImages()));
+  lateMain($);
   return $.html();
 }
 
