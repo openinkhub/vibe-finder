@@ -114,8 +114,10 @@ function keyphraseStats(text, keyphrase) {
 // Share of keyphrase words (ignoring stop words) found in a piece of text.
 const STOP = new Set("a an and are as at be by for from in is it of on or the to with your you our we in near me best top".split(" "));
 function termCoverage(text, terms) {
-  const set = new Set(words(text));
-  const t = [...new Set(terms.flatMap((x) => words(x)).filter((x) => !STOP.has(x)))];
+  // Hyphenated words count as separate words here ("self-grooming" covers "self grooming").
+  const split = (x) => words(String(x || "").replace(/-/g, " "));
+  const set = new Set(split(text));
+  const t = [...new Set(terms.flatMap((x) => split(x)).filter((x) => !STOP.has(x)))];
   if (!t.length) return { covered: [], missing: [], share: 1 };
   const covered = t.filter((x) => set.has(x) || set.has(x + "s") || set.has(x.replace(/s$/, "")));
   return { covered, missing: t.filter((x) => !covered.includes(x)), share: covered.length / t.length };

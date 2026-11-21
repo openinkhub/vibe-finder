@@ -157,7 +157,15 @@ async function blogHtml(slug, { buildSchema } = {}) {
   // Readable article for crawlers that don't run JavaScript; React replaces it on load.
   // The body's own "# Title" line becomes an h2 so the page has a single h1.
   const bodyHtml = sanitizeHtml(marked.parse(String(post.body || "").replace(/^#\s+/m, "## ")), { allowedTags: sanitizeHtml.defaults.allowedTags.concat(["h2", "img"]), allowedAttributes: { a: ["href", "title", "rel"], img: ["src", "alt", "width", "height", "loading"] } });
-  $("#root").html(`<main class="prerender"><article><p><a href="/blog">Journal</a></p><h1>${esc(post.title)}</h1><p>By <a href="/about-us">Rekha Krishnamurthy</a> · <time datetime="${esc(post.publish_date)}">${esc(post.publish_date)}</time></p><img src="${esc(post.featured_image)}" alt="${esc(post.alt_text || post.title)}" width="1200" height="630"/>${bodyHtml}</article></main>`);
+  // Same layout and classes as BlogPostPage, so nothing moves when the app takes over
+  // (it reads the post from #rk-post instead of fetching it, so it never renders blank first).
+  const sec = "max-w-[880px] mx-auto px-5 sm:px-6 md:px-10 pb-14 md:pb-20";
+  const takeaway = post.key_takeaway ? `<div class="mt-6 flex gap-3 rounded-2xl border border-[#F1DCE3] bg-[#FBE9F0] px-5 py-4"><span class="w-[18px] shrink-0"></span><div><div class="font-mono text-[10px] tracking-[0.2em] uppercase text-[#E62E6B]">Key takeaway</div><p class="mt-1 text-sm sm:text-base text-[#4A2530] font-medium leading-relaxed">${esc(post.key_takeaway)}</p></div></div>` : "";
+  $("#root").html(`<div><main class="pt-24 sm:pt-28"><div data-testid="blog-post-page"><section class="${sec} pb-0"><div><a href="/blog" class="inline-flex items-center gap-1.5 text-sm text-[#E62E6B] font-medium mb-6">Back to Blog</a><div class="flex items-center gap-4 text-xs font-mono uppercase tracking-wider text-[#E62E6B]"><span class="inline-flex items-center gap-1">${esc(post.category || "")}</span><span class="inline-flex items-center gap-1"><time datetime="${esc(post.publish_date)}">${esc(post.publish_date)}</time></span></div><h1 class="font-display text-3xl sm:text-4xl lg:text-5xl text-[#4A2530] mt-4 leading-tight">${esc(post.title)}</h1>${takeaway}<div class="mt-4 text-sm text-[#5C4E52]">By <a href="/about-us">${esc(post.author || "Rekha Krishnamurthy")}</a></div></div></section><section class="${sec} pb-0"><div><img width="1200" height="630" fetchpriority="high" decoding="async" src="${esc(post.featured_image)}" alt="${esc(post.alt_text || post.title)}" class="w-full h-64 sm:h-96 object-cover rounded-3xl"/></div></section><section class="${sec}"><div><article class="legal-md text-sm sm:text-base text-[#5C4E52] leading-relaxed mt-8">${bodyHtml}</article></div></section></div></main></div>`);
+  const pick = ["slug", "title", "meta_title", "meta_description", "category", "author", "publish_date", "excerpt", "key_takeaway", "body", "faqs", "interlink_url", "featured_image", "alt_text"];
+  const boot = Object.fromEntries(pick.map((k) => [k, post[k]]));
+  if (buildSchema) boot.schema = buildSchema(post);
+  $("body").append(`<script type="application/json" id="rk-post">${safeJson(boot)}</script>`);
   return $.html();
 }
 

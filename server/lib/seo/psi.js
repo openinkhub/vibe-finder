@@ -51,8 +51,21 @@ async function testOne(path, key) {
     const j = await r.json();
     const a = j.lighthouseResult.audits;
     const num = (id) => (a[id] && typeof a[id].numericValue === "number" ? a[id].numericValue : null);
+    // Why LCP is slow: which element it is and how its time splits into phases.
+    const lcpEl = a["largest-contentful-paint-element"];
+    const parts = (lcpEl && lcpEl.details && lcpEl.details.items) || [];
+    const node = parts[0] && parts[0].items && parts[0].items[0] && parts[0].items[0].node;
+    const phases = parts[1] && parts[1].items ? Object.fromEntries(parts[1].items.map((x) => [x.phase, Math.round(x.timing)])) : null;
+    const rb = a["render-blocking-resources"];
+    const diag = {
+      lcp_element: node ? { selector: String(node.selector || "").slice(0, 160), snippet: String(node.snippet || "").slice(0, 240) } : null,
+      lcp_phases: phases,
+      render_blocking: rb && rb.details && rb.details.items ? rb.details.items.map((x) => String(x.url || "").replace(SITE, "").slice(0, 120)) : [],
+      opportunities: Object.values(a).filter((x) => x.details && x.details.type === "opportunity" && x.numericValue > 100).map((x) => `${x.id}:${Math.round(x.numericValue)}`).slice(0, 6),
+    };
     return {
       path,
+      diag,
       score: Math.round((j.lighthouseResult.categories.performance.score || 0) * 100),
       lcp: num("largest-contentful-paint"),
       fcp: num("first-contentful-paint"),

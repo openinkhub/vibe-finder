@@ -13,7 +13,9 @@ const fail = (value, msg, fix) => ({ status: "fail", value, msg, fix });
 const na = (msg) => ({ status: "na", msg });
 const pct = (x) => `${Math.round(x * 100)}%`;
 const len = (s) => String(s || "").length;
-const has = (s, kp) => !!kp && String(s || "").toLowerCase().includes(kp.toLowerCase());
+// Hyphens count as spaces and "&" as "and" ("Self-Grooming" matches "self grooming").
+const norm = (s) => String(s || "").toLowerCase().replace(/&/g, " and ").replace(/[-–]/g, " ").replace(/\s+/g, " ").trim();
+const has = (s, kp) => !!kp && norm(s).includes(norm(kp));
 
 const GENERIC_ANCHORS = /^(click here|here|read more|more|learn more|this|link|go|view|see more|know more)$/i;
 
@@ -39,6 +41,8 @@ const CHECKS = [
     if (/_|\s|%/.test(s)) issues.push("use hyphens only");
     if (s.length > 75) issues.push(`long (${s.length} characters)`);
     if (/makup|bangaore|karnatka|celebrirt/.test(s)) issues.push("contains a spelling mistake");
+    // Live addresses kept on purpose (already ranking / linked) are not flagged.
+    if (issues.length && ((i.data && i.data.keepSlug) || (i.kind === "post" && issues.every((x) => x.startsWith("long"))))) return pass(s, `Kept on purpose (live address): ${issues.join(", ")}`);
     if (issues.length) return warn(s, `Slug ${issues.join(", ")}`, "Kept as-is to protect existing rankings; fix only with a 301 redirect");
     return pass(s);
   }),
@@ -115,6 +119,7 @@ const CHECKS = [
     return share <= 0.1 ? pass(pct(share), "complex words") : warn(pct(share), "Many 3+ syllable words", "Swap long words for simpler ones");
   }),
   C("transition_words", "Transition words", "readability", 3, false, (i) => {
+    if (i.data && i.data.listing) return pass("Listing page", "Checked on the articles it lists");
     if (i.sentences.length < 5) return na("Too little text");
     const share = i.sentences.filter(T.hasTransition).length / i.sentences.length;
     return share >= 0.3 ? pass(pct(share)) : warn(pct(share), "Under 30% of sentences use transition words", "Connect ideas with words like 'also', 'however', 'for example'");
@@ -125,6 +130,7 @@ const CHECKS = [
     return share <= 0.1 ? pass(pct(share)) : warn(pct(share), "Over 10% of sentences are passive", "Rewrite as 'Rekha applies…' rather than '…is applied'");
   }),
   C("consecutive_sentences", "Consecutive sentences", "readability", 2, false, (i) => {
+    if (i.data && i.data.listing) return pass("Listing page", "Checked on the articles it lists");
     const runs = T.consecutiveStarts(i.sentences);
     return runs.length ? warn(runs.map((r) => `${r.count}× "${r.word}"`).join(", "), "Several sentences in a row start with the same word", "Vary sentence openings") : pass("Varied");
   }),
@@ -133,6 +139,7 @@ const CHECKS = [
     return issues.length ? warn(issues.map((x) => x.term).join(", "), "Terms to review", issues.map((x) => `"${x.term}" → "${x.suggest}"`).join("; ")) : pass("No issues");
   }),
   C("subheading_distribution", "Subheading distribution", "readability", 3, false, (i) => {
+    if (i.data && i.data.listing) return pass("Listing page", "Checked on the articles it lists");
     const long = i.sections.filter((s) => s.words > 300).length;
     return long ? warn(`${long} section(s)`, `${long} section(s) run over 300 words without a subheading`, "Break long sections with H2/H3 subheadings") : pass(`${i.h2s} subheadings`);
   }),
@@ -214,6 +221,7 @@ const CHECKS = [
 
   // ── Content & AI ──
   C("keyword_density", "Keyword density", "content", 3, false, (i) => {
+    if (i.data && i.data.listing) return pass("Listing page", "Checked on the articles it lists");
     if (!i.keyphrase) return na("No keyphrase");
     const s = T.keyphraseStats(i.text, i.keyphrase);
     if (s.density === 0) return fail("0%", "Keyphrase never appears in the content", "Use the keyphrase naturally 2–5 times");

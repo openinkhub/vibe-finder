@@ -11,14 +11,22 @@ const Section = ({ children, className = "" }) => <section className={`max-w-[88
 
 const BlogPostPage = () => {
   const { slug } = useParams();
-  const [post, setPost] = useState(null);
+  // The server sends the post's data with the page (#rk-post), so the first render shows
+  // the full article instead of an empty page that then jumps into place.
+  const [post, setPost] = useState(() => {
+    try {
+      const p = JSON.parse(document.getElementById("rk-post")?.textContent || "null");
+      return p && p.slug === slug ? p : null;
+    } catch { return null; }
+  });
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
+    if (post && post.slug === slug) return;
     setPost(null);
     setNotFound(false);
     api.get(`/blog/${slug}`).then((r) => setPost(r.data)).catch(() => setNotFound(true));
-  }, [slug]);
+  }, [slug]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!post) return;

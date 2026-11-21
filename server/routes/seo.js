@@ -289,9 +289,11 @@ const speedStatus = async () => {
   const left = await PSI.pending(all, false);
   return { ...st, has_key: !!(await PSI.getKey()), key_from_env: !!process.env.PSI_API_KEY, pages_total: all.length, pages_tested: all.length - left.length };
 };
+let lastSpeedRefresh = null;
 router.get("/seo/speed/status", requireAdmin, ah(async (_req, res) => {
   const st = PSI.status();
-  if (!st.running && st.finished_at) inventory.invalidateInventory();
+  // Refresh the report once when a run finishes (not on every poll).
+  if (!st.running && st.finished_at && lastSpeedRefresh !== String(st.finished_at)) { lastSpeedRefresh = String(st.finished_at); inventory.invalidateInventory(); }
   res.json(await speedStatus());
 }));
 // Save (or clear, with an empty value) the PageSpeed API key. The key is never sent back.

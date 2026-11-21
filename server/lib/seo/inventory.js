@@ -95,11 +95,25 @@ function parse(html) {
 }
 
 let cache = null;
-const invalidateInventory = () => { cache = null; };
+let inflight = null;
+// Marks the report out of date. The last report stays available (see buildReport) so the
+// admin never waits on a full rebuild, which can take ~10 s on the live server.
+const invalidateInventory = () => { if (cache) cache.stale = true; };
 
-// Build (or reuse, 10 minutes) the full report for the site.
+// Full report for the site: reused for 10 minutes. When out of date, the last report is
+// returned at once and a fresh one builds in the background (one build at a time).
+// force (Re-check) waits for the fresh build, but falls back to the last report after 7 s.
 async function buildReport({ force = false } = {}) {
-  if (!force && cache && Date.now() - cache.t < 10 * 60 * 1000) return cache.v;
+  const fresh = cache && !cache.stale && Date.now() - cache.t < 10 * 60 * 1000;
+  if (!force && fresh) return cache.v;
+  if (!inflight) inflight = buildFresh().finally(() => { inflight = null; });
+  if (!cache) return inflight;
+  if (!force) { inflight.catch(() => {}); return cache.v; }
+  const last = cache.v;
+  return Promise.race([inflight, new Promise((r) => setTimeout(() => r(last), 7000))]);
+}
+
+async function buildFresh() {
   const db = getDb();
   const settings = await getSettings();
   const ov = await R.getOverrides();

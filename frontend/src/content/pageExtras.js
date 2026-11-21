@@ -148,6 +148,12 @@ export const pageExtras = {
   "/fashion-wedding-makeup-artist-bangalore": { sections: [{ h: "Where Fashion Meets the Wedding", p: ["Some brides want a look that feels like a magazine cover. So these photos blend fashion ideas, such as graphic liner or glossy skin, with the comfort a long wedding day needs.", "Look at how each idea is kept wearable. A bold eye is balanced with a soft lip, and a high shine is kept to the cheekbones. That way, the look feels modern but still holds through the rituals."] }, { h: "Making It Your Own", p: ["Bring a fashion photo you love and your outfit details. Rekha will show you which part of the idea will work for your wedding. Then [send a fashion request](/contact?service=Fashion) or see [fashion makeup](/fashion-makeup).", "In addition, tell Rekha which events need the bolder look, so the rest of the day can stay softer."] }] },
   "/makeup-artist-for-pre-wedding-shoot": { sections: [{ h: "Makeup That Works on Location", p: ["Pre-wedding shoots move from sun to shade and from one outfit to the next. So these looks use long-wear products and a base that copes with heat and wind. Look for skin that still looks even in strong sunlight.", "Also notice how the look changes between outfits. A western dress may get a softer, fresh face, while a saree look gets more depth. Quick touch-ups keep the couple ready for each new frame."] }, { h: "Planning Your Shoot Day", p: ["Share the location, the number of outfits and the light you expect. Then Rekha plans the looks and the touch-ups. To book, [send a shoot request](/contact?service=Photoshoot) or see [photoshoot makeup](/photoshoot-makeup-artist-bangalore)."] }] },
 
+  "/best-bridal-makup-artist-in-bangalore": {
+    sections: [
+      { h: "A Quick Answer", p: ["To find the best bridal makeup artist, first shortlist three artists whose real bridal photos match your style. Then book a short consult or trial with your top choice. Finally, confirm the date, the price and what is included in writing before you pay the advance."] },
+    ],
+  },
+
   "/blog": {
     sections: [
       { h: "What You Will Find Here", p: [
@@ -165,25 +171,6 @@ export const pageExtras = {
       ["Can I ask a makeup question?", "Yes. Send your question through the contact page, and it may become a future post."],
     ],
     links: [SKIN_LINK, ...BRAND_LINKS.slice(0, 2)],
-  },
-
-  "/archive": {
-    sections: [
-      { h: "Makeup Advice, All in One Place", p: [
-        "This archive lists every journal post by date. So it is the quickest way to find an older tip or a post you read before. Also, each post shows its date, so you can see how fresh the advice is.",
-        "Topics include skin prep, bridal planning, party looks, product care and self grooming. For newer posts and in-depth guides, visit the [journal](/blog).",
-      ] },
-      { h: "Using the Advice Well", p: [
-        "Makeup tips work best when they suit your skin. So test a new product on a small patch first, and give your skin time before a big event. If you are unsure, ask at a [skin consult](/skin-consultation).",
-        "In addition, many posts link to a service or class. That way, you can move from reading to booking in one step.",
-      ] },
-    ],
-    faq: [
-      ["How is the archive different from the journal?", "The archive lists all posts by date. The journal shows the latest posts and the in-depth guides."],
-      ["Is the advice suitable for all skin types?", "The tips are general. For advice on your own skin, book a skin consult with Rekha."],
-      ["Can I share these posts?", "Yes. You are welcome to share links to any post."],
-    ],
-    links: [SKIN_LINK],
   },
 
   "/community": {
@@ -220,9 +207,9 @@ export const pageExtras = {
   // Legal pages: the answers repeat what the policy text already says.
   "/privacy": {
     faq: [
-      ["When are my details shared?", "Section 1.3 of this policy explains when your details may be shared."],
+      ["When are my details shared?", "Section 1.3 of this privacy policy explains when your details may be shared."],
       ["Does the site use cookies?", "Yes. The site may use cookies and tools such as Google Tag Manager to see how visitors use it. You can turn cookies off in your browser."],
-      ["How do I ask about my data?", "Use the contact details in section 1.11 of this policy."],
+      ["How do I ask about my data?", "Use the contact details in section 1.11 of this privacy policy."],
     ],
     links: [["Digital Personal Data Protection Act, 2023 (MeitY)", "https://www.meity.gov.in/"], ["How Google uses cookies", "https://policies.google.com/technologies/cookies"]],
   },
@@ -236,13 +223,16 @@ export const pageExtras = {
   },
   "/refund": {
     faq: [
-      ["Can I reschedule my booking?", "Yes. Ask at least 30 days ahead, subject to open dates. One change is usually free; later changes may cost extra."],
-      ["Is the advance refundable?", "Section 3.2 of this policy explains what happens to the advance when a client cancels."],
-      ["Whom do I contact about a refund?", "Use the contact details in section 3.8 of this policy."],
+      ["Can I reschedule my booking?", "Yes, but ask at least 30 days ahead, subject to open dates. Also, one change is usually free; later changes may cost extra."],
+      ["Is the advance refundable?", "In short, section 3.2 of this policy explains what happens to the advance when a client cancels."],
+      ["Whom do I contact about a refund?", "First, use the contact details in section 3.8 of this policy. Or reach Rekha's makeup studio in Bangalore through the contact page."],
     ],
     links: [["National Consumer Helpline (Government of India)", "https://consumerhelpline.gov.in/"]],
   },
   "/disclaimer": {
+    sections: [
+      { h: "About This Website Disclaimer", p: ["This website disclaimer explains the limits of the tips, photos and details on this site. It sits alongside the [Terms & Conditions](/terms) and the [Privacy Policy](/privacy) for Makeup by Rekha Krishnamurthy in Bangalore."] },
+    ],
     faq: [
       ["Is the site's advice medical advice?", "No. The content is general and is not medical or skin-care advice. See a doctor for skin concerns."],
       ["Will my results look like the photos?", "Results vary with skin, features, light and photos, so they may differ from the portfolio."],
@@ -253,7 +243,7 @@ export const pageExtras = {
   "/delivery": {
     sections: [
       { h: "How Our Services Are Delivered", p: [
-        "Rekha does all makeup in person, at the date, time and venue you agree. For example, this may be a home, a hall, a hotel or a shoot location. Similarly, she holds courses and classes at the venue she shares when a batch starts.",
+        "Rekha Krishnamurthy does all makeup in person in and around Bangalore, at the date, time and venue you agree. For example, this may be a home, a hall, a hotel or a shoot location. Similarly, she holds courses and classes at the venue she shares when a batch starts.",
         "Sending a request does not confirm a booking. Your booking counts as confirmed only once you both agree the service, date, venue and price, and you pay any advance.",
       ] },
       { h: "On the Day", p: [
@@ -282,7 +272,7 @@ export const pageExtras = {
         "If you block all cookies, the main pages will still load. However, some features may not work as intended. For example, forms may need you to fill in your details again.",
       ] },
       { h: "Questions About Your Data", p: [
-        "Cookies are only one part of how the site handles data. So, for what the site collects, how long it keeps it and your rights, read the full [Privacy Policy](/privacy). You can also reach Rekha through the [contact page](/contact).",
+        "Cookies are only one part of how Rekha Krishnamurthy's makeup website in Bangalore handles data. So, for what the site collects, how long it keeps it and your rights, read the full [Privacy Policy](/privacy). You can also reach Rekha through the [contact page](/contact).",
       ] },
     ],
     faq: [

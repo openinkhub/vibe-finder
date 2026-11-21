@@ -152,7 +152,8 @@
     "cta": "Book Your Free Consult",
     "path": "/blog",
     "image": "https://images.unsplash.com/photo-1600685890506-593fdf55949b?auto=format&fit=crop&w=1000&q=70",
-    "keyphrase": "bridal beauty blog"
+    "keyphrase": "bridal beauty blog",
+    "listing": true
   },
   {
     "group": "Services",
@@ -990,27 +991,6 @@
   },
   {
     "group": "Explore",
-    "name": "Archive",
-    "url": "https://rekhakrishnamurthy.com/archive",
-    "metaTitle": "Makeup Advice & Bridal Beauty Archive | Rekha",
-    "metaDescription": "Makeup advice from Rekha Krishnamurthy: every journal post by date, with tips on bridal prep, skin, products and looks for events.",
-    "ogTitle": "Makeup Advice & Bridal Beauty Archive | Rekha",
-    "ogDescription": "Browse practical makeup and bridal beauty articles covering wedding planning, makeup techniques, skin preparation, occasion looks and beauty guidance.",
-    "canonical": "https://rekhakrishnamurthy.com/archive",
-    "eyebrow": "MAKEUP JOURNAL • ARCHIVE",
-    "heroHeadline": "Explore Past Makeup Guidance",
-    "heroSub": "Find makeup advice in older articles, with hands-on answers to common bridal and makeup questions.",
-    "h1": "Makeup Advice Archive",
-    "h1Heading": "A searchable archive of helpful makeup, bridal beauty and prep content.",
-    "h1Sub": "Readers researching makeup questions and planning choices.",
-    "conclusion": null,
-    "cta": "Book Your Free Consult",
-    "path": "/archive",
-    "image": "https://images.unsplash.com/photo-1677691257363-eebd2abeafec?auto=format&fit=crop&w=1000&q=70",
-    "keyphrase": "makeup advice"
-  },
-  {
-    "group": "Explore",
     "name": "Booking",
     "url": "https://rekhakrishnamurthy.com/premium-bridal-makeup-booking",
     "metaTitle": "Premium Bridal Makeup Booking Bangalore | Rekha",
@@ -1035,7 +1015,7 @@
     "name": "Privacy",
     "url": "https://rekhakrishnamurthy.com/privacy",
     "metaTitle": "Privacy Policy | Rekha Krishnamurthy",
-    "metaDescription": "Read the privacy policy for Rekha Krishnamurthy and understand how website enquiries and personal information are handled.",
+    "metaDescription": "Privacy policy for Rekha Krishnamurthy's website: what details we collect from requests and bookings, how we use them, and your rights.",
     "ogTitle": "Privacy Policy | Rekha Krishnamurthy",
     "ogDescription": "Read the privacy policy for Rekha Krishnamurthy and understand how website enquiries and personal information are handled.",
     "canonical": "https://rekhakrishnamurthy.com/privacy",
@@ -1056,7 +1036,7 @@
     "name": "Terms & Conditions",
     "url": "https://rekhakrishnamurthy.com/terms",
     "metaTitle": "Terms & Conditions | Rekha Krishnamurthy",
-    "metaDescription": "Review the terms governing use of the Rekha Krishnamurthy website, enquiries, bookings and related services.",
+    "metaDescription": "Terms & Conditions for Rekha Krishnamurthy's website and makeup services in Bangalore: bookings, payments, courses, photos and your rights.",
     "ogTitle": "Terms & Conditions | Rekha Krishnamurthy",
     "ogDescription": "Review the terms governing use of the Rekha Krishnamurthy website, enquiries, bookings and related services.",
     "canonical": "https://rekhakrishnamurthy.com/terms",
@@ -1077,7 +1057,7 @@
     "name": "Refund & Cancellation",
     "url": "https://rekhakrishnamurthy.com/refund",
     "metaTitle": "Refund & Cancellation Policy | Rekha Krishnamurthy",
-    "metaDescription": "Review refund and cancellation terms for makeup service bookings and related payments with Rekha Krishnamurthy.",
+    "metaDescription": "Refund & cancellation policy for makeup bookings and courses with Rekha Krishnamurthy in Bangalore: advances, date changes and refund times.",
     "ogTitle": "Refund & Cancellation Policy | Rekha Krishnamurthy",
     "ogDescription": "Review refund and cancellation terms for makeup service bookings and related payments with Rekha Krishnamurthy.",
     "canonical": "https://rekhakrishnamurthy.com/refund",
@@ -1097,7 +1077,7 @@
     "group": "Legal",
     "name": "Disclaimer",
     "url": "https://rekhakrishnamurthy.com/disclaimer",
-    "metaTitle": "Disclaimer | Rekha Krishnamurthy",
+    "metaTitle": "Website Disclaimer | Rekha Krishnamurthy",
     "metaDescription": "Review the website disclaimer covering information, content, services and third-party references on Rekha Krishnamurthy's website.",
     "ogTitle": "Disclaimer | Rekha Krishnamurthy",
     "ogDescription": "Review the website disclaimer covering information, content, services and third-party references on Rekha Krishnamurthy's website.",
@@ -1119,7 +1099,7 @@
     "name": "Shipping & Delivery",
     "url": "https://rekhakrishnamurthy.com/delivery",
     "metaTitle": "Service Delivery Policy | Rekha Krishnamurthy",
-    "metaDescription": "Review service delivery, travel and fulfilment information for makeup services and related bookings.",
+    "metaDescription": "Service delivery policy for Rekha's makeup services in Bangalore: on-site makeup, booking confirmation, the day itself and changing your date.",
     "ogTitle": "Service Delivery Policy | Rekha Krishnamurthy",
     "ogDescription": "Review service delivery, travel and fulfilment information for makeup services and related bookings.",
     "canonical": "https://rekhakrishnamurthy.com/delivery",
@@ -1140,7 +1120,7 @@
     "name": "Cookies",
     "url": "https://rekhakrishnamurthy.com/cookies",
     "metaTitle": "Cookie Policy | Rekha Krishnamurthy",
-    "metaDescription": "Learn how cookies and similar technologies may be used on the Rekha Krishnamurthy website.",
+    "metaDescription": "Cookie policy for Rekha Krishnamurthy's website: which cookies and tools the site uses, why, and how to turn them off in your browser.",
     "ogTitle": "Cookie Policy | Rekha Krishnamurthy",
     "ogDescription": "Learn how cookies and similar technologies may be used on the Rekha Krishnamurthy website.",
     "canonical": "https://rekhakrishnamurthy.com/cookies",
@@ -1228,7 +1208,8 @@
     "relatedKeywords": [
       "best makeup artist in bangalore",
       "bridal makeup"
-    ]
+    ],
+    "keepSlug": true
   },
   {
     "group": "Guides",
@@ -1280,7 +1261,8 @@
     "relatedKeywords": [
       "bridal makeup",
       "bridal makeup in bangalore"
-    ]
+    ],
+    "keepSlug": true
   },
   {
     "group": "Guides",
