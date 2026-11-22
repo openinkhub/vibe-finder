@@ -10,7 +10,7 @@ export const guideBodies = {
     sections: [
       { h: "How to Choose a Bridal Makeup Artist in Bangalore", p: [
         "Your bridal makeup artist is with you for some of the most photographed hours of your life. In Bangalore, weddings often run from an early muhurtham to a late reception. So the right artist plans a look that survives heat, tears and flash, and still feels like you.",
-        "This guide covers what to look for in a bridal makeup artist in Bangalore. It also covers what to ask and how to budget. If you already know what you want, you can go straight to [bridal makeup in Bangalore](/) with Rekha.",
+        "This guide covers how to choose a bridal makeup artist in Bangalore: what to look for, what to ask and how to budget. If you already know what you want, you can go straight to [bridal makeup in Bangalore](/) with Rekha.",
       ] },
       { h: "What to Look For", bullets: [
         "**A real consult.** A good bridal makeup artist in Bangalore asks about your skin, outfit and timings first. Only then does she talk about products.",
