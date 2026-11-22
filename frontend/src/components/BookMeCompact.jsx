@@ -13,6 +13,17 @@ const CompactPlaceholder = () => (
   </div>
 );
 
+// Some phones and browsers have 3D graphics (WebGL) turned off; they keep the flat placeholder.
+const hasWebGL = () => {
+  try { const c = document.createElement("canvas"); return !!(window.WebGLRenderingContext && (c.getContext("webgl2") || c.getContext("webgl"))); } catch { return false; }
+};
+class Safe3D extends React.Component {
+  constructor(props) { super(props); this.state = { failed: false }; }
+  static getDerivedStateFromError() { return { failed: true }; }
+  componentDidCatch() { /* fall back to the flat placeholder */ }
+  render() { return this.state.failed ? <CompactPlaceholder /> : this.props.children; }
+}
+
 export const BookMeCompact = ({ onBook }) => {
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -21,6 +32,7 @@ export const BookMeCompact = ({ onBook }) => {
   // Only fetch the 3D code when the card scrolls near the viewport.
   useEffect(() => {
     const el = wrap.current;
+    if (!hasWebGL()) return;
     if (!el || !("IntersectionObserver" in window)) { setShow3d(true); return; }
     const io = new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting)) { setShow3d(true); io.disconnect(); } }, { rootMargin: "300px" });
     io.observe(el);
@@ -31,9 +43,11 @@ export const BookMeCompact = ({ onBook }) => {
       <div className="absolute top-4 left-4 z-10 font-mono text-[10px] tracking-[0.2em] uppercase text-[#6E6266]">{open ? "Compact open" : "Tap the compact"}</div>
       <div className={`h-64 sm:h-72 relative overflow-hidden ${hovered ? "cursor-pointer" : ""}`} data-testid="bookme-canvas-wrap" ref={wrap}>
         {show3d ? (
-          <Suspense fallback={<CompactPlaceholder />}>
-            <BookMeCanvas open={open} setOpen={setOpen} hovered={hovered} setHovered={setHovered} />
-          </Suspense>
+          <Safe3D>
+            <Suspense fallback={<CompactPlaceholder />}>
+              <BookMeCanvas open={open} setOpen={setOpen} hovered={hovered} setHovered={setHovered} />
+            </Suspense>
+          </Safe3D>
         ) : <CompactPlaceholder />}
       </div>
       <button onClick={() => setOpen((v) => !v)} className="absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full bg-[#FBE9F0] text-[#E62E6B] text-xs font-medium" data-testid="bookme-toggle-btn">{open ? "Close" : "Open"}</button>

@@ -140,7 +140,8 @@ app.get("*", ah(async (req, res) => {
   const near = site.closestPage(clean);
   if (near && near !== clean) return res.redirect(301, near);
   // Bot probes for other software (WordPress, .env files...) aren't worth logging.
-  if (!/\.(php|env|asp|aspx|jsp|cgi|bak|sql|ini|git|map)$|^\/(wp-|xmlrpc|cgi-bin|\.)/i.test(clean)) site.logNotFound(clean, req.get("referer"));
+  if (site.isOldAsset(clean)) return res.status(410).set("Cache-Control", "public, max-age=86400").type("text/plain").send("Gone");
+  if (!site.isProbe(clean) && !/^\/(wp-|xmlrpc|cgi-bin|\.)/i.test(clean)) site.logNotFound(clean, req.get("referer"));
   sendHtml(res, shell, 404);
 }));
 

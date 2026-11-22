@@ -26,7 +26,7 @@ const Hero = ({ page }) => {
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] text-[#6E6266] uppercase" data-testid="hero-eyebrow">{page.eyebrow}</span>
           </div>
 
-          <h2 className="fade-up delay-1 font-display text-[#4A2530] mt-5 sm:mt-6 text-[40px] leading-[1.04] sm:text-[56px] md:text-[66px] lg:text-[72px] font-medium [text-shadow:0_2px_20px_rgba(244,241,234,0.8)] md:[text-shadow:none]" data-testid="hero-title">
+          <h2 className="font-display text-[#4A2530] mt-5 sm:mt-6 text-[40px] leading-[1.04] sm:text-[56px] md:text-[66px] lg:text-[72px] font-medium [text-shadow:0_2px_20px_rgba(244,241,234,0.8)] md:[text-shadow:none]" data-testid="hero-title">
             <Headline text={page.heroHeadline} />
           </h2>
 

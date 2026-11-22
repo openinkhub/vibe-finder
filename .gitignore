@@ -107,3 +107,4 @@ credentials.json
 
 !.env.example
 node_modules/
+frontend/.prev-static

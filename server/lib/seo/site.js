@@ -61,6 +61,14 @@ const normPath = (p) => {
 };
 
 // ── 404 log ──
+// Addresses that only bots and scanners ask for (other software's admin pages, backups,
+// job/legal pages of foreign sites…). They get a plain 404 and are not logged.
+const PROBE = /^\/(wp|wordpress|wp-[\w-]+|backup|backups|bk|bc|old|new|main|auth|admin\w*|\.env|\.git|cgi-bin|xmlrpc|phpmyadmin|careers|about\/careers|jobs|hiring|employment|join-us|impressum|kontakt|ipfs|products\.json|__[\w-]+|ai\.txt|llm\.txt)(\/|$)|\.(php|env|asp|aspx|jsp|cgi|ini|sql|zip|bak|gz|map)(\?|$)|^\/static\/(js|css)\//i;
+const isProbe = (p) => PROBE.test(String(p || ""));
+// Image, script and style files of the old website. Answered "410 Gone" so search engines drop them.
+const OLD_ASSET = /^\/(images|img|js|css|assets|uploads)\/.+\.(jpe?g|png|gif|webp|svg|js|css)$/i;
+const isOldAsset = (p) => OLD_ASSET.test(String(p || "")) && !/^\/img\/u\//.test(String(p));
+
 async function logNotFound(p, referrer) {
   try {
     await getDb().collection("not_found").updateOne({ path: p }, { $inc: { hits: 1 }, $set: { last_seen: new Date().toISOString(), referrer: (referrer || "").slice(0, 300) }, $setOnInsert: { first_seen: new Date().toISOString() } }, { upsert: true });
@@ -171,4 +179,4 @@ async function vitalsByPath(days = 28) {
   return out;
 }
 
-module.exports = { BUILT_IN, closestPage, getRedirects, clearRedirects, normPath, logNotFound, robotsTxt, robotsAllowsFn, indexableUrls, sitemapXml, llmsTxt, recordVitals, vitalsByPath };
+module.exports = { BUILT_IN, isProbe, isOldAsset, closestPage, getRedirects, clearRedirects, normPath, logNotFound, robotsTxt, robotsAllowsFn, indexableUrls, sitemapXml, llmsTxt, recordVitals, vitalsByPath };

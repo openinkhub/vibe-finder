@@ -11,10 +11,42 @@ if (process.env.SKIP_FRONTEND_BUILD) {
 }
 const root = path.join(__dirname, "..");
 const run = (cmd) => execSync(cmd, { cwd: root, stdio: "inherit", env: { ...process.env, CI: "false", GENERATE_SOURCEMAP: "false" } });
+// Keep the previous build's script and style files for a few days. A visitor whose page was
+// opened before a deploy still asks for those files; without them the page fails to load
+// parts of itself ("ChunkLoadError").
+const KEEP_DAYS = 3;
+const staticDir = path.join(root, "frontend/build/static");
+const keep = path.join(root, "frontend/.prev-static");
+fs.rmSync(keep, { recursive: true, force: true });
+for (const sub of ["js", "css"]) {
+  const from = path.join(staticDir, sub);
+  if (!fs.existsSync(from)) continue;
+  fs.mkdirSync(path.join(keep, sub), { recursive: true });
+  for (const f of fs.readdirSync(from)) {
+    const src = path.join(from, f);
+    if (!/\.(js|css)$/.test(f) || Date.now() - fs.statSync(src).mtimeMs > KEEP_DAYS * 864e5) continue;
+    fs.copyFileSync(src, path.join(keep, sub, f));
+    fs.utimesSync(path.join(keep, sub, f), fs.statSync(src).atime, fs.statSync(src).mtime);
+  }
+}
 console.log("Building frontend…");
 run("npm --prefix frontend install --legacy-peer-deps --no-audit --no-fund");
 run("npm --prefix frontend run build");
 console.log("Frontend build complete");
+let restored = 0;
+for (const sub of ["js", "css"]) {
+  const from = path.join(keep, sub);
+  if (!fs.existsSync(from)) continue;
+  for (const f of fs.readdirSync(from)) {
+    const dest = path.join(staticDir, sub, f);
+    if (fs.existsSync(dest)) continue;
+    fs.copyFileSync(path.join(from, f), dest);
+    fs.utimesSync(dest, fs.statSync(path.join(from, f)).atime, fs.statSync(path.join(from, f)).mtime);
+    restored++;
+  }
+}
+fs.rmSync(keep, { recursive: true, force: true });
+if (restored) console.log(`Kept ${restored} script/style files from the previous build for open pages`);
 
 // The build tools (~70,000 files) aren't needed once the site is built; removing them keeps the
 // hosting plan's file (inode) count low. They're reinstalled on the next deploy.

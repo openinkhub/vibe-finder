@@ -129,7 +129,7 @@ async function buildFresh() {
   const BOT = /^\/(wp|wordpress|wp-[\w-]+|backup|bk|bc|old|new|main|admin\w*|\.env|\.git|cgi-bin|xmlrpc|phpmyadmin)(\/|$)|\.(php|asp|aspx|env|sql|zip|bak|gz)(\?|$)|^\/static\/(js|css)\/|^\/(ai|llm)\.txt$/i;
   const livePaths = new Set([...indexable].map((p) => p.toLowerCase()));
   const notFoundTotal = (await db.collection("not_found").find({}, { projection: { _id: 0, path: 1 } }).toArray().catch(() => []))
-    .filter(({ path: p }) => p && !BOT.test(p) && !redirects[site.normPath(p)] && !livePaths.has(site.normPath(p).toLowerCase()) && !site.closestPage(p)).length;
+    .filter(({ path: p }) => p && !BOT.test(p) && !site.isProbe(p) && !site.isOldAsset(p) && !redirects[site.normPath(p)] && !livePaths.has(site.normPath(p).toLowerCase()) && !site.closestPage(p)).length;
   const vitals = await site.vitalsByPath().catch(() => ({}));
   const lab = await require("./psi").labByPath().catch(() => ({}));
   const jsErr = await db.collection("js_errors").find({}).toArray().catch(() => []);

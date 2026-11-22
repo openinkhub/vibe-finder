@@ -126,6 +126,16 @@ async function pageHtml(urlPath) {
   applyOverrides($, ov, { title: page.metaTitle, description: page.metaDescription, canonical: page.canonical, image: "/og-image.webp" });
   if (!$('meta[name="author"]').length) $("head").append('<meta name="author" content="Rekha Krishnamurthy">');
   lateMain($);
+  // The home hero uses bold italic words; load that font early so the headline does not re-flow
+  // (a re-flow after start-up was counted as a later, larger paint).
+  const heroTitle = $("#top h2").filter((_, el) => $(el).find(".italic.font-bold").length).first();
+  if (heroTitle.length) {
+    if (!$('link[href*="playfair-display-latin-700-italic"]').length) $("head").append('<link rel="preload" as="font" type="font/woff2" href="/fonts/playfair-display-latin-700-italic.woff2" crossorigin>');
+    // Show the headline once both of its fonts are ready, so it is drawn once at its final size.
+    heroTitle.attr("id", "rk-hero-title").attr("style", "visibility:hidden");
+    $("head").append('<noscript><style>#rk-hero-title{visibility:visible!important}</style></noscript>');
+    $("body").append('<script>(function(){var e=document.getElementById("rk-hero-title");if(!e)return;var d=0;function s(){if(d)return;d=1;e.style.visibility=""}try{Promise.all([document.fonts.load(\'500 40px "Playfair Display"\'),document.fonts.load(\'italic 700 40px "Playfair Display"\')]).then(s,s)}catch(x){s()}setTimeout(s,1500)})()</script>');
+  }
   $("#rk-page-images").remove();
   $("body").append(heroBoot(heroes));
   if (hero && hero.alt_text) {
