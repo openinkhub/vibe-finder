@@ -46,7 +46,7 @@ const count = (text, kw) => T.keyphraseStats(noIn(toks(text).join(" ")), noIn(co
 // Place names and filler words ("bangalore", "artist", "services", "best") are optional there.
 const URL_OPTIONAL = new Set(["a", "an", "the", "in", "for", "of", "and", "near", "me", "best", "artist", "services", "service", "bangalore", "karnataka", "india", "rekha", "krishnamurthy", "professional", "premium", "how", "to", "choose", "find", "makeup", "bridal", "beauty", "join"]);
 // A page address may use a common synonym of the keyword's topic word.
-const URL_SYNONYMS = { reviews: ["testimonials"], review: ["testimonials"] };
+const URL_SYNONYMS = { reviews: ["testimonials", "testimonial"], review: ["testimonials", "testimonial"] };
 const urlTopic = (path, kw) => {
   const need = core(kw).split(" ").filter((x) => x && !URL_OPTIONAL.has(x));
   const slug = new Set(toks(path.replace(/[/]+/g, " ")));
