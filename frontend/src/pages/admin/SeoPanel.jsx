@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Loader2, RefreshCw, Search, X, CheckCircle2, AlertTriangle, XCircle, MinusCircle, Wand2, Undo2, Save, Plus, Trash2, ExternalLink, ArrowRightLeft, FileWarning, Gauge, Settings2, KeyRound, ListChecks } from "lucide-react";
 import { toast } from "sonner";
+
+// The site root is the home page; show it by name so it does not look empty.
+const pageLabel = (p) => (p === "/" ? "Home page (/)" : p);
 import { api, errorText } from "../../lib/api";
 
 const fieldCls = "px-3.5 py-2.5 rounded-xl border border-[#F1DCE3] bg-[#FBFAF7] text-[#4A2530] text-sm focus:outline-none focus:border-[#E62E6B] transition-all";
@@ -537,7 +540,7 @@ const Keywords = () => {
       </div>
       <form onSubmit={(e) => { e.preventDefault(); if (f.keyword.trim()) { persist([...list, f]); setF({ keyword: "", page: "", volume: "", note: "" }); } }} className={`${card} p-5 grid sm:grid-cols-[1.4fr_1.4fr_0.7fr_1fr_auto] gap-3 items-end`}>
         <div><label className={labelCls}>Keyword</label><input value={f.keyword} onChange={(e) => setF({ ...f, keyword: e.target.value })} className={inputCls} data-testid="seo-keyword-input" /></div>
-        <div><label className={labelCls}>Target page</label><select value={f.page} onChange={(e) => setF({ ...f, page: e.target.value })} className={inputCls}><option value="">— choose —</option>{data.pages.map((p) => <option key={p} value={p}>{p}</option>)}</select></div>
+        <div><label className={labelCls}>Target page</label><select value={f.page} onChange={(e) => setF({ ...f, page: e.target.value })} className={inputCls}><option value="">— choose —</option>{data.pages.map((p) => <option key={p} value={p}>{pageLabel(p)}</option>)}</select></div>
         <div><label className={labelCls}>Searches / mo</label><input type="number" min="0" value={f.volume} onChange={(e) => setF({ ...f, volume: e.target.value })} className={inputCls} /></div>
         <div><label className={labelCls}>Note</label><input value={f.note} onChange={(e) => setF({ ...f, note: e.target.value })} className={inputCls} /></div>
         <button className={btnPrimary}><Plus size={15} /> Add</button>
@@ -552,7 +555,7 @@ const Keywords = () => {
                   <tr className="hover:bg-[#FFFBFC] cursor-pointer" onClick={() => setOpen(open === k.keyword ? null : k.keyword)}>
                     <td className="px-3 py-2.5"><div className="font-medium text-[#4A2530]">{k.keyword}</div>{k.note && <div className="text-xs text-[#8B7F82]">{k.note}</div>}</td>
                     <td className="px-3 py-2.5 text-[#5C4E52]">{fmtNum(k.volume)}</td>
-                    <td className="px-3 py-2.5 text-xs text-[#5C4E52] max-w-[220px] truncate">{k.page || <span className="text-[#8a5a00]">None chosen</span>}</td>
+                    <td className="px-3 py-2.5 text-xs text-[#5C4E52] max-w-[220px] truncate">{k.page ? pageLabel(k.page) : <span className="text-[#8a5a00]">None chosen</span>}</td>
                     <td className="px-3 py-2.5"><ScoreBadge score={k.onpage ? k.onpage.score : null} label="On-page targeting" /></td>
                     <td className="px-3 py-2.5"><PosBadge pos={k.latest && k.latest.pos} />{k.latest && <div className="text-[10px] text-[#8B7F82] mt-0.5">{k.latest.date}</div>}</td>
                     <td className="px-3 py-2.5"><Change c={k.change} /></td>
@@ -563,14 +566,14 @@ const Keywords = () => {
                     <tr><td colSpan={8} className="bg-[#FFFBFC] px-4 py-4">
                       <div className="grid lg:grid-cols-2 gap-5">
                         <div>
-                          <div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82] mb-2">On-page check{k.page ? ` · ${k.page}` : ""}</div>
+                          <div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82] mb-2">On-page check{k.page ? ` · ${pageLabel(k.page)}` : ""}</div>
                           {k.onpage ? (
                             <ul className="space-y-1.5">{k.onpage.signals.map((s) => <li key={s.id} className="flex items-center gap-2 text-sm text-[#4A2530]"><StatusIcon s={s.ok ? "pass" : "fail"} /> {s.label}{s.detail ? <span className="text-xs text-[#8B7F82]">({s.detail})</span> : null}</li>)}</ul>
                           ) : <p className="text-sm text-[#8a5a00]">Choose a target page to check it.</p>}
-                          {k.best && k.best.path !== k.page && k.best.score > (k.onpage ? k.onpage.score : 0) && <p className="mt-3 text-xs text-[#5C4E52]">Best match on the site today: <b>{k.best.path}</b> ({k.best.score}%). Point the term there, or strengthen the target page.</p>}
+                          {k.best && k.best.path !== k.page && k.best.score > (k.onpage ? k.onpage.score : 0) && <p className="mt-3 text-xs text-[#5C4E52]">Best match on the site today: <b>{pageLabel(k.best.path)}</b> ({k.best.score}%). Point the term there, or strengthen the target page.</p>}
                           {k.local && <p className="mt-3 text-xs text-[#5C4E52]">"Near me" searches are answered from the searcher's location: the Google Business Profile, reviews and the address on the site matter most. The page check looks for the rest of the phrase.</p>}
                           <div className="mt-3 flex flex-wrap gap-2 items-center">
-                            <select value={k.page} onChange={(e) => persist(list.map((x) => (x.keyword === k.keyword ? { ...x, page: e.target.value } : x)))} className={fieldCls} aria-label="Target page"><option value="">— target page —</option>{data.pages.map((p) => <option key={p} value={p}>{p}</option>)}</select>
+                            <select value={k.page} onChange={(e) => persist(list.map((x) => (x.keyword === k.keyword ? { ...x, page: e.target.value } : x)))} className={fieldCls} aria-label="Target page"><option value="">— target page —</option>{data.pages.map((p) => <option key={p} value={p}>{pageLabel(p)}</option>)}</select>
                             <input type="number" min="0" defaultValue={k.volume || ""} onBlur={(e) => Number(e.target.value) !== k.volume && persist(list.map((x) => (x.keyword === k.keyword ? { ...x, volume: e.target.value } : x)))} className={`${fieldCls} w-32`} placeholder="Searches/mo" aria-label="Searches per month" />
                           </div>
                         </div>
