@@ -70,6 +70,9 @@ async function testOne(path, key) {
       images: (((a["network-requests"] || {}).details || {}).items || []).filter((x) => x.resourceType === "Image" || /\.(webp|jpe?g|png|avif)(\?|$)/i.test(x.url || "")).slice(0, 6)
         .map((x) => ({ u: String(x.url || "").replace(SITE, "").replace(/\?.*/, "").slice(-70), s: Math.round(x.networkRequestTime || x.startTime || 0), e: Math.round(x.networkEndTime || x.endTime || 0), st: x.statusCode, kb: Math.round((x.transferSize || 0) / 1024), p: x.priority })),
       lcp_ms_observed: (a["metrics"] && a["metrics"].details && a["metrics"].details.items && a["metrics"].details.items[0] && Math.round(a["metrics"].details.items[0].observedLargestContentfulPaint)) || null,
+      observed: (() => { const m = a["metrics"] && a["metrics"].details && a["metrics"].details.items && a["metrics"].details.items[0]; if (!m) return null;
+        const o = {}; for (const k of ["observedFirstPaint", "observedFirstContentfulPaint", "observedDomContentLoaded", "observedLoad", "observedFirstVisualChange", "observedLastVisualChange", "observedLargestContentfulPaint", "observedSpeedIndex"]) if (m[k] != null) o[k.replace("observed", "")] = Math.round(m[k]); return o; })(),
+      long_tasks: (((a["long-tasks"] || {}).details || {}).items || []).slice(0, 6).map((x) => ({ u: String(x.url || "").replace(SITE, "").replace(/\?.*/, "").slice(-40), s: Math.round(x.startTime || 0), d: Math.round(x.duration || 0) })),
       opportunities: Object.values(a).filter((x) => x.details && x.details.type === "opportunity" && x.numericValue > 100).map((x) => `${x.id}:${Math.round(x.numericValue)}`).slice(0, 6),
     };
     return {
