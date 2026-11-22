@@ -19,7 +19,7 @@ const absUrl = (u) => (!u ? "" : /^https?:\/\//.test(u) ? u : SITE_URL + (u.star
 
 // Pre-rendered pages are complete HTML, so the app script can wait until the page has loaded
 // (or the visitor interacts first). Loading it at once made mobile tests count its download in LCP.
-const LOADER = (src) => `<script>(function(){var d=0;function go(){if(d)return;d=1;var s=document.createElement("script");s.src=${JSON.stringify(src)};document.head.appendChild(s)}function later(){setTimeout(go,50)}if(document.readyState==="complete")later();else addEventListener("load",later);["pointerdown","keydown","touchstart","scroll"].forEach(function(e){addEventListener(e,go,{once:true,passive:true})});setTimeout(go,3500)})()</script>`;
+const LOADER = (src) => `<script>(function(){var d=0,loaded=0,painted=0;function go(){if(d)return;d=1;var s=document.createElement("script");s.src=${JSON.stringify(src)};document.head.appendChild(s)}function maybe(){if(loaded&&painted)setTimeout(go,150)}function onLoad(){loaded=1;maybe()}if(document.readyState==="complete")onLoad();else addEventListener("load",onLoad);try{if(performance.getEntriesByName("first-contentful-paint").length)painted=1;else new PerformanceObserver(function(l){if(l.getEntriesByName("first-contentful-paint").length){painted=1;maybe()}}).observe({type:"paint",buffered:true})}catch(e){painted=1}["pointerdown","keydown","touchstart","scroll"].forEach(function(e){addEventListener(e,go,{once:true,passive:true})});setTimeout(go,4000)})()</script>`;
 const { localize, srcSetFor } = require("../routes/img");
 const lateMain = ($) => {
   // Stock hero photos come from this site (see routes/img.js), not a second host.
