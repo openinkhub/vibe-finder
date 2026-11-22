@@ -9,6 +9,13 @@ const { getSettings, defaultRobots, baseLlms } = require("./settings");
 const BUILT_IN = {
   ...Object.fromEntries(Object.entries(BLOG_REDIRECTS).map(([slug, to]) => [`/blog/${slug}`, to])),
   "/look-lab": "/corporate-professional-makeup-services",
+  // Common guesses for the sitemap and feed, sent to the real ones.
+  "/sitemap_index.xml": "/sitemap.xml",
+  "/sitemaps.xml": "/sitemap.xml",
+  "/sitemap.txt": "/sitemap.xml",
+  "/sitemap.html": "/sitemap.xml",
+  "/feed": "/blog",
+  "/locations": "/contact",
   "/try-on": "/book-bridal-makeup-package-karnataka",
   "/legal": "/privacy",
   "/party-and-non-bridal-makeup-karnatka": "/party-and-non-bridal-makeup-karnataka",
@@ -63,7 +70,7 @@ const normPath = (p) => {
 // ── 404 log ──
 // Addresses that only bots and scanners ask for (other software's admin pages, backups,
 // job/legal pages of foreign sites…). They get a plain 404 and are not logged.
-const PROBE = /^\/(wp|wordpress|wp-[\w-]+|backup|backups|bk|bc|old|new|main|auth|admin\w*|\.env|\.git|cgi-bin|xmlrpc|phpmyadmin|careers|about\/careers|jobs|hiring|employment|join-us|impressum|kontakt|ipfs|products\.json|__[\w-]+|ai\.txt|llm\.txt)(\/|$)|\.(php|env|asp|aspx|jsp|cgi|ini|sql|zip|bak|gz|map)(\?|$)|^\/static\/(js|css)\//i;
+const PROBE = /^\/(wp|wordpress|wp-[\w-]+|backup|backups|bk|bc|old|new|main|auth|admin\w*|\.env|\.git|cgi-bin|xmlrpc|phpmyadmin|careers|about\/careers|company\/careers|jobs|hiring|employment|join-us|join-our-team|join-the-team|work-with-us|work-here|opportunities|vacancies|talent|open-positions|recruitment|team|press|news|newsroom|collections|impressum|kontakt|ipfs|products\.json|__[\w-]+|ai\.txt|llm\.txt|security\.txt|news_sitemap\.xml|gtag\.js|gtm\.js|analytics\.js|seo|enquiries|content|studio|blog\/api-key)(\/|$)|\.(php|env|asp|aspx|jsp|cgi|ini|sql|zip|bak|gz|map)(\?|$)|^\/static\/(js|css)\//i;
 const isProbe = (p) => PROBE.test(String(p || ""));
 // Image, script and style files of the old website. Answered "410 Gone" so search engines drop them.
 const OLD_ASSET = /^\/(images|img|js|css|assets|uploads)\/.+\.(jpe?g|png|gif|webp|svg|js|css)$/i;
