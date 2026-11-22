@@ -12,7 +12,7 @@ const WhoWeServe = () => {
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal className="max-w-2xl">
           <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Made for you</span>
-          <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Who we serve best</h2>
+          <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Makeup artist for every occasion</h2>
           <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">As a wedding makeup artist across Bangalore, Rekha also tailors the approach to who's in the chair. So pick your event to see how.</p>
         </Reveal>
 

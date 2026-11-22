@@ -11,7 +11,7 @@ const SKIN_LINK = ["American Academy of Dermatology: everyday skin care", "https
 export const pageExtras = {
   "/": {
     sections: [
-      { h: "Why Brides Choose Rekha", p: [
+      { h: "Why Clients Call Rekha the Best Makeup Artist", p: [
         "Rekha has done bridal makeup for **14+ years**. In that time, she has worked with **500+ brides** from many regions and styles. So she knows how makeup behaves in heat, in long rituals and under strong flash.",
         "She also plans each look with you. First, she asks about your skin, outfit, jewellery and the events. Then she suggests HD or airbrush makeup and a finish that suits you. As a result, you look like yourself, only polished and flash-proof.",
       ] },
@@ -29,7 +29,7 @@ export const pageExtras = {
         "She also leaves time for photos and small fixes. So you are not rushed, and you walk out calm. If your family has booked makeup too, she plans the order so the bride is ready first.",
         "Finally, she checks the look in the room's light and in a phone photo. That last check helps the makeup look right both in person and in the album. Then you are ready to go.",
       ] },
-      { h: "Areas Rekha Covers", p: [
+      { h: "Best Makeup Artist Near Me: Areas Rekha Covers", p: [
         "Rekha works across the city and nearby towns. For example, she often travels to [Koramangala](/bridal-makeup-artist-koramangala), [Jayanagar](/bridal-makeup-artist-jayanagar), [Indiranagar](/wedding-makeup-artist-indiranagar) and [HSR Layout](/bridal-makeup-hsr-layout). She also takes bookings in [Hosur](/bridal-makeup-artist-hosur), [Tumakuru](/premium-bridal-makeup-tumakuru), [Hoskote](/luxury-makeup-hoskote) and [Chikkaballapur](/bridal-makeup-artist-chikkaballapur).",
         "Each area page lists local tips, such as early starts for long drives. So read the page for your venue before you book. If your town is not listed, just ask.",
       ] },

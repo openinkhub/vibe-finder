@@ -18,7 +18,7 @@ const Reels = () => {
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal className="max-w-2xl mb-8 md:mb-12">
           <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Short-form</span>
-          <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Behind the brush</h2>
+          <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Behind the brush with your makeup artist</h2>
           <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">Process reels — trials, transformations, and technique — the way this work is actually watched now.</p>
         </Reveal>
 
