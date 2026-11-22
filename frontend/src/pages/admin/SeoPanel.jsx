@@ -514,7 +514,7 @@ const Keywords = () => {
   }, []);
   useEffect(() => { load(false); }, [load]);
   const persist = async (next) => {
-    try { await api.put("/seo/settings", { keywords: next.map(({ keyword, page, note, volume, country }) => ({ keyword, page, note, volume, country })) }); await load(false); }
+    try { await api.put("/seo/settings", { keywords: next.map(({ keyword, page, note, volume, country, vol_checked }) => ({ keyword, page, note, volume, country, vol_checked })) }); await load(false); }
     catch (e) { toast.error(errorText(e)); }
   };
   const addRank = async (k) => {
@@ -554,7 +554,7 @@ const Keywords = () => {
                 <React.Fragment key={k.keyword}>
                   <tr className="hover:bg-[#FFFBFC] cursor-pointer" onClick={() => setOpen(open === k.keyword ? null : k.keyword)}>
                     <td className="px-3 py-2.5"><div className="font-medium text-[#4A2530]">{k.keyword}</div>{k.note && <div className="text-xs text-[#8B7F82]">{k.note}</div>}</td>
-                    <td className="px-3 py-2.5 text-[#5C4E52]">{fmtNum(k.volume)}</td>
+                    <td className="px-3 py-2.5 text-[#5C4E52]" title={!k.volume && k.vol_checked ? "Too few searches for keyword tools to measure" : undefined}>{!k.volume && k.vol_checked ? "<10" : fmtNum(k.volume)}</td>
                     <td className="px-3 py-2.5 text-xs text-[#5C4E52] max-w-[220px] truncate">{k.page ? pageLabel(k.page) : <span className="text-[#8a5a00]">None chosen</span>}</td>
                     <td className="px-3 py-2.5"><ScoreBadge score={k.onpage ? k.onpage.score : null} label="On-page targeting" /></td>
                     <td className="px-3 py-2.5"><PosBadge pos={k.latest && k.latest.pos} />{k.latest && <div className="text-[10px] text-[#8B7F82] mt-0.5">{k.latest.date}</div>}</td>

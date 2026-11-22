@@ -20,6 +20,8 @@ const cleanKeywords = (list) => list.map((k) => ({
   page: k.page ? site.normPath(k.page) : "",
   note: cut(String(k.note || ""), 200),
   volume: Math.max(0, Math.round(Number(k.volume) || 0)),
+  // Volume looked up but below what keyword tools can measure (shown as "<10").
+  vol_checked: !!k.vol_checked,
   country: cut(String(k.country || "IN").toUpperCase().replace(/[^A-Z]/g, ""), 2) || "IN",
 })).filter((k) => k.keyword).filter((k, i, a) => a.findIndex((x) => x.keyword === k.keyword) === i).slice(0, 200);
 const meta = () => getDb().collection("seo_meta");
