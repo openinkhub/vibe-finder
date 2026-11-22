@@ -115,6 +115,7 @@ const CHECKS = [
 
   // ── Readability ──
   C("word_complexity", "Word complexity", "readability", 3, false, (i) => {
+    if (i.data && i.data.listing) return pass("Listing page", "Checked on the articles it lists");
     const share = T.complexWordShare(i.text);
     return share <= 0.1 ? pass(pct(share), "complex words") : warn(pct(share), "Many 3+ syllable words", "Swap long words for simpler ones");
   }),
@@ -155,6 +156,7 @@ const CHECKS = [
   C("flesch", "Readability score (Flesch)", "readability", 4, false, (i) => {
     // Score the running prose (paragraphs), as Yoast does. Whole-page text joins headings,
     // buttons and list labels that have no full stops into giant "sentences".
+    if (i.data && i.data.listing) return pass("Listing page", "Checked on the articles it lists");
     const f = T.fleschReadingEase((i.paragraphs || []).join(". "));
     if (f === null) return na("Too little text");
     return f >= 60 ? pass(String(f), "Easy to read") : f >= 50 ? warn(String(f), "Fairly difficult", "Use shorter sentences and simpler words") : fail(String(f), "Difficult to read", "Use shorter sentences and simpler words");
@@ -165,6 +167,7 @@ const CHECKS = [
   }),
   C("text_image_ratio", "Text to image ratio", "content", 1, false, (i) => {
     if (!i.images.length) return warn("no images", "No images", "Add at least one relevant image");
+    if (i.data && i.data.listing) return pass(`${i.images.length} post images`, "Listing page: one image per post card");
     const r = Math.round(i.wordCount / i.images.length);
     return r >= 75 ? pass(`${r} words per image`) : warn(`${r} words per image`, "Image-heavy for the amount of text", "Add descriptive text around images");
   }),
