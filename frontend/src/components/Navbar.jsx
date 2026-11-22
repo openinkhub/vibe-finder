@@ -55,7 +55,7 @@ const Navbar = ({ solid = false }) => {
   const filled = solid || scrolled;
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${filled ? "bg-[#F4F1EA]/92 backdrop-blur-xl border-b border-[#F1DCE3] py-2.5" : "bg-transparent py-4 sm:py-5"}`} data-testid="navbar">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${filled ? "bg-[#F4F1EA]/[0.97] border-b border-[#F1DCE3] py-2.5" : "bg-transparent py-4 sm:py-5"}`} data-testid="navbar">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center shrink-0" data-testid="header-logo-link" aria-label="Rekha Krishnamurthy Makeup & Academy">
           <motion.img width="311" height="133" src={brand.logo} alt="Rekha Krishnamurthy Makeup & Academy" className="h-9 sm:h-10 md:h-12 w-auto" whileHover={{ rotateY: 12, scale: 1.04 }} transition={{ type: "spring", stiffness: 240, damping: 18 }} style={{ transformPerspective: 600 }} />

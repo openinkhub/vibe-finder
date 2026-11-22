@@ -31,7 +31,7 @@ export const MobileBookBar = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
           transition={{ type: "spring", stiffness: 420, damping: 38 }}
-          className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/97 backdrop-blur-xl border-t border-[#F1DCE3] px-4 py-3 shadow-[0_-8px_30px_rgba(74,37,48,0.08)]"
+          className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#F1DCE3] px-4 py-3 shadow-[0_-8px_30px_rgba(74,37,48,0.08)]"
           style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))" }}
           data-testid="mobile-book-bar"
         >
