@@ -1,5 +1,5 @@
 import React from "react";
-import { Phone, MapPin, ArrowUpRight, Mail } from "lucide-react";
+import { Phone, MapPin, ArrowUpRight, Mail, Clock } from "lucide-react";
 import { FaInstagram, FaFacebookF, FaXTwitter, FaLinkedinIn, FaWhatsapp } from "react-icons/fa6";
 import { motion } from "@/lib/motion";
 import { Link } from "react-router-dom";
@@ -42,6 +42,7 @@ const Footer = () => {
               <li className="flex items-center gap-3 text-sm"><MapPin size={16} className="text-[#C8215A]" /><a href="https://share.google/nu7HoWg5cktHMEnHr" target="_blank" rel="noreferrer" className="hover:text-[#C8215A]" data-testid="footer-locate-google-link">Locate us on Google</a></li>
               <li className="flex items-center gap-3 text-sm"><FaWhatsapp size={16} className="text-[#25D366] shrink-0" /><a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="hover:text-[#25D366]">Chat on WhatsApp</a></li>
               <li className="flex items-center gap-3 text-sm"><Mail size={16} className="text-[#C8215A] shrink-0" /><a href={`mailto:${brand.email}`} className="hover:text-[#C8215A] break-all">{brand.email}</a></li>
+              <li className="flex items-center gap-3 text-sm"><Clock size={16} className="text-[#C8215A] shrink-0" /><span>Open daily, 9:00 AM – 9:00 PM</span></li>
             </ul>
             <div className="mt-6 flex items-center gap-3" data-testid="footer-social-icons">
               {socialLinks.map(({ key, href, icon: Icon, label }) => (
@@ -70,6 +71,7 @@ const Footer = () => {
           <p className="font-mono text-xs text-[#6E6266]">© {new Date().getFullYear()} Rekha Krishnamurthy. All rights reserved.</p>
           <div className="flex items-center gap-4 font-mono text-xs text-[#6E6266]">
             <span>Bridal · HD · Airbrush · Self-Grooming</span>
+            <button type="button" onClick={() => window.rkCookieSettings && window.rkCookieSettings()} className="underline underline-offset-2 hover:text-[#C8215A]" data-testid="footer-cookie-settings">Cookie settings</button>
           </div>
         </div>
       </div>

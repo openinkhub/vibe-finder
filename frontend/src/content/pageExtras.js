@@ -11,7 +11,7 @@ const SKIN_LINK = ["American Academy of Dermatology: everyday skin care", "https
 export const pageExtras = {
   "/": {
     sections: [
-      { h: "Rekha Krishnamurthy at a Glance", details: [["Experience", "14+ years as a makeup artist in Bangalore"], ["Services", "Bridal, engagement, non-bridal, party, groom, editorial, fashion and photoshoot makeup, plus makeup classes"], ["Prices", "From ₹4,999 (groom) and ₹7,999 (party) to ₹29,999 per session (bridal)"], ["Where", "At your home or venue across Bangalore and nearby towns"], ["Book", "Form, phone or WhatsApp; book 4–6 months ahead for wedding season"]] },
+      { h: "Rekha Krishnamurthy at a Glance", details: [["Experience", "14+ years as a makeup artist in Bangalore"], ["Services", "Bridal, engagement, non-bridal, party, groom, editorial, fashion and photoshoot makeup, plus makeup classes"], ["Prices", "From ₹4,999 (groom) and ₹7,999 (party) to ₹30,000 per session (bridal)"], ["Where", "At your home or venue across Bangalore and nearby towns"], ["Book", "Form, phone or WhatsApp; book 4–6 months ahead for wedding season"]] },
       { h: "Why Clients Call Rekha the Best Makeup Artist", p: [
         "Rekha has done bridal makeup for **14+ years**. In that time, she has worked with **500+ brides** from many regions and styles. So she knows how makeup behaves in heat, in long rituals and under strong flash.",
         "She also plans each look with you. First, she asks about your skin, outfit, jewellery and the events. Then she suggests HD or airbrush makeup and a finish that suits you. As a result, you look like yourself, only polished and flash-proof.",
@@ -269,7 +269,8 @@ export const pageExtras = {
     sections: [
       { h: "How This Site Uses Cookies", p: [
         "The site may use cookies and like tools, such as Google Tag Manager and tools that count visits. They help us see how people use the site, so we can make it work better.",
-        "You can turn cookies off in your browser settings. However, some parts of the site may not work as intended if you do so. Full details are in the [Privacy Policy](/privacy), section 1.4.",
+        "Analytics and advertising cookies stay off until you choose. On your first visit, a banner asks you to accept or decline them. If you decline, Google tools only receive cookieless signals. You can change your choice at any time with the \"Cookie settings\" link at the bottom of every page.",
+        "You can also turn cookies off in your browser settings. However, some parts of the site may not work as intended if you do so. Full details are in the [Privacy Policy](/privacy), section 1.4.",
       ] },
       { h: "Managing Cookies", p: [
         "Most browsers let you block or delete cookies in their settings. You can also clear cookies after each visit. In addition, Google explains how its own cookies work at the link below.",
