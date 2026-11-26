@@ -154,6 +154,16 @@ async function pageHtml(urlPath) {
   if (urlPath === "/") {
     const cat = await require("./agent").offerCatalog().catch(() => null);
     if (cat) $("head").append(`<script type="application/ld+json" id="ld-json-offers">${safeJson(cat)}</script>`);
+    // Show the admin's current prices in the served HTML too, not the ones baked into the snapshot.
+    const rows = await require("./agent").pricingRows().catch(() => []);
+    if (rows.length) {
+      const byTitle = new Map(rows.map((r) => [String(r.title || "").trim().toLowerCase(), r]));
+      $("#pricing h3").each((_, h) => {
+        const row = byTitle.get($(h).text().trim().toLowerCase());
+        const priceEl = $(h).prev("div");
+        if (row && row.price && priceEl.length) priceEl.text(row.price);
+      });
+    }
   }
   return $.html();
 }

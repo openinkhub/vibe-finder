@@ -189,4 +189,4 @@ function mcpRoutes(app, express, ah) {
   app.get(["/.well-known/mcp/server-card.json", "/.well-known/mcp/server-cards.json", "/.well-known/mcp.json", "/mcp/server-card"], sendCard);
 }
 
-module.exports = { htmlToMarkdown, mdPath, fromMdPath, linkHeader, wantsMarkdown, offerCatalog, clearAgentCache, mcpRoutes, TOOLS };
+module.exports = { htmlToMarkdown, mdPath, fromMdPath, linkHeader, wantsMarkdown, offerCatalog, pricingRows, clearAgentCache, mcpRoutes, TOOLS };

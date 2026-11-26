@@ -1,13 +1,13 @@
 {
  "DEFAULT_PRICING": [
   {
-   "price": "Starting ₹7,999/person/session",
+   "price": "Starting ₹8,000/person/session",
    "title": "Party Makeup",
    "desc": "Event-ready glam.",
    "featured": false
   },
   {
-   "price": "Starting ₹9,999/person/session",
+   "price": "Starting ₹10,000/person/session",
    "title": "Non-Bridal Makeup",
    "desc": "For the wedding party, family & guests.",
    "featured": false
@@ -19,13 +19,13 @@
    "featured": false
   },
   {
-   "price": "Starting ₹9,999 onwards",
+   "price": "Starting ₹10,000 onwards",
    "title": "Fashion Makeup",
    "desc": "Customised looks for portfolio & fashion shoots.",
    "featured": false
   },
   {
-   "price": "₹4,999/session",
+   "price": "₹5,000/session",
    "title": "Groom Makeup",
    "desc": "Camera-ready grooming for the big day.",
    "featured": false

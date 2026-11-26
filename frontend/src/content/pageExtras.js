@@ -11,7 +11,7 @@ const SKIN_LINK = ["American Academy of Dermatology: everyday skin care", "https
 export const pageExtras = {
   "/": {
     sections: [
-      { h: "Rekha Krishnamurthy at a Glance", details: [["Experience", "14+ years as a makeup artist in Bangalore"], ["Services", "Bridal, engagement, non-bridal, party, groom, editorial, fashion and photoshoot makeup, plus makeup classes"], ["Prices", "From ₹4,999 (groom) and ₹7,999 (party) to ₹30,000 per session (bridal)"], ["Where", "At your home or venue across Bangalore and nearby towns"], ["Book", "Form, phone or WhatsApp; book 4–6 months ahead for wedding season"]] },
+      { h: "Rekha Krishnamurthy at a Glance", details: [["Experience", "14+ years as a makeup artist in Bangalore"], ["Services", "Bridal, engagement, non-bridal, party, groom, editorial, fashion and photoshoot makeup, plus makeup classes"], ["Prices", "From ₹5,000 (groom) and ₹8,000 (party) to ₹30,000 per session (bridal)"], ["Where", "At your home or venue across Bangalore and nearby towns"], ["Book", "Form, phone or WhatsApp; book 4–6 months ahead for wedding season"]] },
       { h: "Why Clients Call Rekha the Best Makeup Artist", p: [
         "Rekha has done bridal makeup for **14+ years**. In that time, she has worked with **500+ brides** from many regions and styles. So she knows how makeup behaves in heat, in long rituals and under strong flash.",
         "She also plans each look with you. First, she asks about your skin, outfit, jewellery and the events. Then she suggests HD or airbrush makeup and a finish that suits you. As a result, you look like yourself, only polished and flash-proof.",

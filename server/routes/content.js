@@ -53,17 +53,20 @@ router.get("/content/pricing", ah(async (_q, res) => res.json(clean(await c("pri
 router.post("/content/pricing", requireAdmin, ah(async (req, res) => {
   const doc = { ...pricingIn(req.body || {}), id: uuid(), order: await c("pricing").countDocuments({}), created_at: nowIso() };
   await c("pricing").insertOne({ ...doc });
+  heroChanged();
   res.status(201).json(doc);
 }));
 
 router.put("/content/pricing/:id", requireAdmin, ah(async (req, res) => {
   const doc = await c("pricing").findOneAndUpdate({ id: req.params.id }, { $set: pricingIn(req.body || {}) }, { returnDocument: "after" });
   if (!doc) throw new HttpError(404, "Not found");
+  heroChanged();
   res.json(clean(doc));
 }));
 
 router.delete("/content/pricing/:id", requireAdmin, ah(async (req, res) => {
   if (!(await c("pricing").deleteOne({ id: req.params.id })).deletedCount) throw new HttpError(404, "Not found");
+  heroChanged();
   res.status(204).end();
 }));
 
