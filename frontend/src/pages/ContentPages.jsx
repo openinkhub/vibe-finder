@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { openBooking } from "../lib/booking";
 import { srcSetFor } from "../lib/img";
 import { Navigate, Link, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
@@ -161,8 +162,8 @@ export const ContactPage = () => {
   return (
     <PageShell page={page} title="Contact" faq={body?.faq}>
       <div data-testid="contact-page">
-        <Hero page={page} cta="Jump to Enquiry Form" onCta={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} />
-        <SeoIntro page={page} onCta={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} />
+        <Hero page={page} cta="Jump to Enquiry Form" onCta={() => openBooking()} />
+        <SeoIntro page={page} onCta={() => openBooking()} />
         {body && <RichBody body={body} />}
         <Contact showBooking={pathname !== BOOKING_PATH} requireTerms={pathname === BOOKING_PATH} />
       </div>

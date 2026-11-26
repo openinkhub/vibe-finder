@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "@/lib/motion";
 import { CalendarCheck } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { brand } from "../mock/mock";
-import { scrollToId } from "./Navbar";
+import { openBooking, bookingKindAt } from "../lib/booking";
 
 export const MobileBookBar = () => {
   const [visible, setVisible] = useState(false);
   const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 320);
@@ -18,10 +17,8 @@ export const MobileBookBar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleBook = () => {
-    if (pathname === "/") scrollToId("contact");
-    else navigate("/contact");
-  };
+  const handleBook = () => openBooking();
+  const isAcademy = bookingKindAt(pathname) === "enquiry";
 
   return (
     <AnimatePresence>
@@ -42,7 +39,7 @@ export const MobileBookBar = () => {
               data-testid="mobile-book-bar-btn"
             >
               <CalendarCheck size={17} />
-              Book Free Consult
+              {isAcademy ? "Enquire Now" : "Book Free Consult"}
             </button>
             <a
               href={brand.whatsappUrl}

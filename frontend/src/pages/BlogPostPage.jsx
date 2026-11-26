@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { setBookingContext } from "../lib/booking";
 import { useParams, Link, Navigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { ArrowLeft, CalendarDays, Tag, Sparkles } from "lucide-react";
@@ -22,6 +23,9 @@ const BlogPostPage = () => {
   });
   const [notFound, setNotFound] = useState(false);
 
+  // Course posts send readers to the Academy enquiry form; every other post to the booking form.
+  const courseCategory = post && /course|grooming|academy|class/i.test(post.category || "");
+  useEffect(() => { setBookingContext(courseCategory ? { kind: "enquiry", service: /grooming/i.test(post.category) ? "Self Grooming Workshop" : "Academy" } : null); return () => setBookingContext(null); }, [courseCategory, post]);
   useEffect(() => {
     if (post && post.slug === slug) return;
     setPost(null);

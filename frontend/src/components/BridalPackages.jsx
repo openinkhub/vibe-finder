@@ -126,7 +126,7 @@ const BridalPackages = () => (
               So Rekha works with you from consult through trial to the final event, and confirms each detail in advance.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="bridal-pkg-book-btn">
+              <Link to="/contact?service=Bridal" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="bridal-pkg-book-btn">
                 <CalendarCheck size={17} /> Book Free Consult
               </Link>
               <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-[#E62E6B] text-[#C8215A] font-medium hover:bg-[#FBE9F0] transition-colors w-full sm:w-auto" data-testid="bridal-pkg-whatsapp-btn">
@@ -178,7 +178,7 @@ const BridalPackages = () => (
                     </li>
                   ))}
                 </ul>
-                <Link to="/contact" className={`mt-7 w-full py-3 rounded-full text-sm font-medium text-center block transition-colors ${pkg.best ? "bg-[#D6245F] text-white hover:bg-[#C81F57]" : "border border-[#E62E6B] text-[#C8215A] hover:bg-[#FBE9F0]"}`} data-testid={`bridal-pkg-${pkg.tier.toLowerCase().replace(/\s+/g, "-")}-btn`}>
+                <Link to="/contact?service=Bridal" className={`mt-7 w-full py-3 rounded-full text-sm font-medium text-center block transition-colors ${pkg.best ? "bg-[#D6245F] text-white hover:bg-[#C81F57]" : "border border-[#E62E6B] text-[#C8215A] hover:bg-[#FBE9F0]"}`} data-testid={`bridal-pkg-${pkg.tier.toLowerCase().replace(/\s+/g, "-")}-btn`}>
                   Discuss this package
                 </Link>
               </TiltCard>
@@ -242,7 +242,7 @@ const BridalPackages = () => (
                 <div>
                   <div className="font-display text-base font-bold text-[#4A2530]">On-Site. Everywhere in Karnataka.</div>
                   <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">Also, Rekha travels to your home, hotel or venue, so you don't need to visit a studio. Outstation charges extra.</p>
-                  <Link to="/contact" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#C8215A] hover:gap-2.5 transition-all" data-testid="bridal-pkg-location-link">
+                  <Link to="/contact?service=Bridal" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#C8215A] hover:gap-2.5 transition-all" data-testid="bridal-pkg-location-link">
                     Check availability <ArrowUpRight size={14} />
                   </Link>
                 </div>

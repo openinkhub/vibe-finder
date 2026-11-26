@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import FloatingButtons from "./components/FloatingButtons";
 import { MobileBookBar } from "./components/MobileBookBar";
+import { BookingModal } from "./components/BookingModal";
 import NotFoundPage from "./pages/NotFoundPage";
 import { SeoIntro } from "./components/SeoIntro";
 import { useSeo, useJsonLd } from "./components/Seo";
@@ -104,6 +105,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <RouteTracker />
+        <BookingModal />
         <Suspense fallback={<div className="min-h-screen" />}>
         <Routes>
           {allPages.map((p) => <Route key={p.path} path={p.path} caseSensitive element={special[p.path] || (legalKeyByPath[p.path] ? <LegalPage /> : p.group === "Guides" ? <GuidePage /> : <SheetPage />)} />)}

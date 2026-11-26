@@ -1,4 +1,5 @@
 import React from "react";
+import { openBooking } from "../lib/booking";
 import { Link } from "react-router-dom";
 import { Check, X, ArrowUpRight, ArrowRight, Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
@@ -29,7 +30,7 @@ const Cta = ({ c }) => {
   if (c.href === "whatsapp") return <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className={cls} data-testid={tid}><FaWhatsapp size={16} /> {c.label}</a>;
   if (c.href === "tel") return <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className={cls} data-testid={tid}><Phone size={16} /> {c.label}</a>;
   return c.scrollTo
-    ? <button onClick={() => scrollToId(c.scrollTo)} className={cls} data-testid={tid}>{c.label} <ArrowUpRight size={16} /></button>
+    ? <button onClick={() => (c.scrollTo === "contact" ? openBooking() : scrollToId(c.scrollTo))} className={cls} data-testid={tid}>{c.label} <ArrowUpRight size={16} /></button>
     : <Link to={c.to} className={cls} data-testid={tid}>{c.label} <ArrowUpRight size={16} /></Link>;
 };
 

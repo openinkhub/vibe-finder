@@ -103,7 +103,7 @@ const CorporateMakeup = () => (
               ))}
             </ul>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="corp-book-btn">
+              <Link to="/contact?service=Corporate%20Makeup" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="corp-book-btn">
                 <CalendarCheck size={17} /> Book a Session
               </Link>
               <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-[#E62E6B] text-[#C8215A] font-medium hover:bg-[#FBE9F0] transition-colors w-full sm:w-auto" data-testid="corp-whatsapp-btn">
@@ -151,7 +151,7 @@ const CorporateMakeup = () => (
             Rekha takes shoots and events across Bangalore, Mysore and parts of Karnataka.
           </div>
           <div className="mt-6">
-            <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#4A2530] text-white font-medium hover:bg-[#D6245F] transition-colors text-sm" data-testid="corp-cta-bottom">
+            <Link to="/contact?service=Corporate%20Makeup" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#4A2530] text-white font-medium hover:bg-[#D6245F] transition-colors text-sm" data-testid="corp-cta-bottom">
               Enquire about your shoot <ArrowUpRight size={16} />
             </Link>
           </div>

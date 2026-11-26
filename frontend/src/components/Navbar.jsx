@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { openBooking, bookingKindAt } from "../lib/booking";
 import { Menu, X, ArrowUpRight, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "@/lib/motion";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { brand } from "../mock/mock";
 import { headerMenu } from "../lib/pages";
 
@@ -41,7 +42,6 @@ const Navbar = ({ solid = false }) => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -50,7 +50,8 @@ const Navbar = ({ solid = false }) => {
   }, []);
   useEffect(() => { setOpen(false); }, [pathname]);
 
-  const goContact = () => { setOpen(false); if (pathname === "/") scrollToId("contact"); else navigate("/contact"); };
+  const goContact = () => { setOpen(false); openBooking(); };
+  const bookLabel = bookingKindAt(pathname) === "enquiry" ? "Enquire now" : "Book now";
   const linkCls = (to, active = pathname === to) => `relative text-[14px] tracking-wide transition-colors duration-300 group ${active ? "text-[#C8215A]" : "text-[#4A2530] hover:text-[#C8215A]"}`;
   const filled = solid || scrolled;
 
@@ -73,7 +74,7 @@ const Navbar = ({ solid = false }) => {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <button onClick={goContact} className="hidden md:inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-[#D6245F] text-white text-sm font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-lg shadow-[#E62E6B]/25" data-testid="nav-book-btn">Book now <ArrowUpRight size={15} /></button>
+          <button onClick={goContact} className="hidden md:inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-[#D6245F] text-white text-sm font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-lg shadow-[#E62E6B]/25" data-testid="nav-book-btn">{bookLabel} <ArrowUpRight size={15} /></button>
           <button onClick={() => setOpen((v) => !v)} className="lg:hidden w-11 h-11 flex items-center justify-center rounded-full border border-[#F1DCE3] bg-white/70 text-[#C8215A]" aria-label="Menu" data-testid="mobile-menu-btn">{open ? <X size={20} /> : <Menu size={20} />}</button>
         </div>
       </div>
@@ -93,7 +94,7 @@ const Navbar = ({ solid = false }) => {
             ) : (
               <Link key={m.to} to={m.to} className="block w-full text-left px-6 py-4 text-[#4A2530] border-b border-[#FBE9F0] hover:bg-[#FBE9F0] hover:text-[#C8215A] transition-colors" data-testid={`mobile-nav-${slug(m.label)}`}>{m.label}</Link>
             ))}
-            <button onClick={goContact} className="m-4 w-[calc(100%-2rem)] py-3.5 rounded-full bg-[#D6245F] text-white font-medium" data-testid="mobile-book-btn">Book now</button>
+            <button onClick={goContact} className="m-4 w-[calc(100%-2rem)] py-3.5 rounded-full bg-[#D6245F] text-white font-medium" data-testid="mobile-book-btn">{bookLabel}</button>
           </motion.div>
         )}
       </AnimatePresence>
