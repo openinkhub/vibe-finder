@@ -120,6 +120,9 @@ app.use(express.static(BUILD_DIR, { index: false, redirect: false, maxAge: "1h",
   // Images and icons in the site root (logo, hero poster, favicons) change rarely.
   else if (/\.(png|jpe?g|webp|avif|svg|ico|woff2?)$/i.test(p)) res.set("Cache-Control", "public, max-age=2592000");
 } }));
+// Script/style files from earlier builds (see scripts/build-frontend.js), for visitors whose page
+// was opened before a deploy. Without them those pages fail with "ChunkLoadError".
+app.use("/static", express.static(require("path").join(require("os").homedir(), ".rk-static-archive"), { index: false, redirect: false, immutable: true, maxAge: "365d" }));
 
 const sendHtml = (res, html, status = 200) => res.status(status).set("Cache-Control", "no-cache").type("html").send(html);
 // A page: Markdown when the client asks for it (Accept: text/markdown), else HTML with a Link

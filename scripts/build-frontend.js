@@ -51,6 +51,28 @@ for (const sub of ["js", "css"]) {
 fs.rmSync(keep, { recursive: true, force: true });
 if (restored) console.log(`Kept ${restored} script/style files from the previous build for open pages`);
 
+// Some hosts build each deploy in a fresh folder, so the copy above finds nothing. Also archive
+// every build's script/style files in the home folder (kept 7 days); server.js serves from there
+// when a file is missing from the current build.
+try {
+  const archive = path.join(require("os").homedir(), ".rk-static-archive");
+  let archived = 0;
+  for (const sub of ["js", "css"]) {
+    const from = path.join(staticDir, sub), to = path.join(archive, sub);
+    if (!fs.existsSync(from)) continue;
+    fs.mkdirSync(to, { recursive: true });
+    for (const f of fs.readdirSync(from)) {
+      if (!/\.(js|css)$/.test(f)) continue;
+      const dest = path.join(to, f);
+      if (!fs.existsSync(dest)) { fs.copyFileSync(path.join(from, f), dest); archived++; }
+    }
+    for (const f of fs.readdirSync(to)) {
+      if (Date.now() - fs.statSync(path.join(to, f)).mtimeMs > 7 * 864e5) fs.rmSync(path.join(to, f), { force: true });
+    }
+  }
+  console.log(`Archived ${archived} new script/style files for visitors with older pages open`);
+} catch (e) { console.log("Static archive skipped:", e.message); }
+
 // The build tools (~70,000 files) aren't needed once the site is built; removing them keeps the
 // hosting plan's file (inode) count low. They're reinstalled on the next deploy.
 // Set KEEP_FRONTEND_DEPS=1 to keep them (e.g. for local frontend work).

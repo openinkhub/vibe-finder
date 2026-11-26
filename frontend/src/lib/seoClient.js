@@ -39,7 +39,8 @@ export const startVitals = () => {
   });
   observe("event", (e) => { if (e.interactionId) m.inp = Math.max(m.inp || 0, e.duration); }, { durationThreshold: 40 });
   try { const nav = performance.getEntriesByType("navigation")[0]; if (nav) m.ttfb = nav.responseStart; } catch { /* ignore */ }
-  window.addEventListener("error", (e) => { if (m.errors.length < 5 && e.message) m.errors.push(`${e.message}${e.filename ? ` @ ${String(e.filename).split("/").pop()}:${e.lineno}` : ""}`); });
+  // "ResizeObserver loop..." is a harmless browser notice, not a site error.
+  window.addEventListener("error", (e) => { if (m.errors.length < 5 && e.message && !/^ResizeObserver loop/.test(e.message)) m.errors.push(`${e.message}${e.filename ? ` @ ${String(e.filename).split("/").pop()}:${e.lineno}` : ""}`); });
   window.addEventListener("unhandledrejection", (e) => { if (m.errors.length < 5) m.errors.push(`Unhandled: ${String((e.reason && e.reason.message) || e.reason).slice(0, 200)}`); });
   let sent = false;
   const send = (force) => {
