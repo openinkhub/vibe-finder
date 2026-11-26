@@ -63,7 +63,11 @@ const requestOnce = async (method, url, data, config = {}) => {
 export const api = {
   get: (url, config) => request("GET", url, undefined, config),
   delete: (url, config) => request("DELETE", url, undefined, config),
-  post: (url, data, config) => request("POST", url, data, config),
+  post: (url, data, config) => request("POST", url, data, config).then((r) => {
+    // Booking enquiries are the site's main conversion: tell Google Tag Manager (GA4 "generate_lead").
+    if (url === "/enquiries") { try { (window.dataLayer = window.dataLayer || []).push({ event: "generate_lead", lead_source: (data && data.source) || "form", service: (data && data.service) || "", page_path: window.location.pathname }); } catch (e) { /* ignore */ } }
+    return r;
+  }),
   put: (url, data, config) => request("PUT", url, data, config),
   patch: (url, data, config) => request("PATCH", url, data, config),
 };

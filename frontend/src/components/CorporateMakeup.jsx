@@ -55,9 +55,9 @@ const CorporateMakeup = () => (
     <section className="bg-[#F4F1EA] py-20 md:py-28" data-testid="corp-who-section">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal>
-          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Who it's for</span>
+          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Who it's for</span>
           <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl lg:text-5xl leading-[1.1] mt-3">
-            Professional makeup for <span className="italic text-[#E62E6B]">every camera</span>
+            Professional makeup for <span className="italic text-[#C8215A]">every camera</span>
           </h2>
           <p className="mt-4 max-w-2xl text-sm sm:text-base text-[#5C4E52] leading-relaxed">
             Whether you face a TV camera, a brand shoot or a stage, good makeup is the difference between looking present and looking polished.
@@ -68,7 +68,7 @@ const CorporateMakeup = () => (
           {WHO.map((w, i) => (
             <Reveal key={w.label} delay={i * 0.08}>
               <TiltCard className="h-full bg-white rounded-3xl p-7 border border-[#F1DCE3] hover:shadow-xl hover:shadow-[#E62E6B]/10 transition-shadow duration-300">
-                <div className="w-11 h-11 rounded-2xl bg-[#FBE9F0] flex items-center justify-center text-[#E62E6B]">
+                <div className="w-11 h-11 rounded-2xl bg-[#FBE9F0] flex items-center justify-center text-[#C8215A]">
                   <w.icon size={20} />
                 </div>
                 <h3 className="font-display text-lg font-bold text-[#4A2530] mt-5">{w.label}</h3>
@@ -85,9 +85,9 @@ const CorporateMakeup = () => (
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <Reveal>
-            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">What's included</span>
+            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">What's included</span>
             <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl leading-[1.1] mt-3">
-              Each session is built to <span className="italic text-[#E62E6B]">perform in photos</span>
+              Each session is built to <span className="italic text-[#C8215A]">perform in photos</span>
             </h2>
             <p className="mt-4 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
               Makeup for shoots and TV isn't just about looking good. It must also look right on your lens, under your lights and in your format.
@@ -96,7 +96,7 @@ const CorporateMakeup = () => (
               {INCLUDES.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm text-[#5C4E52]">
                   <span className="mt-0.5 w-5 h-5 rounded-full bg-[#FBE9F0] flex items-center justify-center shrink-0">
-                    <Check size={12} className="text-[#E62E6B]" />
+                    <Check size={12} className="text-[#C8215A]" />
                   </span>
                   {item}
                 </li>
@@ -106,7 +106,7 @@ const CorporateMakeup = () => (
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="corp-book-btn">
                 <CalendarCheck size={17} /> Book a Session
               </Link>
-              <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#FBE9F0] transition-colors w-full sm:w-auto" data-testid="corp-whatsapp-btn">
+              <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-[#E62E6B] text-[#C8215A] font-medium hover:bg-[#FBE9F0] transition-colors w-full sm:w-auto" data-testid="corp-whatsapp-btn">
                 Ask on WhatsApp
               </a>
             </div>
@@ -115,7 +115,7 @@ const CorporateMakeup = () => (
             <div className="relative rounded-[32px] overflow-hidden aspect-[4/5]">
               <img width="800" height="1000" decoding="async" src={CORP_IMG} srcSet={srcSetFor(CORP_IMG)} sizes="(min-width: 768px) 45vw, 100vw" alt="Professional corporate makeup Bangalore" className="w-full h-full object-cover" loading="lazy" />
               <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md rounded-2xl px-5 py-4 flex items-center gap-4 shadow-xl">
-                <Sparkles size={22} className="text-[#E62E6B] shrink-0" />
+                <Sparkles size={22} className="text-[#C8215A] shrink-0" />
                 <div>
                   <div className="font-display text-sm font-bold text-[#4A2530]">On-Location Service.</div>
                   <div className="text-xs text-[#5C4E52] mt-0.5">Rekha comes to your studio, office or event venue across the city.</div>
@@ -131,14 +131,14 @@ const CorporateMakeup = () => (
     <section className="bg-[#FBE9F0] py-20 md:py-28" data-testid="corp-process-section">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal className="text-center max-w-xl mx-auto">
-          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">How it works</span>
-          <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl leading-[1.1] mt-3">From brief to on-set in <span className="italic text-[#E62E6B]">three steps</span></h2>
+          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">How it works</span>
+          <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl leading-[1.1] mt-3">From brief to on-set in <span className="italic text-[#C8215A]">three steps</span></h2>
         </Reveal>
         <div className="mt-10 md:mt-14 grid sm:grid-cols-3 gap-6 md:gap-8">
           {STEPS.map((s, i) => (
             <Reveal key={s.n} delay={i * 0.1}>
               <div className="bg-white rounded-3xl p-7 border border-[#F1DCE3] h-full">
-                <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#E62E6B]">Step {s.n}</div>
+                <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#C8215A]">Step {s.n}</div>
                 <h3 className="font-display text-xl font-bold text-[#4A2530] mt-4">{s.title}</h3>
                 <p className="mt-3 text-sm text-[#5C4E52] leading-relaxed">{s.body}</p>
               </div>
@@ -147,7 +147,7 @@ const CorporateMakeup = () => (
         </div>
         <Reveal className="mt-10 md:mt-14 text-center">
           <div className="inline-flex items-center gap-3 text-sm text-[#5C4E52]">
-            <MapPin size={16} className="text-[#E62E6B]" />
+            <MapPin size={16} className="text-[#C8215A]" />
             Rekha takes shoots and events across Bangalore, Mysore and parts of Karnataka.
           </div>
           <div className="mt-6">
@@ -164,9 +164,9 @@ const CorporateMakeup = () => (
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <Reveal>
-            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Why it matters</span>
+            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Why it matters</span>
             <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl leading-[1.1] mt-3">
-              Lenses see what <span className="italic text-[#E62E6B]">eyes miss</span>
+              Lenses see what <span className="italic text-[#C8215A]">eyes miss</span>
             </h2>
             <p className="mt-5 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
               After all, a lens picks up shine, uneven colour and colour casts that the eye smooths over. So Rekha adjusts the makeup for the light and the lens before you step in front of it.
@@ -184,7 +184,7 @@ const CorporateMakeup = () => (
             ].map((f, i) => (
               <Reveal key={f.title} delay={i * 0.07}>
                 <div className="bg-white rounded-2xl p-5 border border-[#F1DCE3]">
-                  <f.icon size={20} className="text-[#E62E6B]" />
+                  <f.icon size={20} className="text-[#C8215A]" />
                   <div className="font-display text-sm font-bold text-[#4A2530] mt-3">{f.title}</div>
                   <p className="mt-1.5 text-xs text-[#5C4E52] leading-relaxed">{f.body}</p>
                 </div>

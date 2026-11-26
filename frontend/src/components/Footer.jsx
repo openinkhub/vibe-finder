@@ -22,7 +22,7 @@ const Col = ({ title, children, delay = 0, className = "" }) => (
 );
 
 const Footer = () => {
-  const li = "text-[#4A2530] hover:text-[#E62E6B] hover:translate-x-1 inline-block transition-all text-sm";
+  const li = "text-[#4A2530] hover:text-[#C8215A] hover:translate-x-1 inline-block transition-all text-sm";
 
   return (
     <footer className="relative bg-[#FBE9F0] text-[#4A2530] overflow-hidden" data-testid="footer">
@@ -35,13 +35,13 @@ const Footer = () => {
               <motion.img width="311" height="133" src={brand.logo} alt="Rekha Krishnamurthy Makeup & Academy" className="h-12 sm:h-14 w-auto" whileHover={{ rotateY: 12, scale: 1.04 }} transition={{ type: "spring", stiffness: 240, damping: 18 }} style={{ transformPerspective: 600 }} />
             </Link>
             <p className="mt-6 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-sm">Bridal, party & editorial makeup that reads flawless on camera and feels effortless in person. Serving brides across Bangalore.</p>
-            <a href={brand.siteUrl} className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#E62E6B] hover:gap-2.5 transition-all" data-testid="footer-site-link">rekhakrishnamurthy.com <ArrowUpRight size={15} /></a>
+            <a href={brand.siteUrl} className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#C8215A] hover:gap-2.5 transition-all" data-testid="footer-site-link">rekhakrishnamurthy.com <ArrowUpRight size={15} /></a>
             <ul className="mt-6 space-y-3">
-              <li className="flex items-center gap-3 text-sm"><Phone size={16} className="text-[#E62E6B]" /><a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="hover:text-[#E62E6B]">{brand.phone}</a></li>
-              <li className="flex items-center gap-3 text-sm"><MapPin size={16} className="text-[#E62E6B]" /><span>{brand.location}</span></li>
-              <li className="flex items-center gap-3 text-sm"><MapPin size={16} className="text-[#E62E6B]" /><a href="https://share.google/nu7HoWg5cktHMEnHr" target="_blank" rel="noreferrer" className="hover:text-[#E62E6B]" data-testid="footer-locate-google-link">Locate us on Google</a></li>
+              <li className="flex items-center gap-3 text-sm"><Phone size={16} className="text-[#C8215A]" /><a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="hover:text-[#C8215A]">{brand.phone}</a></li>
+              <li className="flex items-center gap-3 text-sm"><MapPin size={16} className="text-[#C8215A]" /><span>{brand.location}</span></li>
+              <li className="flex items-center gap-3 text-sm"><MapPin size={16} className="text-[#C8215A]" /><a href="https://share.google/nu7HoWg5cktHMEnHr" target="_blank" rel="noreferrer" className="hover:text-[#C8215A]" data-testid="footer-locate-google-link">Locate us on Google</a></li>
               <li className="flex items-center gap-3 text-sm"><FaWhatsapp size={16} className="text-[#25D366] shrink-0" /><a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="hover:text-[#25D366]">Chat on WhatsApp</a></li>
-              <li className="flex items-center gap-3 text-sm"><Mail size={16} className="text-[#E62E6B] shrink-0" /><a href={`mailto:${brand.email}`} className="hover:text-[#E62E6B] break-all">{brand.email}</a></li>
+              <li className="flex items-center gap-3 text-sm"><Mail size={16} className="text-[#C8215A] shrink-0" /><a href={`mailto:${brand.email}`} className="hover:text-[#C8215A] break-all">{brand.email}</a></li>
             </ul>
             <div className="mt-6 flex items-center gap-3" data-testid="footer-social-icons">
               {socialLinks.map(({ key, href, icon: Icon, label }) => (

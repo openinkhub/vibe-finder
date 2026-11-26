@@ -94,6 +94,7 @@ export const useJsonLd = (page, faq) => {
       isPartOf: { "@id": `${SITE_URL}/#website` },
       author: { "@type": "Person", name: "Rekha Krishnamurthy", url: `${SITE_URL}/about-us` },
       publisher: { "@id": `${SITE_URL}/#organization` },
+      ...((page.updated || process.env.REACT_APP_CONTENT_DATE) ? { dateModified: page.updated || process.env.REACT_APP_CONTENT_DATE } : {}),
     };
     injectJsonLd("ld-json-webpage", webPage);
     injectJsonLd("ld-json-breadcrumb", breadcrumb);
@@ -107,6 +108,7 @@ export const useJsonLd = (page, faq) => {
         description: page.metaDescription,
         provider: { "@type": "Person", name: "Rekha Krishnamurthy" },
         areaServed: "Bangalore, Karnataka, India",
+        ...(page.offers ? { offers: page.offers.map((o) => ({ "@type": "Offer", name: o.name, price: o.price, priceCurrency: "INR", url: page.canonical, availability: "https://schema.org/InStock" })) } : {}),
       });
     } else if (page.group === "Academy") {
       injectJsonLd("ld-json-entity", {

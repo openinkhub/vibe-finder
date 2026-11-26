@@ -82,7 +82,7 @@ const Faq = ({ q, a }) => {
     <div className="border-b border-[#F1DCE3] last:border-0">
       <button className="w-full flex items-center justify-between gap-4 py-5 text-left" onClick={() => setOpen(!open)} data-testid={`faq-${q.slice(0, 20).replace(/\s+/g, "-").toLowerCase()}`}>
         <span className="font-medium text-sm sm:text-base text-[#4A2530]">{q}</span>
-        <ChevronDown size={18} className={`text-[#E62E6B] shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+        <ChevronDown size={18} className={`text-[#C8215A] shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
       </button>
       {open && <p className="pb-5 text-sm text-[#5C4E52] leading-relaxed">{a}</p>}
     </div>
@@ -115,9 +115,9 @@ const BridalPackages = () => (
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <Reveal>
-            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Bridal packages</span>
+            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Bridal packages</span>
             <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl lg:text-5xl leading-[1.1] mt-3">
-              Each look is planned, not <span className="italic text-[#E62E6B]">pieced together</span>
+              Each look is planned, not <span className="italic text-[#C8215A]">pieced together</span>
             </h2>
             <p className="mt-5 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
               A bridal package isn't just a list of services — it's a plan that considers your events, timing, outfits, skin, and the way you want to look in photographs that will last a lifetime.
@@ -129,7 +129,7 @@ const BridalPackages = () => (
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="bridal-pkg-book-btn">
                 <CalendarCheck size={17} /> Book Free Consult
               </Link>
-              <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#FBE9F0] transition-colors w-full sm:w-auto" data-testid="bridal-pkg-whatsapp-btn">
+              <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-[#E62E6B] text-[#C8215A] font-medium hover:bg-[#FBE9F0] transition-colors w-full sm:w-auto" data-testid="bridal-pkg-whatsapp-btn">
                 <FaWhatsapp size={17} /> WhatsApp Rekha
               </a>
             </div>
@@ -138,7 +138,7 @@ const BridalPackages = () => (
             <div className="relative rounded-[32px] overflow-hidden aspect-[4/5]">
               <img width="800" height="1000" decoding="async" src={BRIDAL_IMG} srcSet={srcSetFor(BRIDAL_IMG)} sizes="(min-width: 768px) 45vw, 100vw" alt="Bridal makeup artist Bangalore" className="w-full h-full object-cover" loading="lazy" />
               <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md rounded-2xl px-4 py-3 shadow-xl flex items-center gap-3">
-                <Star size={18} className="text-[#E62E6B] shrink-0" fill="#E62E6B" />
+                <Star size={18} className="text-[#C8215A] shrink-0" fill="#E62E6B" />
                 <div>
                   <div className="font-display text-sm font-bold text-[#4A2530]">Trusted by 500+ brides</div>
                   <div className="text-xs text-[#5C4E52]">Across Karnataka for 14+ years</div>
@@ -154,8 +154,8 @@ const BridalPackages = () => (
     <section className="bg-white py-20 md:py-28" data-testid="bridal-pkg-tiers">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal className="text-center max-w-xl mx-auto">
-          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Package options</span>
-          <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl leading-[1.1] mt-3">Choose the coverage that <span className="italic text-[#E62E6B]">fits your wedding</span></h2>
+          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Package options</span>
+          <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl leading-[1.1] mt-3">Choose the coverage that <span className="italic text-[#C8215A]">fits your wedding</span></h2>
           <p className="mt-4 text-sm text-[#5C4E52]">Rekha talks through each package in detail at your free consult. However, prices vary with travel, the number of events and any extra services.</p>
         </Reveal>
         <div className="mt-10 md:mt-14 grid sm:grid-cols-3 gap-5 md:gap-6">
@@ -167,18 +167,18 @@ const BridalPackages = () => (
                     <Sparkles size={11} /> Most chosen
                   </div>
                 )}
-                <div className={`font-mono text-[10px] tracking-[0.2em] uppercase ${pkg.best ? "text-[#F4B7CE]" : "text-[#E62E6B]"}`}>{pkg.tag}</div>
+                <div className={`font-mono text-[10px] tracking-[0.2em] uppercase ${pkg.best ? "text-[#F4B7CE]" : "text-[#C8215A]"}`}>{pkg.tag}</div>
                 <h3 className={`font-display text-xl font-bold mt-2 ${pkg.best ? "text-white" : "text-[#4A2530]"}`}>{pkg.tier}</h3>
-                <div className={`mt-1 text-sm font-medium ${pkg.best ? "text-[#F4B7CE]" : "text-[#E62E6B]"}`}>{pkg.price}</div>
+                <div className={`mt-1 text-sm font-medium ${pkg.best ? "text-[#F4B7CE]" : "text-[#C8215A]"}`}>{pkg.price}</div>
                 <ul className="mt-6 space-y-3 flex-1">
                   {pkg.items.map((item) => (
                     <li key={item} className="flex items-start gap-2.5 text-sm">
-                      <Check size={14} className={`mt-0.5 shrink-0 ${pkg.best ? "text-[#F4B7CE]" : "text-[#E62E6B]"}`} />
+                      <Check size={14} className={`mt-0.5 shrink-0 ${pkg.best ? "text-[#F4B7CE]" : "text-[#C8215A]"}`} />
                       <span className={pkg.best ? "text-white/90" : "text-[#5C4E52]"}>{item}</span>
                     </li>
                   ))}
                 </ul>
-                <Link to="/contact" className={`mt-7 w-full py-3 rounded-full text-sm font-medium text-center block transition-colors ${pkg.best ? "bg-[#D6245F] text-white hover:bg-[#C81F57]" : "border border-[#E62E6B] text-[#E62E6B] hover:bg-[#FBE9F0]"}`} data-testid={`bridal-pkg-${pkg.tier.toLowerCase().replace(/\s+/g, "-")}-btn`}>
+                <Link to="/contact" className={`mt-7 w-full py-3 rounded-full text-sm font-medium text-center block transition-colors ${pkg.best ? "bg-[#D6245F] text-white hover:bg-[#C81F57]" : "border border-[#E62E6B] text-[#C8215A] hover:bg-[#FBE9F0]"}`} data-testid={`bridal-pkg-${pkg.tier.toLowerCase().replace(/\s+/g, "-")}-btn`}>
                   Discuss this package
                 </Link>
               </TiltCard>
@@ -193,9 +193,9 @@ const BridalPackages = () => (
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           <Reveal>
-            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Planning guide</span>
+            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Planning guide</span>
             <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl leading-[1.1] mt-3">
-              What to have ready before your <span className="italic text-[#E62E6B]">consultation</span>
+              What to have ready before your <span className="italic text-[#C8215A]">consultation</span>
             </h2>
             <p className="mt-4 text-sm sm:text-base text-[#5C4E52] leading-relaxed">
               A well-prepared consult means less back-and-forth and a clearer picture of your day — which lets us focus on the creative part.
@@ -204,7 +204,7 @@ const BridalPackages = () => (
               {CHECKLIST.map((c) => (
                 <li key={c.q} className="bg-white rounded-2xl p-5 border border-[#F1DCE3]">
                   <div className="flex items-start gap-3">
-                    <Check size={15} className="text-[#E62E6B] mt-0.5 shrink-0" />
+                    <Check size={15} className="text-[#C8215A] mt-0.5 shrink-0" />
                     <div>
                       <div className="font-medium text-sm text-[#4A2530]">{c.q}</div>
                       <div className="mt-1 text-xs text-[#5C4E52] leading-relaxed">{c.hint}</div>
@@ -238,11 +238,11 @@ const BridalPackages = () => (
             </Reveal>
             <Reveal delay={0.15}>
               <div className="bg-white rounded-3xl p-7 border border-[#F1DCE3] flex items-start gap-4">
-                <MapPin size={20} className="text-[#E62E6B] mt-0.5 shrink-0" />
+                <MapPin size={20} className="text-[#C8215A] mt-0.5 shrink-0" />
                 <div>
                   <div className="font-display text-base font-bold text-[#4A2530]">On-Site. Everywhere in Karnataka.</div>
                   <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">Also, Rekha travels to your home, hotel or venue, so you don't need to visit a studio. Outstation charges extra.</p>
-                  <Link to="/contact" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#E62E6B] hover:gap-2.5 transition-all" data-testid="bridal-pkg-location-link">
+                  <Link to="/contact" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#C8215A] hover:gap-2.5 transition-all" data-testid="bridal-pkg-location-link">
                     Check availability <ArrowUpRight size={14} />
                   </Link>
                 </div>
@@ -258,9 +258,9 @@ const BridalPackages = () => (
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <div className="grid lg:grid-cols-[1fr_1.4fr] gap-12 items-start">
           <Reveal>
-            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Common questions</span>
+            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Common questions</span>
             <h2 className="font-display text-[#4A2530] text-3xl sm:text-4xl leading-[1.1] mt-3">
-              Answers before you <span className="italic text-[#E62E6B]">reach out</span>
+              Answers before you <span className="italic text-[#C8215A]">reach out</span>
             </h2>
             <p className="mt-4 text-sm text-[#5C4E52] leading-relaxed">Still have questions? Send a message on WhatsApp or fill the request form — Rekha usually replies within a few hours.</p>
             <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#25D366] text-white font-medium text-sm hover:bg-[#1eb959] transition-colors" data-testid="bridal-pkg-faq-whatsapp">

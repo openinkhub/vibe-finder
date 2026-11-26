@@ -37,7 +37,7 @@ const ScrollTransformation = ({ showcase }) => {
       <div className="sticky top-0 h-screen flex items-center">
         <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 w-full grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-16 items-center">
           <div className="order-2 lg:order-1">
-            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Scroll to transform · {String(idx + 1).padStart(2, "0")} / {String(frames.length).padStart(2, "0")}</span>
+            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Scroll to transform · {String(idx + 1).padStart(2, "0")} / {String(frames.length).padStart(2, "0")}</span>
             <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-7xl leading-[1.02] mt-4" data-testid="morph-title">{cur.name}</h2>
             <p className="mt-4 text-sm sm:text-base text-[#5C4E52] max-w-md">{idx === 0 ? "First, every transformation starts with skin prep: hydrated, primed and ready to hold a twelve-hour look." : `${cur.name} — lips ${lab?.lips || ""}, cheeks ${lab?.blush || ""}, eyes ${lab?.eyes || ""}. Keep scrolling to move through the looks.`}</p>
             <div className="mt-6 flex gap-1.5" aria-hidden>{frames.map((f, i) => <span key={f.key} className={`h-1 rounded-full transition-all duration-500 ${i === idx ? "w-10 bg-[#E62E6B]" : "w-4 bg-[#F4B7CE]"}`} />)}</div>
@@ -66,7 +66,7 @@ const ParallaxGallery = ({ items }) => {
     <section className="relative bg-[#EBE6DB] py-20 md:py-32 overflow-hidden" data-testid="parallax-gallery">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal className="max-w-2xl mb-10 md:mb-14">
-          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Parallax gallery</span>
+          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Parallax gallery</span>
           <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4">Frames in depth</h2>
           <p className="mt-4 text-sm sm:text-base text-[#5C4E52]">Move your cursor — or tilt your phone — and the contact sheet drifts in layers.</p>
         </Reveal>
@@ -90,7 +90,7 @@ const ParallaxItem = ({ p, d, sx, sy, i }) => {
     <motion.div style={{ x, y, rotateX, rotateY, z: d }} className={`${i % 3 === 1 ? "md:mt-16" : i % 3 === 2 ? "md:-mt-8" : ""}`} data-testid={`parallax-item-${i}`}>
       <TiltCard max={6} className="rounded-2xl overflow-hidden shadow-[0_30px_70px_-30px_rgba(74,37,48,0.45)]">
         <img width="600" height="560" decoding="async" src={imgUrl(p.image)} srcSet={srcSetFor(p.image)} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" alt={p.alt_text || p.caption} loading="lazy" className="w-full h-[220px] sm:h-[280px] md:h-[340px] object-cover" />
-        <div className="absolute bottom-3 left-3 font-mono text-[10px] text-white bg-[#E62E6B]/90 px-2 py-1 rounded">{p.cat} · {p.caption}</div>
+        <div className="absolute bottom-3 left-3 font-mono text-[10px] text-white bg-[#D6245F]/90 px-2 py-1 rounded">{p.cat} · {p.caption}</div>
       </TiltCard>
     </motion.div>
   );

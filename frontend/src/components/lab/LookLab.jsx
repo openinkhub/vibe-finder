@@ -124,8 +124,8 @@ const LookLab = () => {
       <div className="absolute -bottom-32 -right-24 w-[380px] h-[380px] rounded-full bg-[#E62E6B]/15 blur-3xl" />
       <div className="relative max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal className="max-w-2xl">
-          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Look lab · MediaPipe 3D face scan</span>
-          <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mt-4 sm:mt-5">Scan your face, <span className="italic text-[#E62E6B]">see it in 3D</span> — in four looks</h2>
+          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Look lab · MediaPipe 3D face scan</span>
+          <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mt-4 sm:mt-5">Scan your face, <span className="italic text-[#C8215A]">see it in 3D</span> — in four looks</h2>
           <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">One camera capture builds a 468-point 3D model of your face. Tap Natural, Bridal, Editorial or Glam and the filter is painted straight onto the model — rotate it, then compare before / after beside it. Nothing is uploaded.</p>
         </Reveal>
 
@@ -138,7 +138,7 @@ const LookLab = () => {
           ))}
           <div className="flex-1" />
           {mode !== "camera" && <button onClick={startCamera} disabled={mode === "processing"} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#4A2530] text-white text-sm font-medium hover:bg-[#D6245F] transition-colors disabled:opacity-60" data-testid="looklab-scan-btn"><ScanFace size={16} /> Scan my face</button>}
-          {scan && !scan.isSample && mode === "idle" && <button onClick={resetToModel} className="w-10 h-10 rounded-full border border-[#F1DCE3] bg-white text-[#6E6266] hover:text-[#E62E6B] flex items-center justify-center" aria-label="Back to model" data-testid="looklab-reset-btn"><RotateCcw size={15} /></button>}
+          {scan && !scan.isSample && mode === "idle" && <button onClick={resetToModel} className="w-10 h-10 rounded-full border border-[#F1DCE3] bg-white text-[#6E6266] hover:text-[#C8215A] flex items-center justify-center" aria-label="Back to model" data-testid="looklab-reset-btn"><RotateCcw size={15} /></button>}
         </div>
 
         <div className="mt-6 md:mt-8 grid lg:grid-cols-2 gap-5 lg:gap-8 items-stretch">
@@ -156,7 +156,7 @@ const LookLab = () => {
               )}
               {mode !== "camera" && scan && <FaceMesh3D key={scan.beforeUrl} landmarks={scan.landmarks} canvas={scan.painted} aspect={scan.aspect} version={version} />}
               {(mode === "processing" || (!scan && mode !== "camera")) && (
-                <div className="absolute inset-0 bg-white/75 backdrop-blur-sm flex flex-col items-center justify-center gap-3 text-[#E62E6B]" data-testid="looklab-loading">
+                <div className="absolute inset-0 bg-white/75 backdrop-blur-sm flex flex-col items-center justify-center gap-3 text-[#C8215A]" data-testid="looklab-loading">
                   <Loader2 size={32} className="animate-spin" />
                   <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-center px-6">{mode === "processing" ? "Building your 3D face model…" : progress || (status === "error" ? "Face engine unavailable" : "Loading face engine…")}</span>
                 </div>
@@ -181,7 +181,7 @@ const LookLab = () => {
         <p className="mt-3 font-mono text-[10px] tracking-[0.12em] uppercase text-[#6E6266] min-h-[14px]" data-testid="looklab-status">{msg}</p>
 
         <div className="mt-4 flex justify-end">
-          <Link to="/portfolio" className="inline-flex items-center gap-1.5 text-sm font-medium text-[#E62E6B] hover:gap-2.5 transition-all" data-testid="looklab-portfolio-link">See the scroll transformation & parallax gallery <ArrowUpRight size={15} /></Link>
+          <Link to="/portfolio" className="inline-flex items-center gap-1.5 text-sm font-medium text-[#C8215A] hover:gap-2.5 transition-all" data-testid="looklab-portfolio-link">See the scroll transformation & parallax gallery <ArrowUpRight size={15} /></Link>
         </div>
       </div>
     </section>

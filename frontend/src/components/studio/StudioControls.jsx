@@ -6,7 +6,7 @@ const Swatches = ({ label, colors, value, onPick, testid }) => (
   <div>
     <div className="flex items-center justify-between mb-2.5">
       <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#6E6266]">{label}</span>
-      <button onClick={() => onPick(null)} className={`font-mono text-[10px] tracking-wider uppercase transition-colors ${value ? "text-[#E62E6B]" : "text-[#C9B7BD]"}`} data-testid={`${testid}-clear`}>
+      <button onClick={() => onPick(null)} className={`font-mono text-[10px] tracking-wider uppercase transition-colors ${value ? "text-[#C8215A]" : "text-[#C9B7BD]"}`} data-testid={`${testid}-clear`}>
         {value ? "Remove" : "Off"}
       </button>
     </div>
@@ -57,7 +57,7 @@ export const StudioControls = ({ look, setLook }) => {
       <div>
         <div className="flex items-center justify-between mb-2">
           <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#6E6266]">Intensity</span>
-          <span className="font-mono text-xs text-[#E62E6B]">{Math.round(look.intensity * 100)}%</span>
+          <span className="font-mono text-xs text-[#C8215A]">{Math.round(look.intensity * 100)}%</span>
         </div>
         <input
           type="range" min="0.2" max="1" step="0.05" value={look.intensity}

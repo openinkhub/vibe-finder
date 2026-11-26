@@ -50,7 +50,7 @@ export const PortfolioEditor = () => {
   return (
     <div data-testid="portfolio-editor">
       <form onSubmit={upload} className="bg-white rounded-3xl p-5 border border-[#F1DCE3] grid sm:grid-cols-[120px_1fr] gap-4 items-start" data-testid="portfolio-upload-form">
-        <button type="button" onClick={() => fileRef.current.click()} className="w-full aspect-[4/5] rounded-2xl border-2 border-dashed border-[#F4B7CE] bg-[#FBE9F0] overflow-hidden flex items-center justify-center text-[#E62E6B]" data-testid="portfolio-pick-btn">
+        <button type="button" onClick={() => fileRef.current.click()} className="w-full aspect-[4/5] rounded-2xl border-2 border-dashed border-[#F4B7CE] bg-[#FBE9F0] overflow-hidden flex items-center justify-center text-[#C8215A]" data-testid="portfolio-pick-btn">
           {preview ? <img src={preview} alt="preview" className="w-full h-full object-cover" /> : <Upload size={22} />}
         </button>
         <input ref={fileRef} type="file" accept="image/*" onChange={(e) => pick(e.target.files?.[0])} className="hidden" data-testid="portfolio-file-input" />
@@ -61,7 +61,7 @@ export const PortfolioEditor = () => {
           </div>
           <input placeholder="Alt text (optional — defaults to the caption)" value={altText} onChange={(e) => setAltText(e.target.value)} className={`${inputCls} w-full`} data-testid="portfolio-alt-input" />
           <p className="text-xs text-[#8B7F82]">JPG, PNG or WebP up to 8 MB. Photos are automatically resized and compressed to WebP, then appear instantly in the Portfolio contact sheet.</p>
-          <button type="submit" disabled={busy || !file} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] disabled:opacity-50" data-testid="portfolio-upload-btn">{busy ? <Loader2 size={15} className="animate-spin" /> : <Upload size={15} />} Upload photo</button>
+          <button type="submit" disabled={busy || !file} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#D6245F] text-white text-sm font-medium hover:bg-[#C81F57] disabled:opacity-50" data-testid="portfolio-upload-btn">{busy ? <Loader2 size={15} className="animate-spin" /> : <Upload size={15} />} Upload photo</button>
         </div>
       </form>
 
@@ -75,13 +75,13 @@ export const PortfolioEditor = () => {
                 <input value={edit.caption} onChange={(e) => setEdit({ ...edit, caption: e.target.value })} placeholder="Caption" className={`${inputCls} w-full`} data-testid="portfolio-edit-caption" />
                 <input value={edit.alt_text} onChange={(e) => setEdit({ ...edit, alt_text: e.target.value })} placeholder="Alt text" className={`${inputCls} w-full`} data-testid="portfolio-edit-alt" />
                 <div className="flex gap-2">
-                  <button onClick={saveEdit} className="flex-1 py-1.5 rounded-full bg-[#E62E6B] text-white text-xs flex items-center justify-center gap-1" data-testid="portfolio-edit-save"><Check size={12} /> Save</button>
+                  <button onClick={saveEdit} className="flex-1 py-1.5 rounded-full bg-[#D6245F] text-white text-xs flex items-center justify-center gap-1" data-testid="portfolio-edit-save"><Check size={12} /> Save</button>
                   <button onClick={() => setEditing(null)} className="flex-1 py-1.5 rounded-full border border-[#F1DCE3] text-[#8B7F82] text-xs flex items-center justify-center gap-1"><X size={12} /> Cancel</button>
                 </div>
               </div>
             ) : (
               <div className="p-3">
-                <div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{p.cat}</div>
+                <div className="font-mono text-[10px] uppercase tracking-wider text-[#C8215A]">{p.cat}</div>
                 <div className="text-sm text-[#4A2530] truncate">{p.caption}</div>
                 <div className="mt-2 flex gap-2">
                   <button onClick={() => { setEditing(p.id); setEdit({ cat: p.cat, caption: p.caption, alt_text: p.alt_text || "" }); }} className="flex-1 py-1.5 rounded-full border border-[#F1DCE3] text-[#4A2530] text-xs flex items-center justify-center gap-1 hover:border-[#E62E6B]" data-testid={`portfolio-edit-${p.id}`}><Pencil size={12} /> Edit</button>

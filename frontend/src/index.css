@@ -133,5 +133,14 @@ input[type="range"]::-webkit-slider-thumb { appearance: none; width: 18px; heigh
 .legal-md ul { list-style: disc; padding-left: 1.4rem; margin: .5rem 0; }
 .legal-md li { margin: .3rem 0; }
 .legal-md strong { color: #4A2530; }
-.legal-md a { color: #E62E6B; text-decoration: underline; }
+.legal-md a { color: #C8215A; text-decoration: underline; }
 .legal-md blockquote { border-left: 3px solid #F4B7CE; padding-left: 1rem; color: #8B7F82; margin: 1rem 0; }
+
+/* Keyboard focus: always show a clear ring (WCAG 2.4.7) */
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible {
+    outline: 3px solid #C8215A;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+.skip-link { position: absolute; left: 12px; top: -60px; z-index: 100; background: #4A2530; color: #fff; padding: 10px 16px; border-radius: 999px; font-size: 14px; transition: top .15s; }
+.skip-link:focus { top: 12px; }

@@ -10,7 +10,10 @@ if (process.env.SKIP_FRONTEND_BUILD) {
   process.exit(0);
 }
 const root = path.join(__dirname, "..");
-const run = (cmd) => execSync(cmd, { cwd: root, stdio: "inherit", env: { ...process.env, CI: "false", GENERATE_SOURCEMAP: "false" } });
+// Last date the site's content changed (from git), used as dateModified in page schema.
+let contentDate = "";
+try { contentDate = execSync("git log -1 --format=%cs -- frontend/src/content", { cwd: root }).toString().trim(); } catch (e) { /* no git on this machine */ }
+const run = (cmd) => execSync(cmd, { cwd: root, stdio: "inherit", env: { ...process.env, CI: "false", GENERATE_SOURCEMAP: "false", ...(contentDate ? { REACT_APP_CONTENT_DATE: contentDate } : {}) } });
 // Keep the previous build's script and style files for a few days. A visitor whose page was
 // opened before a deploy still asks for those files; without them the page fails to load
 // parts of itself ("ChunkLoadError").

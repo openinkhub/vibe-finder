@@ -26,7 +26,8 @@
       "best makeup artist",
       "makeup artist near me",
       "best makeup artist near me"
-    ]
+    ],
+    "updated": "2026-11-25"
   },
   {
     "group": "Header",
@@ -180,6 +181,18 @@
       "bridal makeup bangalore",
       "bridal makeup in bangalore",
       "best bridal makeup artist in bangalore"
+    ],
+    "updated": "2026-11-25",
+    "cardTitle": "Wedding-Day Bridal Makeup",
+    "offers": [
+      {
+        "name": "Bridal Makeup – HD",
+        "price": 30000
+      },
+      {
+        "name": "Bridal Makeup – Airbrush",
+        "price": 40000
+      }
     ]
   },
   {
@@ -201,7 +214,17 @@
     "cta": "Book Your Free Consult",
     "path": "/engagement-makeup",
     "image": "https://images.unsplash.com/photo-1594647210801-5124307f3d51?auto=format&fit=crop&w=1000&q=70",
-    "keyphrase": "engagement makeup artist in bangalore"
+    "keyphrase": "engagement makeup artist in bangalore",
+    "offers": [
+      {
+        "name": "Engagement Makeup – HD",
+        "price": 20000
+      },
+      {
+        "name": "Engagement Makeup – Airbrush",
+        "price": 30000
+      }
+    ]
   },
   {
     "group": "Services",

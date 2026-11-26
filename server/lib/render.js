@@ -128,7 +128,7 @@ async function pageHtml(urlPath) {
   lateMain($);
   // The home hero uses bold italic words; load that font early so the headline does not re-flow
   // (a re-flow after start-up was counted as a later, larger paint).
-  const heroTitle = $("#top h2").filter((_, el) => $(el).find(".italic.font-bold").length).first();
+  const heroTitle = $("#top h2, #top p.font-display").filter((_, el) => $(el).find(".italic.font-bold").length).first();
   if (heroTitle.length) {
     if (!$('link[href*="playfair-display-latin-700-italic"]').length) $("head").append('<link rel="preload" as="font" type="font/woff2" href="/fonts/playfair-display-latin-700-italic.woff2" crossorigin>');
     // Show the headline once both of its fonts are ready, so it is drawn once at its final size.

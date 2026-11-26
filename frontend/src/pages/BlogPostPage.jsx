@@ -56,17 +56,17 @@ const BlogPostPage = () => {
       <div data-testid="blog-post-page">
         <Section className="pb-0">
           <Reveal>
-            <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm text-[#E62E6B] font-medium mb-6" data-testid="blog-post-back-link"><ArrowLeft size={14} /> Back to Blog</Link>
-            <div className="flex items-center gap-4 text-xs font-mono uppercase tracking-wider text-[#E62E6B]">
+            <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm text-[#C8215A] font-medium mb-6" data-testid="blog-post-back-link"><ArrowLeft size={14} /> Back to Blog</Link>
+            <div className="flex items-center gap-4 text-xs font-mono uppercase tracking-wider text-[#C8215A]">
               <span className="inline-flex items-center gap-1"><Tag size={12} /> {post.category}</span>
               <span className="inline-flex items-center gap-1"><CalendarDays size={12} /> {post.publish_date}</span>
             </div>
             <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl text-[#4A2530] mt-4 leading-tight" data-testid="blog-post-title">{post.title}</h1>
             {post.key_takeaway && (
               <div className="mt-6 flex gap-3 rounded-2xl border border-[#F1DCE3] bg-[#FBE9F0] px-5 py-4" data-testid="blog-key-takeaway">
-                <Sparkles size={18} className="text-[#E62E6B] shrink-0 mt-0.5" />
+                <Sparkles size={18} className="text-[#C8215A] shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#E62E6B]">Key takeaway</div>
+                  <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#C8215A]">Key takeaway</div>
                   <p className="mt-1 text-sm sm:text-base text-[#4A2530] font-medium leading-relaxed">{post.key_takeaway}</p>
                 </div>
               </div>
@@ -91,7 +91,7 @@ const BlogPostPage = () => {
               ))}
             </article>
             {post.interlink_url && (
-              <Link to={post.interlink_url} className="inline-flex items-center gap-1.5 mt-8 text-sm font-medium text-[#E62E6B]" data-testid="blog-post-interlink">Explore this service →</Link>
+              <Link to={post.interlink_url} className="inline-flex items-center gap-1.5 mt-8 text-sm font-medium text-[#C8215A]" data-testid="blog-post-interlink">Explore this service →</Link>
             )}
           </Reveal>
           <div className="mt-10"><AuthorBio /></div>

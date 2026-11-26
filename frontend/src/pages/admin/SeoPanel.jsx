@@ -64,7 +64,7 @@ export const CheckList = ({ results, compact }) => {
                       <div className="flex flex-wrap items-baseline gap-x-2">
                         <span className="font-medium text-[#4A2530]">{r.label}</span>
                         {r.value && <span className="text-xs text-[#8B7F82] break-all">{String(r.value).slice(0, 120)}</span>}
-                        {r.auto && r.status !== "pass" && r.status !== "na" && <span className="text-[10px] font-mono uppercase text-[#E62E6B]">auto-fix</span>}
+                        {r.auto && r.status !== "pass" && r.status !== "na" && <span className="text-[10px] font-mono uppercase text-[#C8215A]">auto-fix</span>}
                       </div>
                       {r.msg && r.status !== "pass" && <div className="text-xs text-[#5C4E52]">{r.msg}</div>}
                       {r.fix && r.status !== "pass" && <div className="text-xs text-[#1c7a45]">→ {r.fix}</div>}
@@ -128,13 +128,13 @@ export const SeoItemPanel = ({ path, onClose, onChanged }) => {
       <div className="w-full max-w-[760px] h-full overflow-y-auto bg-[#F4F1EA] p-5 sm:p-7" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-start justify-between gap-4 mb-5">
           <div className="min-w-0">
-            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">{item ? (isPost ? "Blog post" : item.group || "Page") : "Loading"}</span>
+            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">{item ? (isPost ? "Blog post" : item.group || "Page") : "Loading"}</span>
             <h2 className="font-display text-2xl sm:text-3xl text-[#4A2530] mt-1 break-words">{item ? item.name : path}</h2>
-            <a href={path} target="_blank" rel="noreferrer" className="text-xs text-[#8B7F82] hover:text-[#E62E6B] inline-flex items-center gap-1">{path} <ExternalLink size={11} /></a>
+            <a href={path} target="_blank" rel="noreferrer" className="text-xs text-[#8B7F82] hover:text-[#C8215A] inline-flex items-center gap-1">{path} <ExternalLink size={11} /></a>
           </div>
           <button onClick={onClose} className="w-10 h-10 rounded-full border border-[#F1DCE3] bg-white flex items-center justify-center shrink-0" aria-label="Close"><X size={16} /></button>
         </div>
-        {!item ? <Loader2 className="animate-spin text-[#E62E6B]" /> : (
+        {!item ? <Loader2 className="animate-spin text-[#C8215A]" /> : (
           <div className="space-y-5">
             <div className="flex flex-wrap gap-4">
               {CATS.map(([k, label]) => <div key={k} className="flex flex-col items-center gap-1"><ScoreBadge score={item.scores[k]} big /><span className="text-xs text-[#5C4E52]">{label}</span></div>)}
@@ -208,7 +208,7 @@ const PageReport = ({ report, reload, loading, kindFilter = "all" }) => {
   const Th = ({ k, children }) => (
     <th className="px-3 py-2.5 text-left font-mono text-[10px] uppercase tracking-wider text-[#8B7F82] cursor-pointer whitespace-nowrap" onClick={() => setSort([k, sort[0] === k ? -sort[1] : 1])}>{children}{sort[0] === k ? (sort[1] > 0 ? " ↑" : " ↓") : ""}</th>
   );
-  if (!report) return <Loader2 className="animate-spin text-[#E62E6B]" />;
+  if (!report) return <Loader2 className="animate-spin text-[#C8215A]" />;
   return (
     <div data-testid="seo-page-report">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
@@ -240,7 +240,7 @@ const PageReport = ({ report, reload, loading, kindFilter = "all" }) => {
                 <td className="px-3 py-2.5 text-xs">{i.issues ? <span className="text-[#C81F57]">{i.issues} fail</span> : <span className="text-[#1c7a45]">0 fail</span>}{i.warnings ? <span className="text-[#8a5a00]"> · {i.warnings} warn</span> : ""}</td>
                 <td className="px-3 py-2.5 text-xs text-[#5C4E52] max-w-[180px] truncate">{i.keyphrase || <span className="text-[#C81F57]">none</span>}</td>
                 <td className="px-3 py-2.5 text-xs text-[#8B7F82] whitespace-nowrap">{i.updated || i.date || "–"}</td>
-                <td className="px-3 py-2.5"><span className="text-xs font-medium text-[#E62E6B]">Report</span></td>
+                <td className="px-3 py-2.5"><span className="text-xs font-medium text-[#C8215A]">Report</span></td>
               </tr>
             ))}
           </tbody>
@@ -283,7 +283,7 @@ const AutoConfigure = ({ reload }) => {
               <div className="font-medium text-[#4A2530]">{p.name} <span className="text-xs text-[#8B7F82]">{p.path}</span></div>
               <ul className="mt-1 space-y-1">
                 {Object.entries(p.changes).map(([k, v]) => (
-                  <li key={k} className="text-xs"><span className="font-mono text-[#E62E6B]">{k.replace(/_/g, " ")}</span>: {p.before[k] && typeof p.before[k] !== "object" ? <span className="line-through text-[#8B7F82] mr-1">{String(p.before[k]).slice(0, 120)}</span> : null}<span className="text-[#1c7a45]">{show(v).slice(0, 200)}</span></li>
+                  <li key={k} className="text-xs"><span className="font-mono text-[#C8215A]">{k.replace(/_/g, " ")}</span>: {p.before[k] && typeof p.before[k] !== "object" ? <span className="line-through text-[#8B7F82] mr-1">{String(p.before[k]).slice(0, 120)}</span> : null}<span className="text-[#1c7a45]">{show(v).slice(0, 200)}</span></li>
                 ))}
               </ul>
             </div>
@@ -309,7 +309,7 @@ const SettingsTab = () => {
   const [s, setS] = useState(null);
   const [busy, setBusy] = useState(false);
   useEffect(() => { api.get("/seo/settings").then(({ data }) => setS({ ...data, entitiesText: data.entities.map((e) => e.join(" / ")).join("\n"), robotsText: data.robots_txt || data.robots_default })).catch((e) => toast.error(errorText(e))); }, []);
-  if (!s) return <Loader2 className="animate-spin text-[#E62E6B]" />;
+  if (!s) return <Loader2 className="animate-spin text-[#C8215A]" />;
   const setRule = (k, v) => setS({ ...s, rules: { ...s.rules, [k]: v } });
   const save = async () => {
     setBusy(true);
@@ -346,7 +346,7 @@ const SettingsTab = () => {
         <h3 className="font-display text-xl text-[#4A2530]">robots.txt & llms.txt</h3>
         <div><label className={labelCls}>robots.txt</label><textarea rows={8} value={s.robotsText} onChange={(e) => setS({ ...s, robotsText: e.target.value })} className={`${inputCls} font-mono text-[12px]`} /></div>
         <div><label className={labelCls}>Extra text for llms.txt (pages and posts are listed automatically)</label><textarea rows={4} value={s.llms_extra} onChange={(e) => setS({ ...s, llms_extra: e.target.value })} className={`${inputCls} font-mono text-[12px]`} /></div>
-        <div className="flex gap-4 text-xs"><a href="/robots.txt" target="_blank" rel="noreferrer" className="text-[#E62E6B]">View robots.txt</a><a href="/llms.txt" target="_blank" rel="noreferrer" className="text-[#E62E6B]">View llms.txt</a><a href="/sitemap.xml" target="_blank" rel="noreferrer" className="text-[#E62E6B]">View sitemap.xml</a></div>
+        <div className="flex gap-4 text-xs"><a href="/robots.txt" target="_blank" rel="noreferrer" className="text-[#C8215A]">View robots.txt</a><a href="/llms.txt" target="_blank" rel="noreferrer" className="text-[#C8215A]">View llms.txt</a><a href="/sitemap.xml" target="_blank" rel="noreferrer" className="text-[#C8215A]">View sitemap.xml</a></div>
       </div>
       <button onClick={save} disabled={busy} className={btnPrimary} data-testid="seo-settings-save">{busy ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />} Save settings</button>
     </div>
@@ -373,7 +373,7 @@ const Redirects = ({ prefill, clearPrefill }) => {
         <div><label className={labelCls}>Type</label><select value={f.code} onChange={(e) => setF({ ...f, code: Number(e.target.value) })} className={inputCls}><option value={301}>301 permanent</option><option value={302}>302 temporary</option></select></div>
         <button className={btnPrimary} data-testid="seo-redirect-add"><Plus size={15} /> Add</button>
       </form>
-      {!list ? <Loader2 className="animate-spin text-[#E62E6B]" /> : (
+      {!list ? <Loader2 className="animate-spin text-[#C8215A]" /> : (
         <div className={`${card} divide-y divide-[#F6E9EE]`}>
           {list.map((r) => (
             <div key={r.from} className="px-4 py-3 flex items-center gap-3 text-sm">
@@ -395,7 +395,7 @@ const NotFoundLog = ({ onRedirect }) => {
   useEffect(() => { load(); }, []);
   const clearAll = async () => { await api.delete("/seo/404"); load(); };
   const del = async (path) => { await api.delete("/seo/404", { params: { path } }); load(); };
-  if (!list) return <Loader2 className="animate-spin text-[#E62E6B]" />;
+  if (!list) return <Loader2 className="animate-spin text-[#C8215A]" />;
   return (
     <div className="space-y-4" data-testid="seo-404">
       <p className="text-sm text-[#5C4E52]">Addresses visitors or search engines asked for that don't exist. Redirect the useful ones to the closest live page.</p>
@@ -405,7 +405,7 @@ const NotFoundLog = ({ onRedirect }) => {
             {list.map((r) => (
               <div key={r.path} className="px-4 py-3 flex items-center gap-3 text-sm">
                 <div className="flex-1 min-w-0"><div className="font-mono text-xs text-[#4A2530] break-all">{r.path}</div><div className="text-[11px] text-[#8B7F82] truncate">{r.hits} hit(s) · last {String(r.last_seen).slice(0, 10)}{r.referrer ? ` · from ${r.referrer}` : ""}</div></div>
-                <button onClick={() => onRedirect(r.path)} className="text-xs font-medium text-[#E62E6B]">Redirect</button>
+                <button onClick={() => onRedirect(r.path)} className="text-xs font-medium text-[#C8215A]">Redirect</button>
                 <button onClick={() => del(r.path)} className="w-8 h-8 rounded-full border border-[#F1DCE3] text-[#8B7F82] hover:text-[#C81F57] flex items-center justify-center" aria-label="Dismiss"><X size={13} /></button>
               </div>
             ))}
@@ -451,7 +451,7 @@ const SpeedLabCard = ({ onDone }) => {
           {st && <p className="text-xs text-[#6E6266] mt-2" data-testid="seo-speed-coverage">{tested}{st.finished_at && !st.running ? ` · last run ${new Date(st.finished_at).toLocaleString()}` : ""}{st.failed ? ` · ${st.failed} failed` : ""}</p>}
         </div>
         {st && st.running
-          ? <span className="inline-flex items-center gap-2 text-sm text-[#5C4E52]" data-testid="seo-speed-progress"><Loader2 size={15} className="animate-spin text-[#E62E6B]" /> Testing {st.done}/{st.total}{st.current ? ` · ${st.current}` : ""}</span>
+          ? <span className="inline-flex items-center gap-2 text-sm text-[#5C4E52]" data-testid="seo-speed-progress"><Loader2 size={15} className="animate-spin text-[#C8215A]" /> Testing {st.done}/{st.total}{st.current ? ` · ${st.current}` : ""}</span>
           : <span className="inline-flex flex-wrap items-center gap-2">
               <button onClick={() => start(false)} disabled={st && !st.has_key} className={`${btnPrimary} disabled:opacity-50`} data-testid="seo-speed-run"><Gauge size={15} /> Run speed test (all pages)</button>
               {st && st.pages_tested > 0 && <button onClick={() => start(true)} disabled={!st.has_key} className={`${btnGhost} disabled:opacity-50`} data-testid="seo-speed-rerun">Re-test everything</button>}
@@ -522,7 +522,7 @@ const Keywords = () => {
     catch (e) { toast.error(errorText(e)); }
   };
   const delRank = async (id) => { try { await api.delete("/seo/keywords/rank", { params: { id } }); await load(false); } catch (e) { toast.error(errorText(e)); } };
-  if (!data) return <Loader2 className="animate-spin text-[#E62E6B]" />;
+  if (!data) return <Loader2 className="animate-spin text-[#C8215A]" />;
   const list = data.keywords;
   const ranked = list.filter((k) => k.latest && k.latest.pos);
   const top10 = ranked.filter((k) => k.latest.pos <= 10).length;

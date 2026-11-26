@@ -29,7 +29,7 @@ function cleanup() {
   rootEl.querySelectorAll("script, style, noscript, canvas, iframe, video, svg, [aria-hidden='true'], form button[type='submit'] svg, [data-sonner-toaster]").forEach((el) => el.remove());
   rootEl.querySelectorAll("*").forEach((el) => {
     for (const a of [...el.attributes]) {
-      if (a.name === "style" || a.name.startsWith("data-") || a.name.startsWith("aria-") || a.name === "tabindex" || a.name === "role" || a.name.startsWith("on")) el.removeAttribute(a.name);
+      if (a.name === "style" || a.name.startsWith("data-") || (a.name.startsWith("aria-") && !["aria-label", "aria-current", "aria-labelledby", "aria-describedby"].includes(a.name)) || a.name === "tabindex" || a.name.startsWith("on")) el.removeAttribute(a.name);
     }
   });
   rootEl.querySelectorAll("input, select, textarea").forEach((el) => el.removeAttribute("value"));

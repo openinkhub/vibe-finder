@@ -65,9 +65,11 @@ const Landing = () => {
   return (
   <>
     <Navbar />
+    <main id="main">
     <Hero page={page} />
     <SeoIntro page={page} onCta={() => scrollToId("contact")} className="pt-14 md:pt-20" />
     {rest ? <LandingRest all={jump} /> : <div style={{ minHeight: "100vh" }} />}
+    </main>
     <FloatingButtons />
     <MobileBookBar />
   </>

@@ -154,6 +154,7 @@ export const instagramFeed = [
 ];
 
 export const faqs = [
+  { q: "How much does a makeup artist cost in Bangalore?", a: "It depends on the event, the method and the artist's experience. With Rekha, groom makeup starts at ₹4,999, party makeup at ₹7,999 per person, non-bridal at ₹9,999 per person, engagement at ₹19,999 and bridal at ₹29,999 per session. Hair styling and draping are included." },
   { q: "How do I choose the best makeup artist in Bangalore for my wedding?", a: "Look beyond the portfolio. The best makeup artist for you is the one who listens to what you want, understands your skin and features, and plans the look around your outfit, venue lighting and wedding schedule. Also ask about products, hygiene, HD or airbrush options and what the price includes. Rekha starts each booking with a consult, so you know exactly what to expect before the big day." },
   { q: "How far in advance should I book?", a: "For wedding-season dates (Oct–Feb), 4–6 months' notice keeps your date and trial slot secure. However, off-season dates can often be booked a few weeks ahead." },
   { q: "HD vs. Airbrush makeup — what's the difference?", a: "HD makeup uses light-reflecting, high-definition products applied by hand for a flawless close-up finish. Airbrush sprays a fine, even mist for an ultra-lightweight, long-wear base — ideal for full-day weddings and hot, humid weather." },

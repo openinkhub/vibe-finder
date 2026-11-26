@@ -23,7 +23,17 @@ export const PageShell = ({ children, title, page, faq }) => {
   return (
     <div className="bg-[#F4F1EA] min-h-screen">
       <Navbar solid />
-      <main className="pt-24 sm:pt-28">{children}{page?.path && <PageExtras path={page.path} />}</main>
+      <main id="main" className="pt-24 sm:pt-28">
+        {page?.path && page.path !== "/" && (
+          <nav aria-label="Breadcrumb" className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 pb-4" data-testid="breadcrumb">
+            <ol className="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm text-[#6E6266]">
+              <li><Link to="/" className="hover:text-[#C8215A] underline-offset-2 hover:underline">Home</Link></li>
+              <li aria-hidden="true">›</li>
+              <li aria-current="page" className="text-[#4A2530]">{page.h1 || page.name}</li>
+            </ol>
+          </nav>
+        )}
+        {children}{page?.path && <PageExtras path={page.path} />}</main>
       <Footer />
       <FloatingButtons />
       <MobileBookBar />
@@ -34,8 +44,8 @@ export const PageShell = ({ children, title, page, faq }) => {
 export const PageHero = ({ eyebrow, title, subtitle, image, imageAlt, cta = "Book Your Free Consult", ctaTo = "/contact", onCta }) => (
   <section className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-14 items-center pb-12 md:pb-20" data-testid="page-hero">
     <Reveal>
-      {eyebrow && <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]" data-testid="page-eyebrow">{eyebrow}</span>}
-      <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mt-4" data-testid="page-title">{title}</h2>
+      {eyebrow && <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]" data-testid="page-eyebrow">{eyebrow}</span>}
+      <p className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mt-4" data-testid="page-title">{title}</p>
       {subtitle && <p className="mt-5 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-xl" data-testid="page-subtitle">{subtitle.split(/\*\*(.+?)\*\*/).map((p, i) => i % 2 === 1 ? <strong key={i} className="font-semibold text-[#4A2530]">{p}</strong> : p)}</p>}
       {onCta
         ? <button type="button" onClick={onCta} className="mt-8 inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#D6245F] text-white text-sm sm:text-base font-medium hover:bg-[#C81F57] transition-colors shadow-lg shadow-[#E62E6B]/25" data-testid="page-cta"><span className="sm:hidden">{shortCta(cta)}</span><span className="hidden sm:inline">{cta}</span> <ArrowUpRight size={16} /></button>
@@ -53,7 +63,7 @@ export const PageHero = ({ eyebrow, title, subtitle, image, imageAlt, cta = "Boo
 
 export const AuthorBio = () => {
   const { pathname } = useLocation();
-  const linkCls = "text-[#E62E6B] underline decoration-[#E62E6B]/40 underline-offset-2";
+  const linkCls = "text-[#C8215A] underline decoration-[#E62E6B]/40 underline-offset-2";
   // **bold** and [text](https://…) links.
   const parseBold = (text) =>
     text.split(/(\*\*.+?\*\*|\[[^\]]+\]\([^)\s]+\))/).map((p, i) => {
@@ -73,11 +83,11 @@ export const AuthorBio = () => {
           <p className="mt-2 text-sm text-[#5C4E52] leading-relaxed">{parseBold(bioText)}</p>
           <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
             <span className="text-[#5C4E52]">📍 Based in Bangalore</span>
-            <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-1.5 text-[#E62E6B]"><Phone size={14} /> {brand.phone}</a>
-            <a href={brand.instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><Instagram size={14} /></a>
-            <a href={brand.facebookUrl} target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaFacebookF size={13} /></a>
-            <a href={brand.twitterUrl} target="_blank" rel="noreferrer" aria-label="X" title="X" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaXTwitter size={13} /></a>
-            <a href={brand.linkedinUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn" className="inline-flex items-center gap-1.5 text-[#E62E6B]"><FaLinkedinIn size={13} /></a>
+            <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-1.5 text-[#C8215A]"><Phone size={14} /> {brand.phone}</a>
+            <a href={brand.instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram" className="inline-flex items-center gap-1.5 text-[#C8215A]"><Instagram size={14} /></a>
+            <a href={brand.facebookUrl} target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook" className="inline-flex items-center gap-1.5 text-[#C8215A]"><FaFacebookF size={13} /></a>
+            <a href={brand.twitterUrl} target="_blank" rel="noreferrer" aria-label="X" title="X" className="inline-flex items-center gap-1.5 text-[#C8215A]"><FaXTwitter size={13} /></a>
+            <a href={brand.linkedinUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn" className="inline-flex items-center gap-1.5 text-[#C8215A]"><FaLinkedinIn size={13} /></a>
             <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" aria-label="WhatsApp" title="WhatsApp" className="inline-flex items-center gap-1.5 text-[#25D366]"><FaWhatsapp size={14} /></a>
           </div>
         </div>

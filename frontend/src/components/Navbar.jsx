@@ -28,7 +28,7 @@ const Dropdown = ({ m, pathname, linkCls }) => {
         {open && (
           <motion.div initial={{ opacity: 0, y: 8, rotateX: -10 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} exit={{ opacity: 0, y: 6 }} style={{ transformPerspective: 800, transformOrigin: "top" }} className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 rounded-2xl bg-white border border-[#F1DCE3] shadow-xl overflow-hidden p-2" data-testid={`${key}-dropdown`}>
             {m.children.map((c) => (
-              <Link key={c.path} to={c.path} className="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm text-[#4A2530] hover:bg-[#FBE9F0] hover:text-[#E62E6B] transition-colors" data-testid={`nav-${key}-${c.path.slice(1)}`}>{c.name} <ArrowUpRight size={13} className="opacity-50" /></Link>
+              <Link key={c.path} to={c.path} className="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm text-[#4A2530] hover:bg-[#FBE9F0] hover:text-[#C8215A] transition-colors" data-testid={`nav-${key}-${c.path.slice(1)}`}>{c.name} <ArrowUpRight size={13} className="opacity-50" /></Link>
             ))}
           </motion.div>
         )}
@@ -51,10 +51,12 @@ const Navbar = ({ solid = false }) => {
   useEffect(() => { setOpen(false); }, [pathname]);
 
   const goContact = () => { setOpen(false); if (pathname === "/") scrollToId("contact"); else navigate("/contact"); };
-  const linkCls = (to, active = pathname === to) => `relative text-[14px] tracking-wide transition-colors duration-300 group ${active ? "text-[#E62E6B]" : "text-[#4A2530] hover:text-[#E62E6B]"}`;
+  const linkCls = (to, active = pathname === to) => `relative text-[14px] tracking-wide transition-colors duration-300 group ${active ? "text-[#C8215A]" : "text-[#4A2530] hover:text-[#C8215A]"}`;
   const filled = solid || scrolled;
 
   return (
+    <>
+    <a href="#main" className="skip-link">Skip to content</a>
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${filled ? "bg-[#F4F1EA]/[0.97] border-b border-[#F1DCE3] py-2.5" : "bg-transparent py-4 sm:py-5"}`} data-testid="navbar">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center shrink-0" data-testid="header-logo-link" aria-label="Rekha Krishnamurthy Makeup & Academy">
@@ -72,7 +74,7 @@ const Navbar = ({ solid = false }) => {
 
         <div className="flex items-center gap-2 sm:gap-3">
           <button onClick={goContact} className="hidden md:inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-[#D6245F] text-white text-sm font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-lg shadow-[#E62E6B]/25" data-testid="nav-book-btn">Book now <ArrowUpRight size={15} /></button>
-          <button onClick={() => setOpen((v) => !v)} className="lg:hidden w-11 h-11 flex items-center justify-center rounded-full border border-[#F1DCE3] bg-white/70 text-[#E62E6B]" aria-label="Menu" data-testid="mobile-menu-btn">{open ? <X size={20} /> : <Menu size={20} />}</button>
+          <button onClick={() => setOpen((v) => !v)} className="lg:hidden w-11 h-11 flex items-center justify-center rounded-full border border-[#F1DCE3] bg-white/70 text-[#C8215A]" aria-label="Menu" data-testid="mobile-menu-btn">{open ? <X size={20} /> : <Menu size={20} />}</button>
         </div>
       </div>
 
@@ -82,20 +84,21 @@ const Navbar = ({ solid = false }) => {
             {headerMenu.map((m) => m.children ? (
               <div key={m.label} className="border-b border-[#FBE9F0]">
                 {m.to
-                  ? <Link to={m.to} className="block px-6 pt-4 pb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#E62E6B]" data-testid={`mobile-nav-${slug(m.label)}`}>{m.label}</Link>
-                  : <div className="px-6 pt-4 pb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#E62E6B]" data-testid={`mobile-nav-${slug(m.label)}`}>{m.label}</div>}
+                  ? <Link to={m.to} className="block px-6 pt-4 pb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#C8215A]" data-testid={`mobile-nav-${slug(m.label)}`}>{m.label}</Link>
+                  : <div className="px-6 pt-4 pb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#C8215A]" data-testid={`mobile-nav-${slug(m.label)}`}>{m.label}</div>}
                 <div className="grid grid-cols-2 gap-1 px-4 pb-3">
                   {m.children.map((c) => <Link key={c.path} to={c.path} className="px-3 py-2 rounded-lg text-sm text-[#4A2530] hover:bg-[#FBE9F0]" data-testid={`mobile-nav-${slug(m.label)}-${c.path.slice(1)}`}>{c.name}</Link>)}
                 </div>
               </div>
             ) : (
-              <Link key={m.to} to={m.to} className="block w-full text-left px-6 py-4 text-[#4A2530] border-b border-[#FBE9F0] hover:bg-[#FBE9F0] hover:text-[#E62E6B] transition-colors" data-testid={`mobile-nav-${slug(m.label)}`}>{m.label}</Link>
+              <Link key={m.to} to={m.to} className="block w-full text-left px-6 py-4 text-[#4A2530] border-b border-[#FBE9F0] hover:bg-[#FBE9F0] hover:text-[#C8215A] transition-colors" data-testid={`mobile-nav-${slug(m.label)}`}>{m.label}</Link>
             ))}
             <button onClick={goContact} className="m-4 w-[calc(100%-2rem)] py-3.5 rounded-full bg-[#D6245F] text-white font-medium" data-testid="mobile-book-btn">Book now</button>
           </motion.div>
         )}
       </AnimatePresence>
     </header>
+    </>
   );
 };
 

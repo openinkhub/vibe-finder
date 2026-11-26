@@ -33,8 +33,8 @@ const Row = ({ page, batch, reload }) => {
       <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Optional note · e.g. Weekend batch, Bangalore studio" maxLength={160} className={input} data-testid={`batch-note-${slug}`} />
       <input type="number" min={1} max={999} value={seats} onChange={(e) => setSeats(e.target.value)} placeholder="Seats (5)" className={input} data-testid={`batch-seats-${slug}`} />
       <div className="flex gap-2">
-        <button onClick={save} disabled={busy} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#E62E6B] text-white text-xs font-medium hover:bg-[#C81F57] disabled:opacity-60" data-testid={`batch-save-${slug}`}>{busy ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />} Save</button>
-        {batch && <button onClick={clear} disabled={busy} className="w-9 h-9 rounded-full border border-[#F1DCE3] text-[#8B7F82] hover:text-[#E62E6B] flex items-center justify-center" aria-label="Remove" data-testid={`batch-clear-${slug}`}><Trash2 size={14} /></button>}
+        <button onClick={save} disabled={busy} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#D6245F] text-white text-xs font-medium hover:bg-[#C81F57] disabled:opacity-60" data-testid={`batch-save-${slug}`}>{busy ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />} Save</button>
+        {batch && <button onClick={clear} disabled={busy} className="w-9 h-9 rounded-full border border-[#F1DCE3] text-[#8B7F82] hover:text-[#C8215A] flex items-center justify-center" aria-label="Remove" data-testid={`batch-clear-${slug}`}><Trash2 size={14} /></button>}
       </div>
     </div>
   );

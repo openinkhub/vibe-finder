@@ -266,8 +266,8 @@ const FaceStudio = () => {
       <div className="absolute -top-24 -left-24 w-[320px] h-[320px] rounded-full bg-[#E62E6B]/15 blur-3xl" />
       <div className="relative max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal className="max-w-2xl">
-          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Virtual try-on · AR face scan · AI look</span>
-          <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mt-4 sm:mt-5">Scan your face, <span className="italic text-[#E62E6B]">try the look</span> before the trial</h2>
+          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Virtual try-on · AR face scan · AI look</span>
+          <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mt-4 sm:mt-5">Scan your face, <span className="italic text-[#C8215A]">try the look</span> before the trial</h2>
           <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#5C4E52]">Your camera maps 478 facial points and paints the look instantly. Then tap <span className="font-semibold text-[#4A2530]">Generate AI look</span> for a photoreal re-render, drag to compare before / after, and share it straight to Rekha.</p>
         </Reveal>
 
@@ -290,7 +290,7 @@ const FaceStudio = () => {
                     </div>
                   )}
                   {canCompare && (
-                    <button onClick={() => setCompare(compare == null ? 0.5 : null)} className={`${btn} px-4 py-2.5 border ${compare != null ? "border-[#E62E6B] text-[#E62E6B]" : "border-[#F1DCE3] text-[#4A2530]"}`} data-testid="studio-compare-toggle"><SlidersHorizontal size={15} /> {compare != null ? "Hide compare" : "Before / After"}</button>
+                    <button onClick={() => setCompare(compare == null ? 0.5 : null)} className={`${btn} px-4 py-2.5 border ${compare != null ? "border-[#E62E6B] text-[#C8215A]" : "border-[#F1DCE3] text-[#4A2530]"}`} data-testid="studio-compare-toggle"><SlidersHorizontal size={15} /> {compare != null ? "Hide compare" : "Before / After"}</button>
                   )}
                 </div>
               )}
@@ -302,14 +302,14 @@ const FaceStudio = () => {
                 <div className="flex-1" />
                 {source && <button onClick={share} className={`${btn} px-4 py-2.5 bg-[#25D366] text-white hover:bg-[#1eb959]`} data-testid="studio-share-btn"><Share2 size={15} /> Share</button>}
                 {source && <button onClick={download} className={`${btn} px-4 py-2.5 border border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]`} data-testid="studio-download-btn"><Download size={15} /> Save</button>}
-                {source && <button onClick={reset} className={`${btn} w-10 h-10 border border-[#F1DCE3] text-[#6E6266] hover:text-[#E62E6B]`} aria-label="Reset" data-testid="studio-reset-btn"><RotateCcw size={15} /></button>}
+                {source && <button onClick={reset} className={`${btn} w-10 h-10 border border-[#F1DCE3] text-[#6E6266] hover:text-[#C8215A]`} aria-label="Reset" data-testid="studio-reset-btn"><RotateCcw size={15} /></button>}
                 <input ref={fileRef} type="file" accept="image/*" onChange={onFile} className="hidden" data-testid="studio-file-input" />
               </div>
               {gallery.length > 0 && (
                 <div className="mt-4 pt-4 border-t border-[#F1DCE3]" data-testid="look-gallery">
                   <div className="flex items-center justify-between mb-2.5">
                     <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#6E6266]">Your AI looks · {gallery.length}</span>
-                    <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[#E62E6B]">Tap one to view & book</span>
+                    <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[#C8215A]">Tap one to view & book</span>
                   </div>
                   <div className="flex gap-2.5 overflow-x-auto no-scrollbar pb-1">
                     {gallery.map((g) => (
@@ -336,7 +336,7 @@ const FaceStudio = () => {
               <TiltCard max={6} className="bg-white rounded-[28px] border border-[#F1DCE3] overflow-hidden">
                 <div className="flex items-center justify-between px-6 pt-5">
                   <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#6E6266]">3D shade viewer</span>
-                  <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[#E62E6B]">Drag · Pinch · Zoom</span>
+                  <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[#C8215A]">Drag · Pinch · Zoom</span>
                 </div>
                 <div className="h-56 sm:h-64 cursor-grab active:cursor-grabbing overflow-hidden relative" data-testid="lipstick-viewer-wrap">
                   <LipstickViewer shade={look.lips || "#E62E6B"} caseColor={look.blush || "#F4B7CE"} />

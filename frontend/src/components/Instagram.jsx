@@ -18,7 +18,7 @@ const Instagram = () => {
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 md:gap-6 mb-8 md:mb-12">
           <div>
-            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Follow along</span>
+            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Follow along</span>
             <h2 className="font-display text-[#4A2530] text-2xl sm:text-3xl md:text-4xl leading-tight mt-4 sm:mt-5 break-all sm:break-normal">{brand.instagram}</h2>
           </div>
           <a href={brand.instagramUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all w-fit shadow-lg shadow-[#E62E6B]/25" data-testid="instagram-follow-btn">

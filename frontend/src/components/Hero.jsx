@@ -5,7 +5,7 @@ import { heroStats, heroVideoPoster } from "../mock/mock";
 import { scrollToId } from "./Navbar";
 import { shortCta } from "../lib/ctaLabel";
 
-const Headline = ({ text }) => text.split(/["“”]/).map((part, i) => part ? <span key={i} className={i % 2 ? "italic font-bold text-[#E62E6B]" : undefined}>{part}</span> : null);
+const Headline = ({ text }) => text.split(/["“”]/).map((part, i) => part ? <span key={i} className={i % 2 ? "italic font-bold text-[#C8215A]" : undefined}>{part}</span> : null);
 
 const Hero = ({ page }) => {
 
@@ -26,9 +26,9 @@ const Hero = ({ page }) => {
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] text-[#6E6266] uppercase" data-testid="hero-eyebrow">{page.eyebrow}</span>
           </div>
 
-          <h2 className="font-display text-[#4A2530] mt-5 sm:mt-6 text-[40px] leading-[1.04] sm:text-[56px] md:text-[66px] lg:text-[72px] font-medium [text-shadow:0_2px_20px_rgba(244,241,234,0.8)] md:[text-shadow:none]" data-testid="hero-title">
+          <p className="font-display text-[#4A2530] mt-5 sm:mt-6 text-[40px] leading-[1.04] sm:text-[56px] md:text-[66px] lg:text-[72px] font-medium [text-shadow:0_2px_20px_rgba(244,241,234,0.8)] md:[text-shadow:none]" data-testid="hero-title">
             <Headline text={page.heroHeadline} />
-          </h2>
+          </p>
 
           <p className="fade-up delay-3 mt-6 sm:mt-7 text-base sm:text-[17px] md:text-lg leading-relaxed text-[#5C4E52] max-w-[540px]" data-testid="hero-subtitle">
             {page.heroSub}
@@ -40,7 +40,7 @@ const Hero = ({ page }) => {
               <span className="hidden sm:inline">Book Your Free Consult</span>
             </motion.button>
             <button onClick={() => scrollToId("reels")} className="group flex items-center gap-3 text-[#4A2530]" data-testid="hero-reel-btn">
-              <span className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-[#F4B7CE] bg-white/70 backdrop-blur flex items-center justify-center text-[#E62E6B] group-hover:bg-[#D6245F] group-hover:border-[#E62E6B] group-hover:text-white transition-all duration-300">
+              <span className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-[#F4B7CE] bg-white/70 backdrop-blur flex items-center justify-center text-[#C8215A] group-hover:bg-[#D6245F] group-hover:border-[#E62E6B] group-hover:text-white transition-all duration-300">
                 <Play size={16} className="ml-0.5 fill-current" />
               </span>
               <span className="text-sm sm:text-[15px]">Watch the reel</span>
@@ -52,7 +52,7 @@ const Hero = ({ page }) => {
               <div key={s.label} className={i === 0 ? "pr-4 sm:pr-6" : "px-4 sm:px-6"}>
                 <div className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-[#4A2530] flex items-center gap-1">
                   {s.value}
-                  {s.label === "Google rating" && <Star size={16} className="fill-[#E62E6B] text-[#E62E6B]" />}
+                  {s.label === "Google rating" && <Star size={16} className="fill-[#E62E6B] text-[#C8215A]" />}
                 </div>
                 <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.14em] uppercase text-[#6E6266] mt-1.5">{s.label}</div>
               </div>

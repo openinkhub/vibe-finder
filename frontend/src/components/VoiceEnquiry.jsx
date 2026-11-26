@@ -82,7 +82,7 @@ export const VoiceEnquiry = ({ onResult }) => {
       </div>
       {transcript && (
         <div className="mt-3 flex items-start gap-2 text-xs sm:text-sm text-[#4A2530] bg-white/70 rounded-xl px-3 py-2.5" data-testid="voice-transcript">
-          <Sparkles size={14} className="text-[#E62E6B] shrink-0 mt-0.5" /> <span className="italic">“{transcript}”</span>
+          <Sparkles size={14} className="text-[#C8215A] shrink-0 mt-0.5" /> <span className="italic">“{transcript}”</span>
         </div>
       )}
     </div>

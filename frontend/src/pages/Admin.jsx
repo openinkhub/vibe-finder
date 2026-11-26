@@ -41,15 +41,15 @@ const Login = ({ onLogin }) => {
     <div className="min-h-screen bg-[#F4F1EA] flex items-center justify-center px-5 py-16">
       <form onSubmit={submit} className="w-full max-w-sm bg-white rounded-[28px] p-8 border border-[#F1DCE3] shadow-[0_30px_80px_-40px_rgba(230,46,107,0.45)]" data-testid="admin-login-form">
         <img width="311" height="133" src={brand.logo} alt="Rekha Krishnamurthy" className="h-12 w-auto" />
-        <div className="mt-6 flex items-center gap-2 text-[#E62E6B]"><Lock size={16} /><span className="font-mono text-[11px] tracking-[0.24em] uppercase">Studio admin</span></div>
+        <div className="mt-6 flex items-center gap-2 text-[#C8215A]"><Lock size={16} /><span className="font-mono text-[11px] tracking-[0.24em] uppercase">Studio admin</span></div>
         <h1 className="font-display text-3xl text-[#4A2530] mt-2">Sign in</h1>
         {error && <div className="mt-4 bg-[#FBE9F0] text-[#C81F57] px-4 py-3 rounded-xl text-sm" data-testid="admin-login-error">{error}</div>}
         <div className="mt-6 space-y-4">
           <input type="email" required placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={inputCls} data-testid="admin-email-input" />
           <input type="password" required placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className={inputCls} data-testid="admin-password-input" />
         </div>
-        <button type="submit" disabled={busy} className="mt-6 w-full py-3.5 rounded-full bg-[#E62E6B] text-white font-medium hover:bg-[#C81F57] transition-colors disabled:opacity-60 inline-flex items-center justify-center gap-2" data-testid="admin-login-btn">{busy && <Loader2 size={16} className="animate-spin" />} Sign in</button>
-        <Link to="/" className="mt-5 inline-flex items-center gap-1.5 text-sm text-[#8B7F82] hover:text-[#E62E6B]" data-testid="admin-back-link"><ArrowLeft size={14} /> Back to site</Link>
+        <button type="submit" disabled={busy} className="mt-6 w-full py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors disabled:opacity-60 inline-flex items-center justify-center gap-2" data-testid="admin-login-btn">{busy && <Loader2 size={16} className="animate-spin" />} Sign in</button>
+        <Link to="/" className="mt-5 inline-flex items-center gap-1.5 text-sm text-[#8B7F82] hover:text-[#C8215A]" data-testid="admin-back-link"><ArrowLeft size={14} /> Back to site</Link>
       </form>
     </div>
   );
@@ -61,17 +61,17 @@ const EnquiryCard = ({ e, onStatus, onAccept, onReject, onDelete, busy }) => (
       <div className="flex items-start gap-3">
         {e.look_image && <img src={imgUrl(e.look_image)} alt={e.look || "look"} className="w-16 h-20 rounded-xl object-cover border border-[#F1DCE3] shrink-0" data-testid={`enquiry-look-image-${e.id}`} />}
         <div>
-        <div className="font-display text-xl text-[#4A2530] flex items-center gap-2">{e.seen === false && <span className="w-2 h-2 rounded-full bg-[#E62E6B] animate-pulse" title="New" />}{e.name}{e.source === "voice" && <span className="inline-flex items-center gap-1 text-[10px] font-mono uppercase bg-[#FBE9F0] text-[#E62E6B] px-2 py-0.5 rounded-full"><Mic size={10} /> voice</span>}</div>
-              <div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82] mt-1 flex items-center gap-2 flex-wrap">{COURSE_SERVICES.includes(e.service) ? <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#4A2530] text-white" data-testid={`enquiry-course-tag-${e.id}`}><GraduationCap size={10} /> {e.service}</span> : e.service}{e.date ? ` · ${e.date}` : ""} · {new Date(e.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}{e.terms_accepted && <span className="px-2 py-0.5 rounded-full bg-[#FBE9F0] text-[#E62E6B]" data-testid={`enquiry-terms-tag-${e.id}`}>T&C accepted</span>}</div>
+        <div className="font-display text-xl text-[#4A2530] flex items-center gap-2">{e.seen === false && <span className="w-2 h-2 rounded-full bg-[#E62E6B] animate-pulse" title="New" />}{e.name}{e.source === "voice" && <span className="inline-flex items-center gap-1 text-[10px] font-mono uppercase bg-[#FBE9F0] text-[#C8215A] px-2 py-0.5 rounded-full"><Mic size={10} /> voice</span>}</div>
+              <div className="font-mono text-[10px] uppercase tracking-wider text-[#8B7F82] mt-1 flex items-center gap-2 flex-wrap">{COURSE_SERVICES.includes(e.service) ? <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#4A2530] text-white" data-testid={`enquiry-course-tag-${e.id}`}><GraduationCap size={10} /> {e.service}</span> : e.service}{e.date ? ` · ${e.date}` : ""} · {new Date(e.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}{e.terms_accepted && <span className="px-2 py-0.5 rounded-full bg-[#FBE9F0] text-[#C8215A]" data-testid={`enquiry-terms-tag-${e.id}`}>T&C accepted</span>}</div>
         </div>
       </div>
       <span className={`px-3 py-1 rounded-full text-xs font-medium ${STATUS_STYLE[e.status]}`} data-testid={`enquiry-status-${e.id}`}>{e.status}</span>
     </div>
     <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#5C4E52]">
-      <a href={`tel:${e.phone.replace(/\s/g, "")}`} className="flex items-center gap-1.5 hover:text-[#E62E6B]"><Phone size={14} className="text-[#E62E6B]" /> {e.phone}</a>
-      {e.email && <a href={`mailto:${e.email}`} className="flex items-center gap-1.5 hover:text-[#E62E6B]"><Mail size={14} className="text-[#E62E6B]" /> {e.email}</a>}
-      {e.date && <span className="flex items-center gap-1.5"><Calendar size={14} className="text-[#E62E6B]" /> {e.date}</span>}
-      {e.look && <span className="flex items-center gap-1.5 bg-[#FBE9F0] px-2.5 py-0.5 rounded-full"><Sparkles size={13} className="text-[#E62E6B]" /> {e.look}</span>}
+      <a href={`tel:${e.phone.replace(/\s/g, "")}`} className="flex items-center gap-1.5 hover:text-[#C8215A]"><Phone size={14} className="text-[#C8215A]" /> {e.phone}</a>
+      {e.email && <a href={`mailto:${e.email}`} className="flex items-center gap-1.5 hover:text-[#C8215A]"><Mail size={14} className="text-[#C8215A]" /> {e.email}</a>}
+      {e.date && <span className="flex items-center gap-1.5"><Calendar size={14} className="text-[#C8215A]" /> {e.date}</span>}
+      {e.look && <span className="flex items-center gap-1.5 bg-[#FBE9F0] px-2.5 py-0.5 rounded-full"><Sparkles size={13} className="text-[#C8215A]" /> {e.look}</span>}
     </div>
     {e.message && <p className="mt-3 text-sm text-[#5C4E52] leading-relaxed bg-[#FBFAF7] rounded-xl px-4 py-3">{e.message}</p>}
     <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -86,7 +86,7 @@ const EnquiryCard = ({ e, onStatus, onAccept, onReject, onDelete, busy }) => (
         </>
       )}
       {STATUSES.filter((s) => s !== e.status).map((s) => (
-        <button key={s} onClick={() => onStatus(e.id, s)} className="px-3 py-1.5 rounded-full text-xs font-medium border border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B] hover:text-[#E62E6B] transition-colors capitalize" data-testid={`enquiry-set-${s}-${e.id}`}>Mark {s}</button>
+        <button key={s} onClick={() => onStatus(e.id, s)} className="px-3 py-1.5 rounded-full text-xs font-medium border border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B] hover:text-[#C8215A] transition-colors capitalize" data-testid={`enquiry-set-${s}-${e.id}`}>Mark {s}</button>
       ))}
       <div className="flex-1" />
       <a href={`https://wa.me/${e.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hi ${e.name.split(" ")[0]}, this is Rekha Krishnamurthy 💄 Thank you for your ${e.service.toLowerCase()} enquiry${e.date ? ` for ${e.date}` : ""}${e.look ? ` — I love that you picked the "${e.look}" look` : ""}! I'd be happy to hold your date. When would be a good time for a quick free consultation call?`)}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-[#25D366] text-white" data-testid={`enquiry-whatsapp-${e.id}`}><MessageCircle size={12} /> Reply on WhatsApp</a>
@@ -99,15 +99,15 @@ const EnquiriesSection = ({ group, title, items, filter, setFilter, stats, unsee
   <>
     <div className="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">{group === "course" ? "Course enquiries" : "Service enquiries"}</span>
+        <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">{group === "course" ? "Course enquiries" : "Service enquiries"}</span>
         <h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3">{title}</h1>
       </div>
-      {unseen > 0 && <button onClick={markSeen} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[#E62E6B] text-[#E62E6B] text-sm font-medium hover:bg-[#FBE9F0]" data-testid={`admin-mark-seen-${group}`}><Bell size={15} /> Mark {unseen} as seen</button>}
+      {unseen > 0 && <button onClick={markSeen} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[#E62E6B] text-[#C8215A] text-sm font-medium hover:bg-[#FBE9F0]" data-testid={`admin-mark-seen-${group}`}><Bell size={15} /> Mark {unseen} as seen</button>}
     </div>
 
     <div className="mt-8 grid grid-cols-2 sm:grid-cols-5 gap-3" data-testid={`admin-stats-${group}`}>
       {["total", ...STATUSES].map((k) => (
-        <button key={k} onClick={() => setFilter(k === "total" ? "all" : k)} className={`text-left rounded-2xl p-4 border transition-colors ${(filter === "all" && k === "total") || filter === k ? "bg-[#E62E6B] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`admin-filter-${group}-${k}`}>
+        <button key={k} onClick={() => setFilter(k === "total" ? "all" : k)} className={`text-left rounded-2xl p-4 border transition-colors ${(filter === "all" && k === "total") || filter === k ? "bg-[#D6245F] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`admin-filter-${group}-${k}`}>
           <div className="font-display text-3xl">{stats[k]}</div>
           <div className="font-mono text-[10px] uppercase tracking-wider opacity-70 mt-1">{k}</div>
         </button>
@@ -188,7 +188,7 @@ export default function Admin() {
     try { await api.delete(`/enquiries/${id}`); toast.success("Deleted"); refresh(); } catch (err) { toast.error(errorText(err)); }
   };
 
-  if (user === undefined) return <div className="min-h-screen bg-[#F4F1EA] flex items-center justify-center text-[#E62E6B]"><Loader2 className="animate-spin" /></div>;
+  if (user === undefined) return <div className="min-h-screen bg-[#F4F1EA] flex items-center justify-center text-[#C8215A]"><Loader2 className="animate-spin" /></div>;
   if (!user) return <Login onLogin={setUser} />;
 
   const isCourse = (e) => COURSE_SERVICES.includes(e.service);
@@ -211,12 +211,12 @@ export default function Admin() {
           <Link to="/" className="flex items-center gap-3" data-testid="admin-logo-link"><img width="311" height="133" src={brand.logo} alt="Rekha Krishnamurthy" className="h-9 sm:h-10 w-auto" /></Link>
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="hidden sm:block font-mono text-[10px] uppercase tracking-wider text-[#8B7F82]">{user.email}</span>
-            <button onClick={enableNotify} className={`relative w-10 h-10 rounded-full border flex items-center justify-center ${notify ? "border-[#E62E6B] text-[#E62E6B]" : "border-[#F1DCE3] text-[#4A2530]"}`} aria-label="Enable browser alerts" title={notify ? "Browser alerts on" : "Enable browser alerts"} data-testid="admin-notify-btn">
+            <button onClick={enableNotify} className={`relative w-10 h-10 rounded-full border flex items-center justify-center ${notify ? "border-[#E62E6B] text-[#C8215A]" : "border-[#F1DCE3] text-[#4A2530]"}`} aria-label="Enable browser alerts" title={notify ? "Browser alerts on" : "Enable browser alerts"} data-testid="admin-notify-btn">
               {notify ? <BellRing size={16} /> : <Bell size={16} />}
-              {stats?.unseen > 0 && <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#E62E6B] text-white text-[10px] font-bold flex items-center justify-center" data-testid="admin-unseen-badge">{stats.unseen}</span>}
+              {stats?.unseen > 0 && <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#D6245F] text-white text-[10px] font-bold flex items-center justify-center" data-testid="admin-unseen-badge">{stats.unseen}</span>}
             </button>
-            <button onClick={() => refresh()} className="w-10 h-10 rounded-full border border-[#F1DCE3] flex items-center justify-center text-[#4A2530] hover:text-[#E62E6B]" aria-label="Refresh" data-testid="admin-refresh-btn"><RefreshCw size={16} className={loading ? "animate-spin" : ""} /></button>
-            <button onClick={logout} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57]" data-testid="admin-logout-btn"><LogOut size={15} /> Logout</button>
+            <button onClick={() => refresh()} className="w-10 h-10 rounded-full border border-[#F1DCE3] flex items-center justify-center text-[#4A2530] hover:text-[#C8215A]" aria-label="Refresh" data-testid="admin-refresh-btn"><RefreshCw size={16} className={loading ? "animate-spin" : ""} /></button>
+            <button onClick={logout} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#D6245F] text-white text-sm font-medium hover:bg-[#C81F57]" data-testid="admin-logout-btn"><LogOut size={15} /> Logout</button>
           </div>
         </div>
       </header>
@@ -235,20 +235,20 @@ export default function Admin() {
             ["blog", "Blog", Newspaper, 0],
             ["seo", "SEO", SearchCheck, 0],
           ].map(([k, label, Icon, badge]) => (
-            <button key={k} onClick={() => setTab(k)} className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium border transition-colors ${tab === k ? "bg-[#E62E6B] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`admin-tab-${k}`}>
-              <Icon size={15} /> {label}{badge > 0 && <span className={`ml-1 px-1.5 rounded-full text-[10px] ${tab === k ? "bg-white text-[#E62E6B]" : "bg-[#E62E6B] text-white"}`}>{badge}</span>}
+            <button key={k} onClick={() => setTab(k)} className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium border transition-colors ${tab === k ? "bg-[#D6245F] border-[#E62E6B] text-white" : "bg-white border-[#F1DCE3] text-[#4A2530] hover:border-[#E62E6B]"}`} data-testid={`admin-tab-${k}`}>
+              <Icon size={15} /> {label}{badge > 0 && <span className={`ml-1 px-1.5 rounded-full text-[10px] ${tab === k ? "bg-white text-[#C8215A]" : "bg-[#D6245F] text-white"}`}>{badge}</span>}
             </button>
           ))}
         </div>
 
-        {tab === "calendar" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Availability</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-2">Booked dates & hours</h1><p className="text-sm text-[#5C4E52] mb-8">Only you can edit this. Visitors see it read-only on the site so they enquire for open slots.</p><CalendarEditor /></>)}
-        {tab === "services" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Services</h1><ServicesEditor /></>)}
-        {tab === "pricing" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Pricing cards</h1><PricingEditor /></>)}
-        {tab === "portfolio" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Portfolio photos</h1><PortfolioEditor /></>)}
-        {tab === "heroes" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Page hero images</h1><HeroImagesEditor /></>)}
-        {tab === "batches" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Academy</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Next batch dates</h1><BatchesEditor /></>)}
-        {tab === "blog" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Blog posts</h1><BlogEditor /></>)}
-        {tab === "seo" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Search & AI visibility</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">SEO</h1><SeoPanel /></>)}
+        {tab === "calendar" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Availability</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-2">Booked dates & hours</h1><p className="text-sm text-[#5C4E52] mb-8">Only you can edit this. Visitors see it read-only on the site so they enquire for open slots.</p><CalendarEditor /></>)}
+        {tab === "services" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Services</h1><ServicesEditor /></>)}
+        {tab === "pricing" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Pricing cards</h1><PricingEditor /></>)}
+        {tab === "portfolio" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Portfolio photos</h1><PortfolioEditor /></>)}
+        {tab === "heroes" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Page hero images</h1><HeroImagesEditor /></>)}
+        {tab === "batches" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Academy</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Next batch dates</h1><BatchesEditor /></>)}
+        {tab === "blog" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Editable content</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">Blog posts</h1><BlogEditor /></>)}
+        {tab === "seo" && (<><span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Search & AI visibility</span><h1 className="font-display text-4xl sm:text-5xl text-[#4A2530] mt-3 mb-8">SEO</h1><SeoPanel /></>)}
 
         {(tab === "service-enquiries" || tab === "course-enquiries") && stats?.alerts && !stats.alerts.email && <p className="mb-6 text-xs text-[#8B7F82] bg-white border border-[#F1DCE3] rounded-xl px-4 py-2.5 inline-block" data-testid="admin-alerts-note">In-app alerts are on. Email alerts will switch on automatically once RESEND_API_KEY and ALERT_TO_EMAIL are added to the backend .env.</p>}
 

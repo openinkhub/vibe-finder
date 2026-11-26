@@ -20,7 +20,7 @@ const PostChecklist = ({ f, faqs }) => {
     <div className="bg-[#FBFAF7] border border-[#F1DCE3] rounded-2xl p-4" data-testid="blog-seo-checklist">
       <div className="flex items-center gap-3 mb-3">
         <span className="font-mono text-[11px] uppercase tracking-wider text-[#8B7F82]">SEO checklist</span>
-        {busy && <Loader2 size={13} className="animate-spin text-[#E62E6B]" />}
+        {busy && <Loader2 size={13} className="animate-spin text-[#C8215A]" />}
         {res && [["seo", "SEO"], ["content", "Content"], ["readability", "Readability"]].map(([k, l]) => <span key={k} className="inline-flex items-center gap-1 text-xs text-[#5C4E52]"><ScoreBadge score={res.scores[k]} /> {l}</span>)}
       </div>
       {res ? <CheckList results={res.results} compact /> : <p className="text-xs text-[#8B7F82]">Start writing to see the checklist.</p>}
@@ -58,7 +58,7 @@ const MarkdownField = ({ value, onChange }) => {
     <div>
       <div className="flex items-center gap-1 mb-1.5 flex-wrap" data-testid="blog-md-toolbar">
         {TOOLBAR.map(({ icon: Icon, wrap, label, line }) => (
-          <button key={label} type="button" title={label} onClick={() => apply(wrap[0], wrap[1], line)} className="w-8 h-8 rounded-lg border border-[#F1DCE3] bg-white text-[#4A2530] hover:border-[#E62E6B] hover:text-[#E62E6B] flex items-center justify-center" data-testid={`blog-md-btn-${label.toLowerCase().replace(/\s/g, "-")}`}>
+          <button key={label} type="button" title={label} onClick={() => apply(wrap[0], wrap[1], line)} className="w-8 h-8 rounded-lg border border-[#F1DCE3] bg-white text-[#4A2530] hover:border-[#E62E6B] hover:text-[#C8215A] flex items-center justify-center" data-testid={`blog-md-btn-${label.toLowerCase().replace(/\s/g, "-")}`}>
             <Icon size={14} />
           </button>
         ))}
@@ -79,7 +79,7 @@ const FaqEditor = ({ faqs, setFaqs }) => (
         <textarea rows={2} placeholder="Answer" value={f.a} onChange={(e) => setFaqs(faqs.map((x, j) => (j === i ? { ...x, a: e.target.value } : x)))} className={inputCls} data-testid={`blog-faq-a-${i}`} />
       </div>
     ))}
-    <button type="button" onClick={() => setFaqs([...faqs, { q: "", a: "" }])} className="inline-flex items-center gap-1.5 text-sm font-medium text-[#E62E6B]" data-testid="blog-faq-add"><Plus size={14} /> Add FAQ</button>
+    <button type="button" onClick={() => setFaqs([...faqs, { q: "", a: "" }])} className="inline-flex items-center gap-1.5 text-sm font-medium text-[#C8215A]" data-testid="blog-faq-add"><Plus size={14} /> Add FAQ</button>
     <p className="text-xs text-[#8B7F82]">FAQs appear inline within the article body (not a separate section) and automatically generate FAQPage schema markup for Google whenever at least one is added.</p>
   </div>
 );
@@ -162,7 +162,7 @@ const PostForm = ({ item, onSave, onCancel }) => {
       <div>
         <label className={labelCls}>Featured image</label>
         <div className="flex items-start gap-4">
-          <button type="button" onClick={() => fileRef.current.click()} className="w-28 h-28 rounded-2xl border-2 border-dashed border-[#F4B7CE] bg-[#FBE9F0] overflow-hidden flex items-center justify-center text-[#E62E6B] shrink-0" data-testid="blog-image-pick-btn">
+          <button type="button" onClick={() => fileRef.current.click()} className="w-28 h-28 rounded-2xl border-2 border-dashed border-[#F4B7CE] bg-[#FBE9F0] overflow-hidden flex items-center justify-center text-[#C8215A] shrink-0" data-testid="blog-image-pick-btn">
             {preview ? <img src={preview} alt="preview" className="w-full h-full object-cover" /> : <Upload size={20} />}
           </button>
           <input ref={fileRef} type="file" accept="image/*" onChange={(e) => pick(e.target.files?.[0])} className="hidden" data-testid="blog-image-file-input" />
@@ -186,7 +186,7 @@ const PostForm = ({ item, onSave, onCancel }) => {
       <PostChecklist f={f} faqs={faqs} />
 
       <div className="flex gap-3 pt-2">
-        <button type="submit" disabled={busy} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] disabled:opacity-60" data-testid="blog-save-btn">{busy ? <Loader2 size={15} className="animate-spin" /> : <Check size={15} />} Publish</button>
+        <button type="submit" disabled={busy} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#D6245F] text-white text-sm font-medium hover:bg-[#C81F57] disabled:opacity-60" data-testid="blog-save-btn">{busy ? <Loader2 size={15} className="animate-spin" /> : <Check size={15} />} Publish</button>
         <button type="button" onClick={onCancel} className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#F1DCE3] text-[#8B7F82] text-sm font-medium" data-testid="blog-cancel-btn"><X size={15} /> Cancel</button>
       </div>
     </form>
@@ -213,7 +213,7 @@ const ApiKeyCard = () => {
 
   return (
     <div className="bg-white rounded-3xl p-5 sm:p-6 border border-[#F1DCE3] mb-6" data-testid="blog-api-key-card">
-      <div className="flex items-center gap-2 text-[#E62E6B]"><Key size={16} /><span className="font-mono text-[11px] tracking-[0.2em] uppercase">Third-party posting API</span></div>
+      <div className="flex items-center gap-2 text-[#C8215A]"><Key size={16} /><span className="font-mono text-[11px] tracking-[0.2em] uppercase">Third-party posting API</span></div>
       <p className="text-sm text-[#5C4E52] mt-2">Use this key to publish blog posts from Zapier, Make, or any external tool via <code className="text-xs bg-[#FBFAF7] px-1.5 py-0.5 rounded">POST {API}/blog</code> with header <code className="text-xs bg-[#FBFAF7] px-1.5 py-0.5 rounded">X-API-Key</code>.</p>
       <div className="mt-3 flex items-center gap-2 flex-wrap">
         <code className="flex-1 min-w-[200px] px-3 py-2.5 rounded-xl bg-[#FBFAF7] border border-[#F1DCE3] text-sm text-[#4A2530] font-mono truncate" data-testid="blog-api-key-value">{show ? key : "•".repeat(24)}</code>
@@ -222,7 +222,7 @@ const ApiKeyCard = () => {
         <button type="button" onClick={regenerate} disabled={busy} className="px-3 py-2.5 rounded-xl border border-[#F1DCE3] text-sm text-[#C81F57] inline-flex items-center gap-1.5 disabled:opacity-60" data-testid="blog-api-key-regenerate">{busy ? <Loader2 size={13} className="animate-spin" /> : <RefreshCw size={13} />} Regenerate</button>
       </div>
       <details className="mt-3">
-        <summary className="text-sm text-[#E62E6B] cursor-pointer">Show example request</summary>
+        <summary className="text-sm text-[#C8215A] cursor-pointer">Show example request</summary>
         <pre className="mt-2 p-3 rounded-xl bg-[#FBFAF7] border border-[#F1DCE3] text-xs text-[#4A2530] overflow-x-auto whitespace-pre" data-testid="blog-api-key-snippet">{snippet}</pre>
       </details>
     </div>
@@ -258,7 +258,7 @@ export const BlogEditor = () => {
       <ApiKeyCard />
       <div className="flex items-center justify-between gap-4 mb-5">
         <p className="text-sm text-[#5C4E52]">Posts appear instantly on the public Blog page and get their own SEO-optimised URL.</p>
-        {!adding && <button onClick={() => { setAdding(true); setEditing(null); }} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] shrink-0" data-testid="blog-add-btn"><Plus size={15} /> New post</button>}
+        {!adding && <button onClick={() => { setAdding(true); setEditing(null); }} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#D6245F] text-white text-sm font-medium hover:bg-[#C81F57] shrink-0" data-testid="blog-add-btn"><Plus size={15} /> New post</button>}
       </div>
 
       {seoOpen && <SeoItemPanel path={seoOpen} onClose={() => setSeoOpen(null)} onChanged={() => { load(); reloadSeo(true); }} />}
@@ -272,17 +272,17 @@ export const BlogEditor = () => {
           <div key={p.id} className="bg-white rounded-2xl p-4 border border-[#F1DCE3] flex items-center gap-4" data-testid={`blog-row-${p.id}`}>
             <img src={imgUrl(p.featured_image)} alt={p.alt_text} className="w-16 h-16 rounded-xl object-cover shrink-0" />
             <div className="flex-1 min-w-0">
-              <div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{p.category} · {p.publish_date}</div>
+              <div className="font-mono text-[10px] uppercase tracking-wider text-[#C8215A]">{p.category} · {p.publish_date}</div>
               <div className="font-display text-lg text-[#4A2530] truncate">{p.title}</div>
               <div className="text-sm text-[#5C4E52] truncate">{p.excerpt}</div>
             </div>
             {seoOf(p.slug) && (
               <button onClick={() => setSeoOpen(`/blog/${p.slug}`)} className="hidden sm:flex items-center gap-1.5 shrink-0" title="SEO report" data-testid={`blog-seo-${p.id}`}>
                 <ScoreBadge score={seoOf(p.slug).scores.seo} label="SEO" /><ScoreBadge score={seoOf(p.slug).scores.content} label="Content" /><ScoreBadge score={seoOf(p.slug).scores.readability} label="Readability" />
-                <span className="text-xs font-medium text-[#E62E6B] ml-1">Report</span>
+                <span className="text-xs font-medium text-[#C8215A] ml-1">Report</span>
               </button>
             )}
-            <button onClick={() => { setEditing(p.id); setAdding(false); }} className="w-9 h-9 rounded-full border border-[#F1DCE3] text-[#4A2530] hover:text-[#E62E6B] flex items-center justify-center shrink-0" aria-label="Edit" data-testid={`blog-edit-${p.id}`}><Pencil size={14} /></button>
+            <button onClick={() => { setEditing(p.id); setAdding(false); }} className="w-9 h-9 rounded-full border border-[#F1DCE3] text-[#4A2530] hover:text-[#C8215A] flex items-center justify-center shrink-0" aria-label="Edit" data-testid={`blog-edit-${p.id}`}><Pencil size={14} /></button>
             <button onClick={() => remove(p.id)} className="w-9 h-9 rounded-full border border-[#F1DCE3] text-[#8B7F82] hover:text-[#C81F57] flex items-center justify-center shrink-0" aria-label="Delete" data-testid={`blog-delete-${p.id}`}><Trash2 size={14} /></button>
           </div>
         ))}

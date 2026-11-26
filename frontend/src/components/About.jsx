@@ -26,16 +26,16 @@ const About = () => {
             <div className="relative">
               <TiltCard max={7} className="rounded-[24px] overflow-hidden shadow-[0_30px_80px_-30px_rgba(230,46,107,0.45)]">
                 <motion.img style={{ y: imgY }} width="800" height="1000" loading="lazy" decoding="async" src={artistImg} srcSet={srcSetFor(artistImg)} sizes="(min-width: 768px) 40vw, 100vw" alt={artistAlt} className="w-full h-[360px] sm:h-[420px] md:h-[560px] object-cover scale-110" />
-                <div className="absolute bottom-4 left-4 font-mono text-[11px] tracking-[0.15em] text-white bg-[#E62E6B]/90 backdrop-blur px-3 py-1.5 rounded">Studio · Bengaluru</div>
+                <div className="absolute bottom-4 left-4 font-mono text-[11px] tracking-[0.15em] text-white bg-[#D6245F]/90 backdrop-blur px-3 py-1.5 rounded">Studio · Bengaluru</div>
               </TiltCard>
               <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-20 h-20 sm:w-24 sm:h-24 border-t-2 border-l-2 border-[#E62E6B] rounded-tl-[24px] pointer-events-none" />
             </div>
           </Reveal>
 
           <Reveal delay={0.15}>
-            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">About the artist</span>
+            <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">About the artist</span>
             <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-[1.06] mt-4 sm:mt-5">
-              14+ Years as a Makeup Artist <span className="italic text-[#E62E6B]">in Bangalore</span>
+              14+ Years as a Makeup Artist <span className="italic text-[#C8215A]">in Bangalore</span>
             </h2>
             <p className="mt-5 sm:mt-6 text-[#5C4E52] leading-relaxed text-sm sm:text-base">
               For Rekha, great bridal makeup starts long before the brushes come out. First, it starts with understanding <span className="font-semibold text-[#4A2530]">you</span>: your features, your skin, your style and how you want to feel on your wedding day.
@@ -48,7 +48,7 @@ const About = () => {
             </p>
 
             <p className="mt-4 text-[#5C4E52] leading-relaxed text-sm sm:text-base">
-              Her kit includes trusted brands such as <a href="https://www.maccosmetics.in/" target="_blank" rel="noopener" className="text-[#E62E6B] underline decoration-[#E62E6B]/40 underline-offset-2">MAC Cosmetics</a> and <a href="https://www.bobbibrown.in/" target="_blank" rel="noopener" className="text-[#E62E6B] underline decoration-[#E62E6B]/40 underline-offset-2">Bobbi Brown</a>. Also, she follows strict hygiene at each booking.
+              Her kit includes trusted brands such as <a href="https://www.maccosmetics.in/" target="_blank" rel="noopener" className="text-[#C8215A] underline decoration-[#E62E6B]/40 underline-offset-2">MAC Cosmetics</a> and <a href="https://www.bobbibrown.in/" target="_blank" rel="noopener" className="text-[#C8215A] underline decoration-[#E62E6B]/40 underline-offset-2">Bobbi Brown</a>. Also, she follows strict hygiene at each booking.
             </p>
 
             <div className="mt-8 sm:mt-10 grid grid-cols-3 gap-3 sm:gap-6 border-t border-[#F1DCE3] pt-7 sm:pt-8">

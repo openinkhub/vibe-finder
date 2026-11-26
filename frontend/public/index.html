@@ -11,6 +11,9 @@
         w.addEventListener('load',function(){setTimeout(go,3500)});
         })(window,document,'script','dataLayer','GTM-WL72CXFB');</script>
         <!-- End Google Tag Manager -->
+        <!-- Contact clicks and AI-assistant referrals, sent to Tag Manager as events -->
+        <script>(function(w,d){var l=w.dataLayer=w.dataLayer||[];try{var r=d.referrer||"",m=r.match(/(chatgpt\.com|chat\.openai\.com|perplexity\.ai|gemini\.google\.com|copilot\.microsoft\.com|claude\.ai)/);if(m)l.push({event:"ai_referral",ai_source:m[1],page_path:location.pathname})}catch(e){}
+        d.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a[href]");if(!a)return;var h=a.getAttribute("href")||"",k=/^tel:/.test(h)?"phone":/wa\.me|whatsapp/.test(h)?"whatsapp":/^mailto:/.test(h)?"email":"";if(k)l.push({event:"contact_click",contact_method:k,page_path:location.pathname})},true)})(window,document);</script>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#E62E6B" />

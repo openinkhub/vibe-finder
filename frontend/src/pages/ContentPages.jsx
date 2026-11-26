@@ -40,7 +40,7 @@ const Body = ({ page }) => (
         {page?.bullets && (
           <ul className="mt-8 space-y-3" data-testid="page-bullets">
             {page.bullets.map(([t, d]) => (
-              <li key={t} className="flex gap-3 bg-white rounded-2xl p-4 border border-[#F1DCE3]"><Check size={18} className="text-[#E62E6B] shrink-0 mt-0.5" /><div><div className="font-display text-lg text-[#4A2530]">{t}</div><div className="text-sm text-[#5C4E52] mt-1">{d}</div></div></li>
+              <li key={t} className="flex gap-3 bg-white rounded-2xl p-4 border border-[#F1DCE3]"><Check size={18} className="text-[#C8215A] shrink-0 mt-0.5" /><div><div className="font-display text-lg text-[#4A2530]">{t}</div><div className="text-sm text-[#5C4E52] mt-1">{d}</div></div></li>
             ))}
           </ul>
         )}
@@ -50,7 +50,7 @@ const Body = ({ page }) => (
         {page?.faq && (
           <Reveal delay={0.1}>
             <div className="bg-[#FBE9F0] rounded-3xl p-6 border border-[#F1DCE3]" data-testid="page-faq">
-              <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#E62E6B] mb-4">Good to know</div>
+              <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#C8215A] mb-4">Good to know</div>
               {page.faq.map(([q, a]) => <div key={q} className="mb-4 last:mb-0"><div className="font-display text-base text-[#4A2530]">{q}</div><p className="text-sm text-[#5C4E52] mt-1">{a}</p></div>)}
             </div>
           </Reveal>
@@ -71,10 +71,10 @@ const ChildCards = ({ items }) => {
             <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full hover:border-[#E62E6B] transition-colors">
               <img width="600" height="300" loading="lazy" decoding="async" src={heroImage(c, map)} srcSet={srcSetFor(heroImage(c, map))} sizes="(min-width: 1024px) 33vw, 100vw" alt={heroImageAlt(c, map)} className="w-full h-44 object-cover" />
               <div className="p-6">
-                <div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{c.eyebrow}</div>
+                <div className="font-mono text-[10px] uppercase tracking-wider text-[#C8215A]">{c.eyebrow}</div>
                 <h3 className="font-display text-xl text-[#4A2530] mt-2">{c.name}</h3>
                 <p className="text-sm text-[#5C4E52] mt-2">{c.heroSub}</p>
-                <span className="mt-4 inline-flex items-center gap-1 text-sm text-[#E62E6B]">{c.heroHeadline} <ArrowUpRight size={14} /></span>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm text-[#C8215A]">{c.heroHeadline} <ArrowUpRight size={14} /></span>
               </div>
             </TiltCard>
           </Link>
@@ -89,7 +89,7 @@ const ComingSoon = ({ faq }) => (
   <Section>
     <Reveal>
       <div className="bg-[#FBE9F0] rounded-3xl p-8 sm:p-12 border border-[#F1DCE3] text-center" data-testid="coming-soon">
-        <div className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Coming soon</div>
+        <div className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Coming soon</div>
         <p className="mt-3 font-display text-2xl sm:text-3xl text-[#4A2530]">Right now, we're putting the finishing touches on this page.</p>
         <p className="mt-3 text-sm sm:text-base text-[#5C4E52] max-w-xl mx-auto">Soon, community perks, member stories and workshop invites will appear here. In the meantime, say hello on WhatsApp or start an enquiry.</p>
       </div>
@@ -118,7 +118,7 @@ const Siblings = ({ page }) => {
   return (
     <Section>
       <div className="flex flex-wrap gap-2" data-testid="sibling-links">
-        {others.map((p) => <Link key={p.path} to={p.path} className="inline-flex items-center gap-2 bg-white border border-[#F1DCE3] rounded-full px-4 py-2.5 text-sm text-[#4A2530] hover:border-[#E62E6B] hover:text-[#E62E6B]" data-testid={`sibling-${p.path.slice(1)}`}><MapPin size={14} className="text-[#E62E6B]" /> {p.name}</Link>)}
+        {others.map((p) => <Link key={p.path} to={p.path} className="inline-flex items-center gap-2 bg-white border border-[#F1DCE3] rounded-full px-4 py-2.5 text-sm text-[#4A2530] hover:border-[#E62E6B] hover:text-[#C8215A]" data-testid={`sibling-${p.path.slice(1)}`}><MapPin size={14} className="text-[#C8215A]" /> {p.name}</Link>)}
       </div>
     </Section>
   );
@@ -144,7 +144,7 @@ export const SheetPage = () => {
         {page.group === "Academy" && <BatchBanner page={page} />}
         <SeoIntro page={page} ctaTo={`/contact?service=${encodeURIComponent(enquiryServiceFor(page))}`} />
         {hub ? <><ChildCards items={hub.children} /><div className="mt-12 max-w-3xl"><AuthorBio /></div></> : body ? <RichBody body={body} /> : body === undefined ? <div className="min-h-[60vh]" /> : page.comingSoon ? <ComingSoon faq={pathname === "/community" ? communityFaq : undefined} /> : <Body page={content} />}
-        {page.group === "Portfolio" && <><PortfolioGallery limit={6} /><Section className="pt-8"><Link to="/portfolio" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#E62E6B] hover:text-white transition-colors" data-testid="full-portfolio-link">See the full portfolio <ArrowUpRight size={16} /></Link></Section></>}
+        {page.group === "Portfolio" && <><PortfolioGallery limit={6} /><Section className="pt-8"><Link to="/portfolio" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#E62E6B] text-[#C8215A] font-medium hover:bg-[#E62E6B] hover:text-white transition-colors" data-testid="full-portfolio-link">See the full portfolio <ArrowUpRight size={16} /></Link></Section></>}
         {!hub && (page.group === "Services" || page.group === "Academy") && (<><BrochureCta page={page} /><BookingPanel page={page} /></>)}
         {!hub && <Siblings page={page} />}
       </div>
@@ -196,7 +196,7 @@ const GuideCards = ({ items, testid = "guide-cards" }) => {
           <Link to={g.path} className="block h-full" data-testid={`guide-card-${g.path.slice(1)}`}>
             <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full hover:border-[#E62E6B] transition-colors">
               <img src={heroImage(g, map)} srcSet={srcSetFor(heroImage(g, map))} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" alt={heroImageAlt(g, map)} loading="lazy" decoding="async" width="600" height="300" className="w-full h-40 object-cover" />
-              <div className="p-5"><div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{g.eyebrow}</div><h3 className="font-display text-lg text-[#4A2530] mt-2 leading-snug">{g.h1}</h3></div>
+              <div className="p-5"><div className="font-mono text-[10px] uppercase tracking-wider text-[#C8215A]">{g.eyebrow}</div><h3 className="font-display text-lg text-[#4A2530] mt-2 leading-snug">{g.h1}</h3></div>
             </TiltCard>
           </Link>
         </Reveal>
@@ -222,11 +222,11 @@ export const GuidePage = () => {
   return (
     <PageShell page={page} title={page.name} faq={body?.faq}>
       <article className="max-w-3xl mx-auto px-5 sm:px-6 pb-14" data-testid="guide-article">
-        <nav className="text-xs text-[#6E6266] flex flex-wrap gap-1.5" aria-label="Breadcrumb"><Link to="/" className="hover:text-[#E62E6B]">Home</Link><span>›</span><Link to="/blog" className="hover:text-[#E62E6B]">Guides</Link></nav>
-        <span className="block mt-6 font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">{page.eyebrow}</span>
+        <nav className="text-xs text-[#6E6266] flex flex-wrap gap-1.5" aria-label="Breadcrumb"><Link to="/" className="hover:text-[#C8215A]">Home</Link><span>›</span><Link to="/blog" className="hover:text-[#C8215A]">Guides</Link></nav>
+        <span className="block mt-6 font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">{page.eyebrow}</span>
         <h1 className="font-display text-[#4A2530] text-3xl sm:text-5xl leading-[1.08] mt-3" data-testid="guide-h1">{page.h1}</h1>
         <p className="mt-5 text-base sm:text-lg text-[#5C4E52] leading-relaxed">{bold(page.heroSub)}</p>
-        <div className="mt-5 text-xs text-[#6E6266] font-mono uppercase tracking-wider">By <Link to="/about-us" className="text-[#4A2530] hover:text-[#E62E6B]">Rekha Krishnamurthy</Link> · {fmtDate(page.date)}{words ? ` · ${Math.max(3, Math.round(words / 200))} min read` : ""}</div>
+        <div className="mt-5 text-xs text-[#6E6266] font-mono uppercase tracking-wider">By <Link to="/about-us" className="text-[#4A2530] hover:text-[#C8215A]">Rekha Krishnamurthy</Link> · {fmtDate(page.date)}{words ? ` · ${Math.max(3, Math.round(words / 200))} min read` : ""}</div>
         <img src={heroImage(page, map)} srcSet={srcSetFor(heroImage(page, map))} sizes={srcSetFor(heroImage(page, map)) ? "(max-width: 800px) 100vw, 760px" : undefined} fetchPriority="high" decoding="async" alt={heroImageAlt(page, map)} width="1000" height="560" className="mt-8 w-full h-[240px] sm:h-[380px] object-cover rounded-[24px]" />
         {body ? (
           <div className="mt-10 space-y-12" data-testid="guide-body">{body.sections.map((s2, i) => <Block key={s2.h} s={s2} i={i} />)}</div>
@@ -238,12 +238,12 @@ export const GuidePage = () => {
           </section>
         )}
         <div className="mt-12 bg-[#FBE9F0] rounded-3xl p-6 sm:p-8 border border-[#F1DCE3]" data-testid="guide-cta">
-          <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#E62E6B]">Work with Rekha</div>
+          <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#C8215A]">Work with Rekha</div>
           <p className="mt-2 font-display text-2xl text-[#4A2530]">Bridal makeup and self-grooming classes in Bangalore</p>
           <p className="mt-2 text-sm text-[#5C4E52]">Plan your wedding look with a personal consultation, or learn to do your own makeup in a small-batch self-grooming class.</p>
           <div className="mt-5 flex flex-wrap gap-3">
             <Link to="/" className={`${link} bg-[#D6245F] text-white hover:bg-[#C81F57]`}>Explore Bridal Makeup <ArrowUpRight size={16} /></Link>
-            <Link to="/self-grooming-classes" className={`${link} border border-[#E62E6B] text-[#E62E6B] hover:bg-[#D6245F] hover:text-white`}>Self-Grooming Classes <ArrowUpRight size={16} /></Link>
+            <Link to="/self-grooming-classes" className={`${link} border border-[#E62E6B] text-[#C8215A] hover:bg-[#D6245F] hover:text-white`}>Self-Grooming Classes <ArrowUpRight size={16} /></Link>
           </div>
         </div>
         <div className="mt-10"><AuthorBio /></div>
@@ -274,7 +274,7 @@ export const BlogPage = () => {
                 <Link to={`/blog/${p.slug}`} data-testid={`blog-card-${i}`}>
                   <TiltCard className="bg-white rounded-3xl overflow-hidden border border-[#F1DCE3] h-full">
                     <img width="600" height="400" loading="lazy" decoding="async" src={imgUrl(p.featured_image)} srcSet={srcSetFor(p.featured_image)} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" alt={p.alt_text || p.title} className="w-full h-48 object-cover" />
-                    <div className="p-6"><div className="font-mono text-[10px] uppercase tracking-wider text-[#E62E6B]">{p.category} · {p.publish_date}</div><h3 className="font-display text-xl text-[#4A2530] mt-2">{p.title}</h3><p className="text-sm text-[#5C4E52] mt-2">{p.excerpt}</p><span className="mt-4 inline-flex items-center gap-1 text-sm text-[#E62E6B]">Read more <ArrowUpRight size={14} /></span></div>
+                    <div className="p-6"><div className="font-mono text-[10px] uppercase tracking-wider text-[#C8215A]">{p.category} · {p.publish_date}</div><h3 className="font-display text-xl text-[#4A2530] mt-2">{p.title}</h3><p className="text-sm text-[#5C4E52] mt-2">{p.excerpt}</p><span className="mt-4 inline-flex items-center gap-1 text-sm text-[#C8215A]">Read more <ArrowUpRight size={14} /></span></div>
                   </TiltCard>
                 </Link>
               </Reveal>

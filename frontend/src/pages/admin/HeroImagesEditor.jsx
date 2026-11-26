@@ -40,15 +40,15 @@ const Row = ({ page, map }) => {
       <img src={heroImage(page, map)} alt={heroImageAlt(page, map)} className="w-20 h-16 rounded-xl object-cover shrink-0 bg-[#FBE9F0]" data-testid={`hero-img-${slug}`} />
       <div className="flex-1 min-w-0">
         <div className="font-medium text-[#4A2530] text-sm truncate">{page.name} <span className="text-[#8B7F82] font-normal">· {page.group}</span></div>
-        <div className="text-xs text-[#8B7F82] truncate">{page.path}{custom && <span className="ml-2 text-[#E62E6B]">custom</span>}</div>
+        <div className="text-xs text-[#8B7F82] truncate">{page.path}{custom && <span className="ml-2 text-[#C8215A]">custom</span>}</div>
         <div className="mt-1.5 flex items-center gap-1.5">
           <input value={alt} onChange={(e) => setAlt(e.target.value)} placeholder={`Alt text, e.g. ${page.name}`} className="flex-1 text-xs px-2.5 py-1.5 rounded-lg border border-[#F1DCE3] bg-[#FBFAF7] focus:outline-none focus:border-[#E62E6B]" data-testid={`hero-alt-${slug}`} />
-          {altDirty && <button onClick={saveAlt} disabled={altBusy} className="shrink-0 w-7 h-7 rounded-lg bg-[#E62E6B] text-white flex items-center justify-center disabled:opacity-60" aria-label="Save alt text" data-testid={`hero-alt-save-${slug}`}>{altBusy ? <Loader2 size={12} className="animate-spin" /> : <Check size={12} />}</button>}
+          {altDirty && <button onClick={saveAlt} disabled={altBusy} className="shrink-0 w-7 h-7 rounded-lg bg-[#D6245F] text-white flex items-center justify-center disabled:opacity-60" aria-label="Save alt text" data-testid={`hero-alt-save-${slug}`}>{altBusy ? <Loader2 size={12} className="animate-spin" /> : <Check size={12} />}</button>}
         </div>
       </div>
       <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => { upload(e.target.files?.[0]); e.target.value = ""; }} data-testid={`hero-file-${slug}`} />
-      <button onClick={() => fileRef.current.click()} disabled={busy} className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#E62E6B] text-white text-xs font-medium hover:bg-[#C81F57] disabled:opacity-60" data-testid={`hero-upload-${slug}`}>{busy ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />} Change</button>
-      {custom && <button onClick={reset} disabled={busy} className="w-9 h-9 rounded-full border border-[#F1DCE3] text-[#8B7F82] hover:text-[#E62E6B] flex items-center justify-center" aria-label="Reset" data-testid={`hero-reset-${slug}`}><RotateCcw size={14} /></button>}
+      <button onClick={() => fileRef.current.click()} disabled={busy} className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#D6245F] text-white text-xs font-medium hover:bg-[#C81F57] disabled:opacity-60" data-testid={`hero-upload-${slug}`}>{busy ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />} Change</button>
+      {custom && <button onClick={reset} disabled={busy} className="w-9 h-9 rounded-full border border-[#F1DCE3] text-[#8B7F82] hover:text-[#C8215A] flex items-center justify-center" aria-label="Reset" data-testid={`hero-reset-${slug}`}><RotateCcw size={14} /></button>}
     </div>
   );
 };

@@ -1,7 +1,8 @@
 // Site-level SEO tools: redirects, 404 log, robots.txt, llms.txt, sitemap and real-visitor vitals.
 const { getDb } = require("../core");
 const { BLOG_REDIRECTS, RETIRED_SLUGS } = require("../blogSeo");
-const { PAGES, SITE_URL, getOverrides } = require("../render");
+const { PAGES, SITE_URL, getOverrides, pageHtml, cached } = require("../render");
+const cheerio = require("cheerio");
 const { getSettings, defaultRobots, baseLlms } = require("./settings");
 
 // ── Redirects ──
@@ -123,14 +124,35 @@ async function indexableUrls() {
 }
 
 const PRIORITY = { "/": ["1.0", "weekly"], Services: ["0.8", "monthly"], Academy: ["0.8", "monthly"], Portfolio: ["0.7", "monthly"], Header: ["0.9", "monthly"], Blog: ["0.7", "weekly"], Legal: ["0.3", "yearly"] };
+// Up to 8 content images per page (logo skipped), for <image:image> entries.
+const xmlEsc = (t) => String(t).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[c]);
+async function pageImages(p) {
+  try {
+    const html = await pageHtml(p);
+    if (!html) return [];
+    const $ = cheerio.load(html);
+    const seen = new Set();
+    $("#root img[src]").each((_, el) => {
+      const src = $(el).attr("src") || "";
+      if (!src || /logo|\.svg($|\?)|^data:/i.test(src) || seen.size >= 8) return;
+      seen.add(/^https?:/.test(src) ? src : SITE_URL + (src.startsWith("/") ? src : "/" + src));
+    });
+    return [...seen];
+  } catch (e) { return []; }
+}
 async function sitemapXml() {
-  const today = new Date().toISOString().slice(0, 10);
-  const urls = await indexableUrls();
-  const body = urls.map((u) => {
-    const [prio, freq] = PRIORITY[u.path] || PRIORITY[u.group] || ["0.6", "monthly"];
-    return `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod || today}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>`;
-  }).join("\n");
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`;
+  return cached("sitemap.xml", async () => {
+    const today = new Date().toISOString().slice(0, 10);
+    const urls = await indexableUrls();
+    const parts = [];
+    for (const u of urls) {
+      const [prio, freq] = PRIORITY[u.path] || PRIORITY[u.group] || ["0.6", "monthly"];
+      const imgs = u.group === "Blog" ? [] : await pageImages(u.path);
+      const imgXml = imgs.map((i) => `\n    <image:image><image:loc>${xmlEsc(i)}</image:loc></image:image>`).join("");
+      parts.push(`  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod || today}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>${imgXml}\n  </url>`);
+    }
+    return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${parts.join("\n")}\n</urlset>\n`;
+  });
 }
 
 // ── llms.txt: the hand-written intro + every indexable page and article ──

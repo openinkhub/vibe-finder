@@ -19,7 +19,7 @@ const Row = ({ item, onSave, onCancel }) => {
         <label className="flex items-center gap-2 text-sm text-[#5C4E52]"><input type="checkbox" checked={f.featured} onChange={(e) => setF({ ...f, featured: e.target.checked })} className="accent-[#E62E6B]" data-testid="pricing-featured-input" /> Most booked (featured)</label>
       </div>
       <div className="flex gap-2">
-        <button type="submit" disabled={busy} className="w-10 h-10 rounded-full bg-[#E62E6B] text-white flex items-center justify-center disabled:opacity-60" aria-label="Save" data-testid="pricing-save-btn">{busy ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}</button>
+        <button type="submit" disabled={busy} className="w-10 h-10 rounded-full bg-[#D6245F] text-white flex items-center justify-center disabled:opacity-60" aria-label="Save" data-testid="pricing-save-btn">{busy ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}</button>
         <button type="button" onClick={onCancel} className="w-10 h-10 rounded-full border border-[#F1DCE3] text-[#8B7F82] flex items-center justify-center" aria-label="Cancel" data-testid="pricing-cancel-btn"><X size={16} /></button>
       </div>
     </form>
@@ -51,7 +51,7 @@ export const PricingEditor = () => {
     <div data-testid="pricing-editor">
       <div className="flex items-center justify-between gap-4 mb-5">
         <p className="text-sm text-[#5C4E52]">Edits appear instantly in the Pricing section of the site.</p>
-        <button onClick={() => { setAdding(true); setEditing(null); }} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57]" data-testid="pricing-add-btn"><Plus size={15} /> Add price</button>
+        <button onClick={() => { setAdding(true); setEditing(null); }} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#D6245F] text-white text-sm font-medium hover:bg-[#C81F57]" data-testid="pricing-add-btn"><Plus size={15} /> Add price</button>
       </div>
       <div className="space-y-3">
         {adding && <Row item={EMPTY} onSave={save} onCancel={() => setAdding(false)} />}
@@ -59,12 +59,12 @@ export const PricingEditor = () => {
           <Row key={p.id} item={p} onSave={save} onCancel={() => setEditing(null)} />
         ) : (
           <div key={p.id} className="bg-white rounded-2xl p-4 border border-[#F1DCE3] flex items-center gap-4" data-testid={`pricing-row-${p.id}`}>
-            <div className="font-display text-2xl text-[#E62E6B] w-32 shrink-0">{p.price}</div>
+            <div className="font-display text-2xl text-[#C8215A] w-32 shrink-0">{p.price}</div>
             <div className="flex-1 min-w-0">
-              <div className="font-display text-lg text-[#4A2530] flex items-center gap-2">{p.title} {p.featured && <span className="inline-flex items-center gap-1 text-[10px] font-mono uppercase bg-[#FBE9F0] text-[#E62E6B] px-2 py-0.5 rounded-full"><Star size={10} className="fill-current" /> featured</span>}</div>
+              <div className="font-display text-lg text-[#4A2530] flex items-center gap-2">{p.title} {p.featured && <span className="inline-flex items-center gap-1 text-[10px] font-mono uppercase bg-[#FBE9F0] text-[#C8215A] px-2 py-0.5 rounded-full"><Star size={10} className="fill-current" /> featured</span>}</div>
               <div className="text-sm text-[#5C4E52] truncate">{p.desc}</div>
             </div>
-            <button onClick={() => { setEditing(p.id); setAdding(false); }} className="w-9 h-9 rounded-full border border-[#F1DCE3] text-[#4A2530] hover:text-[#E62E6B] flex items-center justify-center" aria-label="Edit" data-testid={`pricing-edit-${p.id}`}><Pencil size={14} /></button>
+            <button onClick={() => { setEditing(p.id); setAdding(false); }} className="w-9 h-9 rounded-full border border-[#F1DCE3] text-[#4A2530] hover:text-[#C8215A] flex items-center justify-center" aria-label="Edit" data-testid={`pricing-edit-${p.id}`}><Pencil size={14} /></button>
             <button onClick={() => remove(p.id)} className="w-9 h-9 rounded-full border border-[#F1DCE3] text-[#8B7F82] hover:text-[#C81F57] flex items-center justify-center" aria-label="Delete" data-testid={`pricing-delete-${p.id}`}><Trash2 size={14} /></button>
           </div>
         ))}

@@ -20,6 +20,23 @@ const BUILD_DIR = R.BUILD_DIR;
 
 app.set("trust proxy", true);
 app.disable("x-powered-by");
+
+// Security headers, and one address per page: www -> bare domain, "/page/" -> "/page".
+app.use((req, res, next) => {
+  res.set({
+    "Strict-Transport-Security": "max-age=31536000",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "camera=(self), microphone=(self), geolocation=(), payment=(), usb=()",
+  });
+  if (req.method !== "GET" && req.method !== "HEAD") return next();
+  const host = (req.hostname || "").toLowerCase();
+  const qs = req.originalUrl.includes("?") ? req.originalUrl.slice(req.originalUrl.indexOf("?")) : "";
+  if (host.startsWith("www.")) return res.redirect(301, `https://${host.slice(4)}${req.path}${qs}`);
+  if (req.path.length > 1 && req.path.endsWith("/") && !req.path.startsWith("/api/")) return res.redirect(301, req.path.replace(/\/+$/, "") + qs);
+  next();
+});
 app.use(compression());
 app.use(cookieParser());
 app.use(express.json({ limit: "15mb" }));

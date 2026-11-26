@@ -10,7 +10,7 @@ const Testimonials = ({ showLink = true }) => {
       <div className="absolute -bottom-24 -left-24 w-[380px] h-[380px] rounded-full bg-[#E62E6B]/15 blur-3xl" />
       <div className="relative max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10">
         <Reveal className="text-center max-w-2xl mx-auto mb-10 md:mb-16">
-          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">In their words</span>
+          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">In their words</span>
           <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Happy clients</h2>
           <p className="mt-4 text-sm sm:text-base text-[#5C4E52]">Real reviews from real clients, straight from Google.</p>
         </Reveal>

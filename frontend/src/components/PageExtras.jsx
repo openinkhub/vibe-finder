@@ -34,7 +34,7 @@ export const PageExtras = ({ path }) => {
             <h2 className="font-display text-xl sm:text-2xl text-[#4A2530] mb-3">Helpful resources</h2>
             <ul className="space-y-2">
               {x.links.map(([label, url]) => (
-                <li key={url}><a href={url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm sm:text-base text-[#E62E6B] underline decoration-[#E62E6B]/40 underline-offset-2 hover:decoration-[#E62E6B]">{label} <ExternalLink size={13} /></a></li>
+                <li key={url}><a href={url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm sm:text-base text-[#C8215A] underline decoration-[#E62E6B]/40 underline-offset-2 hover:decoration-[#E62E6B]">{label} <ExternalLink size={13} /></a></li>
               ))}
             </ul>
           </div>

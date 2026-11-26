@@ -41,9 +41,9 @@ export const BrochureCta = ({ page }) => {
     <section className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 pb-10 md:pb-14" data-testid="brochure-cta-section">
       <Reveal>
         <div className={`flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 rounded-[24px] px-6 sm:px-8 py-6 sm:py-7 border ${isCourse ? "bg-[#4A2530] text-white border-transparent" : "bg-white border-[#F1DCE3]"}`}>
-          <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${isCourse ? "bg-[#D6245F] text-white" : "bg-[#FBE9F0] text-[#E62E6B]"}`}><FileText size={20} /></div>
+          <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${isCourse ? "bg-[#D6245F] text-white" : "bg-[#FBE9F0] text-[#C8215A]"}`}><FileText size={20} /></div>
           <div className="flex-1 min-w-0">
-            <div className={`font-mono text-[10px] tracking-[0.24em] uppercase ${isCourse ? "text-[#F4B7CE]" : "text-[#E62E6B]"}`}>{isCourse ? "Course brochure" : "Service brochure"}</div>
+            <div className={`font-mono text-[10px] tracking-[0.24em] uppercase ${isCourse ? "text-[#F4B7CE]" : "text-[#C8215A]"}`}>{isCourse ? "Course brochure" : "Service brochure"}</div>
             <div className={`font-display text-xl sm:text-2xl mt-1 ${isCourse ? "text-white" : "text-[#4A2530]"}`}>Get the full {page.name} brochure</div>
             <div className={`text-sm mt-1 ${isCourse ? "text-white/80" : "text-[#5C4E52]"}`}>Highlights, details & fees — as a PDF, downloaded now or emailed to you.</div>
           </div>
@@ -71,10 +71,10 @@ export const BrochureCta = ({ page }) => {
                 </div>
                 <RadioGroup value={mode} onValueChange={setMode} className="grid grid-cols-1 gap-2" data-testid="brochure-mode-group">
                   <label className={`flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer transition-colors ${mode === "download" ? "border-[#E62E6B] bg-[#FBE9F0]" : "border-[#F1DCE3]"}`}>
-                    <RadioGroupItem value="download" id="mode-download" data-testid="brochure-mode-download" /> <Download size={15} className="text-[#E62E6B]" /> Download PDF now
+                    <RadioGroupItem value="download" id="mode-download" data-testid="brochure-mode-download" /> <Download size={15} className="text-[#C8215A]" /> Download PDF now
                   </label>
                   <label className={`flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer transition-colors ${mode === "email" ? "border-[#E62E6B] bg-[#FBE9F0]" : "border-[#F1DCE3]"}`}>
-                    <RadioGroupItem value="email" id="mode-email" data-testid="brochure-mode-email" /> <Mail size={15} className="text-[#E62E6B]" /> Email it to me instead
+                    <RadioGroupItem value="email" id="mode-email" data-testid="brochure-mode-email" /> <Mail size={15} className="text-[#C8215A]" /> Email it to me instead
                   </label>
                 </RadioGroup>
                 <button type="submit" disabled={busy} className="w-full py-3 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] disabled:opacity-60 inline-flex items-center justify-center gap-2" data-testid="brochure-submit-btn">

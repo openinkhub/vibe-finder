@@ -38,10 +38,11 @@ const buildJsonLd = (page) => {
     isPartOf: { "@id": `${SITE_URL}/#website` },
     author: { "@type": "Person", name: "Rekha Krishnamurthy", url: `${SITE_URL}/about-us` },
     publisher: { "@id": `${SITE_URL}/#organization` },
+    ...((page.updated || process.env.REACT_APP_CONTENT_DATE) ? { dateModified: page.updated || process.env.REACT_APP_CONTENT_DATE } : {}),
   };
   let entity = null;
   if (page.group === "Services") {
-    entity = { "@context": "https://schema.org", "@type": "Service", serviceType: page.h1 || page.name, name: page.h1 || page.name, description: page.metaDescription, provider: { "@type": "Person", name: "Rekha Krishnamurthy" }, areaServed: "Bangalore, Karnataka, India" };
+    entity = { "@context": "https://schema.org", "@type": "Service", serviceType: page.h1 || page.name, name: page.h1 || page.name, description: page.metaDescription, provider: { "@type": "Person", name: "Rekha Krishnamurthy" }, areaServed: "Bangalore, Karnataka, India", ...(page.offers ? { offers: page.offers.map((o) => ({ "@type": "Offer", name: o.name, price: o.price, priceCurrency: "INR", url: page.canonical, availability: "https://schema.org/InStock" })) } : {}) };
   } else if (page.group === "Academy") {
     entity = { "@context": "https://schema.org", "@type": "Course", name: page.h1 || page.name, description: page.metaDescription, provider: { "@type": "Organization", name: "Rekha Krishnamurthy Makeup & Academy", sameAs: SITE_URL } };
   } else if (page.group === "Guides") {

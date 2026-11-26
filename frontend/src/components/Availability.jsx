@@ -31,7 +31,7 @@ export const Availability = ({ compact = false, slots: externalSlots, month: ext
   return (
     <div className={`bg-white rounded-[28px] border border-[#F1DCE3] ${compact ? "p-4" : "p-5 sm:p-6"}`} data-testid="availability-calendar">
       <div className="flex items-center justify-between gap-3 mb-2">
-        <div className="flex items-center gap-2 text-[#4A2530]"><CalendarDays size={18} className="text-[#E62E6B]" /><span className="font-display text-lg">Availability</span></div>
+        <div className="flex items-center gap-2 text-[#4A2530]"><CalendarDays size={18} className="text-[#C8215A]" /><span className="font-display text-lg">Availability</span></div>
         <div className="flex items-center gap-3 font-mono text-[9px] uppercase tracking-wider text-[#6E6266]">
           <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-[#E62E6B]" /> Booked</span>
           <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-[#F4B7CE]" /> Partly</span>
@@ -47,7 +47,7 @@ export const Availability = ({ compact = false, slots: externalSlots, month: ext
           onMonthChange={setMonth}
           modifiers={{ booked: bookedDays, partial: partialDays }}
           modifiersClassNames={{ booked: "!bg-[#E62E6B] !text-white rounded-full", partial: "!bg-[#F4B7CE] !text-[#4A2530] rounded-full" }}
-          classNames={{ day_today: "ring-1 ring-[#E62E6B] text-[#E62E6B] rounded-full bg-transparent", day_selected: "!ring-2 !ring-[#4A2530] rounded-full" }}
+          classNames={{ day_today: "ring-1 ring-[#E62E6B] text-[#C8215A] rounded-full bg-transparent", day_selected: "!ring-2 !ring-[#4A2530] rounded-full" }}
           className="p-0 mx-auto"
           data-testid="availability-daypicker"
         />
@@ -63,7 +63,7 @@ export const Availability = ({ compact = false, slots: externalSlots, month: ext
                 <ul className="mt-2 space-y-1.5" data-testid="availability-slots">
                   {daySlots.map((s) => (
                     <li key={s.id} className="flex items-center justify-between gap-2 text-sm text-[#4A2530] bg-white rounded-lg px-3 py-2 border border-[#F1DCE3]">
-                      <span className="flex items-center gap-2"><Clock size={14} className="text-[#E62E6B]" /> {fmtSlot(s)}{s.note ? <span className="text-[#6E6266]"> · {s.note}</span> : null}</span>
+                      <span className="flex items-center gap-2"><Clock size={14} className="text-[#C8215A]" /> {fmtSlot(s)}{s.note ? <span className="text-[#6E6266]"> · {s.note}</span> : null}</span>
                       {renderSlotExtra?.(s)}
                     </li>
                   ))}

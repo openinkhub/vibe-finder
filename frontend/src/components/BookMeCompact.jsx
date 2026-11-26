@@ -50,13 +50,13 @@ export const BookMeCompact = ({ onBook }) => {
           </Safe3D>
         ) : <CompactPlaceholder />}
       </div>
-      <button onClick={() => setOpen((v) => !v)} className="absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full bg-[#FBE9F0] text-[#E62E6B] text-xs font-medium" data-testid="bookme-toggle-btn">{open ? "Close" : "Open"}</button>
+      <button onClick={() => setOpen((v) => !v)} className="absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full bg-[#FBE9F0] text-[#C8215A] text-xs font-medium" data-testid="bookme-toggle-btn">{open ? "Close" : "Open"}</button>
       <AnimatePresence>
         {open && (
           <motion.div initial={{ opacity: 0, y: 16, rotateX: -20 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} exit={{ opacity: 0, y: 10 }} style={{ transformPerspective: 800 }} className="px-5 pb-5 -mt-2" data-testid="bookme-reveal">
             <div className="font-display text-xl text-[#4A2530]">Book me</div>
             <div className="mt-4 grid sm:grid-cols-3 gap-2">
-              <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full border border-[#E62E6B] text-[#E62E6B] text-sm font-medium hover:bg-[#D6245F] hover:text-white transition-colors" data-testid="bookme-call"><Phone size={15} /> Call</a>
+              <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full border border-[#E62E6B] text-[#C8215A] text-sm font-medium hover:bg-[#D6245F] hover:text-white transition-colors" data-testid="bookme-call"><Phone size={15} /> Call</a>
               <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-[#25D366] text-white text-sm font-medium" data-testid="bookme-whatsapp"><FaWhatsapp size={16} /> WhatsApp</a>
               <button onClick={onBook} className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-[#D6245F] text-white text-sm font-medium hover:bg-[#C81F57]" data-testid="bookme-form"><CalendarCheck size={15} /> Book form</button>
             </div>

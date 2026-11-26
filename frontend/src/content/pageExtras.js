@@ -11,6 +11,7 @@ const SKIN_LINK = ["American Academy of Dermatology: everyday skin care", "https
 export const pageExtras = {
   "/": {
     sections: [
+      { h: "Rekha Krishnamurthy at a Glance", details: [["Experience", "14+ years as a makeup artist in Bangalore"], ["Services", "Bridal, engagement, non-bridal, party, groom, editorial, fashion and photoshoot makeup, plus makeup classes"], ["Prices", "From ₹4,999 (groom) and ₹7,999 (party) to ₹29,999 per session (bridal)"], ["Where", "At your home or venue across Bangalore and nearby towns"], ["Book", "Form, phone or WhatsApp; book 4–6 months ahead for wedding season"]] },
       { h: "Why Clients Call Rekha the Best Makeup Artist", p: [
         "Rekha has done bridal makeup for **14+ years**. In that time, she has worked with **500+ brides** from many regions and styles. So she knows how makeup behaves in heat, in long rituals and under strong flash.",
         "She also plans each look with you. First, she asks about your skin, outfit, jewellery and the events. Then she suggests HD or airbrush makeup and a finish that suits you. As a result, you look like yourself, only polished and flash-proof.",
@@ -38,8 +39,11 @@ export const pageExtras = {
         "You can read more in the [client reviews](/testimonials). Then browse the [portfolio](/portfolio) to see the work behind them.",
         "Many brides also come back for a sister's wedding or a festival. In fact, some first meet Rekha at a self grooming class and later book her for their own big day. That long bond is the best sign of the work.",
       ] },
-      { h: "How Booking Works", p: [
-        "First, send your date, venue and events. Then Rekha confirms if she is free and shares the plan and price. After that, a booking is confirmed once the advance is paid. Bridal trials are on offer on request as a paid service.",
+      { h: "How Booking Works", steps: [
+        ["Send your details", "Share your date, venue and events by form, phone or WhatsApp."],
+        ["Get the plan and price", "Rekha confirms she is free and shares the look plan and price."],
+        ["Pay the advance", "Your date is confirmed once the advance is paid. Bridal trials are a paid option on request."],
+      ], after: [
         "Popular wedding dates fill early. So it helps to start four to six months before the wedding. You can [contact Rekha](/contact) by form, phone or WhatsApp.",
       ] },
     ],

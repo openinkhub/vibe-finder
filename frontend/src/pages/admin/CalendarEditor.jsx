@@ -41,7 +41,7 @@ export const CalendarEditor = () => {
             </>
           )}
           <label className="flex flex-col gap-1 text-xs text-[#8B7F82] flex-1 min-w-[160px]">Note (private label, shown as-is)<input value={f.note} onChange={(e) => setF({ ...f, note: e.target.value })} placeholder="e.g. Wedding · Whitefield" className={inputCls} data-testid="slot-note-input" /></label>
-          <button type="submit" disabled={busy} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#E62E6B] text-white text-sm font-medium hover:bg-[#C81F57] disabled:opacity-60" data-testid="slot-add-btn">{busy ? <Loader2 size={15} className="animate-spin" /> : <Plus size={15} />} Mark booked</button>
+          <button type="submit" disabled={busy} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#D6245F] text-white text-sm font-medium hover:bg-[#C81F57] disabled:opacity-60" data-testid="slot-add-btn">{busy ? <Loader2 size={15} className="animate-spin" /> : <Plus size={15} />} Mark booked</button>
         </div>
       </form>
 
@@ -55,7 +55,7 @@ export const CalendarEditor = () => {
         <ul className="divide-y divide-[#FBE9F0]">
           {slots.map((s) => (
             <li key={s.id} className="flex items-center justify-between gap-3 py-2.5 text-sm text-[#4A2530]" data-testid={`slot-row-${s.id}`}>
-              <span><span className="font-mono text-xs text-[#E62E6B] mr-2">{s.date}</span>{fmtSlot(s)}{s.note ? <span className="text-[#8B7F82]"> · {s.note}</span> : null}</span>
+              <span><span className="font-mono text-xs text-[#C8215A] mr-2">{s.date}</span>{fmtSlot(s)}{s.note ? <span className="text-[#8B7F82]"> · {s.note}</span> : null}</span>
               <button onClick={() => remove(s.id)} className="w-8 h-8 rounded-full text-[#8B7F82] hover:text-[#C81F57] hover:bg-[#FBE9F0] flex items-center justify-center" aria-label="Remove" data-testid={`slot-remove-${s.id}`}><Trash2 size={14} /></button>
             </li>
           ))}

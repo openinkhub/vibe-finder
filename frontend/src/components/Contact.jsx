@@ -59,20 +59,20 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
 
   const inputCls = "w-full px-4 py-3 rounded-xl border border-[#F1DCE3] bg-[#FBFAF7] text-[#4A2530] text-base focus:outline-none focus:border-[#E62E6B] focus:ring-2 focus:ring-[#E62E6B]/15 transition-all";
   const contactRow = "flex items-center gap-4 group";
-  const iconBox = "w-12 h-12 rounded-2xl bg-[#FBE9F0] flex items-center justify-center text-[#E62E6B] group-hover:bg-[#E62E6B] group-hover:text-white transition-colors";
+  const iconBox = "w-12 h-12 rounded-2xl bg-[#FBE9F0] flex items-center justify-center text-[#C8215A] group-hover:bg-[#E62E6B] group-hover:text-white transition-colors";
 
   return (
     <section id="contact" className="relative bg-[#F4F1EA] py-20 md:py-32 scroll-mt-20" data-testid="contact-section">
       <div className="max-w-[1320px] mx-auto px-5 sm:px-6 md:px-10 grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-12">
         <Reveal className="min-w-0">
-          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#E62E6B]">Get in touch</span>
+          <span className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#C8215A]">Get in touch</span>
           <h2 className="font-display text-[#4A2530] text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 sm:mt-5">Let's talk about your date</h2>
           <p className="mt-5 sm:mt-6 text-sm sm:text-base text-[#5C4E52] leading-relaxed max-w-md">Tell us about your event: Bridal/Non-Bridal, Date/Venue/Location, Event Timing & No. of People who require our assistance, and anything else relevant. We shall revert back and let you know our availability with our best quote. You can simply reach us on a WhatsApp call for a quick response.</p>
 
           <div className="mt-8 sm:mt-9 space-y-5">
             <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className={contactRow} data-testid="contact-phone-link">
               <span className={iconBox}><Phone size={20} /></span>
-              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">Phone</div><div className="text-[#4A2530] group-hover:text-[#E62E6B] transition-colors">{brand.phone}</div></div>
+              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">Phone</div><div className="text-[#4A2530] group-hover:text-[#C8215A] transition-colors">{brand.phone}</div></div>
             </a>
             <div className={contactRow}>
               <span className={iconBox}><MapPin size={20} /></span>
@@ -80,18 +80,18 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
             </div>
             <a href={brand.instagramUrl} target="_blank" rel="noreferrer" className={contactRow} data-testid="contact-instagram-link">
               <span className={iconBox}><Instagram size={20} /></span>
-              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">Instagram</div><div className="text-[#4A2530] group-hover:text-[#E62E6B] transition-colors break-all">{brand.instagram}</div></div>
+              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">Instagram</div><div className="text-[#4A2530] group-hover:text-[#C8215A] transition-colors break-all">{brand.instagram}</div></div>
             </a>
             <a href={`mailto:${brand.email}`} className={contactRow} data-testid="contact-email-link">
               <span className={iconBox}><Mail size={20} /></span>
-              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">Email</div><div className="text-[#4A2530] group-hover:text-[#E62E6B] transition-colors break-all">{brand.email}</div></div>
+              <div><div className="font-mono text-[10px] uppercase tracking-wider text-[#6E6266]">Email</div><div className="text-[#4A2530] group-hover:text-[#C8215A] transition-colors break-all">{brand.email}</div></div>
             </a>
           </div>
 
           <div className="mt-8 sm:mt-9 flex flex-col sm:flex-row sm:flex-wrap gap-3">
             {showBooking && <Link to={BOOKING_PATH} className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] hover:-translate-y-0.5 transition-all shadow-lg shadow-[#E62E6B]/25 w-full sm:w-auto" data-testid="contact-book-slot-btn"><CalendarCheck size={18} /> Book Your Slot</Link>}
             <a href={brand.whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#25D366] text-white font-medium hover:bg-[#1eb959] hover:-translate-y-0.5 transition-all w-full sm:w-auto" data-testid="contact-whatsapp-btn"><FaWhatsapp size={18} /> Chat on WhatsApp</a>
-            <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-[#E62E6B] text-[#E62E6B] font-medium hover:bg-[#D6245F] hover:text-white transition-colors w-full sm:w-auto" data-testid="contact-call-btn"><Phone size={18} /> Call now</a>
+            <a href={`tel:${brand.phone.replace(/\s/g, "")}`} className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-[#E62E6B] text-[#C8215A] font-medium hover:bg-[#D6245F] hover:text-white transition-colors w-full sm:w-auto" data-testid="contact-call-btn"><Phone size={18} /> Call now</a>
           </div>
 
           <div className="mt-8 sm:mt-9 space-y-5">
@@ -106,8 +106,8 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
             {error && <div className="mb-5 flex items-center gap-2 bg-[#FBE9F0] text-[#C81F57] px-4 py-3 rounded-xl text-sm" data-testid="contact-error"><X size={16} /> {error}</div>}
             {look && (
               <div className="mb-5 flex items-center justify-between gap-2 bg-[#FBE9F0] text-[#4A2530] px-4 py-3 rounded-xl text-sm" data-testid="contact-look-chip">
-                <span className="flex items-center gap-2">{lookImage ? <img src={imgUrl(lookImage)} alt={look} className="w-10 h-10 rounded-lg object-cover border border-white" data-testid="contact-look-thumb" /> : <Sparkles size={15} className="text-[#E62E6B]" />} Booking look: <span className="font-semibold">{look}</span></span>
-                <button type="button" onClick={() => { sessionStorage.removeItem("rk_selected_look"); sessionStorage.removeItem("rk_selected_look_image"); setLook(""); setLookImage(""); }} className="text-[#6E6266] hover:text-[#E62E6B]" aria-label="Remove look" data-testid="contact-look-remove"><X size={15} /></button>
+                <span className="flex items-center gap-2">{lookImage ? <img src={imgUrl(lookImage)} alt={look} className="w-10 h-10 rounded-lg object-cover border border-white" data-testid="contact-look-thumb" /> : <Sparkles size={15} className="text-[#C8215A]" />} Booking look: <span className="font-semibold">{look}</span></span>
+                <button type="button" onClick={() => { sessionStorage.removeItem("rk_selected_look"); sessionStorage.removeItem("rk_selected_look_image"); setLook(""); setLookImage(""); }} className="text-[#6E6266] hover:text-[#C8215A]" aria-label="Remove look" data-testid="contact-look-remove"><X size={15} /></button>
               </div>
             )}
             <div className="mb-6">
@@ -132,7 +132,7 @@ const Contact = ({ showBooking = true, requireTerms = false }) => {
               {requireTerms && (
                 <label className="flex items-start gap-3 text-sm text-[#5C4E52] cursor-pointer" data-testid="contact-terms-label">
                   <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} required className="mt-1 w-4 h-4 accent-[#E62E6B]" data-testid="contact-terms-checkbox" />
-                  <span>I agree to the <a href="#booking-terms" onClick={(e) => { e.preventDefault(); scrollToId("booking-terms"); }} className="text-[#E62E6B] underline underline-offset-2 hover:text-[#C81F57]" data-testid="contact-terms-link">booking terms & conditions</a>.</span>
+                  <span>I agree to the <a href="#booking-terms" onClick={(e) => { e.preventDefault(); scrollToId("booking-terms"); }} className="text-[#C8215A] underline underline-offset-2 hover:text-[#C81F57]" data-testid="contact-terms-link">booking terms & conditions</a>.</span>
                 </label>
               )}
               <button type="submit" disabled={sending || (requireTerms && !agreed)} className="w-full py-4 rounded-full bg-[#D6245F] text-white font-medium hover:bg-[#C81F57] transition-colors shadow-xl shadow-[#E62E6B]/30 disabled:opacity-60 inline-flex items-center justify-center gap-2" data-testid="contact-submit-btn">{sending && <Loader2 size={16} className="animate-spin" />} {sending ? "Sending…" : "Send Enquiry"}</button>

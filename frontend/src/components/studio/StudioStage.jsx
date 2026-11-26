@@ -32,17 +32,17 @@ export const StudioStage = ({ canvasRef, videoRef, source, busy, generating, pro
             style={{ background: "transparent", height: "100%", margin: 0 }}
             data-testid="studio-compare-slider"
           />
-          <span className="absolute top-3 right-3 font-mono text-[10px] tracking-[0.15em] uppercase text-white bg-[#E62E6B]/90 px-2.5 py-1 rounded-full pointer-events-none">{view === "ai" ? "AI look" : "After"} · {look.name}</span>
+          <span className="absolute top-3 right-3 font-mono text-[10px] tracking-[0.15em] uppercase text-white bg-[#D6245F]/90 px-2.5 py-1 rounded-full pointer-events-none">{view === "ai" ? "AI look" : "After"} · {look.name}</span>
         </>
       )}
 
       {source && !busy && !showCompare && (
-        <span className="absolute top-3 left-3 font-mono text-[10px] tracking-[0.15em] uppercase text-white bg-[#E62E6B]/90 backdrop-blur px-3 py-1.5 rounded-full">{source.type === "video" ? "● Live" : view === "ai" ? "AI look" : "Photo"} · {look.name}</span>
+        <span className="absolute top-3 left-3 font-mono text-[10px] tracking-[0.15em] uppercase text-white bg-[#D6245F]/90 backdrop-blur px-3 py-1.5 rounded-full">{source.type === "video" ? "● Live" : view === "ai" ? "AI look" : "Photo"} · {look.name}</span>
       )}
 
       {!source && (
         <div className="text-center px-6 py-10">
-          <div className="mx-auto w-20 h-20 rounded-full bg-white flex items-center justify-center text-[#E62E6B] shadow-lg shadow-[#E62E6B]/20 animate-pulse"><ScanFace size={36} /></div>
+          <div className="mx-auto w-20 h-20 rounded-full bg-white flex items-center justify-center text-[#C8215A] shadow-lg shadow-[#E62E6B]/20 animate-pulse"><ScanFace size={36} /></div>
           <h3 className="font-display text-xl sm:text-2xl text-[#4A2530] mt-5">Start your face scan</h3>
           <p className="text-sm text-[#5C4E52] mt-2 max-w-xs mx-auto">Use your camera, upload a selfie, or try it on our model first.</p>
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
@@ -54,7 +54,7 @@ export const StudioStage = ({ canvasRef, videoRef, source, busy, generating, pro
       )}
 
       {(busy || generating) && (
-        <div className="absolute inset-0 bg-white/70 backdrop-blur-sm flex flex-col items-center justify-center gap-3 text-[#E62E6B]" data-testid={generating ? "studio-generating" : "studio-loading"}>
+        <div className="absolute inset-0 bg-white/70 backdrop-blur-sm flex flex-col items-center justify-center gap-3 text-[#C8215A]" data-testid={generating ? "studio-generating" : "studio-loading"}>
           {generating ? <Wand2 size={34} className="animate-pulse" /> : <Loader2 size={34} className="animate-spin" />}
           <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-center px-6">{generating ? "Painting your photoreal look with AI…" : progress || msg || "Preparing…"}</span>
           <span className="font-mono text-[10px] text-[#6E6266]">{generating ? "Usually 10–25 seconds" : "First load downloads a 15 MB on-device engine"}</span>
