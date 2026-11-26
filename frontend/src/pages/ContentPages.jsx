@@ -261,7 +261,8 @@ export const GuidePage = () => {
 export const BlogPage = () => {
   const { page } = usePage();
   const [posts, setPosts] = useState([]);
-  useEffect(() => { api.get("/blog").then((r) => setPosts(r.data)).catch(() => setPosts([])); }, []);
+  // Scheduled posts (dated after today in India) stay off the public list even for a logged-in admin.
+  useEffect(() => { const today = new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10); api.get("/blog").then((r) => setPosts(r.data.filter((p) => !p.publish_date || String(p.publish_date).slice(0, 10) <= today))).catch(() => setPosts([])); }, []);
   return (
     <PageShell page={page} title="Blog">
       <div data-testid="blog-page">

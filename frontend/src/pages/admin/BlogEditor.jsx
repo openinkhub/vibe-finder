@@ -272,7 +272,7 @@ export const BlogEditor = () => {
           <div key={p.id} className="bg-white rounded-2xl p-4 border border-[#F1DCE3] flex items-center gap-4" data-testid={`blog-row-${p.id}`}>
             <img src={imgUrl(p.featured_image)} alt={p.alt_text} className="w-16 h-16 rounded-xl object-cover shrink-0" />
             <div className="flex-1 min-w-0">
-              <div className="font-mono text-[10px] uppercase tracking-wider text-[#C8215A]">{p.category} · {p.publish_date}</div>
+              <div className="font-mono text-[10px] uppercase tracking-wider text-[#C8215A]">{p.category} · {p.publish_date}{p.publish_date > new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10) && <span className="ml-2 px-2 py-0.5 rounded-full bg-[#FFF4D6] text-[#7A5A00]">Scheduled</span>}</div>
               <div className="font-display text-lg text-[#4A2530] truncate">{p.title}</div>
               <div className="text-sm text-[#5C4E52] truncate">{p.excerpt}</div>
             </div>

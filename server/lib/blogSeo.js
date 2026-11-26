@@ -39,4 +39,9 @@ function extractFaqs(body) {
   return faqs;
 }
 
-module.exports = { BLOG_REDIRECTS, RETIRED_SLUGS, extractFaqs };
+// Scheduled publishing: a post goes live at 00:00 India time on its publish_date.
+const todayIST = () => new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10);
+const isLive = (post) => !post || !post.publish_date || String(post.publish_date).slice(0, 10) <= todayIST();
+const LIVE = () => ({ slug: { $nin: RETIRED_SLUGS }, $or: [{ publish_date: { $lte: todayIST() } }, { publish_date: { $exists: false } }, { publish_date: "" }, { publish_date: null }] });
+
+module.exports = { BLOG_REDIRECTS, RETIRED_SLUGS, extractFaqs, todayIST, isLive, LIVE };

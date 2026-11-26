@@ -5,7 +5,9 @@ const { getDb, HttpError, ah, uuid, nowIso, cut, clean } = require("../lib/core"
 const { requireAdmin, currentUser } = require("../lib/auth");
 const { storeProcessedImage } = require("../lib/storage");
 const D = require("../lib/defaults.json");
-const { BLOG_REDIRECTS, RETIRED_SLUGS, extractFaqs } = require("../lib/blogSeo");
+const { BLOG_REDIRECTS, RETIRED_SLUGS, extractFaqs, isLive, LIVE } = require("../lib/blogSeo");
+// Admins see scheduled (future-dated) posts; everyone else only sees posts whose date has arrived.
+const isAdmin = async (req) => { try { return !!(await currentUser(req)); } catch (e) { return false; } };
 
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 * 1024 * 1024 } });
@@ -102,7 +104,7 @@ router.post("/blog/api-key/regenerate", requireAdmin, ah(async (_q, res) => {
   res.json({ api_key: value });
 }));
 
-router.get("/blog", ah(async (_q, res) => res.json(clean(await posts().find({ slug: { $nin: RETIRED_SLUGS } }).sort({ publish_date: -1 }).limit(500).toArray()))));
+router.get("/blog", ah(async (req, res) => res.json(clean(await posts().find((await isAdmin(req)) ? { slug: { $nin: RETIRED_SLUGS } } : LIVE()).sort({ publish_date: -1 }).limit(500).toArray()))));
 
 router.get("/blog/:slug", ah(async (req, res) => {
   // A retired post's API call returns the post it was merged into (browsers get a 301 from the page route).
@@ -110,7 +112,7 @@ router.get("/blog/:slug", ah(async (req, res) => {
   const slug = target && target.startsWith("/blog/") ? target.slice(6) : req.params.slug;
   if (target && slug === req.params.slug) throw new HttpError(404, "Post not found");
   const post = await posts().findOne({ slug: target && !target.startsWith("/blog/") ? "__none__" : slug }, { projection: { _id: 0 } });
-  if (!post) throw new HttpError(404, "Post not found");
+  if (!post || (!isLive(post) && !(await isAdmin(req)))) throw new HttpError(404, "Post not found");
   res.json({ ...post, schema: buildSchema(post) });
 }));
 

@@ -115,7 +115,7 @@ async function indexableUrls() {
   const listed = (p) => !(ov[p] && (ov[p].noindex || ov[p].in_sitemap === false));
   const out = [];
   for (const p of PAGES) if (p.canonical && listed(p.path)) out.push({ path: p.path, loc: p.canonical, title: (ov[p.path] && ov[p.path].seo_title) || p.metaTitle, desc: (ov[p.path] && ov[p.path].meta_description) || p.metaDescription, group: p.group });
-  const posts = await getDb().collection("blog_posts").find({ slug: { $nin: RETIRED_SLUGS } }, { projection: { _id: 0, slug: 1, title: 1, meta_description: 1, excerpt: 1, updated_at: 1, publish_date: 1 } }).sort({ publish_date: -1 }).limit(1000).toArray();
+  const posts = await getDb().collection("blog_posts").find(require("../blogSeo").LIVE(), { projection: { _id: 0, slug: 1, title: 1, meta_description: 1, excerpt: 1, updated_at: 1, publish_date: 1 } }).sort({ publish_date: -1 }).limit(1000).toArray();
   for (const post of posts) {
     const p = `/blog/${post.slug}`;
     if (listed(p)) out.push({ path: p, loc: `${SITE_URL}${p}`, title: (ov[p] && ov[p].seo_title) || post.title, desc: (ov[p] && ov[p].meta_description) || post.meta_description || post.excerpt, lastmod: String(post.updated_at || post.publish_date || "").slice(0, 10), group: "Blog" });

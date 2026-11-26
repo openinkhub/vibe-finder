@@ -175,7 +175,7 @@ async function blogHtml(slug, { buildSchema } = {}) {
   const template = readHtml(path.join(BUILD_DIR, "index.html"));
   if (!template) return null;
   const post = await getDb().collection("blog_posts").findOne({ slug }, { projection: { _id: 0 } });
-  if (!post) return null;
+  if (!post || !require("./blogSeo").isLive(post)) return null;
   const ov = (await getOverrides())[`/blog/${slug}`] || {};
   const $ = cheerio.load(template);
   const canonical = ov.canonical || `${SITE_URL}/blog/${post.slug}`;
@@ -250,7 +250,7 @@ function extrasHtml(urlPath) {
 async function blogIndexHtml(urlPath) {
   const base = await pageHtml(urlPath);
   if (!base) return null;
-  const posts = await getDb().collection("blog_posts").find({ slug: { $nin: RETIRED_SLUGS } }, { projection: { _id: 0, slug: 1, title: 1, excerpt: 1, publish_date: 1, category: 1, featured_image: 1, alt_text: 1 } }).sort({ publish_date: -1 }).limit(500).toArray();
+  const posts = await getDb().collection("blog_posts").find(require("./blogSeo").LIVE(), { projection: { _id: 0, slug: 1, title: 1, excerpt: 1, publish_date: 1, category: 1, featured_image: 1, alt_text: 1 } }).sort({ publish_date: -1 }).limit(500).toArray();
   const ov = await getOverrides();
   const listed = posts.filter((p) => !(ov[`/blog/${p.slug}`] || {}).noindex);
   const $ = cheerio.load(base);

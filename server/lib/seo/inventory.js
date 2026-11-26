@@ -118,7 +118,7 @@ async function buildFresh() {
   const settings = await getSettings();
   const ov = await R.getOverrides();
   const blog = require("../../routes/blog");
-  const posts = await db.collection("blog_posts").find({ slug: { $nin: RETIRED_SLUGS } }, { projection: { _id: 0 } }).toArray();
+  const posts = await db.collection("blog_posts").find(require("../blogSeo").LIVE(), { projection: { _id: 0 } }).toArray();
   const redirects = await site.getRedirects();
   const robots = await site.robotsTxt();
   const robotsAllows = site.robotsAllowsFn(robots);

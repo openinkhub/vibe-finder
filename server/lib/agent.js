@@ -105,8 +105,7 @@ async function callTool(name, args = {}) {
     const q = String(args.query || "").trim().toLowerCase();
     if (!q) throw Object.assign(new Error("query is required"), { code: -32602 });
     const words = q.split(/\s+/).filter(Boolean);
-    const { RETIRED_SLUGS } = require("./blogSeo");
-    const posts = await db.collection("blog_posts").find({ slug: { $nin: RETIRED_SLUGS } }, { projection: { _id: 0, slug: 1, title: 1, excerpt: 1, body: 1 } }).toArray();
+    const posts = await db.collection("blog_posts").find(require("./blogSeo").LIVE(), { projection: { _id: 0, slug: 1, title: 1, excerpt: 1, body: 1 } }).toArray();
     const scored = posts.map((p) => {
       const hay = `${p.title} ${p.excerpt || ""} ${p.body || ""}`.toLowerCase();
       return { p, score: words.reduce((a, w) => a + (hay.split(w).length - 1) + (p.title.toLowerCase().includes(w) ? 5 : 0), 0) };
