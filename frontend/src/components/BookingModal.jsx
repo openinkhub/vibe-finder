@@ -24,7 +24,9 @@ export const BookingModal = () => {
       if (!hit) return;
       e.preventDefault();
       e.stopPropagation();
-      if (window.OpeninkTrack) { try { window.OpeninkTrack("cta_click", { label: (a.textContent || "").trim().slice(0, 60), service: hit.service || "", path: window.location.pathname }); } catch (err) { /* ignore */ } }
+      const cta = { cta_label: (a.textContent || "").trim().replace(/\s+/g, " ").slice(0, 60), service: hit.service || "", page_path: window.location.pathname };
+      if (window.OpeninkTrack) { try { window.OpeninkTrack("cta_click", cta); } catch (err) { /* ignore */ } }
+      if (window.rkTrack) window.rkTrack("cta_click", cta);
       openBooking(hit);
     };
     window.addEventListener("rk:book", onOpen);

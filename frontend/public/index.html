@@ -3,12 +3,17 @@
     <head>
         <!-- Cookie consent (Google Consent Mode v2): analytics/ads cookies stay off until the visitor accepts -->
         <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}(function(){var c=null;try{c=localStorage.getItem("rk_consent")}catch(e){}var g=c==="granted"?"granted":"denied";gtag("consent","default",{analytics_storage:g,ad_storage:g,ad_user_data:g,ad_personalization:g,functionality_storage:"granted",security_storage:"granted",wait_for_update:500})})();</script>
-        <!-- Google Tag Manager (starts on the visitor's first interaction, or 3.5 s after the page loads,
-             so it doesn't compete with the page's own loading; page views are still recorded) -->
+        <!-- Google Analytics 4 (G-HV3VD6PDDH) + Google Tag Manager. Both start on the visitor's first interaction,
+             or 3.5 s after the page loads, so they don't compete with the page's own loading.
+             GA4 follows the cookie consent above. Page changes in the app are picked up by GA4's
+             enhanced measurement (browser history), so no manual page_view is sent. -->
+        <script>gtag("js",new Date());if(!/^\/admin/.test(location.pathname))gtag("config","G-HV3VD6PDDH");
+        window.rkTrack=function(n,p){p=p||{};try{dataLayer.push(Object.assign({event:n},p));gtag("event",n,p)}catch(e){}};</script>
         <script>(function(w,d,s,l,i){w[l]=w[l]||[];var go=function(){if(w.__gtmGo)return;w.__gtmGo=1;w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);};
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        var g=d.createElement(s);g.async=true;g.src='https://www.googletagmanager.com/gtag/js?id=G-HV3VD6PDDH';f.parentNode.insertBefore(g,f);};
         ['pointerdown','keydown','touchstart','scroll'].forEach(function(e){w.addEventListener(e,go,{once:true,passive:true})});
         w.addEventListener('load',function(){setTimeout(go,3500)});
         })(window,document,'script','dataLayer','GTM-WL72CXFB');</script>
@@ -21,9 +26,9 @@
         w.rkCookieSettings=function(){try{localStorage.removeItem("rk_consent")}catch(e){}show()};
         var c=null;try{c=localStorage.getItem("rk_consent")}catch(e){}if(c||/^\/admin/.test(location.pathname))return;
         function later(){setTimeout(show,1500)}if(d.readyState==="complete")later();else w.addEventListener("load",later)})(window,document);</script>
-        <!-- Contact clicks and AI-assistant referrals, sent to Tag Manager as events -->
-        <script>(function(w,d){var l=w.dataLayer=w.dataLayer||[];try{var r=d.referrer||"",m=r.match(/(chatgpt\.com|chat\.openai\.com|perplexity\.ai|gemini\.google\.com|copilot\.microsoft\.com|claude\.ai)/);if(m)l.push({event:"ai_referral",ai_source:m[1],page_path:location.pathname})}catch(e){}
-        d.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a[href]");if(!a)return;var h=a.getAttribute("href")||"",k=/^tel:/.test(h)?"phone":/wa\.me|whatsapp/.test(h)?"whatsapp":/^mailto:/.test(h)?"email":"";if(k)l.push({event:"contact_click",contact_method:k,page_path:location.pathname})},true)})(window,document);</script>
+        <!-- Contact clicks and AI-assistant referrals, sent to GA4 and Tag Manager as events -->
+        <script>(function(w,d){var l=w.dataLayer=w.dataLayer||[];try{var r=d.referrer||"",m=r.match(/(chatgpt\.com|chat\.openai\.com|perplexity\.ai|gemini\.google\.com|copilot\.microsoft\.com|claude\.ai)/);if(m)w.rkTrack("ai_referral",{ai_source:m[1],page_path:location.pathname})}catch(e){}
+        d.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a[href]");if(!a)return;var h=a.getAttribute("href")||"",k=/^tel:/.test(h)?"phone":/wa\.me|whatsapp/.test(h)?"whatsapp":/^mailto:/.test(h)?"email":"";if(k)w.rkTrack("contact_click",{contact_method:k,page_path:location.pathname})},true)})(window,document);</script>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#E62E6B" />

@@ -64,8 +64,8 @@ export const api = {
   get: (url, config) => request("GET", url, undefined, config),
   delete: (url, config) => request("DELETE", url, undefined, config),
   post: (url, data, config) => request("POST", url, data, config).then((r) => {
-    // Booking enquiries are the site's main conversion: tell Google Tag Manager (GA4 "generate_lead").
-    if (url === "/enquiries") { try { (window.dataLayer = window.dataLayer || []).push({ event: "generate_lead", lead_source: (data && data.source) || "form", service: (data && data.service) || "", page_path: window.location.pathname }); } catch (e) { /* ignore */ } }
+    // Booking enquiries are the site's main conversion: send GA4 "generate_lead" (and to Tag Manager).
+    if (url === "/enquiries") { try { const lead = { lead_source: (data && data.source) || "form", service: (data && data.service) || "", page_path: window.location.pathname }; if (window.rkTrack) window.rkTrack("generate_lead", lead); else (window.dataLayer = window.dataLayer || []).push({ event: "generate_lead", ...lead }); } catch (e) { /* ignore */ } }
     return r;
   }),
   put: (url, data, config) => request("PUT", url, data, config),
