@@ -87,6 +87,7 @@ const textRoute = (type, fn) => ah(async (_q, res) => res.set("Cache-Control", "
 app.get("/sitemap.xml", textRoute("application/xml", site.sitemapXml));
 app.get("/robots.txt", textRoute("text/plain", site.robotsTxt));
 app.get("/llms.txt", textRoute("text/plain", site.llmsTxt));
+require("./server/lib/seo/indexnow").keyRoute(app);
 
 // For AI agents: a read-only MCP server + its discovery card, and Markdown versions of pages.
 agent.mcpRoutes(app, express, ah);
@@ -204,6 +205,7 @@ async function initDatabase() {
   await blog.getOrCreateApiKey();
   await migrateMovedPages(db).catch((e) => console.error("Moved-page migration failed:", e.message));
   scheduleSpeedTests(db);
+  require("./server/lib/seo/indexnow").schedule();
   console.log("Database ready");
   // Copy images from the old site in the background (only when FILES_FALLBACK_ORIGIN is set).
   syncReferencedFiles().catch((e) => console.error("Image sync failed:", e.message));

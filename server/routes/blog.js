@@ -6,6 +6,7 @@ const { requireAdmin, currentUser } = require("../lib/auth");
 const { storeProcessedImage } = require("../lib/storage");
 const D = require("../lib/defaults.json");
 const { BLOG_REDIRECTS, RETIRED_SLUGS, extractFaqs, isLive, LIVE } = require("../lib/blogSeo");
+const indexNow = require("../lib/seo/indexnow");
 // Admins see scheduled (future-dated) posts; everyone else only sees posts whose date has arrived.
 const isAdmin = async (req) => { try { return !!(await currentUser(req)); } catch (e) { return false; } };
 
@@ -141,6 +142,8 @@ router.post("/blog", upload.single("file"), requireAdminOrApiKey, ah(async (req,
   const now = nowIso();
   const doc = { id: uuid(), slug, ...f, author: "Rekha Krishnamurthy", publish_date: b.publish_date || now.slice(0, 10), featured_image, order: 0, created_at: now, updated_at: now };
   await posts().insertOne({ ...doc });
+  // Live now → tell IndexNow engines; scheduled posts are pinged on their publish date.
+  if (isLive(doc)) indexNow.notify([`/blog/${slug}`, "/blog"], "new post");
   res.status(201).json(doc);
 }));
 
@@ -153,11 +156,18 @@ router.put("/blog/:id", requireAdmin, upload.single("file"), ah(async (req, res)
   if (slug !== existing.slug && (await posts().findOne({ slug, id: { $ne: req.params.id } }))) slug = `${slug}-${short()}`;
   const patch = { slug, ...fields(b, b.title), publish_date: b.publish_date || existing.publish_date, updated_at: nowIso() };
   if (req.file && req.file.originalname) patch.featured_image = await storeFeatured(req.file.buffer);
-  res.json(clean(await posts().findOneAndUpdate({ id: req.params.id }, { $set: patch }, { returnDocument: "after" })));
+  const updated = clean(await posts().findOneAndUpdate({ id: req.params.id }, { $set: patch }, { returnDocument: "after" }));
+  const pings = [];
+  if (isLive(updated)) pings.push(`/blog/${updated.slug}`, "/blog");
+  if (isLive(existing) && (existing.slug !== updated.slug || !isLive(updated))) pings.push(`/blog/${existing.slug}`, "/blog"); // old URL moved or unpublished
+  if (pings.length) indexNow.notify(pings, "post updated");
+  res.json(updated);
 }));
 
 router.delete("/blog/:id", requireAdmin, ah(async (req, res) => {
+  const existing = await posts().findOne({ id: req.params.id });
   if (!(await posts().deleteOne({ id: req.params.id })).deletedCount) throw new HttpError(404, "Not found");
+  if (existing && isLive(existing)) indexNow.notify([`/blog/${existing.slug}`, "/blog"], "post deleted");
   res.status(204).end();
 }));
 

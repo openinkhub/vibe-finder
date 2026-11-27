@@ -12,6 +12,7 @@ const { CHECKS, CAT_LABELS } = require("../lib/seo/checks");
 
 const KW = require("../lib/seo/keywords");
 const PSI = require("../lib/seo/psi");
+const indexNow = require("../lib/seo/indexnow");
 
 const router = express.Router();
 const rankLog = () => getDb().collection("seo_rank_log");
@@ -180,8 +181,15 @@ router.put("/seo/meta", requireAdmin, ah(async (req, res) => {
   const history = [...(cur.history || []), { at: nowIso(), by: req.user ? req.user.email : "admin", source: "manual", before: prev, after: Object.fromEntries(changed.map((k) => [k, k in set ? set[k] : null])) }].slice(-20);
   await meta().updateOne({ path: p }, { $set: { path: p, ...set, manual, history, updated_at: nowIso() }, ...(Object.keys(unset).length ? { $unset: unset } : {}) }, { upsert: true });
   refresh();
-  res.json(clean(await meta().findOne({ path: p }, { projection: { history: 0 } })));
+  if (changed.length) indexNow.notify([p], "SEO settings changed");
+  res.json(clean(await meta().findOne({ path: p }, { projection: { history: 0 } })));}));
+
+// ── IndexNow (Bing and other engines): status, and "send every page now" ──
+router.get("/seo/indexnow", requireAdmin, ah(async (_q, res) => {
+  const s = await indexNow.getState();
+  res.json({ enabled: indexNow.enabled(), key_file: indexNow.KEY_PATH, full_submission_at: s.fullAt || null, scheduled_check_for: s.dailyFor || null, log: s.log || [] });
 }));
+router.post("/seo/indexnow/submit-all", requireAdmin, ah(async (_q, res) => res.json(await indexNow.submitAll("manual full submission from admin"))));
 
 // Public: SEO values the browser should apply on top of the built-in page data.
 router.get("/seo/public-meta", ah(async (_req, res) => {

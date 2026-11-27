@@ -348,7 +348,34 @@ const SettingsTab = () => {
         <div><label className={labelCls}>Extra text for llms.txt (pages and posts are listed automatically)</label><textarea rows={4} value={s.llms_extra} onChange={(e) => setS({ ...s, llms_extra: e.target.value })} className={`${inputCls} font-mono text-[12px]`} /></div>
         <div className="flex gap-4 text-xs"><a href="/robots.txt" target="_blank" rel="noreferrer" className="text-[#C8215A]">View robots.txt</a><a href="/llms.txt" target="_blank" rel="noreferrer" className="text-[#C8215A]">View llms.txt</a><a href="/sitemap.xml" target="_blank" rel="noreferrer" className="text-[#C8215A]">View sitemap.xml</a></div>
       </div>
+      <IndexNowCard />
       <button onClick={save} disabled={busy} className={btnPrimary} data-testid="seo-settings-save">{busy ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />} Save settings</button>
+    </div>
+  );
+};
+
+// ── IndexNow: Bing and other engines hear about new or changed URLs straight away ──
+const IndexNowCard = () => {
+  const [d, setD] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const load = () => api.get("/seo/indexnow").then(({ data }) => setD(data)).catch(() => setD(null));
+  useEffect(() => { load(); }, []);
+  const sendAll = async () => {
+    setBusy(true);
+    try { const { data } = await api.post("/seo/indexnow/submit-all"); toast[data.status >= 200 && data.status < 300 ? "success" : "error"](data.status >= 200 && data.status < 300 ? `Sent ${data.count} URLs to IndexNow` : data.skipped ? "IndexNow is off on this copy of the site" : `IndexNow answered ${data.status || "no response"}${data.error ? `: ${data.error}` : ""}`); load(); }
+    catch (e) { toast.error(errorText(e)); } finally { setBusy(false); }
+  };
+  if (!d) return null;
+  const ok = (st) => st >= 200 && st < 300;
+  return (
+    <div className={`${card} p-5 space-y-3`} data-testid="seo-indexnow">
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <h3 className="font-display text-xl text-[#4A2530]">IndexNow (Bing, Yandex and others)</h3>
+        <button onClick={sendAll} disabled={busy || !d.enabled} className={btnGhost} data-testid="seo-indexnow-send-all">{busy ? <Loader2 size={15} className="animate-spin" /> : <RefreshCw size={15} />} Send every page now</button>
+      </div>
+      <p className="text-sm text-[#5C4E52]">New, edited and deleted posts and pages are sent automatically. Scheduled posts are sent on the day they go live. {d.enabled ? "" : "(Off on this copy of the site — only the live site sends.)"}</p>
+      <div className="text-xs text-[#8B7F82] flex gap-4 flex-wrap"><a href={d.key_file} target="_blank" rel="noreferrer" className="text-[#C8215A]">Key file</a><span>Full submission: {d.full_submission_at ? new Date(d.full_submission_at).toLocaleString() : "not yet"}</span></div>
+      {d.log.length > 0 && <ul className="text-xs divide-y divide-[#F4E8EC]">{d.log.slice(0, 8).map((l, i) => <li key={i} className="py-1.5 flex gap-3"><span className={ok(l.status) ? "text-[#1c7a45]" : "text-[#B3123F]"}>{l.status || "failed"}</span><span className="text-[#8B7F82] shrink-0">{new Date(l.at).toLocaleString()}</span><span className="text-[#4A2530]">{l.count} URL{l.count === 1 ? "" : "s"} — {l.reason}{l.error ? ` — ${l.error}` : ""}</span></li>)}</ul>}
     </div>
   );
 };
