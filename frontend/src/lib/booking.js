@@ -51,5 +51,7 @@ export const isBookingLink = (a) => {
   let u;
   try { u = new URL(a.getAttribute("href"), window.location.href); } catch (e) { return null; }
   if (u.origin !== window.location.origin || clean(u.pathname) !== "/contact") return null;
-  return { service: u.searchParams.get("service") || undefined };
+  const service = u.searchParams.get("service");
+  // "Blog" / "General" are page tags, not services the client is asking about.
+  return { service: service && !/^(blog|general)$/i.test(service) ? service : undefined };
 };
