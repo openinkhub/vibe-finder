@@ -362,7 +362,7 @@ const IndexNowCard = () => {
   useEffect(() => { load(); }, []);
   const sendAll = async () => {
     setBusy(true);
-    try { const { data } = await api.post("/seo/indexnow/submit-all"); toast[data.status >= 200 && data.status < 300 ? "success" : "error"](data.status >= 200 && data.status < 300 ? `Sent ${data.count} URLs to IndexNow` : data.skipped ? "IndexNow is off on this copy of the site" : `IndexNow answered ${data.status || "no response"}${data.error ? `: ${data.error}` : ""}`); load(); }
+    try { const { data } = await api.post("/seo/indexnow/submit-all"); toast[data.status >= 200 && data.status < 300 ? "success" : "error"](data.status >= 200 && data.status < 300 ? `Sent ${data.count} URLs to ${(data.results || []).map((r) => r.engine).join(" and ") || "IndexNow"}` : data.skipped ? "IndexNow is off on this copy of the site" : `IndexNow answered ${data.status || "no response"}${data.error ? `: ${data.error}` : ""}`); load(); }
     catch (e) { toast.error(errorText(e)); } finally { setBusy(false); }
   };
   if (!d) return null;
@@ -370,12 +370,12 @@ const IndexNowCard = () => {
   return (
     <div className={`${card} p-5 space-y-3`} data-testid="seo-indexnow">
       <div className="flex items-center justify-between gap-3 flex-wrap">
-        <h3 className="font-display text-xl text-[#4A2530]">IndexNow (Bing, Yandex and others)</h3>
+        <h3 className="font-display text-xl text-[#4A2530]">IndexNow (Bing, Yandex, Yep and others)</h3>
         <button onClick={sendAll} disabled={busy || !d.enabled} className={btnGhost} data-testid="seo-indexnow-send-all">{busy ? <Loader2 size={15} className="animate-spin" /> : <RefreshCw size={15} />} Send every page now</button>
       </div>
       <p className="text-sm text-[#5C4E52]">New, edited and deleted posts and pages are sent automatically. Scheduled posts are sent on the day they go live. {d.enabled ? "" : "(Off on this copy of the site — only the live site sends.)"}</p>
-      <div className="text-xs text-[#8B7F82] flex gap-4 flex-wrap"><a href={d.key_file} target="_blank" rel="noreferrer" className="text-[#C8215A]">Key file</a><span>Full submission: {d.full_submission_at ? new Date(d.full_submission_at).toLocaleString() : "not yet"}</span></div>
-      {d.log.length > 0 && <ul className="text-xs divide-y divide-[#F4E8EC]">{d.log.slice(0, 8).map((l, i) => <li key={i} className="py-1.5 flex gap-3"><span className={ok(l.status) ? "text-[#1c7a45]" : "text-[#B3123F]"}>{l.status || "failed"}</span><span className="text-[#8B7F82] shrink-0">{new Date(l.at).toLocaleString()}</span><span className="text-[#4A2530]">{l.count} URL{l.count === 1 ? "" : "s"} — {l.reason}{l.error ? ` — ${l.error}` : ""}</span></li>)}</ul>}
+      <div className="text-xs text-[#8B7F82] flex gap-4 flex-wrap"><a href={d.key_file} target="_blank" rel="noreferrer" className="text-[#C8215A]">Key file</a>{["IndexNow", "Yep"].map((n) => <span key={n}>Full submission ({n}): {(d.full_by_engine || {})[n] ? new Date(d.full_by_engine[n]).toLocaleString() : "not yet"}</span>)}</div>
+      {d.log.length > 0 && <ul className="text-xs divide-y divide-[#F4E8EC]">{d.log.slice(0, 8).map((l, i) => <li key={i} className="py-1.5 flex gap-3"><span className="shrink-0">{(l.results || [{ engine: "IndexNow", status: l.status }]).map((r) => <span key={r.engine} className={`mr-2 ${ok(r.status) ? "text-[#1c7a45]" : "text-[#B3123F]"}`}>{r.engine} {r.status || "failed"}</span>)}</span><span className="text-[#8B7F82] shrink-0">{new Date(l.at).toLocaleString()}</span><span className="text-[#4A2530]">{l.count} URL{l.count === 1 ? "" : "s"} — {l.reason}{l.error ? ` — ${l.error}` : ""}</span></li>)}</ul>}
     </div>
   );
 };

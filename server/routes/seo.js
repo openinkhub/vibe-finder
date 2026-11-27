@@ -187,7 +187,7 @@ router.put("/seo/meta", requireAdmin, ah(async (req, res) => {
 // ── IndexNow (Bing and other engines): status, and "send every page now" ──
 router.get("/seo/indexnow", requireAdmin, ah(async (_q, res) => {
   const s = await indexNow.getState();
-  res.json({ enabled: indexNow.enabled(), key_file: indexNow.KEY_PATH, full_submission_at: s.fullAt || null, scheduled_check_for: s.dailyFor || null, log: s.log || [] });
+  res.json({ enabled: indexNow.enabled(), key_file: indexNow.KEY_PATH, full_submission_at: s.fullAt || null, full_by_engine: s.full || (s.fullAt ? { IndexNow: s.fullAt } : {}), scheduled_check_for: s.dailyFor || null, log: s.log || [] });
 }));
 router.post("/seo/indexnow/submit-all", requireAdmin, ah(async (_q, res) => res.json(await indexNow.submitAll("manual full submission from admin"))));
 
